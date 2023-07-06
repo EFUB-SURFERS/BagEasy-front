@@ -6,7 +6,10 @@ const ItemInfo = () => {
   return (
     <Div>
       <ItemImages src={picture} />
-      <SellerInfo />
+      <Seller>
+        <SellerProfile src={picture} />
+        <SellerInfo />
+      </Seller>
       <ItemContent />
       <Comment />
       <ItemDetail />
@@ -17,6 +20,9 @@ export default ItemInfo;
 
 const Div = styled.div`
   position: relative;
+
+  margin: 0;
+  padding: 0;
 
   width: 100%;
 
@@ -33,6 +39,16 @@ const ItemImages = styled.img`
 
 const ItemContent = styled.div``;
 
+const Seller = styled.div`
+  position: relative;
+  width: 100%;
+  display: flex;
+  border-bottom: 0.5px solid #808080;
+`;
+const SellerProfile = styled.img`
+  width: 50px;
+  height: 50px;
+`;
 const SellerInfo = styled.div``;
 
 const Comment = styled.div``;
