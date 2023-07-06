@@ -1,5 +1,11 @@
+import DetailPage from "./pages/DetailPage";
+
 function App() {
-  return <div>Bag Easy</div>;
+  return (
+    <div>
+      <DetailPage />
+    </div>
+  );
 }
 
 export default App;

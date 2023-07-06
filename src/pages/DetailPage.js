@@ -1,4 +1,11 @@
+//components
+import TopNavBar from "../components/nav/TopNavBar";
+
 const DetailPage = () => {
-  return <></>;
+  return (
+    <>
+      <TopNavBar />
+    </>
+  );
 };
 export default DetailPage;
