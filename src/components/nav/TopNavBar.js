@@ -32,13 +32,13 @@ const Logo = styled.img`
 `;
 
 const Revert = styled.img`
-  margin-left: 10px;
+  margin-left: 17px;
   width: 20px;
   height: 35px;
 `;
 
 const Trash = styled.img`
-  margin-right: 10px;
+  margin-right: 17px;
   width: 30px;
   height: 38.72px;
 `;
