@@ -1,5 +1,4 @@
-import DetailPage from "./pages/DetailPage";
-
+import DetailPage from "./pages/DetailPage"; 
 function App() {
   return (
     <div>
