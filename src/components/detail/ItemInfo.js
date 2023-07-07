@@ -1,19 +1,28 @@
 import styled from "styled-components";
 
 import picture from "../../assets/picture.png";
+import profile from "../../assets/profile.png";
 
 const ItemInfo = () => {
   return (
     <Div>
       <ItemImages src={picture} />
       <Seller>
-        <SellerProfile src={picture} />
+        <SellerProfile src={profile} />
         <SellerInfo>
           <SellerNickname>jjm0829</SellerNickname>
           <SellerUniv>University of Northern Colorado</SellerUniv>
         </SellerInfo>
       </Seller>
-      <ItemContent />
+      <Item>
+        <ItemTitle>이불, 침대시트, 베개 판매합니다.</ItemTitle>
+        <ItemContent>
+          4개월동안 사용했습니다. <br />
+          상태 아주 깨끗하고 좋아요. <br />
+          거래 전에 세탁해서 드립니다. <br />
+          연락 많이 주세요!
+        </ItemContent>
+      </Item>
       <Comment />
       <ItemDetail />
     </Div>
@@ -37,16 +46,42 @@ const ItemImages = styled.img`
   height: 390px;
 `;
 
-const ItemContent = styled.div``;
+const Item = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 390px;
+  height: 200px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  border-bottom: 0.5px solid #cecece;
+`;
+const ItemTitle = styled.span`
+  font-family: "Noto Sans KR", sans-serif;
+  font-style: medium;
+  font-size: 16px;
+  font-weight: 550;
+
+  margin-top: 25px;
+  margin-bottom: 20px;
+  /* padding-top: 5px; */
+`;
+const ItemContent = styled.span`
+  font-family: "Noto Sans KR", sans-serif;
+  font-style: regular;
+  font-size: 15px;
+  font-weight: 540;
+`;
 
 const Seller = styled.div`
   position: relative;
-  width: 100%;
   display: flex;
 
+  width: 389px;
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 7px;
   border-bottom: 0.5px solid #808080;
 `;
 const SellerProfile = styled.img`
