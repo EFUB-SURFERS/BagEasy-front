@@ -4,7 +4,7 @@ import logo from "../../assets/logo.png";
 import back from "../../assets/back.png";
 const Header = () => {
   return (
-    <div>
+    <Wrapper>
       <HeaderDiv>
         <Btn>
           <img src={back} />
@@ -13,11 +13,17 @@ const Header = () => {
           <img src={logo} />
         </p>
       </HeaderDiv>
-    </div>
+    </Wrapper>
   );
 };
 
 export default Header;
+const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
 
 const HeaderDiv = styled.div`
   width: 100%;
