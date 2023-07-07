@@ -28,6 +28,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 90px;
   justify-content: center;
+  background: #ffffff;
 `;
 const Line = styled.div`
   position: fixed;

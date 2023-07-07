@@ -11,6 +11,12 @@ const MessagesContainer = () => {
         <MyMessage />
         <YourMessage />
         <YourMessage />
+        <MyMessage />
+        <YourMessage />
+        <MyMessage />
+        <YourMessage />
+        <MyMessage />
+        <MyMessage />
       </div>
     </Wrapper>
   );
@@ -20,6 +26,7 @@ export default MessagesContainer;
 const Wrapper = styled.div`
   /*상단 고정 헤더 높이 만큼 padding*/
   padding-top: 97px;
+  padding-bottom: 90px;
 `;
 const Date = styled.div`
   padding-top: 15px;
