@@ -10,7 +10,7 @@ const Form = () => {
       <Line />
       <Wrapper>
         <input type="file" id="file" multiple />
-        <label for="file">
+        <label htmlFor="file">
           <ImgBtn>
             <img src={gallery} alt="사진첨부버튼" />
           </ImgBtn>
