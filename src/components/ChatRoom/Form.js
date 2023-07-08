@@ -1,7 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
 import gallery from "../../assets/gallery.png";
+import { useState } from "react";
 const Form = () => {
+  const [text, setText] = useState("");
+
   return (
     <div>
       <Line />
@@ -13,7 +16,13 @@ const Form = () => {
           </ImgBtn>
         </label>
         <Text>
-          <input placeholder="메세지를 입력하세요." />
+          <input
+            placeholder="메세지를 입력하세요."
+            value={text}
+            onChange={e => {
+              setText(e.target.value);
+            }}
+          />
         </Text>
         <SubmitBtn>전송</SubmitBtn>
       </Wrapper>
