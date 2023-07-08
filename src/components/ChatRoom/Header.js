@@ -2,11 +2,17 @@ import React from "react";
 import { styled } from "styled-components";
 
 import back from "../../assets/back.png";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <HeaderDiv>
-        <Btn>
+        <Btn
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <img src={back} />
         </Btn>
         <ItemContainer>

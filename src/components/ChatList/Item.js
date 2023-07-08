@@ -1,9 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 const Item = () => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
-      <ChatItem>
+      <ChatItem
+        onClick={() => {
+          navigate("/chats/1");
+        }}
+      >
         <p className="img">
           <img src={""} />
         </p>
