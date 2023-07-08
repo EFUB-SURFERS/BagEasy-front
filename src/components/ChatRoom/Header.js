@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 
 import back from "../../assets/back.png";
 import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const [finished, setFinished] = useState(false);
+  const [isSold, setIsSold] = useState(false);
   const navigate = useNavigate();
+  const toggleFinished = () => {
+    setFinished(!finished);
+    setIsSold(!isSold);
+    /*거래 취소하기 / 거래 성사하기 텍스트 문구 정하기 
+    거래 성사 = 판매완료 처리
+    글 삭제시..? => 판매완료처리..?*/
+  };
   return (
     <div>
       <HeaderDiv>
@@ -22,10 +31,15 @@ const Header = () => {
 
           <div>
             <div className="wrapper">
-              <p className="status">판매완료</p>
-              <p className="title">이불, 침대시트, 베개 판매합니다.</p>
+              <p className="isSold">{isSold ? "판매완료" : "판매중"}</p>
+              <Title isSold={isSold}>이불, 침대시트, 베개 판매합니다.</Title>
             </div>
-            <p className="price">30000원</p>
+            <div className="wrapper">
+              <p className="price">30000원</p>
+              <FinishBtn onClick={toggleFinished} finished={finished}>
+                {finished ? "거래 취소하기" : "거래 성사하기"}
+              </FinishBtn>
+            </div>
           </div>
         </ItemContainer>
       </HeaderDiv>
@@ -34,6 +48,24 @@ const Header = () => {
 };
 
 export default Header;
+const FinishBtn = styled.div`
+  width: 131px;
+  height: 28px;
+  border-radius: 10px;
+  background: ${props => (props.finished ? "#D9D9D9" : "#ffc700")};
+  color: #fff;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: Noto Sans KR;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 28px;
+  margin-top: 6px;
+`;
 const ItemContainer = styled.div`
   display: flex;
   p {
@@ -54,9 +86,9 @@ const ItemContainer = styled.div`
   .wrapper {
     display: flex;
     flex-direction: row;
-    .status {
+    .isSold {
       margin: 28px 0px 0px 11px;
-
+      max-width: 50px;
       color: #f00;
       font-family: Noto Sans KR;
       font-size: 12px;
@@ -64,23 +96,10 @@ const ItemContainer = styled.div`
       font-weight: 500;
       line-height: normal;
     }
-    .title {
-      width: 230px;
-      margin: 24px 0px 0px 4px;
-      color: #000;
-      font-family: Noto Sans KR;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
   }
 
   .price {
+    width: 95px;
     margin-left: 11px;
     margin-top: 4px;
     color: #6d6d6d;
@@ -90,6 +109,20 @@ const ItemContainer = styled.div`
     font-weight: 400;
     line-height: normal;
   }
+`;
+const Title = styled.div`
+  width: 222px;
+  margin: 24px 0px 0px 4px;
+  color: ${props => (props.isSold ? "#848484" : "#000")};
+  font-family: Noto Sans KR;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 const HeaderDiv = styled.div`
   position: fixed;

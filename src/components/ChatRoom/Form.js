@@ -6,11 +6,14 @@ const Form = () => {
     <div>
       <Line />
       <Wrapper>
-        <ImgBtn>
-          <img src={gallery} />
-        </ImgBtn>
+        <input type="file" id="file" multiple />
+        <label for="file">
+          <ImgBtn>
+            <img src={gallery} alt="사진첨부버튼" />
+          </ImgBtn>
+        </label>
         <Text>
-          <input placeholder="메세지를 입력하세요."></input>
+          <input placeholder="메세지를 입력하세요." />
         </Text>
         <SubmitBtn>전송</SubmitBtn>
       </Wrapper>
@@ -29,6 +32,9 @@ const Wrapper = styled.div`
   height: 90px;
   justify-content: center;
   background: #ffffff;
+  #file {
+    display: none;
+  }
 `;
 const Line = styled.div`
   position: fixed;
@@ -59,7 +65,7 @@ const Text = styled.div`
     line-height: normal;
   }
 `;
-const ImgBtn = styled.button`
+const ImgBtn = styled.div`
   width: 32px;
   height: 32px;
   margin: 30px 0px 0px 8px;
@@ -71,12 +77,15 @@ const ImgBtn = styled.button`
     height: 32px;
   }
 `;
-const SubmitBtn = styled.button`
+const SubmitBtn = styled.div`
   margin: 25px 9px 0px 9px;
   width: 42px;
   height: 42px;
   background: #ffc701;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: Noto Sans KR;
   font-size: 12px;
   font-style: normal;
