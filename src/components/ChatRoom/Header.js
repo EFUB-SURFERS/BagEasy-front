@@ -13,11 +13,11 @@ const Header = () => {
             navigate(-1);
           }}
         >
-          <img src={back} />
+          <img src={back} alt="뒤로가기" />
         </Btn>
         <ItemContainer>
           <p className="itemImg">
-            <img src={"itemImg"} />
+            <img src={"itemImg"} alt="물건이미지" />
           </p>
 
           <div>

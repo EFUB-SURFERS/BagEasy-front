@@ -13,10 +13,10 @@ const Header = () => {
             navigate(-1);
           }}
         >
-          <img src={back} />
+          <img src={back} alt="뒤로가기" />
         </Btn>
         <p className="logo">
-          <img src={logo} />
+          <img src={logo} alt="로고" />
         </p>
       </HeaderDiv>
     </Wrapper>
