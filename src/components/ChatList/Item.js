@@ -11,7 +11,7 @@ const Item = () => {
         }}
       >
         <p className="img">
-          <img src={""} />
+          <img src={""} alt="프로필이미지" />
         </p>
         <div className="mainContainer">
           <p className="name">Jimin_Song</p>
