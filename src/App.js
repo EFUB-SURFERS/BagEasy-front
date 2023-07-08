@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import SignUp from "./pages/signUp";
-import Nickname from "./pages/nickname";
+import SignUp from "./pages/SignUpPage";
+import Nickname from "./pages/NicknamePage";
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 

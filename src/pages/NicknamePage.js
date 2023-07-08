@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Arrow from "../images/arrow.png";
+import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 
 const Nickname = () => {

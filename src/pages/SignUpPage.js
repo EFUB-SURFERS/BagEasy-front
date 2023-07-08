@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import Duck from "../images/duck.png";
-import Arrow from "../images/arrow.png";
-import GoogleBtn from "../images/googleBtn.png";
+import Duck from "../assets/duck.png";
+import Arrow from "../assets/arrow.png";
+import GoogleBtn from "../assets/googleBtn.png";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
