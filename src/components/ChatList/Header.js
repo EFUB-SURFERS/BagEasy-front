@@ -2,15 +2,21 @@ import React from "react";
 import { styled } from "styled-components";
 import logo from "../../assets/logo.png";
 import back from "../../assets/back.png";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <Wrapper>
       <HeaderDiv>
-        <Btn>
-          <img src={back} />
+        <Btn
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <img src={back} alt="뒤로가기" />
         </Btn>
         <p className="logo">
-          <img src={logo} />
+          <img src={logo} alt="로고" />
         </p>
       </HeaderDiv>
     </Wrapper>
