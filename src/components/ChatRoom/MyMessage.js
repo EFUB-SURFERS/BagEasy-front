@@ -2,15 +2,39 @@ import React from "react";
 import { styled } from "styled-components";
 
 const MyMessage = () => {
+  const images = true;
   return (
     <Wrapper>
       <Time>PM 2:00</Time>
-      <Text>안녕하세요~ 물건 구매하고 싶습니다!</Text>
+      {images ? (
+        <ImageContainer>
+          <img
+            src={"https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"}
+            alt=""
+          />
+        </ImageContainer>
+      ) : (
+        <Text>
+          안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건 구매하고
+          싶습니다! 안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건
+          구매하고 싶습니다! 안녕하세요~ 물건 구매하고 싶습니다!
+        </Text>
+      )}
     </Wrapper>
   );
 };
 
 export default MyMessage;
+const ImageContainer = styled.div`
+  margin-left: 7px;
+  margin-right: 12px;
+
+  img {
+    max-width: 235px;
+    border-radius: 10px;
+    max-height: 150px;
+  }
+`;
 const Wrapper = styled.div`
   display: flex;
   justify-content: end;
@@ -26,7 +50,7 @@ const Time = styled.div`
   line-height: normal;
 `;
 const Text = styled.div`
-  max-width: 192px;
+  max-width: 235px;
   border-radius: 15px;
   background: #ffee94;
   padding: 8.07px 14px 8.07px 14px;

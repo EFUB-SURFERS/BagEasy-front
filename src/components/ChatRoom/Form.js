@@ -1,41 +1,121 @@
 import React from "react";
 import { styled } from "styled-components";
 import gallery from "../../assets/gallery.png";
-import { useState } from "react";
+import deleteBtn from "../../assets/deleteBtn.png";
+import { useState, useRef } from "react";
 const Form = () => {
   const [text, setText] = useState("");
+  const [imgFile, setImgFile] = useState();
+  const [previewImg, setPreviewImg] = useState(null);
+  const imgRef = useRef();
+
+  const uploadImg = () => {
+    let file = imgRef.current.files[0];
+    setImgFile(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewImg(reader.result);
+    };
+  };
+  const deleteImg = () => {
+    imgRef.current.value = "";
+    setPreviewImg();
+    setImgFile();
+  };
 
   return (
-    <div>
-      <Line />
-      <Wrapper>
-        <input type="file" id="file" multiple />
+    <Wrapper $previewImg={previewImg}>
+      {previewImg ? (
+        <PreviewContainer>
+          <PreviewImg>
+            <img src={previewImg} alt=""></img>
+            <DeleteBtn onClick={deleteImg}>
+              <img className="deleteBtn" src={deleteBtn} alt="삭제" />
+            </DeleteBtn>
+          </PreviewImg>
+        </PreviewContainer>
+      ) : (
+        <Line />
+      )}
+      <Inputs>
+        <input
+          type="file"
+          id="file"
+          multiple
+          onChange={uploadImg}
+          ref={imgRef}
+        />
         <label htmlFor="file">
           <ImgBtn>
             <img src={gallery} alt="사진첨부버튼" />
           </ImgBtn>
         </label>
-        <Text>
-          <input
-            placeholder="메세지를 입력하세요."
-            value={text}
-            onChange={e => {
-              setText(e.target.value);
-            }}
-          />
-        </Text>
+        {previewImg ? (
+          <div className="empty" />
+        ) : (
+          <Text>
+            <input
+              placeholder="메세지를 입력하세요."
+              value={text}
+              onChange={e => {
+                setText(e.target.value);
+              }}
+            />
+          </Text>
+        )}
         <SubmitBtn>전송</SubmitBtn>
-      </Wrapper>
-    </div>
+      </Inputs>
+    </Wrapper>
   );
 };
 
 export default Form;
 const Wrapper = styled.div`
+  display: flex;
+  height: ${props => (props.$previewImg ? "256px" : "90px")};
+`;
+const DeleteBtn = styled.div`
+  position: absolute;
+  top: 11px;
+  right: 8px;
+
+  .deleteBtn {
+    width: 21px;
+    height: 21px;
+  }
+`;
+const PreviewImg = styled.div`
+  position: relative;
+  width: 133px;
+  height: 146px;
+  margin-left: 8px;
+
+  img {
+    width: 133px;
+    height: 146px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+`;
+const PreviewContainer = styled.div`
+  width: 352px;
+  height: 166px;
+  position: fixed;
+  bottom: 90px;
+  margin-right: 12px;
+  right: 0;
+  display: flex;
+  border-radius: 15px;
+  background: #ffee94;
+  align-items: center;
+`;
+const Inputs = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+
   display: flex;
   width: 100%;
   height: 90px;
@@ -43,6 +123,11 @@ const Wrapper = styled.div`
   background: #ffffff;
   #file {
     display: none;
+  }
+  .empty {
+    margin: 25px 0px 0px 7px;
+    width: 280px;
+    height: 42px;
   }
 `;
 const Line = styled.div`
