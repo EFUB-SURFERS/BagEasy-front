@@ -46,14 +46,14 @@ const ItemInfo = () => {
           </NextBtn>
         )}
       </ItemImages>
-      {/* <Seller>
+      <Seller>
         <SellerProfile src={profile} />
         <SellerInfo>
           <SellerNickname>jjm0829</SellerNickname>
           <SellerUniv>University of Northern Colorado</SellerUniv>
         </SellerInfo>
       </Seller>
-      <Item>
+      {/* <Item>
         <ItemTitle>이불, 침대시트, 베개 판매합니다.</ItemTitle>
         <ItemContent>
           4개월동안 사용했습니다. <br />
@@ -115,6 +115,51 @@ const BeforeBtn = styled.div`
     padding-left: 22px;
   }
 `;
+const Seller = styled.div`
+  position: relative;
+  display: flex;
+
+  width: 389px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 0.5px solid #808080;
+`;
+const SellerProfile = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+
+  margin-left: 16px;
+`;
+
+const SellerInfo = styled.div`
+  position: relative;
+  display: flex;
+
+  flex-direction: column;
+
+  padding-left: 7px;
+  width: 310px;
+  height: 54px;
+  margin-left: 13px;
+  margin-: 21px;
+`;
+const SellerNickname = styled.div`
+  color: #000;
+  font-family: Arial;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+const SellerUniv = styled.div`
+  font-family: Arial;
+  font-style: regular;
+  font-size: 13px;
+  color: #848484;
+
+  margin-top: 6px;
+`;
 
 const Item = styled.div`
   display: flex;
@@ -147,49 +192,6 @@ const ItemContent = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`;
-
-const Seller = styled.div`
-  position: relative;
-  display: flex;
-
-  width: 389px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  border-bottom: 0.5px solid #808080;
-`;
-const SellerProfile = styled.img`
-  width: 50px;
-  height: 50px;
-
-  border-radius: 70%;
-
-  margin: auto;
-`;
-const SellerInfo = styled.div`
-  position: relative;
-  display: flex;
-
-  flex-direction: column;
-
-  padding-left: 7px;
-  width: 310px;
-  height: 54px;
-`;
-const SellerNickname = styled.span`
-  font-family: "Arial";
-  font-style: bold;
-  font-size: 17px;
-  font-weight: 600;
-
-  margin-bottom: 5px;
-  margin-top: 5px;
-`;
-const SellerUniv = styled.span`
-  font-family: "Arial";
-  font-style: regular;
-  font-size: 13px;
-  color: #848484;
 `;
 
 const Comment = styled.div``;
