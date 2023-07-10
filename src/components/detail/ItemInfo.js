@@ -53,7 +53,7 @@ const ItemInfo = () => {
           <SellerUniv>University of Northern Colorado</SellerUniv>
         </SellerInfo>
       </Seller>
-      {/* <Item>
+      <Item>
         <ItemTitle>이불, 침대시트, 베개 판매합니다.</ItemTitle>
         <ItemContent>
           4개월동안 사용했습니다. <br />
@@ -62,7 +62,7 @@ const ItemInfo = () => {
           연락 많이 주세요!
         </ItemContent>
       </Item>
-      <Comment />
+      {/* <Comment />
       <ItemDetail>
         <Heart>
           <HeartButton src={heart} />
@@ -115,21 +115,24 @@ const BeforeBtn = styled.div`
     padding-left: 22px;
   }
 `;
+
 const Seller = styled.div`
   position: relative;
   display: flex;
 
-  width: 389px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  width: 100%;
+
   border-bottom: 0.5px solid #808080;
 `;
+
 const SellerProfile = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50px;
 
+  margin-top: 17px;
   margin-left: 16px;
+  margin-bottom: 18px;
 `;
 
 const SellerInfo = styled.div`
@@ -138,11 +141,10 @@ const SellerInfo = styled.div`
 
   flex-direction: column;
 
-  padding-left: 7px;
+  margin-top: 21px;
+  margin-left: 13px;
   width: 310px;
   height: 54px;
-  margin-left: 13px;
-  margin-: 21px;
 `;
 const SellerNickname = styled.div`
   color: #000;
@@ -165,7 +167,7 @@ const Item = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 390px;
+  width: 100%;
   height: 200px;
 
   padding-left: 23px;
@@ -173,7 +175,13 @@ const Item = styled.div`
 
   border-bottom: 0.5px solid #cecece;
 `;
-const ItemTitle = styled.span`
+const ItemTitle = styled.div`
+  display: flex;
+  width: 361px;
+  height: 48px;
+  flex-direction: column;
+  justify-content: center;
+
   color: #000;
   font-family: Noto Sans KR;
   font-size: 16px;
@@ -181,17 +189,24 @@ const ItemTitle = styled.span`
   font-weight: 500;
   line-height: normal;
 
-  margin-top: 25px;
-  margin-bottom: 20px;
-  /* padding-top: 5px; */
+  padding-left: 23px;
+  padding-top: 10px;
+  flex-shrink: 0;
 `;
 const ItemContent = styled.span`
+  display: flex;
+  width: 362px;
+  height: 202px;
+  flex-direction: column;
+  flex-shrink: 0;
   color: #000;
   font-family: Noto Sans KR;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  padding-left: 23px;
 `;
 
 const Comment = styled.div``;
