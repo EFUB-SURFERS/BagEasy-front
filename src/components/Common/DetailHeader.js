@@ -10,21 +10,19 @@ const DetailHeader = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <Div>
-        <Btn
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <img src={revert} alt="뒤로가기" />
-        </Btn>
-        <Logo>
-          <img src={logo} alt="로고" />
-        </Logo>
-        <Trash>
-          <img src={trash} alt="휴지통" />
-        </Trash>
-      </Div>
+      <Btn
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        <img src={revert} alt="뒤로가기" />
+      </Btn>
+      <Logo>
+        <img src={logo} alt="로고" />
+      </Logo>
+      <Trash>
+        <img src={trash} alt="휴지통" />
+      </Trash>
     </Wrapper>
   );
 };
@@ -35,17 +33,13 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   right: 0;
-`;
-
-const Div = styled.div`
-  position: relative;
-
   height: 68px;
   width: 100%;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #ffffff;
 `;
 
 const Logo = styled.div`
@@ -53,6 +47,7 @@ const Logo = styled.div`
   position: absolute;
   left: 50%;
   padding-top: 24px;
+  padding-bottom: 22px;
   img {
     width: 58px;
     height: 22px;
@@ -61,8 +56,10 @@ const Logo = styled.div`
 `;
 
 const Trash = styled.div`
-  padding-top: 20px;
-  padding-right: 19px;
+  padding-top: 17px;
+  padding-right: 21px;
+  padding-bottom: 14px;
+
   img {
     width: 30px;
     height: 38.716px;
@@ -72,7 +69,11 @@ const Trash = styled.div`
 const Btn = styled.div`
   padding-top: 19px;
   padding-left: 14px;
-  width: 20px;
-  height: 35px;
-  display: flex;
+  padding-bottom: 14px;
+
+  img {
+    width: 20px;
+    height: 35px;
+    flex-shrink: 0;
+  }
 `;

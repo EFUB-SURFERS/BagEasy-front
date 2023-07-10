@@ -62,30 +62,28 @@ const ItemInfo = () => {
           연락 많이 주세요!
         </ItemContent>
       </Item>
-      {/* <Comment />
+      <Comment />
       <ItemDetail>
         <Heart>
-          <HeartButton src={heart} />
+          <HeartBtn src={heart} />
           <HeartCount>2</HeartCount>
         </Heart>
-        <Price>30000원</Price>
+        <Line />
+        <Price>30,000원</Price>
         <ChatButton src={chatButton}></ChatButton>
-      </ItemDetail> */}
+      </ItemDetail>
     </Div>
   );
 };
 export default ItemInfo;
 
 const Div = styled.div`
-  position: relative;
-
   width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
   padding-top: 68px;
 `;
 
@@ -209,22 +207,34 @@ const ItemContent = styled.span`
   padding-left: 23px;
 `;
 
-const Comment = styled.div``;
-
-const ItemDetail = styled.div`
-  position: relative;
-
-  height: 68px;
-  width: 390px;
-
+const Comment = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+  height: 150px;
+
+  border-bottom: 0.5px solid #808080;
 `;
 
-const HeartButton = styled.img`
+const ItemDetail = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  width: 100%;
+  height: 75px;
+  justify-content: center;
+  background: #ffffff;
+`;
+
+const HeartBtn = styled.img`
   width: 24px;
   height: 23px;
+
+  flex-shrink: 0;
+  fill: #eb6060;
 `;
 const Heart = styled.div`
   position: relative;
@@ -238,11 +248,9 @@ const Heart = styled.div`
   padding-bottom: 3px;
   padding-left: 21px;
   padding-right: 21px;
-
-  border-right: 0.5px solid #808080;
 `;
 
-const HeartCount = styled.span`
+const HeartCount = styled.div`
   color: #000;
   text-align: center;
   font-family: Arial;
@@ -253,9 +261,15 @@ const HeartCount = styled.span`
 
   padding-top: 5px;
 `;
-const Price = styled.span`
-  text-align: left;
 
+const Line = styled.div`
+  width: 0.5px;
+  height: 48px;
+  background: #808080;
+  margin-top: 16px;
+`;
+
+const Price = styled.div`
   color: #000;
   font-family: Noto Sans KR;
   font-size: 20px;
@@ -263,13 +277,16 @@ const Price = styled.span`
   font-weight: 400;
   line-height: normal;
 
-  flex-shrink: 0;
+  padding-top: 24px;
   margin-left: 18px;
 `;
+
 const ChatButton = styled.img`
   width: 103px;
   height: 46px;
 
   margin-left: auto;
   margin-right: 15px;
+  margin-top: 16px;
+  flex-shrink: 0;
 `;
