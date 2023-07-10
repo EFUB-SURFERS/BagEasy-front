@@ -1,12 +1,12 @@
 //components
-import TopNavBar from "../components/nav/TopNavBar";
+import DetailHeader from "../components/Common/DetailHeader";
 import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = () => {
   return (
     <>
-      <TopNavBar />
-      <ItemInfo />
+      <DetailHeader />
+      {/* <ItemInfo /> */}
     </>
   );
 };
