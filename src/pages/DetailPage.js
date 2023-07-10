@@ -4,10 +4,10 @@ import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = () => {
   return (
-    <>
+    <div>
       <DetailHeader />
-      {/* <ItemInfo /> */}
-    </>
+      <ItemInfo />
+    </div>
   );
 };
 export default DetailPage;

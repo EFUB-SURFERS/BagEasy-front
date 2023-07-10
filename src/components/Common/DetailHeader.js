@@ -36,6 +36,7 @@ const Wrapper = styled.div`
   left: 0;
   right: 0;
 `;
+
 const Div = styled.div`
   position: relative;
 
