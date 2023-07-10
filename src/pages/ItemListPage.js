@@ -1,64 +1,32 @@
 import React, { useState } from "react";
-import Header from "../components/Common/Header";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Item from "../components/ItemList/Item";
+import styled from "styled-components";
+import Header from "../components/Common/Header";
+import Buttons from "../components/ItemList/Buttons";
+import SearchBar from "../components/ItemList/SearchBar";
+import List from "../components/ItemList/List";
+import Footer from "./../components/ItemList/Footer";
 
 const ItemListPage = () => {
-  const [allFilter, setAllFilter] = useState(true);
   const navigate = useNavigate();
+  const [filter, setFilter] = useState(true);
   const onToggle = () => {
-    setAllFilter(prev => !prev);
+    setFilter(prev => !prev);
   };
   return (
-    <Root>
+    <Wrapper>
       <Header />
-      <Container>
-        <ButtonWrapper>
-          <ChatButton onClick={() => navigate("/chats")}>채팅</ChatButton>
-          <MyPageButton onClick={() => navigate("/mypage")}>
-            마이페이지
-          </MyPageButton>
-          <Checkbox type="checkbox" id="toggle" onChange={onToggle} />
-          <Label htmlFor="toggle">양도중</Label>
-        </ButtonWrapper>
-        <List>
-          <Item />
-          <Item />
-          <Item />
-          <Item />
-        </List>
-      </Container>
-    </Root>
+      <Buttons navigate={navigate} />
+      <SearchBar onToggle={onToggle} filter={filter} />
+      <List />
+      <Footer />
+    </Wrapper>
   );
 };
 
-const Root = styled.div``;
-
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-`;
-
-const ButtonWrapper = styled.div`
-  margin-top: 100px;
-  display: flex;
-  flex: 0;
-`;
-
-const ChatButton = styled.button``;
-
-const MyPageButton = styled.button``;
-
-const Checkbox = styled.input``;
-
-const Label = styled.label``;
-
-const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 `;
 
 export default ItemListPage;
