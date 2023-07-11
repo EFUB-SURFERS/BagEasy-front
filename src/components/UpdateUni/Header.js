@@ -2,9 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import back from "../../assets/back.png";
 import { useNavigate } from "react-router-dom";
-//사용방법
-//헤더가 상단 고정이라 다음에 이어질 컴포넌트가 있다면
-//padding-top: 97px 넣어주셔야 헤더에 안가려집니다.
+
 const Header = () => {
   const navigate = useNavigate();
   return (
