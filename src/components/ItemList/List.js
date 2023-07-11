@@ -2,9 +2,9 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = () => {
+const List = ({ margintop = "97px", marginbottom = 0 }) => {
   return (
-    <Wrapper>
+    <Wrapper margintop={margintop} marginbottom={marginbottom}>
       <Item />
       <Item />
       <Item />
@@ -25,8 +25,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-top: 140px;
-  margin-bottom: 60px;
+  margin-top: ${props => props.margintop};
+  margin-bottom: ${props => props.marginbottom};
   /* border: 1px solid black; */
   overflow: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
