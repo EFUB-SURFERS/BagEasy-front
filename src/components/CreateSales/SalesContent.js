@@ -1,10 +1,47 @@
 import styled from "styled-components";
+
+import { useState, useRef, useEffect } from "react";
+
+import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
 import place from "../../assets/place.png";
 
 const SalesContent = () => {
+  const modalRef = useRef();
+  const wrapperRef = useRef();
+
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [content, setContent] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [uni, setUni] = useState("");
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOutsideClick = event => {
+    if (
+      modalRef.current &&
+      !modalRef.current.contains(event.target) &&
+      wrapperRef.current &&
+      !wrapperRef.current.contains(event.target)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  console.log("다른영역클릭");
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper ref={wrapperRef}>
       <Line />
       <Images>
         <AddBtn>
@@ -16,30 +53,58 @@ const SalesContent = () => {
       <Univ>
         <UnivInput>
           <img src={place} alt="검색" />
-          학교명을 입력하세요
+          {uni ? uni : "학교명을 입력하세요"}
         </UnivInput>
-        <Search>
+        <Search onClick={toggleModal}>
           <img src={searchBtn} alt="검색" />
         </Search>
       </Univ>
+      {isOpen && (
+        <>
+          <OutsideWrapper onClick={toggleModal} />
+          <Modal
+            ref={modalRef}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            uni={uni}
+            setUni={setUni}
+          />
+        </>
+      )}
       <SubLine />
-      <TitleWrapper>
+      <Titlesection>
         <Title>제목</Title>
-        <TitleInput>어떤 물품을 양도 중이신가요?</TitleInput>
-      </TitleWrapper>
+        <input
+          placeholder="어떤 물품을 양도 중이신가요?"
+          value={title}
+          onChange={e => {
+            setTitle(e.target.value);
+          }}
+        />
+      </Titlesection>
       <SubLine />
-      <TitleWrapper>
+      <PriceSection>
         <Title>가격</Title>
-        <TitleInput>어느 정도의 가격에 판매하실 예정인가요?</TitleInput>
-      </TitleWrapper>
+        <input
+          placeholder="어느 정도의 가격에 판매하실 예정인가요?"
+          value={price}
+          onChange={e => {
+            setPrice(e.target.value);
+          }}
+        />
+      </PriceSection>
       <SubLine />
-      <TitleWrapper>
-        <Title>제목</Title>
-      </TitleWrapper>
-      <TitleInput>
-        구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. ex) 구매
-        일시, 사용 기간, 생활 오염 정도 등
-      </TitleInput>
+      <ContentSection>
+        <Title>내용</Title>
+        <textarea
+          placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
+          ex) 구매일시, 사용 기간, 생활 오염 정도 등"
+          value={content}
+          onChange={e => {
+            setContent(e.target.value);
+          }}
+        />
+      </ContentSection>
     </Wrapper>
   );
 };
@@ -47,6 +112,7 @@ export default SalesContent;
 
 const Wrapper = styled.div`
   width: 100%;
+  position: relative;
 
   display: flex;
   /* justify-content: center; */
@@ -158,12 +224,81 @@ const Search = styled.div`
   }
 `;
 
-const TitleWrapper = styled.div`
+const Titlesection = styled.div`
   display: flex;
   flex-direction: row;
 
   margin-top: 18px;
   margin-bottom: 19px;
+
+  input {
+    border: 0;
+    display: flex;
+    width: 211px;
+    flex-direction: column;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+`;
+
+const PriceSection = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  margin-top: 18px;
+  margin-bottom: 19px;
+
+  input {
+    border: 0;
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+`;
+// const PriceSection = styled.div`
+//   display: flex;
+//   flex-direction: row;
+
+//   margin-top: 18px;
+//   margin-bottom: 19px;
+// `;
+const ContentSection = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 18px;
+  margin-bottom: 19px;
+
+  textarea {
+    border: 0;
+    display: flex;
+    width: 337px;
+    height: 97px;
+    flex-direction: column;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    margin-left: 29px;
+    margin-top: 18px;
+    margin-right: 23px;
+  }
 `;
 
 const Title = styled.div`
@@ -178,7 +313,7 @@ const Title = styled.div`
   padding-right: 17px;
 `;
 
-const TitleInput = styled.div`
+const Input = styled.div`
   display: flex;
   width: 211px;
   height: 15px;
@@ -206,4 +341,13 @@ const Content = styled.div`
 
   margin-top: 18px;
   margin-bottom: 19px;
+`;
+
+const OutsideWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
 `;
