@@ -3,6 +3,8 @@ import SignUp from "./pages/SignUpPage";
 import Nickname from "./pages/NicknamePage";
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
+import DetailPage from "./pages/DetailPage";
+import CreateSalesPage from "./pages/CreateSalesPage";
 import ItemListPage from "./pages/ItemListPage";
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
       <Route path="/home" element={<ItemListPage />} />
       <Route path="/chats" element={<ChatListPage />} />
       <Route path="/chats/1" element={<ChatRoomPage />} />
+      <Route path="/detail/1" element={<DetailPage />} />
+      <Route path="/create" element={<CreateSalesPage />} />
     </Routes>
   );
 }
