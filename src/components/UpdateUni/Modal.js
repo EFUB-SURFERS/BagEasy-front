@@ -1,6 +1,16 @@
 import React from "react";
 import { styled } from "styled-components";
-const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
+
+const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }) => {
+  const handleUniChange = e => {
+    setUni(e.target.value);
+  };
+
+  const handleItemClick = selectedUni => {
+    setUni(selectedUni);
+    setIsOpen(false);
+  };
+
   return (
     <Container>
       <p>학교명을 입력해주세요!</p>
@@ -8,18 +18,11 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
         <input
           placeholder="영문으로 입력해주세요."
           value={uni}
-          onChange={e => {
-            setUni(e.target.value);
-          }}
+          onChange={handleUniChange}
         />
       </Input>
       <List>
-        <Item
-          onClick={() => {
-            setUni("이화여자대학교");
-            setIsOpen(!isOpen);
-          }}
-        >
+        <Item onClick={() => handleItemClick("이화여자대학교")}>
           이화여자대학교
         </Item>
         <Item>이화여자대학교</Item>
@@ -29,7 +32,7 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
       </List>
     </Container>
   );
-};
+});
 
 export default Modal;
 
