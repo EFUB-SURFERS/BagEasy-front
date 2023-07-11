@@ -5,12 +5,14 @@ import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import DetailPage from "./pages/DetailPage";
 import CreateSalesPage from "./pages/CreateSalesPage";
+import ItemListPage from "./pages/ItemListPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/nickname" element={<Nickname />} />
+      <Route path="/home" element={<ItemListPage />} />
       <Route path="/chats" element={<ChatListPage />} />
       <Route path="/chats/1" element={<ChatRoomPage />} />
       <Route path="/detail/1" element={<DetailPage />} />
