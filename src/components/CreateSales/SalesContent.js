@@ -7,8 +7,9 @@ const SalesContent = () => {
     <Wrapper>
       <Line />
       <Images>
-        <AddBtn />
-        <VirtualImage />
+        <AddBtn>
+          <p>+</p>
+        </AddBtn>
         <VirtualImage />
       </Images>
       <SubLine />
@@ -78,6 +79,24 @@ const AddBtn = styled.div`
     #cecece;
   margin-left: 34px;
   margin-top: 24px;
+
+  p {
+    display: flex;
+    width: 50px;
+    height: 49px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #828282;
+    text-align: center;
+    font-family: Inter;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: auto;
+    padding-top: 8px;
+  }
 `;
 
 const Images = styled.div`
