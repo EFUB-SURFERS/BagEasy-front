@@ -8,10 +8,13 @@ import next from "../../assets/next.png";
 import before from "../../assets/before.png";
 import heart from "../../assets/heart.png";
 import chatButton from "../../assets/chatButton.png";
+import menubar from "../../assets/menubar.png";
 
 const ItemInfo = () => {
   const images = [picture, picture2]; //이미지배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 이미지 인덱스 상태
+
+  const [isWirter, setIsWirter] = useState(false);
 
   const handleNextImage = () => {
     setCurrentImageIndex(prevIndex =>
@@ -70,7 +73,11 @@ const ItemInfo = () => {
         </Heart>
         <Line />
         <Price>30,000원</Price>
-        <ChatButton src={chatButton}></ChatButton>
+        {isWirter ? (
+          <MenuBar src={menubar} />
+        ) : (
+          <ChatButton src={chatButton}></ChatButton>
+        )}
       </ItemDetail>
     </Div>
   );
@@ -285,6 +292,15 @@ const ChatButton = styled.img`
   width: 103px;
   height: 46px;
 
+  margin-left: auto;
+  margin-right: 15px;
+  margin-top: 16px;
+  flex-shrink: 0;
+`;
+
+const MenuBar = styled.img`
+  width: 38px;
+  height: 38px;
   margin-left: auto;
   margin-right: 15px;
   margin-top: 16px;
