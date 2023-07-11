@@ -16,5 +16,6 @@ const UpdateUniPage = () => {
 export default UpdateUniPage;
 
 const Wrapper = styled.div`
-  padding-top: 97px;
+  margin-top: 97px;
+  padding-top: 20px;
 `;
