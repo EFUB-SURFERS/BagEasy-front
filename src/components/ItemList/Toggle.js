@@ -5,7 +5,7 @@ const Toggle = ({ onToggle, filter }) => {
   return (
     <Wrapper>
       <CheckBox type="checkbox" id="toggle" onChange={onToggle} />
-      <Label htmlFor="toggle" filter={filter} />
+      <Label htmlFor="toggle" checked={filter} />
     </Wrapper>
   );
 };
@@ -64,7 +64,7 @@ const Label = styled.label`
   }
 
   ${props =>
-    props.filter &&
+    props.checked &&
     `
     //선택시 배경
     /* 배경색 변경 트랜지션 */
