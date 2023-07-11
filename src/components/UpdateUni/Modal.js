@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { styled } from "styled-components";
 
-const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }, ref) => {
+const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }) => {
   const handleUniChange = e => {
     setUni(e.target.value);
   };
@@ -10,8 +10,9 @@ const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }, ref) => {
     setUni(selectedUni);
     setIsOpen(false);
   };
+
   return (
-    <Container ref={ref}>
+    <Container>
       <p>학교명을 입력해주세요!</p>
       <Input>
         <input

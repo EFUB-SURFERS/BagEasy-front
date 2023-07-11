@@ -5,11 +5,9 @@ import { useState, useRef, useEffect } from "react";
 import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
 import place from "../../assets/place.png";
+import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
-  const modalRef = useRef();
-  const wrapperRef = useRef();
-
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [content, setContent] = useState("");
@@ -20,30 +18,29 @@ const SalesContent = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOutsideClick = event => {
-    if (
-      modalRef.current &&
-      !modalRef.current.contains(event.target) &&
-      wrapperRef.current &&
-      !wrapperRef.current.contains(event.target)
-    ) {
-      setIsOpen(false);
-    }
-  };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (!event.target.closest(".modal-container")) {
+  //       setIsOpen(false);
+  //     }
+  //   };
 
-  console.log("다른영역클릭");
+  //   if (isOpen) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   }
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isOpen]);
 
   return (
-    <Wrapper ref={wrapperRef}>
+    <Wrapper>
       <Line />
       <Images>
+        <Check src={redspot} alt="미완료" />
         <AddBtn>
           <p>+</p>
         </AddBtn>
@@ -51,8 +48,9 @@ const SalesContent = () => {
       </Images>
       <SubLine />
       <Univ>
+        <img src={redspot} alt="미완료" />
         <UnivInput>
-          <img src={place} alt="검색" />
+          <UnivIcon src={place} alt="검색" />
           {uni ? uni : "학교명을 입력하세요"}
         </UnivInput>
         <Search onClick={toggleModal}>
@@ -61,18 +59,18 @@ const SalesContent = () => {
       </Univ>
       {isOpen && (
         <>
-          <OutsideWrapper onClick={toggleModal} />
           <Modal
-            ref={modalRef}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             uni={uni}
             setUni={setUni}
           />
+          <OutsideWrapper onClick={toggleModal} />
         </>
       )}
       <SubLine />
       <Titlesection>
+        <Check src={redspot} alt="미완료" />
         <Title>제목</Title>
         <input
           placeholder="어떤 물품을 양도 중이신가요?"
@@ -84,6 +82,7 @@ const SalesContent = () => {
       </Titlesection>
       <SubLine />
       <PriceSection>
+        <Check src={redspot} alt="미완료" />
         <Title>가격</Title>
         <input
           placeholder="어느 정도의 가격에 판매하실 예정인가요?"
@@ -95,6 +94,7 @@ const SalesContent = () => {
       </PriceSection>
       <SubLine />
       <ContentSection>
+        <Check src={redspot} alt="미완료" />
         <Title>내용</Title>
         <textarea
           placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
@@ -174,6 +174,12 @@ const Images = styled.div`
   background: #ffffff;
 
   margin-bottom: 19px;
+
+  img {
+    width: 5px;
+    height: 5px;
+    margin: 19px -20px 5px 15px;
+  }
 `;
 
 const VirtualImage = styled.div`
@@ -193,6 +199,13 @@ const Univ = styled.div`
 
   margin-top: 18px;
   margin-bottom: 19px;
+
+  img {
+    width: 5px;
+    height: 5px;
+    margin-bottom: auto;
+    margin-right: 3.5px;
+  }
 `;
 
 const UnivInput = styled.div`
@@ -214,6 +227,13 @@ const UnivInput = styled.div`
     width: 18px;
     height: 18px;
   }
+`;
+const UnivIcon = styled.img`
+  padding-left: 11px;
+  padding-right: 8px;
+  padding-top: 7px;
+  width: 18px;
+  height: 18px;
 `;
 
 const Search = styled.div`
@@ -285,7 +305,7 @@ const ContentSection = styled.div`
     border: 0;
     display: flex;
     width: 337px;
-    height: 97px;
+    height: 157px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
@@ -327,22 +347,6 @@ const Input = styled.div`
   line-height: normal;
 `;
 
-const Price = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  margin-top: 18px;
-  margin-bottom: 19px;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  margin-top: 18px;
-  margin-bottom: 19px;
-`;
-
 const OutsideWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -350,4 +354,10 @@ const OutsideWrapper = styled.div`
   right: 0;
   bottom: 0;
   z-index: 999;
+`;
+
+const Check = styled.img`
+  width: 5px;
+  height: 5px;
+  margin: 0px -25px 0px 20px;
 `;
