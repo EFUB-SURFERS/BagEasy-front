@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
   background: #ffee94;
   padding: 0.7rem;
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
   height: 2rem;
 `;
 
