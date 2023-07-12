@@ -218,16 +218,6 @@ const ItemContent = styled.span`
   padding-left: 23px;
 `;
 
-// const Comment = styled.div`
-//   display: flex;
-//   flex-direction: column;
-
-//   width: 100%;
-//   height: 150px;
-
-//   border-bottom: 0.5px solid #808080;
-// `;
-
 const ItemDetail = styled.div`
   position: fixed;
   bottom: 0;
@@ -238,6 +228,7 @@ const ItemDetail = styled.div`
   height: 75px;
   justify-content: center;
   background: #ffffff;
+  border-top: 0.5px solid #808080;
 `;
 
 const HeartBtn = styled.img`

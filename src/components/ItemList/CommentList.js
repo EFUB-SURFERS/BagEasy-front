@@ -43,9 +43,12 @@ const CommentList = () => {
 };
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid lightgrey;
+  justify-content: center;
+  align-items: center;
+  /* border-top: 1px solid lightgrey; */
 `;
 
 const Header = styled.div`
@@ -78,7 +81,9 @@ const CommentWrapper = styled.div`
   flex-direction: column;
   border-radius: 1rem;
   /* border: 1px solid grey; */
-  margin: 1rem;
+  /* margin: 1rem; */
+  margin: 46px 23px 48px 23px;
+  width: 344px;
   overflow: hidden;
   background: #ffee94;
   transition: all 2s;
@@ -88,10 +93,15 @@ const CommentWrapper = styled.div`
 const List = styled.div``;
 
 const Footer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   border-top: 1px solid lightgrey;
   padding: 1rem;
+  /* padding-left: 34px; */
+  /* padding-right: 23px; */
+  padding-bottom: 75px;
 `;
 
 const Profile = styled.div`
@@ -103,11 +113,11 @@ const ProfileImg = styled.img`
 `;
 
 const CommentInput = styled.input`
-  width: 100%;
+  width: 301px;
   margin-left: 0.5rem;
   background: #eeeeee;
   height: 2.5rem;
-  padding: 0rem 1rem;
+  padding: 0 10.99px;
   border-radius: 1rem;
   font-size: 14px;
   border: none;
