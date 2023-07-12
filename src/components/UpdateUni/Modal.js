@@ -1,7 +1,7 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { styled } from "styled-components";
 
-const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }) => {
+const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
   const handleUniChange = e => {
     setUni(e.target.value);
   };
@@ -32,7 +32,7 @@ const Modal = forwardRef(({ isOpen, setIsOpen, uni, setUni }) => {
       </List>
     </Container>
   );
-});
+};
 
 export default Modal;
 

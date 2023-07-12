@@ -137,10 +137,10 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 const HeaderDiv = styled.div`
-  position: fixed;
+  /*position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  right: 0;*/
   width: 100%;
   height: 97px;
   background: #f9f9f9;
