@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   background: #ffee94;
   padding: 0.7rem;
   /* border: 1px solid lightgrey; */
+  /* height: 74px; */
   height: 2rem;
 `;
 

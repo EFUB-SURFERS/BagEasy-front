@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import Comment from "../ItemList/Comment";
+import CommentList from "../ItemList/CommentList";
+
 import picture from "../../assets/picture.png";
 import profile from "../../assets/profile.png";
 import picture2 from "../../assets/picture2.png";
@@ -65,6 +68,7 @@ const ItemInfo = () => {
           연락 많이 주세요!
         </ItemContent>
       </Item>
+      <CommentList />
       <Comment />
       <ItemDetail>
         <Heart>
@@ -214,16 +218,6 @@ const ItemContent = styled.span`
   padding-left: 23px;
 `;
 
-const Comment = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  height: 150px;
-
-  border-bottom: 0.5px solid #808080;
-`;
-
 const ItemDetail = styled.div`
   position: fixed;
   bottom: 0;
@@ -234,6 +228,7 @@ const ItemDetail = styled.div`
   height: 75px;
   justify-content: center;
   background: #ffffff;
+  border-top: 0.5px solid #808080;
 `;
 
 const HeartBtn = styled.img`
