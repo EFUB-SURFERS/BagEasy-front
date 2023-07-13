@@ -1,11 +1,11 @@
 //components
-import DetailHeader from "../components/Common/DetailHeader";
+import Header from "../components/detail/Header";
 import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = () => {
   return (
     <div>
-      <DetailHeader />
+      <Header />
       <ItemInfo />
     </div>
   );
