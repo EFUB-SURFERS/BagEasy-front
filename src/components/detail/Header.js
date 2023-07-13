@@ -6,7 +6,7 @@ import trash from "../../assets/trash.png";
 
 import { useNavigate } from "react-router-dom";
 
-const DetailHeader = () => {
+const Header = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -26,7 +26,7 @@ const DetailHeader = () => {
     </Wrapper>
   );
 };
-export default DetailHeader;
+export default Header;
 
 const Wrapper = styled.div`
   position: fixed;

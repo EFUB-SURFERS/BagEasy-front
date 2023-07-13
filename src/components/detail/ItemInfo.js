@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import Comment from "../ItemList/Comment";
@@ -7,8 +7,6 @@ import ItemContent from "./ItemContent";
 import Footer from "./Footer";
 
 const ItemInfo = () => {
-  
-
   return (
     <Div>
       <ItemContent />
