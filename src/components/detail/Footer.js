@@ -9,21 +9,20 @@ import menubar from "../../assets/menubar.png";
 const Footer = () => {
   const [isWirter, setIsWirter] = useState(false);
 
-
   return (
-      <Wrapper>
-        <Heart>
-          <HeartBtn src={heart} />
-          <HeartCount>2</HeartCount>
-        </Heart>
-        <Line />
-        <Price>30,000원</Price>
-        {isWirter ? (
-          <MenuBar src={menubar} />
-        ) : (
-          <ChatButton src={chatButton}></ChatButton>
-        )}
-      </Wrapper>
+    <Wrapper>
+      <Heart>
+        <HeartBtn src={heart} />
+        <HeartCount>2</HeartCount>
+      </Heart>
+      <Line />
+      <Price>30,000원</Price>
+      {isWirter ? (
+        <MenuBar src={menubar} />
+      ) : (
+        <ChatButton src={chatButton}></ChatButton>
+      )}
+    </Wrapper>
   );
 };
 
