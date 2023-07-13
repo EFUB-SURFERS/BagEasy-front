@@ -74,6 +74,5 @@ const Btn = styled.div`
   img {
     width: 20px;
     height: 35px;
-    flex-shrink: 0;
   }
 `;

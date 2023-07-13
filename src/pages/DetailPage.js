@@ -1,5 +1,5 @@
 //components
-import Header from "../components/Common/Header";
+import Header from "../components/detail/Header";
 import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = () => {

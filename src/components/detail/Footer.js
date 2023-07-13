@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+
+import SubMenuModal from "./SubMenuModal";
 
 import heart from "../../assets/heart.png";
 import chatButton from "../../assets/chatButton.png";
 import menubar from "../../assets/menubar.png";
 
 const Footer = () => {
-  const [isWirter, setIsWirter] = useState(false);
+  const [isWirter, setIsWirter] = useState(true);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
+  const handleEditClick = () => {
+    navigate("/edit");
+  };
+
+  const handleDeleteClick = () => {
+    navigate("/delete");
+  };
+
+  const toggleSubMenu = () => {
+    setIsSubMenuOpen(prev => !prev);
+  };
   return (
     <Wrapper>
       <Heart>
@@ -18,9 +34,15 @@ const Footer = () => {
       <Line />
       <Price>30,000원</Price>
       {isWirter ? (
-        <MenuBar src={menubar} />
+        <MenuBar src={menubar} onClick={toggleSubMenu} />
       ) : (
         <ChatButton src={chatButton}></ChatButton>
+      )}
+      {isSubMenuOpen && (
+        <SubMenuModal
+          onEditClick={handleEditClick}
+          onDeleteClick={handleDeleteClick}
+        />
       )}
     </Wrapper>
   );
