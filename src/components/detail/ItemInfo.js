@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import Comment from "../ItemList/Comment";
 import CommentList from "../ItemList/CommentList";
+import Footer from "./Footer";
 
 import picture from "../../assets/picture.png";
 import profile from "../../assets/profile.png";
@@ -16,8 +17,6 @@ import menubar from "../../assets/menubar.png";
 const ItemInfo = () => {
   const images = [picture, picture2]; //이미지배열
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 이미지 인덱스 상태
-
-  const [isWirter, setIsWirter] = useState(false);
 
   const handleNextImage = () => {
     setCurrentImageIndex(prevIndex =>
@@ -70,7 +69,7 @@ const ItemInfo = () => {
       </Item>
       <CommentList />
       <Comment />
-      <ItemDetail>
+      {/* <ItemDetail>
         <Heart>
           <HeartBtn src={heart} />
           <HeartCount>2</HeartCount>
@@ -82,7 +81,8 @@ const ItemInfo = () => {
         ) : (
           <ChatButton src={chatButton}></ChatButton>
         )}
-      </ItemDetail>
+      </ItemDetail> */}
+      <Footer />
     </Div>
   );
 };
