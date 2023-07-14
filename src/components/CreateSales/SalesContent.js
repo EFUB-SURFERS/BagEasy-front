@@ -9,14 +9,15 @@ import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
+  const [uni, setUni] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [uni, setUni] = useState("");
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    console.log("open");
   };
 
   return (
@@ -81,6 +82,14 @@ const SalesContent = () => {
           }}
         />
       </ContentSection>
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uni={uni}
+          setUni={setUni}
+        />
+      )}
     </Wrapper>
   );
 };
