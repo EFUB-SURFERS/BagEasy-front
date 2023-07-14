@@ -10,9 +10,10 @@ const Header = () => {
   const toggleIsFinished = () => {
     setIsFinished(!isFinished);
     setIsSold(!isSold);
-    /*거래 취소하기 / 거래 성사하기 텍스트 문구 정하기 
-    거래 성사 = 판매완료 처리
-    글 삭제시..? => 판매완료처리..?*/
+    //거래 성사 버튼은 판매자에게만 보이게
+    //판매글 상세 조회에서 글 작성한 사람 아이디와 자신의 멤버아이디 비교
+    //상세조회 api에서 제목, 판매완료여부, 가격, 이미지 1개 겟하기
+    //거래 성사시 판매완료 여부 수정 api
   };
   return (
     <div>
