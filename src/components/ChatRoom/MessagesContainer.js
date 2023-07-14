@@ -15,12 +15,8 @@ const MessagesContainer = () => {
     <Wrapper ref={scrollRef}>
       <Date>2023.07.07</Date>
       <div>
-        <MyMessage />
         <YourMessage />
         <MyMessage />
-        <MyMessage />
-        <MyMessage />
-        <YourMessage />
         <YourMessage />
       </div>
     </Wrapper>
