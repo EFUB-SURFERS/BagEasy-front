@@ -50,9 +50,9 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
 
         <List>
           {uniList &&
-            uniList.map(uni => {
+            uniList.map((uni, index) => {
               return (
-                <Item onClick={() => handleItemClick(uni.name)}>
+                <Item onClick={() => handleItemClick(uni.name)} key={index}>
                   {uni.name}
                 </Item>
               );
