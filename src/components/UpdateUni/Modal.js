@@ -23,7 +23,6 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
       try {
         //프로미스 해결 및 데이터 접근
         const data = await GetUniList(uni);
-        console.log(data);
         setUniList(data);
       } catch (error) {
         console.log("에러 발생", error);
