@@ -9,23 +9,22 @@ import next from "../../assets/next.png";
 import before from "../../assets/before.png";
 
 const ItemContent = () => {
-  const images = [picture, picture2]; //이미지배열
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // 현재 이미지 인덱스 상태
+  const images = [picture, picture2, next, before]; //이미지배열
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleNextImage = () => {
+  const handlePreviousImage = event => {
+    event.stopPropagation();
+    setCurrentImageIndex(prevIndex => (prevIndex === 0 ? 0 : prevIndex - 1));
+    console.log("이전버튼");
+  };
+
+  const handleNextImage = event => {
+    event.stopPropagation();
     setCurrentImageIndex(prevIndex =>
       prevIndex === images.length - 1 ? prevIndex : prevIndex + 1,
     );
-    console.log(currentImageIndex);
+    console.log("다음버튼");
   };
-
-  const handlePreviousImage = () => {
-    setCurrentImageIndex(prevIndex =>
-      prevIndex === 0 ? prevIndex : prevIndex - 1,
-    );
-    console.log(currentImageIndex);
-  };
-
   const isFirstImage = currentImageIndex === 0;
   const isLastImage = currentImageIndex === images.length - 1;
 
@@ -79,20 +78,23 @@ const ItemImages = styled.div`
   height: 390px;
   background-size: cover;
   background-position: center;
+  position: relative;
 `;
 
 const NextBtn = styled.div`
   position: absolute;
+  right: 0;
   img {
     width: 14px;
     height: 83px;
     padding-top: 153px;
-    padding-left: 354px;
+    padding-right: 22px;
   }
 `;
 
 const BeforeBtn = styled.div`
   position: absolute;
+  left: 0;
   img {
     width: 14px;
     height: 83px;
