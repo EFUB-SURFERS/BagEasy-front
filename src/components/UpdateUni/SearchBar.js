@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import place from "../../assets/place.png";
 import Modal from "./Modal";
-//디자인 수정으로 현재 컴포넌트는 필요없어졌으나, 모달 연결에 참고하시라고 남겨둡니다.
+//디자인 수정으로 현재 해당 컴포넌트는 필요없어졌으나
+//모달 연결에 참고하시면 좋을것 같습니다.
 //추후 삭제예정
 //검색버튼이 아닌 회색 필드를 클릭해야 모달 나옵니다.
 const SearchBar = () => {
