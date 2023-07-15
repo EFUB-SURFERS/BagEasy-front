@@ -18,28 +18,17 @@ const SalesContent = () => {
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
-    console.log("open");
   };
 
-  const [imgFile, setImgFile] = useState("");
+  const [imgFile, setImgFile] = useState([]);
   const imgRef = useRef();
 
-  const saveImgFile = () => {
-    const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImgFile(reader.result);
-    };
-  };
-
-  const inputRef = useRef(null);
-
-  const onUploadImageButtonClick = () => {
-    if (!inputRef.current) {
-      return;
-    }
-    inputRef.current.click();
+  const saveImgFile = e => {
+    const fileArr = imgRef.current.files;
+    const fileURLList = Array.from(fileArr).map(file =>
+      URL.createObjectURL(file),
+    );
+    setImgFile(fileURLList);
   };
 
   return (
@@ -47,7 +36,7 @@ const SalesContent = () => {
       <Line />
       <Images>
         {/* <Check src={redspot} alt="미완료" /> */}
-        <AddBtn for="file" onClick={onUploadImageButtonClick}>
+        <AddBtn for="file">
           <p>+</p>
         </AddBtn>
         <input
@@ -60,7 +49,11 @@ const SalesContent = () => {
           // style={{ display: "none" }}
           multiple
         />
-        <img src={imgFile ? imgFile : emptyimage} />
+        {imgFile.length > 0 ? (
+          imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+        ) : (
+          <img src={emptyimage} />
+        )}
       </Images>
       <SubLine />
       <Unisection>
