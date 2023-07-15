@@ -17,7 +17,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate("/edit");
+    navigate("/create");
   };
 
   const handleDeleteClick = () => {
