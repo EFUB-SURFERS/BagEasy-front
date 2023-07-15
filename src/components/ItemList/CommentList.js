@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import openArrow from "../../assets/openArrow.png";
 import closeArrow from "../../assets/closeArrow.png";
-import profileImg1 from "../../assets/profileImg1.png";
+import sendBtn from "../../assets/sendBtn.png";
 
 const CommentList = () => {
   const [open, setOpen] = useState(false);
@@ -31,12 +31,11 @@ const CommentList = () => {
           <Comment />
         </List>
       </CommentWrapper>
-
       <Footer>
-        <Profile>
-          <ProfileImg src={profileImg1} />
-        </Profile>
         <CommentInput placeholder="댓글 쓰기..." />
+        <SendBtn>
+          <SendImg src={sendBtn} />
+        </SendBtn>
       </Footer>
     </Wrapper>
   );
@@ -87,7 +86,7 @@ const CommentWrapper = styled.div`
   overflow: hidden;
   background: #ffee94;
   transition: all 2s;
-  height: ${props => !props.open && `5.3rem`};
+  height: ${props => !props.open && `6.1rem`};
 `;
 
 const List = styled.div``;
@@ -99,31 +98,29 @@ const Footer = styled.div`
   justify-content: center;
   border-top: 1px solid lightgrey;
   padding: 1rem;
-  /* padding-left: 34px; */
-  /* padding-right: 23px; */
   padding-bottom: 75px;
 `;
 
-const Profile = styled.div`
-  width: 1.4rem;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
-`;
-
 const CommentInput = styled.input`
-  width: 301px;
-  margin-left: 0.5rem;
+  width: 18rem;
   background: #eeeeee;
   height: 2.5rem;
   padding: 0 10.99px;
   border-radius: 1rem;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
   &:focus {
     outline: none;
   }
+`;
+
+const SendBtn = styled.div`
+  width: 2rem;
+  margin-left: 0.7rem;
+`;
+
+const SendImg = styled.img`
+  width: 100%;
 `;
 
 export default CommentList;

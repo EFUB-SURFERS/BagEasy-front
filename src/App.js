@@ -11,6 +11,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import Modal from "./components/UpdateUni/Modal";
 
 import { useState } from "react";
+import CommentList from "./components/ItemList/CommentList";
 
 function App() {
   //모달 테스트용 임시 코드
@@ -20,7 +21,7 @@ function App() {
     <Routes>
       <Route path="/signup" element={<SignUp />} />
       <Route path="/nickname" element={<Nickname />} />
-      <Route path="/home" element={<ItemListPage />} />
+      <Route path="/home" element={<CommentList />} />
       <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/chats" element={<ChatListPage />} />
       <Route path="/chats/1" element={<ChatRoomPage />} />
