@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-
 import back from "../../assets/back.png";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
+
 const Header = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [isSold, setIsSold] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const toggleIsFinished = () => {
-    setIsFinished(!isFinished);
-    setIsSold(!isSold);
-    //거래 성사 버튼은 판매자에게만 보이게
+  const openModal = () => {
+    setIsOpen(!isOpen);
+    //거래 확정 버튼은 판매자에게만 보이게
     //판매글 상세 조회에서 글 작성한 사람 아이디와 자신의 멤버아이디 비교
     //상세조회 api에서 제목, 판매완료여부, 가격, 이미지 1개 겟하기
     //거래 성사시 판매완료 여부 수정 api
@@ -41,9 +42,25 @@ const Header = () => {
             </div>
             <div className="wrapper">
               <p className="price">30000원</p>
-              <FinishBtn onClick={toggleIsFinished} $finished={isFinished}>
-                {isFinished ? "거래 취소하기" : "거래 성사하기"}
-              </FinishBtn>
+              {isFinished ? (
+                <FinishBtn $isFinished={isFinished}>거래 확정</FinishBtn>
+              ) : (
+                <FinishBtn onClick={openModal} $isFinished={isFinished}>
+                  거래 확정하기
+                </FinishBtn>
+              )}
+              {isOpen ? (
+                <Modal
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  setIsFinished={setIsFinished}
+                  isFinished={isFinished}
+                  setIsSold={setIsSold}
+                  isSold={isSold}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </ItemContainer>

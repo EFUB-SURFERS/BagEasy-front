@@ -52,11 +52,13 @@ const Wrapper = styled.div`
     top: 97px;
     left: 0;
     right: 0;
+    z-index: -1;
   }
   .form {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0px;
+    z-index: -1;
   }
 `;
