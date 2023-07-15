@@ -97,15 +97,18 @@ const Footer = styled.div`
   align-items: center;
   justify-content: center;
   border-top: 1px solid lightgrey;
-  padding: 1rem;
+  padding-top: 15px;
   padding-bottom: 75px;
+  //background: black;
 `;
 
 const CommentInput = styled.input`
-  width: 18rem;
-  background: #eeeeee;
+  //width: 18rem;
+  flex: auto;
+  background: #dddddd;
   height: 2.5rem;
   padding: 0 10.99px;
+  margin: 0 15px 0 20px;
   border-radius: 1rem;
   font-size: 15px;
   border: none;
@@ -115,8 +118,9 @@ const CommentInput = styled.input`
 `;
 
 const SendBtn = styled.div`
-  width: 2rem;
-  margin-left: 0.7rem;
+  width: 1.8rem;
+  margin-right: 20px;
+  flex: none;
 `;
 
 const SendImg = styled.img`
