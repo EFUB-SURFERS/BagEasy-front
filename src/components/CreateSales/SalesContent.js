@@ -28,7 +28,8 @@ const SalesContent = () => {
     const fileURLList = Array.from(fileArr).map(file =>
       URL.createObjectURL(file),
     );
-    setImgFile(fileURLList);
+    const limitedFileURLList = fileURLList.slice(0, 10); //개수 최대 10개로 제한
+    setImgFile(limitedFileURLList);
   };
 
   return (
