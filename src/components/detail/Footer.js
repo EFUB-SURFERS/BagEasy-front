@@ -6,16 +6,18 @@ import styled from "styled-components";
 import SubMenuModal from "./SubMenuModal";
 
 import heart from "../../assets/heart.png";
+import emptyheart from "../../assets/emptyheart.png";
 import chatButton from "../../assets/chatButton.png";
 import menubar from "../../assets/menubar.png";
 
 const Footer = () => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate("/edit");
+    navigate("/create");
   };
 
   const handleDeleteClick = () => {
@@ -25,10 +27,18 @@ const Footer = () => {
   const toggleSubMenu = () => {
     setIsSubMenuOpen(prev => !prev);
   };
+
+  const handleHeartClick = () => {
+    setIsHearted(prev => !prev);
+  };
+
   return (
     <Wrapper>
       <Heart>
-        <HeartBtn src={heart} />
+        <HeartBtn
+          src={isHearted ? heart : emptyheart}
+          onClick={handleHeartClick}
+        />
         <HeartCount>2</HeartCount>
       </Heart>
       <Line />
