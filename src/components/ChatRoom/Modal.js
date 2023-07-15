@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-
+import { FinishDeal } from "../../api/posts";
 const Modal = ({
   isOpen,
   setIsOpen,
@@ -8,14 +8,15 @@ const Modal = ({
   setIsFinished,
   isSold,
   setIsSold,
+  postId,
+  buyerId,
 }) => {
   const handleItemClick = () => {
     setIsOpen(false);
     //거래 성사 요청 보내기
+    FinishDeal(postId, buyerId);
     setIsFinished(!isFinished);
     setIsSold(!isSold);
-
-    console.log(isFinished, isSold);
   };
 
   return (
@@ -28,7 +29,9 @@ const Modal = ({
       <Container>
         <p className="yellow">거래를 확정하시겠습니까?</p>
         <p className="gray">거래 확정 뒤에는 취소가 불가합니다.</p>
-        <Btn onClick={handleItemClick}>확정</Btn>
+        <p className="btn">
+          <Btn onClick={handleItemClick}>확정</Btn>
+        </p>
       </Container>
     </>
   );
@@ -54,7 +57,6 @@ const Btn = styled.div`
   border-radius: 100px;
   background: #ffc701;
   margin-top: 13px;
-  margin-left: 244px;
 `;
 const Layer = styled.div`
   display: block;
@@ -81,7 +83,8 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
 
   .yellow {
-    margin-left: 32px;
+    width: 65%;
+    margin-left: 8%;
     margin-top: 30px;
     color: #eeba00;
     font-family: Inter;
@@ -91,7 +94,8 @@ const Container = styled.div`
     line-height: normal;
   }
   .gray {
-    margin-left: 32px;
+    width: 65%;
+    margin-left: 8%;
     margin-top: 19px;
     color: #848484;
     font-family: Inter;
@@ -99,5 +103,10 @@ const Container = styled.div`
     font-style: normal;
     font-weight: 900;
     line-height: normal;
+  }
+  .btn {
+    display: flex;
+    justify-content: end;
+    margin-right: 8%;
   }
 `;
