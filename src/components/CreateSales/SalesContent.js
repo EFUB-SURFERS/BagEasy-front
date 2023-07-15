@@ -5,6 +5,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
 import choiceuni from "../../assets/choiceuni.png";
+import emptyimage from "../../assets/emptyimage.png";
 import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
@@ -20,29 +21,19 @@ const SalesContent = () => {
     console.log("open");
   };
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
 
-  const handleFileChange = event => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
-
-  const handleUpload = () => {
-    if (selectedFile) {
-      console.log("업로드할 파일:", selectedFile);
-    } else {
-      console.log("파일이 선택되지 않았습니다.");
-    }
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
   };
 
   const inputRef = useRef(null);
-
-  const onUploadImage = e => {
-    if (!e.target.files) {
-      return;
-    }
-    console.log(e.target.files[0].name);
-  };
 
   const onUploadImageButtonClick = () => {
     if (!inputRef.current) {
@@ -54,26 +45,23 @@ const SalesContent = () => {
   return (
     <Wrapper>
       <Line />
-      {/* <Images>
-        <Check src={redspot} alt="미완료" />
-        <AddBtn>
+      <Images>
+        {/* <Check src={redspot} alt="미완료" /> */}
+        <AddBtn for="file" onClick={onUploadImageButtonClick}>
           <p>+</p>
         </AddBtn>
-        <VirtualImage />
-      </Images> */}
-      <Images>
-        <Check src={redspot} alt="미완료" />
         <input
           type="file"
-          ref={inputRef}
-          onChange={onUploadImage}
-          style={{ display: "none" }}
+          name="file"
+          accept="image/*"
+          ref={imgRef}
+          id="file"
+          onChange={saveImgFile}
+          // style={{ display: "none" }}
+          multiple
         />
-        <AddBtn label="이미지 업로드" onClick={onUploadImageButtonClick}>
-          <p>+</p>
-        </AddBtn>
+        <img src={imgFile ? imgFile : emptyimage} />
       </Images>
-      {/* <button onClick={handleUpload}>파일 업로드</button> */}
       <SubLine />
       <Unisection>
         <Check src={redspot} alt="미완료" />
@@ -139,6 +127,8 @@ const SalesContent = () => {
 };
 export default SalesContent;
 
+// label태그
+
 const Wrapper = styled.div`
   width: 100%;
   position: relative;
@@ -161,7 +151,7 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.div`
+const AddBtn = styled.label`
   width: 80px;
   height: 80px;
   flex-shrink: 0;
@@ -205,9 +195,14 @@ const Images = styled.div`
   margin-bottom: 19px;
 
   img {
-    width: 5px;
-    height: 5px;
-    margin: 19px -20px 5px 15px;
+    width: 80px;
+    height: 80px;
+    margin-left: 17px;
+    margin-top: 30px;
+  }
+
+  #file {
+    display: none;
   }
 `;
 
