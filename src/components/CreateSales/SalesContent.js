@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
@@ -20,16 +20,60 @@ const SalesContent = () => {
     console.log("open");
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = event => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      console.log("업로드할 파일:", selectedFile);
+    } else {
+      console.log("파일이 선택되지 않았습니다.");
+    }
+  };
+
+  const inputRef = useRef(null);
+
+  const onUploadImage = e => {
+    if (!e.target.files) {
+      return;
+    }
+    console.log(e.target.files[0].name);
+  };
+
+  const onUploadImageButtonClick = () => {
+    if (!inputRef.current) {
+      return;
+    }
+    inputRef.current.click();
+  };
+
   return (
     <Wrapper>
       <Line />
-      <Images>
+      {/* <Images>
         <Check src={redspot} alt="미완료" />
         <AddBtn>
           <p>+</p>
         </AddBtn>
         <VirtualImage />
+      </Images> */}
+      <Images>
+        <Check src={redspot} alt="미완료" />
+        <input
+          type="file"
+          ref={inputRef}
+          onChange={onUploadImage}
+          style={{ display: "none" }}
+        />
+        <AddBtn label="이미지 업로드" onClick={onUploadImageButtonClick}>
+          <p>+</p>
+        </AddBtn>
       </Images>
+      {/* <button onClick={handleUpload}>파일 업로드</button> */}
       <SubLine />
       <Unisection>
         <Check src={redspot} alt="미완료" />
