@@ -67,7 +67,7 @@ const FinishBtn = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-left: 28px;
+
   margin-top: 6px;
 `;
 const ItemContainer = styled.div`
@@ -81,7 +81,8 @@ const ItemContainer = styled.div`
   }
 
   .wrapper {
-    display: flex;
+    width: 100%;
+    display: inline-flex;
     flex-direction: row;
     .isSold {
       margin: 28px 0px 0px 11px;
@@ -96,7 +97,7 @@ const ItemContainer = styled.div`
   }
 
   .price {
-    width: 95px;
+    width: 120px;
     margin-left: 11px;
     margin-top: 4px;
     color: #6d6d6d;
@@ -137,11 +138,6 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 const HeaderDiv = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
   height: 97px;
   background: #f9f9f9;
   display: flex;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import openArrow from "../../assets/openArrow.png";
 import closeArrow from "../../assets/closeArrow.png";
-import profileImg1 from "../../assets/profileImg1.png";
+import sendBtn from "../../assets/sendBtn.png";
 
 const CommentList = () => {
   const [open, setOpen] = useState(false);
@@ -31,21 +31,23 @@ const CommentList = () => {
           <Comment />
         </List>
       </CommentWrapper>
-
       <Footer>
-        <Profile>
-          <ProfileImg src={profileImg1} />
-        </Profile>
         <CommentInput placeholder="댓글 쓰기..." />
+        <SendBtn>
+          <SendImg src={sendBtn} />
+        </SendBtn>
       </Footer>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid lightgrey;
+  justify-content: center;
+  align-items: center;
+  /* border-top: 1px solid lightgrey; */
 `;
 
 const Header = styled.div`
@@ -78,42 +80,51 @@ const CommentWrapper = styled.div`
   flex-direction: column;
   border-radius: 1rem;
   /* border: 1px solid grey; */
-  margin: 1rem;
+  /* margin: 1rem; */
+  margin: 46px 23px 48px 23px;
+  width: 344px;
   overflow: hidden;
   background: #ffee94;
   transition: all 2s;
-  height: ${props => !props.open && `5.3rem`};
+  height: ${props => !props.open && `6.1rem`};
 `;
 
 const List = styled.div``;
 
 const Footer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   border-top: 1px solid lightgrey;
-  padding: 1rem;
-`;
-
-const Profile = styled.div`
-  width: 1.4rem;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 75px;
+  //background: black;
 `;
 
 const CommentInput = styled.input`
-  width: 100%;
-  margin-left: 0.5rem;
-  background: #eeeeee;
+  //width: 18rem;
+  flex: auto;
+  background: #dddddd;
   height: 2.5rem;
-  padding: 0rem 1rem;
+  padding: 0 10.99px;
+  margin: 0 15px 0 20px;
   border-radius: 1rem;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
   &:focus {
     outline: none;
   }
+`;
+
+const SendBtn = styled.div`
+  width: 1.8rem;
+  margin-right: 20px;
+  flex: none;
+`;
+
+const SendImg = styled.img`
+  width: 100%;
 `;
 
 export default CommentList;
