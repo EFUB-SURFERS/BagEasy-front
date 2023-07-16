@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import searchImg from "../../assets/searchImg.png";
 import styled from "styled-components";
 import Toggle from "./Toggle";
+import Modal from "./../UpdateUni/Modal";
 
 const SearchBar = ({ onToggle, filter }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [uni, setUni] = useState("");
   return (
     <SearchWrapper>
       <Toggle onToggle={onToggle} filter={filter} />
-      <SearchInput />
-      <SearchBtn>
+      <University>{isOpen ? "" : uni}</University>
+      <SearchBtn onClick={() => setIsOpen(true)}>
         <SearchImg src={searchImg} />
       </SearchBtn>
+      {isOpen ? (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uni={uni}
+          setUni={setUni}
+        />
+      ) : null}
     </SearchWrapper>
   );
 };
@@ -18,7 +29,7 @@ const SearchBar = ({ onToggle, filter }) => {
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
+  justify-content: space-between;
   height: 43px;
   margin-top: 97px;
   position: fixed;
@@ -26,32 +37,17 @@ const SearchWrapper = styled.div`
   background: white;
 `;
 
-const SearchInput = styled.input`
-  flex: 7;
-  height: 2rem;
-  display: block;
-  width: 7rem;
-  border: none;
-  border-radius: 2rem;
-  background: #eeeeee;
-  padding-left: 1rem;
-  padding-right: 2.5rem;
-  margin: 0rem 0.5rem;
-  box-sizing: border-box;
-  font-size: 17px;
-
-  &:focus {
-    outline: none;
-  }
+const University = styled.div`
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
 `;
 
 const SearchBtn = styled.div`
   width: 1.7rem;
-  /* border: 1px solid red; */
-  /* margin: 1rem; */
-  position: absolute;
   right: 1rem;
   transform: translateY(2px);
+  margin-right: 0.5rem;
 `;
 
 const SearchImg = styled.img`
