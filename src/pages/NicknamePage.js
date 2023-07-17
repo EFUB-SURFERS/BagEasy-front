@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { PutNickName } from "../api/nickname";
 
 const Nickname = () => {
+  const [nickname, setNickName] = useState(""); // 닉네임 입력받기
+  const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -13,12 +17,37 @@ const Nickname = () => {
     navigate("/home");
   };
 
+  const handleNickName = e => {
+    setNickName(e.target.value);
+  };
+
+  const putNickName = async () => {
+    if (nickname.length >= 2) {
+      try {
+        await PutNickName(setIsOverlap, handleNavigateHome, nickname);
+      } catch (error) {
+        console.log("에러 발생", error);
+      }
+    }
+  };
+
   return (
     <NickNameContainer>
       <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
       <Copy>닉네임을 입력해주세요!</Copy>
-      <Input placeholder="여기에 입력하세요..." />
-      <Btn onClick={handleNavigateHome}>확인</Btn>
+      <Copy2>이후 닉네임 변경이 불가하니 신중하게 결정해주세요.</Copy2>
+      <Container>
+        <Input
+          placeholder="여기에 입력하세요..."
+          onChange={handleNickName}
+          color={nickname.length < 2 || isOverlap ? "T" : "F"}
+        />
+        {nickname.length < 2 && (
+          <Copy3>- 닉네임을 2글자 이상 입력해주세요.</Copy3>
+        )}
+        {isOverlap && <Copy3>- 중복되는 닉네임입니다.</Copy3>}
+      </Container>
+      <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>
   );
 };
@@ -28,6 +57,11 @@ const NickNameContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 66px;
+`;
+
+const Container = styled.div`
+  height: 10rem;
+  margin-bottom: 360px;
 `;
 
 const ArrowIcon = styled.img`
@@ -47,17 +81,27 @@ const Copy = styled.h2`
   margin-left: 20px;
 `;
 
+const Copy2 = styled(Copy)`
+  font-size: 12px;
+  font-weight: 400;
+`;
+
+const Copy3 = styled(Copy2)`
+  font-size: 12px;
+  font-weight: 400;
+  color: red;
+`;
+
 const Input = styled.input`
   width: 311px;
   height: 47px;
   border-radius: 23.5px;
   background: #efefef;
-  border: none;
+  border: ${props => (props.color === "T" ? "1px solid red" : "none")};
   padding-left: 15px;
   font-size: 15px;
   font-weight: 400;
-  margin-top: 240px;
-  margin-bottom: 250px;
+  margin-top: 190px;
   outline: none;
 `;
 
