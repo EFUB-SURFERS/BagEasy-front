@@ -8,7 +8,7 @@ export const FinishDeal = async (postId, buyerId) => {
       buyerId: { buyerId },
     });
 
-    console(res);
+    console.log(res);
   } catch (err) {
     console.log("에러 발생", err);
   }
