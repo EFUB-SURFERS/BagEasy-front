@@ -2,31 +2,32 @@ import React from "react";
 import { styled } from "styled-components";
 import MyMessage from "./MyMessage";
 import YourMessage from "./YourMessage";
-
+import { useRef, useEffect } from "react";
 const MessagesContainer = () => {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    //새 메세지를 받으면 맨 아래로 스크롤
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper ref={scrollRef}>
       <Date>2023.07.07</Date>
       <div>
-        <MyMessage />
-        <YourMessage />
         <YourMessage />
         <MyMessage />
         <YourMessage />
-        <MyMessage />
-        <YourMessage />
-        <MyMessage />
-        <MyMessage />
       </div>
     </Wrapper>
   );
 };
 
 export default MessagesContainer;
+
 const Wrapper = styled.div`
-  /*상단 고정 헤더 높이 만큼 padding*/
-  padding-top: 97px;
-  padding-bottom: 90px;
+  height: 100%;
+  overflow: auto;
 `;
 const Date = styled.div`
   padding-top: 15px;
