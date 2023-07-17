@@ -1,33 +1,60 @@
 import styled from "styled-components";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
 import choiceuni from "../../assets/choiceuni.png";
+import emptyimage from "../../assets/emptyimage.png";
 import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
+  const [uni, setUni] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [uni, setUni] = useState("");
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
+  };
+
+  const [imgFile, setImgFile] = useState([]);
+  const imgRef = useRef();
+
+  const saveImgFile = e => {
+    const fileArr = imgRef.current.files;
+    const fileURLList = Array.from(fileArr).map(file =>
+      URL.createObjectURL(file),
+    );
+    const limitedFileURLList = fileURLList.slice(0, 10); //개수 최대 10개로 제한
+    setImgFile(limitedFileURLList);
   };
 
   return (
     <Wrapper>
       <Line />
       <Images>
-        <Check src={redspot} alt="미완료" />
-        <AddBtn>
+        {/* <Check src={redspot} alt="미완료" /> */}
+        <AddBtn for="file">
           <p>+</p>
         </AddBtn>
-        <VirtualImage />
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          ref={imgRef}
+          id="file"
+          onChange={saveImgFile}
+          // style={{ display: "none" }}
+          multiple
+        />
+        {imgFile.length > 0 ? (
+          imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+        ) : (
+          <img src={emptyimage} />
+        )}
       </Images>
       <SubLine />
       <Unisection>
@@ -81,10 +108,20 @@ const SalesContent = () => {
           }}
         />
       </ContentSection>
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uni={uni}
+          setUni={setUni}
+        />
+      )}
     </Wrapper>
   );
 };
 export default SalesContent;
+
+// label태그
 
 const Wrapper = styled.div`
   width: 100%;
@@ -108,7 +145,7 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.div`
+const AddBtn = styled.label`
   width: 80px;
   height: 80px;
   flex-shrink: 0;
@@ -152,9 +189,14 @@ const Images = styled.div`
   margin-bottom: 19px;
 
   img {
-    width: 5px;
-    height: 5px;
-    margin: 19px -20px 5px 15px;
+    width: 80px;
+    height: 80px;
+    margin-left: 17px;
+    margin-top: 30px;
+  }
+
+  #file {
+    display: none;
   }
 `;
 
