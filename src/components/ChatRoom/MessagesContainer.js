@@ -52,8 +52,6 @@ const MessagesContainer = () => {
 
   useEffect(() => {
     scrollToBottom();
-
-    //메세지 전송 날짜 확인, 업데이트
   }, [messages]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
@@ -73,6 +71,7 @@ const MessagesContainer = () => {
     }
   };
 
+  //메세지 전송 날짜 확인 후 바뀌었으면 업데이트
   let newDate = "";
   let oldDate = "";
 
