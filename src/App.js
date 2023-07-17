@@ -3,14 +3,10 @@ import GoogleLogin from "./pages/GoogleLoginPage";
 import Nickname from "./pages/NicknamePage";
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
-
 import DetailPage from "./pages/DetailPage";
 import CreateSalesPage from "./pages/CreateSalesPage";
 import ItemListPage from "./pages/ItemListPage";
 import FavoritesPage from "./pages/FavoritesPage";
-import Modal from "./components/UpdateUni/Modal";
-
-import { useState } from "react";
 
 function App() {
   return (
