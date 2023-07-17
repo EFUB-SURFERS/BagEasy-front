@@ -7,7 +7,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import axios from "axios";
 
-const SignUp = () => {
+const GoogleLogin = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
@@ -15,16 +15,7 @@ const SignUp = () => {
     navigate(-1);
   };
 
-  const handleNavigateNickName = () => {
-    navigate("/nickname");
-  };
-
-  const handleNavigateHome = () => {
-    navigate("/home");
-  };
-
   // 로그인 post 요청
-  // 토큰..을 로컬스토리지에 저장..?
   const handleLoginPost = async () => {
     const data = {
       code: token,
@@ -33,7 +24,13 @@ const SignUp = () => {
       const res = await axios.post("http://localhost:8080/auth/login", data);
       console.log(res);
       if (res.status === "200") {
-        res.isExistingMember ? handleNavigateHome() : handleNavigateNickName();
+        // 토큰 localstorage에 저장
+        const accessToken = res.data.accessToken;
+        console.log(accessToken);
+        localStorage.setItem("bagtoken", accessToken);
+
+        // 신규/기존 회원 여부에 따라 다른 주소로 Redirect
+        res.data.isExistingMember ? navigate("/home") : navigate("/nickname");
       }
     } catch (error) {
       console.log(error);
@@ -97,4 +94,4 @@ const Copy = styled.h2`
   margin-left: 20px;
 `;
 
-export default SignUp;
+export default GoogleLogin;
