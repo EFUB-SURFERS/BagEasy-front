@@ -46,7 +46,7 @@ const Label = styled.label`
   //디폴트 원
   &::after {
     position: relative;
-    content: "거래중";
+    content: "판매중";
     font-weight: bold;
     font-size: 12px;
     padding-left: 0.4rem;
@@ -72,7 +72,7 @@ const Label = styled.label`
     /* 선택 O 배경 */
     &::before {
         position: absolute;
-        content: "거래중";
+        content: "판매중";
         color: #aaaaaa;
         width: 3rem;
         height: 2rem;
