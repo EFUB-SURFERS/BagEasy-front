@@ -13,3 +13,14 @@ export const FinishDeal = async (postId, buyerId) => {
     console.log("에러 발생", err);
   }
 };
+
+//판매글 조회 api
+export const getDetail = async postId => {
+  try {
+    const res = await client.get(`posts/${postId}`);
+
+    console.log(res.data);
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
