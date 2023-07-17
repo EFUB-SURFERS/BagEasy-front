@@ -6,6 +6,7 @@ export const getProfile = async memberId => {
     const res = await client.get(`members/${memberId}`);
 
     console.log(res.data);
+    return res.data;
   } catch (err) {
     console.log("에러 발생", err);
   }

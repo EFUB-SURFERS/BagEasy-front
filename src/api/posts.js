@@ -20,6 +20,7 @@ export const getDetail = async postId => {
     const res = await client.get(`posts/${postId}`);
 
     console.log(res.data);
+    return res.data;
   } catch (err) {
     console.log("에러 발생", err);
   }
