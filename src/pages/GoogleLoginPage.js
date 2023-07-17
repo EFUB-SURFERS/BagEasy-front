@@ -3,17 +3,48 @@ import Duck from "../assets/duck.png";
 import Arrow from "../assets/arrow.png";
 import GoogleBtn from "../assets/googleBtn.png";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
+import axios from "axios";
 
-const SignUp = () => {
+const GoogleLogin = () => {
+  const [token, setToken] = useState("");
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
-  const handleNavigateGoogle = () => {
-    navigate("/nickname");
+  // 로그인 post 요청
+  const handleLoginPost = async () => {
+    const data = {
+      code: token,
+    };
+    try {
+      const res = await axios.post("http://localhost:8080/auth/login", data);
+      console.log(res);
+      if (res.status === "200") {
+        // 토큰 localstorage에 저장
+        const accessToken = res.data.accessToken;
+        console.log(accessToken);
+        localStorage.setItem("bagtoken", accessToken);
+
+        // 신규/기존 회원 여부에 따라 다른 주소로 Redirect
+        res.data.isExistingMember ? navigate("/home") : navigate("/nickname");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => {
+      console.log(tokenResponse);
+      setToken(tokenResponse.access_token); // access token 저장
+      handleLoginPost();
+    },
+    flow: "implicit",
+  });
 
   return (
     <SignUpContainer>
@@ -21,7 +52,7 @@ const SignUp = () => {
       <Copy>안녕하세요</Copy>
       <Copy>구글 계정이 있나요?</Copy>
       <Character src={Duck} />
-      <GBtn src={GoogleBtn} onClick={handleNavigateGoogle} />
+      <GBtn src={GoogleBtn} onClick={() => login()} />
     </SignUpContainer>
   );
 };
@@ -63,4 +94,4 @@ const Copy = styled.h2`
   margin-left: 20px;
 `;
 
-export default SignUp;
+export default GoogleLogin;

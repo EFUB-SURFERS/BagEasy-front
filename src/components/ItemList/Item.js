@@ -14,7 +14,7 @@ const Item = () => {
         <Name>머그컵</Name>
         <Price>15000원</Price>
         <Footer>
-          <Tag>거래중</Tag>
+          <Tag>판매중</Tag>
           <Favorites>
             <HeartImg src={heartImg} />
             <FavoritesText>2</FavoritesText>
