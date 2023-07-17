@@ -1,24 +1,16 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const MyMessage = () => {
-  const images = true;
+const MyMessage = ({ contentType, content, sendTime }) => {
   return (
     <Wrapper>
-      <Time>PM 2:00</Time>
-      {images ? (
+      <Time>{sendTime}</Time>
+      {contentType === "image" ? (
         <ImageContainer>
-          <img
-            src={"https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"}
-            alt=""
-          />
+          <img src={content} alt="" />
         </ImageContainer>
       ) : (
-        <Text>
-          안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건 구매하고
-          싶습니다! 안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건
-          구매하고 싶습니다! 안녕하세요~ 물건 구매하고 싶습니다!
-        </Text>
+        <Text>{content}</Text>
       )}
     </Wrapper>
   );

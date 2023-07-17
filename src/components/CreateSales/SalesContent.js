@@ -1,73 +1,76 @@
 import styled from "styled-components";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 import Modal from "../UpdateUni/Modal";
 import searchBtn from "../../assets/searchBtn.png";
+import choiceuni from "../../assets/choiceuni.png";
+import emptyimage from "../../assets/emptyimage.png";
 import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
+  const [uni, setUni] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [content, setContent] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [uni, setUni] = useState("");
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (!event.target.closest(".modal-container")) {
-  //       setIsOpen(false);
-  //     }
-  //   };
+  const [imgFile, setImgFile] = useState([]);
+  const imgRef = useRef();
 
-  //   if (isOpen) {
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [isOpen]);
+  const saveImgFile = e => {
+    const fileArr = imgRef.current.files;
+    const fileURLList = Array.from(fileArr).map(file =>
+      URL.createObjectURL(file),
+    );
+    const limitedFileURLList = fileURLList.slice(0, 10); //개수 최대 10개로 제한
+    setImgFile(limitedFileURLList);
+  };
 
   return (
     <Wrapper>
       <Line />
       <Images>
-        <Check src={redspot} alt="미완료" />
-        <AddBtn>
+        {/* <Check src={redspot} alt="미완료" /> */}
+        <AddBtn for="file">
           <p>+</p>
         </AddBtn>
-        <VirtualImage />
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          ref={imgRef}
+          id="file"
+          onChange={saveImgFile}
+          // style={{ display: "none" }}
+          multiple
+        />
+        {imgFile.length > 0 ? (
+          imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+        ) : (
+          <img src={emptyimage} />
+        )}
       </Images>
       <SubLine />
-      <Univ>
-        <img src={redspot} alt="미완료" />
-        <UnivInput>
-          <UnivIcon src={place} alt="검색" />
-          {uni ? uni : "학교명을 입력하세요"}
-        </UnivInput>
-        <Search onClick={toggleModal}>
-          <img src={searchBtn} alt="검색" />
-        </Search>
-      </Univ>
-      {isOpen && (
-        <>
-          <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            uni={uni}
-            setUni={setUni}
-          />
-          <OutsideWrapper onClick={toggleModal} />
-        </>
-      )}
+      <Unisection>
+        <Check src={redspot} alt="미완료" />
+        <Title>학교</Title>
+        <input
+          placeholder="학교를 선택해주세요"
+          value={uni}
+          onChange={e => {
+            setUni(e.target.value);
+          }}
+        />
+        <ChoiceBtn onClick={toggleModal}>
+          <img src={choiceuni} alt="검색" />
+        </ChoiceBtn>
+      </Unisection>
       <SubLine />
       <Titlesection>
         <Check src={redspot} alt="미완료" />
@@ -105,10 +108,20 @@ const SalesContent = () => {
           }}
         />
       </ContentSection>
+      {isOpen && (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uni={uni}
+          setUni={setUni}
+        />
+      )}
     </Wrapper>
   );
 };
 export default SalesContent;
+
+// label태그
 
 const Wrapper = styled.div`
   width: 100%;
@@ -132,7 +145,7 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.div`
+const AddBtn = styled.label`
   width: 80px;
   height: 80px;
   flex-shrink: 0;
@@ -176,9 +189,14 @@ const Images = styled.div`
   margin-bottom: 19px;
 
   img {
-    width: 5px;
-    height: 5px;
-    margin: 19px -20px 5px 15px;
+    width: 80px;
+    height: 80px;
+    margin-left: 17px;
+    margin-top: 30px;
+  }
+
+  #file {
+    display: none;
   }
 `;
 
@@ -191,56 +209,35 @@ const VirtualImage = styled.div`
   margin-top: 30px;
 `;
 
-const Univ = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 18px;
-  margin-bottom: 19px;
-
-  img {
-    width: 5px;
-    height: 5px;
-    margin-bottom: auto;
-    margin-right: 3.5px;
-  }
-`;
-
-const UnivInput = styled.div`
-  width: 273px;
-  height: 31px;
-  flex-shrink: 0;
-  border-radius: 100px;
-  background: #efefef;
-  color: #656565;
-  font-family: Inter;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  img {
-    padding-left: 11px;
-    padding-right: 8px;
-    padding-top: 7px;
-    width: 18px;
-    height: 18px;
-  }
-`;
-const UnivIcon = styled.img`
-  padding-left: 11px;
-  padding-right: 8px;
-  padding-top: 7px;
-  width: 18px;
-  height: 18px;
-`;
-
 const Search = styled.div`
   margin-left: 8.74px;
   img {
     width: 62px;
     height: 31px;
+  }
+`;
+
+const Unisection = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 24px;
+  margin-top: 18px;
+  margin-bottom: 19px;
+
+  input {
+    border: 0;
+    display: flex;
+    width: 175px;
+    flex-direction: column;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-right: 10px;
   }
 `;
 
@@ -254,7 +251,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 211px;
+    width: 180px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
@@ -287,13 +284,7 @@ const PriceSection = styled.div`
     line-height: normal;
   }
 `;
-// const PriceSection = styled.div`
-//   display: flex;
-//   flex-direction: row;
 
-//   margin-top: 18px;
-//   margin-bottom: 19px;
-// `;
 const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -304,7 +295,6 @@ const ContentSection = styled.div`
   textarea {
     border: 0;
     display: flex;
-    width: 337px;
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
@@ -315,9 +305,7 @@ const ContentSection = styled.div`
     font-weight: 400;
     line-height: normal;
 
-    margin-left: 29px;
-    margin-top: 18px;
-    margin-right: 23px;
+    margin: 18px 23px 0px 30px;
   }
 `;
 
@@ -331,6 +319,14 @@ const Title = styled.div`
 
   padding-left: 29px;
   padding-right: 17px;
+`;
+
+const ChoiceBtn = styled.div`
+  margin: auto;
+  img {
+    width: 85.359px;
+    height: 31px;
+  }
 `;
 
 const Input = styled.div`
