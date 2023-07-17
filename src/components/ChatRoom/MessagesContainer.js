@@ -4,53 +4,39 @@ import MyMessage from "./MyMessage";
 import YourMessage from "./YourMessage";
 import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
-
-/*
-데이터 예시 
-senderNo값은 memberId와 같은 값
-{
-  "email": "bageasyme@gmail.com",
-  "chatList": [
-    {
-      "id": "iderf-23fd-dfasdf",
-      "roomId": 2,
-      "senderNo": 3,
-      "senderName": "young",
-      "contentType": "image",
-      "content": "https://이미지url",
-      "sendDate": "2023-05-20T20:50:13.4478404",
-      "mine": true
-    },
-    {
-      "id": "adsf-23fd-dfasdff",
-      "roomId": 2,
-      "senderNo": 3,
-      "senderName": "young",
-      "contentType": "text",
-      "content": "hello!",
-      "sendDate": "2023-05-20T20:50:13.4478404",
-      "mine": true
-    },
-    {
-      "id": "aasdf-23fd-adsf2",
-      "roomId": 9,
-      "senderNo": 4,
-      "senderName": "pro1",
-      "contentType": "text",
-      "content": "거래중이신가요?",
-      "sendDate": "2023-05-20T20:52:13.4478404",
-      "mine": false
-    }
-  ]
-} */
-
+import { useParams } from "react-router-dom";
 const MessagesContainer = () => {
   const [messages, setMessages] = useState([]);
-
   const scrollRef = useRef(null);
 
+  //경로에서 roomId 받아오기
+  const { roomId } = useParams();
+
   useEffect(() => {
+    //채팅 리스트 조회 (채팅 내역)
+    //const res = getMessages(roomId);
+    //setMessages(res.chatList);
     setMessages([
+      {
+        id: "iderf-23fd-dfasdf",
+        roomId: 2,
+        senderNo: 3,
+        senderName: "young",
+        contentType: "image",
+        content: "https://이미지url",
+        sendDate: "2023-05-20T20:50:13.4478404",
+        mine: true,
+      },
+      {
+        id: "adsf-23fd-dfasdff",
+        roomId: 2,
+        senderNo: 3,
+        senderName: "young",
+        contentType: "text",
+        content: "hello!",
+        sendDate: "2023-05-20T20:50:13.4478404",
+        mine: true,
+      },
       {
         id: "aasdf-23fd-adsf2",
         roomId: 9,
@@ -58,7 +44,7 @@ const MessagesContainer = () => {
         senderName: "pro1",
         contentType: "text",
         content: "거래중이신가요?",
-        sendDate: "2023-05-20T20:52:13.4478404",
+        sendDate: "2023-05-21T20:52:13.4478404",
         mine: false,
       },
     ]);
@@ -66,6 +52,8 @@ const MessagesContainer = () => {
 
   useEffect(() => {
     scrollToBottom();
+
+    //메세지 전송 날짜 확인, 업데이트
   }, [messages]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
@@ -85,28 +73,52 @@ const MessagesContainer = () => {
     }
   };
 
+  let newDate = "";
+  let oldDate = "";
+
+  const checkIsNewDate = sendDate => {
+    newDate = sendDate.substr(0, 10);
+    if (oldDate === newDate) {
+      oldDate = newDate;
+      return false;
+    } else {
+      oldDate = newDate;
+      return true;
+    }
+  };
   return (
     <Wrapper ref={scrollRef}>
-      <Date>2023.07.07</Date>
       <div>
         {messages &&
           messages.map(message => {
             return message.mine ? (
-              <MyMessage
-                key={message.id}
-                contentType={message.contentType}
-                content={message.content}
-                sendTime={getSendTime(message.sendDate)}
-              />
+              <>
+                <MyMessage
+                  key={message.id}
+                  contentType={message.contentType}
+                  content={message.content}
+                  sendTime={getSendTime(message.sendDate)}
+                  sendDate={{
+                    isNewDate: checkIsNewDate(message.sendDate),
+                    date: message.sendDate.substr(0, 10),
+                  }}
+                />
+              </>
             ) : (
-              <YourMessage
-                key={message.id}
-                senderNo={message.senderNo}
-                senderName={message.senderName}
-                contentType={message.contentType}
-                content={message.content}
-                sendTime={getSendTime(message.sendDate)}
-              />
+              <>
+                <YourMessage
+                  key={message.id}
+                  senderNo={message.senderNo}
+                  senderName={message.senderName}
+                  contentType={message.contentType}
+                  content={message.content}
+                  sendTime={getSendTime(message.sendDate)}
+                  sendDate={{
+                    isNewDate: checkIsNewDate(message.sendDate),
+                    date: message.sendDate.substr(0, 10),
+                  }}
+                />
+              </>
             );
           })}
       </div>
