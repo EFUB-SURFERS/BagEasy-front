@@ -19,6 +19,7 @@ const Header = buyerId => {
   const [dealData, setDealData] = useState({});
 
   useEffect(() => {
+    //postId로 상세정보 조회
     const res = {
       postId: 7,
       sellerId: 1,
@@ -51,7 +52,6 @@ const Header = buyerId => {
         <Btn
           onClick={() => {
             navigate(-1);
-            //클라이언트 disconnect
           }}
         >
           <img src={back} alt="뒤로가기" />
