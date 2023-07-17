@@ -3,9 +3,11 @@ import { styled } from "styled-components";
 import gallery from "../../assets/gallery.png";
 import deleteBtn from "../../assets/deleteBtn.png";
 import { useState, useRef } from "react";
-const Form = () => {
+
+const Form = client => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
+  const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
 
@@ -22,6 +24,18 @@ const Form = () => {
     imgRef.current.value = "";
     setPreviewImg();
     setImgFile();
+  };
+  //메세지 전송 ( stompjs: publish )
+  const sendMessage = () => {
+    imgFile ? setMessage(imgFile) : setMessage(text);
+
+    if (!client.connected) {
+      return;
+    }
+    //이미지인지 텍스트인지에 따른 전송형태 확인해야함
+    client.publish({ destination: "/주소", body: JSON.stringify(message) });
+
+    setMessage("");
   };
 
   return (
@@ -64,7 +78,7 @@ const Form = () => {
             />
           </Text>
         )}
-        <SubmitBtn>전송</SubmitBtn>
+        <SubmitBtn onClick={sendMessage}>전송</SubmitBtn>
       </Inputs>
     </Wrapper>
   );
