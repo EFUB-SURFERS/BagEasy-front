@@ -51,6 +51,7 @@ const Header = buyerId => {
         <Btn
           onClick={() => {
             navigate(-1);
+            //클라이언트 disconnect
           }}
         >
           <img src={back} alt="뒤로가기" />
