@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { PutNickName } from "../api/nickname";
 
 const Nickname = () => {
-  const [nickname, setNickName] = useState("");
-  const [userList, setUserList] = useState([]);
-  const [isOverlap, setIsOverlap] = useState(false);
+  const [nickname, setNickName] = useState(""); // 닉네임 입력받기
+  const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -22,42 +21,13 @@ const Nickname = () => {
     setNickName(e.target.value);
   };
 
-  // 유저 리스트 GET
-  const userListGet = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/members/nicknames");
-      console.log(res);
-      setUserList(res); // 유저리스트 저장
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    userListGet();
-  }, []);
-
-  // 닉네임 PUT 요청
   const putNickName = async () => {
-    try {
-      const res = await axios.put("http://localhost:8080/members/nickname", {
-        nickname: nickname,
-      });
-      console.log(res);
-      setNickName("");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // 닉네임 중복 체크
-  const checkNickName = () => {
-    if (userList.includes(nickname)) {
-      setIsOverlap(true);
-    }
-    if (nickname.length >= 2 && !userList.includes(nickname)) {
-      putNickName();
-      handleNavigateHome();
+    if (nickname.length >= 2) {
+      try {
+        await PutNickName(setIsOverlap, handleNavigateHome, nickname);
+      } catch (error) {
+        console.log("에러 발생", error);
+      }
     }
   };
 
@@ -73,11 +43,11 @@ const Nickname = () => {
           color={nickname.length < 2 || isOverlap ? "T" : "F"}
         />
         {nickname.length < 2 && (
-          <Copy3>닉네임을 2글자 이상 입력해주세요.</Copy3>
+          <Copy3>- 닉네임을 2글자 이상 입력해주세요.</Copy3>
         )}
-        {isOverlap && <Copy3>중복되는 닉네임입니다.</Copy3>}
+        {isOverlap && <Copy3>- 중복되는 닉네임입니다.</Copy3>}
       </Container>
-      <Btn onClick={checkNickName}>확인</Btn>
+      <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>
   );
 };
