@@ -21,20 +21,25 @@ const Bar = ({ activeTab, onTabClick }) => {
 };
 
 const BarContainer = styled.div`
-  width: 400px;
   display: flex;
   color: white;
   height: 36px;
   cursor: pointer;
   margin-top: 97px;
-  padding: 0;
-  width: 100%;
 `;
 
 const TabItem = styled.div`
-  width: 210px;
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  width: 207px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: ${({ active }) => (active ? "#ffc700" : "#cbcbcb")};
 `;
