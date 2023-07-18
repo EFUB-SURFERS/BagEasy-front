@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // 닉네임 PUT 요청, 응답 코드로 중복 체크
 export const PutNickName = async ({
@@ -6,17 +7,24 @@ export const PutNickName = async ({
   handleNavigateHome,
   nickname,
 }) => {
+  const token = localStorage.getItem("bagtoken");
+  const navigate = useNavigate();
+ 
   try {
-    const res = await axios.put("http://localhost:8080/members/nickname", {
+    const res = await axios.put("https://server.bageasy.net/members/nickname", {
       nickname: nickname,
+    }, {
+      headers: {
+        Authorization: token,
+      },
     });
     console.log(res);
-    if (res.status === "400") {
+    if (res.status == "400") {
       setIsOverlap(true);
     }
-    if (res.status === "200") {
+    if (res.status == "200") {
       setIsOverlap(false);
-      handleNavigateHome();
+      navigate("/home");
     }
   } catch (error) {
     console.log(error);

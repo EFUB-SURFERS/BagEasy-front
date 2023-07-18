@@ -1,22 +1,37 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const MyMessage = ({ contentType, content, sendTime }) => {
+const MyMessage = ({ contentType, content, sendTime, sendDate }) => {
   return (
-    <Wrapper>
-      <Time>{sendTime}</Time>
-      {contentType === "image" ? (
-        <ImageContainer>
-          <img src={content} alt="" />
-        </ImageContainer>
-      ) : (
-        <Text>{content}</Text>
-      )}
-    </Wrapper>
+    <>
+      {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
+      <Wrapper>
+        <Time>{sendTime}</Time>
+        {contentType === "image" ? (
+          <ImageContainer>
+            <img src={content} alt="" />
+          </ImageContainer>
+        ) : (
+          <Text>{content}</Text>
+        )}
+      </Wrapper>
+    </>
   );
 };
 
 export default MyMessage;
+const Date = styled.div`
+  padding-top: 15px;
+  padding-bottom: 20px;
+  color: #6d6d6d;
+  text-align: center;
+  font-family: Noto Sans KR;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
 const ImageContainer = styled.div`
   margin-left: 7px;
   margin-right: 12px;

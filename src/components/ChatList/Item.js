@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
@@ -6,9 +6,6 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
   //안 읽은 메세지 수 표시 어떻게??
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(getElapsedTime(latestMessage.sentAt));
-  }, []);
   const getElapsedTime = sentAt => {
     const date = new Date(sentAt);
     const elapsedSec = new Date().getTime() - date.getTime();

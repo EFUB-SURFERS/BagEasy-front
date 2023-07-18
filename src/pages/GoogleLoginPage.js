@@ -13,8 +13,7 @@ const GoogleLogin = () => {
 
   const handleLogin = () => {
     // 구글 로그인 화면으로 이동시키기
-    window.location.href =
-      "https://accounts.google.com/o/oauth2/v2/auth?client_id=806934455187-gs7hokkt54h0n7chfdg4um8r4rqs4m7e.apps.googleusercontent.com&redirect_uri=http://localhost:3000/loading&response_type=code&scope=email profile";
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}&redirect_uri=http://localhost:3000/loading&response_type=code&scope=email profile`;
   };
 
   return (

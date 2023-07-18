@@ -8,26 +8,42 @@ const YourMessage = ({
   contentType,
   content,
   sendTime,
+  sendDate,
 }) => {
   return (
-    <Wrapper>
-      <img className="profileImg" src={"image"} alt=""></img>
-      <div>
-        <Name>{senderName}</Name>
-        {contentType === "image" ? (
-          <ImageContainer>
-            <img src={content} alt="" />
-          </ImageContainer>
-        ) : (
-          <Text>{content}</Text>
-        )}
-      </div>
-      <Time>{sendTime}</Time>
-    </Wrapper>
+    <>
+      {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
+      <Wrapper>
+        <img className="profileImg" src={"image"} alt=""></img>
+        <div>
+          <Name>{senderName}</Name>
+          {contentType === "image" ? (
+            <ImageContainer>
+              <img src={content} alt="" />
+            </ImageContainer>
+          ) : (
+            <Text>{content}</Text>
+          )}
+        </div>
+        <Time>{sendTime}</Time>
+      </Wrapper>
+    </>
   );
 };
 
 export default YourMessage;
+const Date = styled.div`
+  padding-top: 15px;
+  padding-bottom: 20px;
+  color: #6d6d6d;
+  text-align: center;
+  font-family: Noto Sans KR;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
 const ImageContainer = styled.div`
   margin-left: 7px;
   margin-right: 12px;
