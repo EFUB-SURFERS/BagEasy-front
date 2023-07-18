@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import place from "../../assets/modal/place.png";
+import place from "../../assets/updateUni/place.png";
 import { GetUniList } from "../../api/uni";
 //리스트 중 하나 클릭했을때 uni에 선택한 아이템의 스트링이 저장되고 모달이 닫히도록 함
 //모달 밖을 선택했을때도 모달이 닫힘

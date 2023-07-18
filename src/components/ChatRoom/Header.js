@@ -1,45 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import back from "../../assets/back.png";
+import back from "../../assets/chat/back.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
-
-const Header = buyerId => {
+import { useParams } from "react-router-dom";
+import { getDetail } from "../../api/posts";
+import { getMyProfile } from "../../api/member";
+const Header = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [isSold, setIsSold] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  let sellerId, buyerId;
   const navigate = useNavigate();
-  //거래 확정 버튼은 판매자에게만 보이게
-  //판매글 상세 조회에서 글 작성한 사람 아이디와 자신의 멤버아이디 비교
-  //상세조회 api에서 postId, 제목, 판매완료여부, 가격, 이미지 1개 겟하기
 
-  //거래 성사시 판매완료 여부 수정 api 요청은 모달에서 진행. 모달로 buyerId, postId 넘겨주기
+  //경로에서 roomId 받아오기
+  const { roomId } = useParams();
+  console.log(roomId);
 
-  //겟 요청 결과
-  const [dealData, setDealData] = useState({});
+  //판매글 상세 정보 저장
+  const [detail, setDetail] = useState({});
 
   useEffect(() => {
+    //룸아이디로 채팅방 정보 조회 (postId, createMember, joinMember)
+    //buyerId= createMember , seller=joinMember
+    //거래 확정 모달에 buyerId, postId 넘기기
+    //const [roomInfo,setRoomInfo]=useState();
+    //
+    //
+    //본인 프로필 조회
+    //본인 아이디와 판매자 아이디 비교
+    //같으면 거래 성사버튼 보이게
+    const myProfile = getMyProfile();
+    if (myProfile.memberId) {
+    }
+    //
+    //
     //postId로 상세정보 조회
-    const res = {
-      postId: 7,
-      sellerId: 1,
-      postTitle: "test",
-      postContent: "쌉니다",
-      price: 600,
-      isSold: false,
-      buyerId: null,
-      createdAt: "2023-07-15T00:01:51.817582",
-      modifiedAt: "2023-07-15T00:01:51.817582",
-      imageResponseDtos: [
-        {
-          imageId: 9,
-          imageUrl:
-            "https://s3.ap-northeast-2.amazonaws.com/bageasy/post/image/d953fdec-b85f-4ce9-b7f5-7ac5576b8e05.jpg",
-          postId: 7,
-        },
-      ],
-    };
-    setDealData(res);
+    //const res = getDetail(postId);
+    //setDetail(res);
   }, []);
 
   //buyerId 는 chatRoomPage에서 받아오기 (판매자 누군지 판별한뒤 남은 멤버)
@@ -58,9 +56,9 @@ const Header = buyerId => {
         </Btn>
         <ItemContainer>
           <ItemImg $isSold={isSold}>
-            {dealData.imageResponseDtos && (
+            {detail.imageResponseDtos && (
               <img
-                src={dealData.imageResponseDtos[0].imageUrl}
+                src={detail.imageResponseDtos[0].imageUrl}
                 alt="물건이미지"
               />
             )}
@@ -68,10 +66,10 @@ const Header = buyerId => {
           <div>
             <div className="wrapper">
               <p className="isSold">{isSold ? "판매완료" : "판매중"}</p>
-              <Title $isSold={isSold}>{dealData.postTitle}</Title>
+              <Title $isSold={isSold}>{detail.postTitle}</Title>
             </div>
             <div className="wrapper">
-              <p className="price">{dealData.price}</p>
+              <p className="price">{detail.price}</p>
               {isFinished ? (
                 <FinishBtn $isFinished={isFinished}>거래 확정</FinishBtn>
               ) : (
@@ -87,7 +85,7 @@ const Header = buyerId => {
                   isFinished={isFinished}
                   setIsSold={setIsSold}
                   isSold={isSold}
-                  postId={dealData.postId}
+                  postId={detail.postId}
                   buyerId={buyerId}
                 />
               ) : (
