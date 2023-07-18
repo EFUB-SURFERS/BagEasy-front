@@ -8,6 +8,10 @@ import DetailPage from "./pages/DetailPage";
 import CreateSalesPage from "./pages/CreateSalesPage";
 import ItemListPage from "./pages/ItemListPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import MyPage from "./pages/MyPage";
+import Start  from "./pages/Start";
+import Purchase  from "./pages/Purchase";
+
 
 function App() {
   return (
@@ -21,6 +25,9 @@ function App() {
       <Route path="/chats/:roomId" element={<ChatRoomPage />} />
       <Route path="/detail/1" element={<DetailPage />} />
       <Route path="/create" element={<CreateSalesPage />} />
+      <Route path="/MyPage" element={<MyPage />} />
+      <Route path="/purchase" element={<Purchase />} />
+      <Route path="/start" element={<Start />} />
     </Routes>
   );
 }
