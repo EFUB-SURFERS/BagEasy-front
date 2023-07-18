@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import Head from "../components/Common/Head";
-import Contents from "../components/Mypage/Contents";
+import Header from "../components/Common/Header";
+import Contents from "../components/MyPage/Contents";
 
 const MyPage = () => {
   return (
     <MyPageContainer>
-      <Head />
+      <Header />
       <Contents />
     </MyPageContainer>
   );
@@ -17,6 +17,5 @@ const MyPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-
 
 export default MyPage;
