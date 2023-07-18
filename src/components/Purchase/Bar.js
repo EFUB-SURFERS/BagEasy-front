@@ -21,18 +21,20 @@ const Bar = ({ activeTab, onTabClick }) => {
 };
 
 const BarContainer = styled.div`
+  width: 400px;
   display: flex;
   color: white;
   height: 36px;
   cursor: pointer;
   margin-top: 97px;
-
+  padding: 0;
+  width: 100%;
 `;
 
 const TabItem = styled.div`
-  width: 195px;
+  width: 210px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: ${({ active }) => (active ? "#ffc700" : "#cbcbcb")};
 `;
