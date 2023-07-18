@@ -25,3 +25,15 @@ export const getDetail = async postId => {
     console.log("에러 발생", err);
   }
 };
+
+//판매글 전체조회 api
+export const getAllPosts = async postId => {
+  try {
+    const res = await client.get(`posts`);
+
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
