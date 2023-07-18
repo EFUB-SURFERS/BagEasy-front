@@ -1,9 +1,8 @@
 import client from "./client";
 
-//게시글 찜하기 api
-export const addLikes = async postId => {
+export const getComments = async postId => {
   try {
-    const res = await client.get(`post/${postId}/likes`);
+    const res = await client.get(`posts/${postId}/comments`);
 
     console.log(res.data);
     return res.data;
