@@ -10,12 +10,6 @@ const Loading = () => {
   const code = params.get("code");
   console.log(code);
 
-  if (code) {
-    handleLoginPost(code);
-  } else {
-    console.log("로그인 재시도하세요.");
-  }
-
   const handleLoginPost = async code => {
     const data = {
       code: code,
@@ -26,7 +20,7 @@ const Loading = () => {
         data,
       );
       console.log(res);
-      if (res.status === "200") {
+      if (res.status == "200") {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
         console.log(accessToken);
@@ -39,6 +33,12 @@ const Loading = () => {
       console.log(error);
     }
   };
+
+  if (code) {
+    handleLoginPost(code);
+  } else {
+    console.log("로그인 재시도하세요.");
+  }
 
   return (
     <LoadingConatiner>

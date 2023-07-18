@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PutNickName } from "../api/nickname";
+import axios from "axios";
 
 const Nickname = () => {
   const [nickname, setNickName] = useState(""); // 닉네임 입력받기
   const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
+  const [isp,setIsp] = useState('');
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
@@ -21,13 +23,34 @@ const Nickname = () => {
     setNickName(e.target.value);
   };
 
+  useEffect(() => {
+    setIsOverlap(true);
+  },[isp])
+
   const putNickName = async () => {
     if (nickname.length >= 2) {
+      const token = localStorage.getItem("bagtoken");
+ 
       try {
-        await PutNickName(setIsOverlap, handleNavigateHome, nickname);
+        const res = await axios.put("https://server.bageasy.net/members/nickname", {
+          nickname: nickname,
+        }, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        console.log(res);
+        if (res.status == "400") {
+          setIsp('400')
+        }
+        if (res.status == "200") {
+          setIsOverlap(false);
+          navigate("/home");
+        }
       } catch (error) {
-        console.log("에러 발생", error);
+        console.log(error);
       }
+//  PutNickName(setIsOverlap, handleNavigateHome, nickname);
     }
   };
 
@@ -42,7 +65,7 @@ const Nickname = () => {
           onChange={handleNickName}
           color={nickname.length < 2 || isOverlap ? "T" : "F"}
         />
-        {nickname.length < 2 && (
+        {nickname.length === 1 && (
           <Copy3>- 닉네임을 2글자 이상 입력해주세요.</Copy3>
         )}
         {isOverlap && <Copy3>- 중복되는 닉네임입니다.</Copy3>}
