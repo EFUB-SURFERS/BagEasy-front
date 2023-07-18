@@ -7,6 +7,7 @@ import profile from "../../assets/profile.png";
 import picture2 from "../../assets/picture2.png";
 import next from "../../assets/next.png";
 import before from "../../assets/before.png";
+import spot from "../../assets/spot.png";
 
 const ItemContent = () => {
   const images = [picture, picture2, next, before]; //이미지배열
@@ -48,7 +49,10 @@ const ItemContent = () => {
         <SellerProfile src={profile} />
         <SellerInfo>
           <SellerNickname>jjm0829</SellerNickname>
-          <SellerUniv>University of Northern Colorado</SellerUniv>
+          <SellerUniv>
+            <img src={spot} />
+            University of Northern Colorado
+          </SellerUniv>
         </SellerInfo>
       </Seller>
       <Item>
@@ -148,6 +152,12 @@ const SellerUniv = styled.div`
   color: #848484;
 
   margin-top: 6px;
+  img {
+    width: 12px;
+    height: 12px;
+    margin-top: 6px;
+    margin-right: 5px;
+  }
 `;
 
 const Item = styled.div`
