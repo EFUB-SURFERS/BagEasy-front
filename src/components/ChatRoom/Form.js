@@ -3,12 +3,16 @@ import { styled } from "styled-components";
 import gallery from "../../assets/gallery.png";
 import deleteBtn from "../../assets/deleteBtn.png";
 import { useState, useRef } from "react";
+import { stompService } from "../../api/stomp";
+
 const Form = () => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
+  const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
 
+  //사진 첨부 및 미리보기
   const uploadImg = () => {
     let file = imgRef.current.files[0];
     setImgFile(file);
@@ -18,10 +22,18 @@ const Form = () => {
       setPreviewImg(reader.result);
     };
   };
+  //사진 첨부 취소
   const deleteImg = () => {
     imgRef.current.value = "";
     setPreviewImg();
     setImgFile();
+  };
+  //메세지 전송 ( stompjs: publish )
+  const sendMessage = () => {
+    //백 완성 후 수정예정
+    imgFile ? setMessage(imgFile) : setMessage(text);
+    message && stompService.publishMessage(message);
+    setMessage("");
   };
 
   return (
@@ -64,7 +76,7 @@ const Form = () => {
             />
           </Text>
         )}
-        <SubmitBtn>전송</SubmitBtn>
+        <SubmitBtn onClick={sendMessage}>전송</SubmitBtn>
       </Inputs>
     </Wrapper>
   );

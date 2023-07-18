@@ -8,8 +8,8 @@ import List from "../components/ItemList/List";
 import Footer from "./../components/ItemList/Footer";
 
 const ItemListPage = () => {
-  const navigate = useNavigate();
   const [filter, setFilter] = useState(true);
+  const navigate = useNavigate();
   const onToggle = () => {
     setFilter(prev => !prev);
   };
