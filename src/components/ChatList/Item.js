@@ -1,13 +1,41 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-const Item = () => {
+const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
+  //createMember, joinMember 중 자신 memberId 비교 후 상대방 프로필이미지, 이름 겟해오기
+  //안 읽은 메세지 수 표시 어떻게??
   const navigate = useNavigate();
+
+  const getElapsedTime = sentAt => {
+    const date = new Date(sentAt);
+    const elapsedSec = new Date().getTime() - date.getTime();
+
+    //지난 분,시간,일,개월,년
+    const elapsedMin = elapsedSec / (1000 * 60);
+    const elapsedHour = elapsedMin / 60;
+    const elapsedDay = elapsedHour / 24;
+    const elapsedMonth = elapsedDay / 30;
+    const elapsedYear = elapsedMonth / 12;
+
+    if (elapsedMin >= 60) {
+      if (elapsedHour >= 24) {
+        if (elapsedDay >= 30) {
+          if (elapsedMonth >= 12) {
+            return Math.floor(elapsedYear) + "년 전";
+          }
+          return Math.floor(elapsedMonth) + "개월 전";
+        }
+        return Math.floor(elapsedDay) + "일 전";
+      }
+      return Math.floor(elapsedHour) + "시간 전";
+    }
+    return Math.floor(elapsedMin) + "분 전";
+  };
   return (
     <Wrapper>
       <ChatItem
         onClick={() => {
-          navigate("/chats/1");
+          navigate(`/chats/${roomId}`);
         }}
       >
         <p className="img">
@@ -15,10 +43,10 @@ const Item = () => {
         </p>
         <div className="mainContainer">
           <p className="name">Jimin_Song</p>
-          <p className="text">안녕하세요 구매하고싶어요</p>
+          <p className="text">{latestMessage.context}</p>
         </div>
         <div className="subContainer">
-          <p className="time">3시간 전</p>
+          <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
           <p className="count">3</p>
         </div>
       </ChatItem>
