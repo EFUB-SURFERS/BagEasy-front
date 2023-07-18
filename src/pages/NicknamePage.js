@@ -3,6 +3,7 @@ import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { PutNickName } from "../api/nickname";
+import axios from "axios";
 
 const Nickname = () => {
   const [nickname, setNickName] = useState(""); // 닉네임 입력받기
@@ -23,11 +24,28 @@ const Nickname = () => {
 
   const putNickName = async () => {
     if (nickname.length >= 2) {
+      const token = localStorage.getItem("bagtoken");
+ 
       try {
-        await PutNickName(setIsOverlap, handleNavigateHome, nickname);
+        const res = await axios.put("https://server.bageasy.net/members/nickname", {
+          nickname: nickname,
+        }, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        console.log(res);
+        if (res.status == "400") {
+          setIsOverlap(true);
+        }
+        if (res.status == "200") {
+          setIsOverlap(false);
+          navigate("/home");
+        }
       } catch (error) {
-        console.log("에러 발생", error);
+        console.log(error);
       }
+//  PutNickName(setIsOverlap, handleNavigateHome, nickname);
     }
   };
 
