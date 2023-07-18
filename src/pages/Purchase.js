@@ -68,7 +68,6 @@ const Purchase = () => {
 };
 
 const Container = styled.div`
-  width: 390px;
   height: 844px;
   display: flex;
   flex-direction: column;
@@ -77,7 +76,6 @@ const Container = styled.div`
 
 const Content = styled.div`
   display: flex;
-  //가운데 정렬 추가
   justify-content: center;
   flex-direction: column;
   align-items: center;
