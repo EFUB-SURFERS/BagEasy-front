@@ -21,7 +21,7 @@ export const createReply = async (postId, commentId, body) => {
 //대댓글 조회 api
 export const getReplies = async commentId => {
   try {
-    const res = await client.get(`comments/${commentId}/replys`);
+    const res = await client.get(`comments/${commentId}/replies`);
 
     console.log(res.data);
     return res.data;
