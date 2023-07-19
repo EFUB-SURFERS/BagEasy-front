@@ -5,7 +5,7 @@ import Header from "../components/Common/Header";
 import Buttons from "../components/ItemList/Buttons";
 import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
-import Footer from "./../components/ItemList/Footer";
+import WriteBtn from "../components/ItemList/WriteBtn";
 
 const ItemListPage = () => {
   const [filter, setFilter] = useState(true);
@@ -18,8 +18,8 @@ const ItemListPage = () => {
       <Header />
       <Buttons navigate={navigate} />
       <SearchBar onToggle={onToggle} filter={filter} />
-      <List margintop="140px" marginbottom="60px" />
-      <Footer />
+      <List margintop="140px" marginbottom="70px" />
+      <WriteBtn />
     </Wrapper>
   );
 };
