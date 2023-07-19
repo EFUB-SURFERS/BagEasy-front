@@ -1,7 +1,7 @@
 import client from "./client";
 
 //댓글 작성 api
-export const writeComment = async (postId, body) => {
+export const createComment = async (postId, body) => {
   try {
     const res = await client.post(`posts/${postId}/comments`, body, {
       headers: { "Content-Type": "application/json" },
@@ -27,7 +27,7 @@ export const getComments = async postId => {
 };
 
 //댓글 삭제 api
-export const deleteComments = async commentId => {
+export const deleteComment = async commentId => {
   try {
     const res = await client.delete(`comments/${commentId}`);
 
