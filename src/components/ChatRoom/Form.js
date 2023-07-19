@@ -3,14 +3,16 @@ import { styled } from "styled-components";
 import gallery from "../../assets/gallery.png";
 import deleteBtn from "../../assets/deleteBtn.png";
 import { useState, useRef } from "react";
+import { stompService } from "../../api/stomp";
 
-const Form = client => {
+const Form = () => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
   const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
 
+  //사진 첨부 및 미리보기
   const uploadImg = () => {
     let file = imgRef.current.files[0];
     setImgFile(file);
@@ -20,6 +22,7 @@ const Form = client => {
       setPreviewImg(reader.result);
     };
   };
+  //사진 첨부 취소
   const deleteImg = () => {
     imgRef.current.value = "";
     setPreviewImg();
@@ -27,14 +30,9 @@ const Form = client => {
   };
   //메세지 전송 ( stompjs: publish )
   const sendMessage = () => {
+    //백 완성 후 수정예정
     imgFile ? setMessage(imgFile) : setMessage(text);
-
-    if (!client.connected) {
-      return;
-    }
-    //이미지인지 텍스트인지에 따른 전송형태 확인해야함
-    client.publish({ destination: "/주소", body: JSON.stringify(message) });
-
+    message && stompService.publishMessage(message);
     setMessage("");
   };
 

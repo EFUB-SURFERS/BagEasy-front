@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 const List = () => {
-  const [chatList, setChatList] = useState([]);
+  const [chatRooms, setChatRooms] = useState([]);
 
   useEffect(() => {
-    setChatList([
+    setChatRooms([
       {
         roomId: 1,
         createMember: 3,
@@ -59,8 +59,8 @@ const List = () => {
   return (
     <>
       <ChatList>
-        {chatList &&
-          chatList.map(room => {
+        {chatRooms &&
+          chatRooms.map(room => {
             return (
               <Item
                 key={room.createdAt}
