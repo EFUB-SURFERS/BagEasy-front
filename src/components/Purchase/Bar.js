@@ -26,11 +26,18 @@ const BarContainer = styled.div`
   height: 36px;
   cursor: pointer;
   margin-top: 97px;
-
 `;
 
 const TabItem = styled.div`
-  width: 195px;
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  width: 207px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -3,8 +3,8 @@ import styled from "styled-components";
 import menubar from "../../assets/menubar.png";
 import chatImg from "../../assets/chatImg.png";
 import heart from "../../assets/heart.png";
-import UserInfo from "../MyPage/ListItem";
 import ListItem from "./ListItem";
+import UserInfo from "./UserInfo";
 
 const Contents = () => {
   return (
