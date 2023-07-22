@@ -58,13 +58,14 @@ const SalesContent = () => {
       <Unisection>
         <Check src={redspot} alt="미완료" />
         <Title>학교</Title>
-        <input
-          placeholder="학교를 선택해주세요"
+        {/* <input
+          placeholder={isOpen ? "학교를 선택해주세요" : uni}
           value={uni}
           onChange={e => {
-            setUni(e.target.value);
+            setModalInput(e.target.value);
           }}
-        />
+        /> */}
+        <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
         <ChoiceBtn onClick={toggleModal}>
           <img src={choiceuni} alt="검색" />
         </ChoiceBtn>
@@ -106,14 +107,14 @@ const SalesContent = () => {
           }}
         />
       </ContentSection>
-      {isOpen && (
+      {isOpen ? (
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           uni={uni}
           setUni={setUni}
         />
-      )}
+      ) : null}
     </Wrapper>
   );
 };
@@ -215,6 +216,21 @@ const Unisection = styled.div`
     line-height: normal;
     margin-right: 10px;
     outline: none;
+  }
+
+  p {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 `;
 

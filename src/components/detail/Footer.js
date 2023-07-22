@@ -22,6 +22,10 @@ const Footer = ({ postId, sellerId, price, isSolded }) => {
     navigate("/create");
   };
 
+  // const handleDeleteClick = () => {
+  //   navigate("/delete");
+  // };
+
   const handleDeleteClick = async () => {
     try {
       const Id = postId;
