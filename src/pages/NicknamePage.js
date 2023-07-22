@@ -1,32 +1,70 @@
 import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { PutNickName } from "../api/nickname";
+import axios from "axios";
 
 const Nickname = () => {
   const [nickname, setNickName] = useState(""); // 닉네임 입력받기
   const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
+  const [isFocused, setIsFocused] = useState(false); // focus 여부
+  const [temp, setTemp] = useState(""); // 현재 입력값이 중복되는지 체크
+  const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
-  const handleNavigateHome = () => {
-    navigate("/home");
-  };
-
   const handleNickName = e => {
     setNickName(e.target.value);
   };
 
+  // focus 여부 감지
+  useEffect(() => {
+    const inputElement = inputRef.current;
+    inputElement.addEventListener("focus", () => setIsFocused(true));
+    inputElement.addEventListener("blur", () => setIsFocused(false));
+
+    return () => {
+      inputElement.removeEventListener("focus", () => setIsFocused(true));
+      inputElement.removeEventListener("blur", () => setIsFocused(false));
+    };
+  }, []);
+
   const putNickName = async () => {
-    if (nickname.length >= 2) {
+    if (nickname.length < 2) {
+      setIsFocused(true);
+    } else {
+      const token = localStorage.getItem("bagtoken");
+
       try {
-        await PutNickName(setIsOverlap, handleNavigateHome, nickname);
+        const res = await axios.put(
+          "https://server.bageasy.net/members/nickname",
+          {
+            nickname: nickname,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          },
+        );
+        console.log(res);
+        if (res.status == "400") {
+          setIsOverlap(true);
+          setIsFocused(true);
+          setTemp(nickname);
+        }
+        if (res.status == "200") {
+          setIsOverlap(false);
+          setIsFocused(false);
+          setTemp("");
+          navigate("/home");
+        }
       } catch (error) {
-        console.log("에러 발생", error);
+        console.log(error);
       }
     }
   };
@@ -40,12 +78,20 @@ const Nickname = () => {
         <Input
           placeholder="여기에 입력하세요..."
           onChange={handleNickName}
-          color={nickname.length < 2 || isOverlap ? "T" : "F"}
+          ref={inputRef}
+          color={
+            isFocused &&
+            (nickname.length < 2 || (isOverlap && nickname === temp))
+              ? "T"
+              : "F"
+          }
         />
-        {nickname.length < 2 && (
+        {isFocused && nickname.length < 2 && (
           <Copy3>- 닉네임을 2글자 이상 입력해주세요.</Copy3>
         )}
-        {isOverlap && <Copy3>- 중복되는 닉네임입니다.</Copy3>}
+        {isFocused && isOverlap && nickname === temp && (
+          <Copy3>- 중복되는 닉네임입니다.</Copy3>
+        )}
       </Container>
       <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>

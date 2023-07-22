@@ -1,11 +1,11 @@
 import Header from "../components/CreateSales/Header";
 import SalesContent from "../components/CreateSales/SalesContent";
 
-const CreateSalesPage = () => {
+const CreateSalesPage = ({isModified}) => {
   return (
     <div>
       <Header />
-      <SalesContent />
+      <SalesContent/>
     </div>
   );
 };

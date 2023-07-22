@@ -3,10 +3,8 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 import Modal from "../UpdateUni/Modal";
-import searchBtn from "../../assets/searchBtn.png";
 import choiceuni from "../../assets/choiceuni.png";
 import emptyimage from "../../assets/emptyimage.png";
-import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
@@ -60,13 +58,14 @@ const SalesContent = () => {
       <Unisection>
         <Check src={redspot} alt="미완료" />
         <Title>학교</Title>
-        <input
-          placeholder="학교를 선택해주세요"
+        {/* <input
+          placeholder={isOpen ? "학교를 선택해주세요" : uni}
           value={uni}
           onChange={e => {
-            setUni(e.target.value);
+            setModalInput(e.target.value);
           }}
-        />
+        /> */}
+        <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
         <ChoiceBtn onClick={toggleModal}>
           <img src={choiceuni} alt="검색" />
         </ChoiceBtn>
@@ -108,28 +107,23 @@ const SalesContent = () => {
           }}
         />
       </ContentSection>
-      {isOpen && (
+      {isOpen ? (
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           uni={uni}
           setUni={setUni}
         />
-      )}
+      ) : null}
     </Wrapper>
   );
 };
 export default SalesContent;
 
-// label태그
-
 const Wrapper = styled.div`
   width: 100%;
   position: relative;
-
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: column;
 `;
 
@@ -200,23 +194,6 @@ const Images = styled.div`
   }
 `;
 
-const VirtualImage = styled.div`
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #efefef;
-  margin-left: 17px;
-  margin-top: 30px;
-`;
-
-const Search = styled.div`
-  margin-left: 8.74px;
-  img {
-    width: 62px;
-    height: 31px;
-  }
-`;
-
 const Unisection = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -238,6 +215,21 @@ const Unisection = styled.div`
     font-weight: 400;
     line-height: normal;
     margin-right: 10px;
+    outline: none;
+  }
+
+  p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #b8b8b8;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 `;
 
@@ -260,6 +252,7 @@ const Titlesection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    outline: none;
   }
 `;
 
@@ -282,6 +275,7 @@ const PriceSection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    outline: none;
   }
 `;
 
@@ -304,7 +298,7 @@ const ContentSection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-
+    outline: none;
     margin: 18px 23px 0px 30px;
   }
 `;
@@ -327,29 +321,6 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
-`;
-
-const Input = styled.div`
-  display: flex;
-  width: 211px;
-  height: 15px;
-  flex-direction: column;
-  flex-shrink: 0;
-  color: #b8b8b8;
-  font-family: Inter;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-const OutsideWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
 `;
 
 const Check = styled.img`
