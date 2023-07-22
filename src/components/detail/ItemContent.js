@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import styled from "styled-components";
 
 import picture from "../../assets/picture.png";
@@ -9,8 +8,16 @@ import next from "../../assets/next.png";
 import before from "../../assets/before.png";
 import spot from "../../assets/spot.png";
 
-const ItemContent = () => {
-  const images = [picture, picture2, next, before]; //이미지배열
+const ItemContent = ({
+  sellerId,
+  postTitle,
+  postContent,
+  imageResponseDtos,
+}) => {
+  // const images = [picture, picture2, next, before]; //이미지배열
+
+  const images = imageResponseDtos.map(x => x.imageUrl);
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handlePreviousImage = event => {
@@ -48,7 +55,7 @@ const ItemContent = () => {
       <Seller>
         <SellerProfile src={profile} />
         <SellerInfo>
-          <SellerNickname>jjm0829</SellerNickname>
+          <SellerNickname>{sellerId}</SellerNickname>
           <SellerUniv>
             <img src={spot} />
             University of Northern Colorado
@@ -56,13 +63,8 @@ const ItemContent = () => {
         </SellerInfo>
       </Seller>
       <Item>
-        <ItemTitle>이불, 침대시트, 베개 판매합니다.</ItemTitle>
-        <ItemDescription>
-          4개월동안 사용했습니다. <br />
-          상태 아주 깨끗하고 좋아요. <br />
-          거래 전에 세탁해서 드립니다. <br />
-          연락 많이 주세요!
-        </ItemDescription>
+        <ItemTitle>{postTitle}</ItemTitle>
+        <ItemDescription>{postContent}</ItemDescription>
       </Item>
     </Wrapper>
   );
@@ -151,7 +153,7 @@ const SellerUniv = styled.div`
   font-size: 13px;
   color: #848484;
 
-  margin-top: 6px;
+  /* margin-top: 6px; */
   img {
     width: 12px;
     height: 12px;

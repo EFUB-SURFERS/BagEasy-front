@@ -37,3 +37,14 @@ export const getAllPosts = async postId => {
     console.log("에러 발생", err);
   }
 };
+
+//판매글 삭제 api
+export const deleteDetail = async postId => {
+  try {
+    const res = await client.delete(`posts/${postId}`);
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};

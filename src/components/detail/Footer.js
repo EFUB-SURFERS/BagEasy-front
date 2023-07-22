@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
+
+import { getDetail, deleteDetail } from "../../api/posts";
 
 import SubMenuModal from "./SubMenuModal";
 
@@ -11,9 +12,8 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = () => {
-  const [isWirter, setIsWirter] = useState(false);
-  const [isSolded, setIsSolded] = useState(false);
+const Footer = ({ postId, sellerId, price, isSolded }) => {
+  const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
@@ -22,8 +22,14 @@ const Footer = () => {
     navigate("/create");
   };
 
-  const handleDeleteClick = () => {
-    navigate("/delete");
+  const handleDeleteClick = async () => {
+    try {
+      const Id = postId;
+      const deleteData = await deleteDetail(Id);
+      console.log(deleteData);
+    } catch (err) {
+      console.log("error", err);
+    }
   };
 
   const toggleSubMenu = () => {
@@ -44,7 +50,7 @@ const Footer = () => {
         <HeartCount>2</HeartCount>
       </Heart>
       <Line />
-      <Price>30,000원</Price>
+      <Price>{price}</Price>
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
       ) : isSolded ? (

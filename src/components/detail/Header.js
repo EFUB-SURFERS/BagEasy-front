@@ -20,9 +20,9 @@ const Header = () => {
       <Logo>
         <img src={logo} alt="로고" />
       </Logo>
-      <Trash>
+      {/* <Trash>
         <img src={trash} alt="휴지통" />
-      </Trash>
+      </Trash> */}
     </Wrapper>
   );
 };
