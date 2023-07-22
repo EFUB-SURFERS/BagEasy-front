@@ -7,17 +7,13 @@ import { useNavigate } from "react-router-dom";
 const Start = () => {
   const navigate = useNavigate();
 
-  const handleStartClick = () => {
-    window.location.replace("/login");
-  };
-
   return (
     <StartScreenContainer>
       <Logo>
         <LogoImg src={logo} alt="logo" />
         <TitleImg src={title} alt="title" />
       </Logo>
-      <Button onClick={() => navigate("/login")} onClick={handleStartClick}>시작하기</Button>
+      <Button onClick={() => navigate("/login")}>시작하기</Button>
 
     </StartScreenContainer>
   );

@@ -5,15 +5,9 @@ import setting from "../../assets/setting.png";
 import Modal from "../UpdateUni/Modal";
 
 const UserInfo = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [uni, setUni] = useState("Ewha Woman's University");
 
-  const handleSettingClick = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
 
   return (
     <>
@@ -23,10 +17,19 @@ const UserInfo = () => {
       <UserInfoContainer>
         <Username>8282duck</Username>
         <UniversityContainer>
-          <University>Ewha Woman's University</University>
-          <Icon2 src={setting} alt="setting" onClick={handleSettingClick} />
+          <University>{uni}</University>
+          <Icon2 src={setting} alt="setting" onClick={() => {
+            setIsOpen(true);
+          }} />
         </UniversityContainer>
-        {isModalVisible && <Modal closeModal={closeModal} />}
+        {isOpen ? (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          uni={uni}
+          setUni={setUni}
+        />
+      ) : null}
       </UserInfoContainer>
       <Line />
     </>
