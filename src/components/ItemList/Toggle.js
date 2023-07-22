@@ -13,6 +13,7 @@ const Toggle = ({ onToggle, filter }) => {
 const Wrapper = styled.div`
   display: flex;
   z-index: 0;
+  margin-left: auto;
 `;
 
 const CheckBox = styled.input`
@@ -20,43 +21,43 @@ const CheckBox = styled.input`
 `;
 
 const Label = styled.label`
-  margin-left: 0.5rem;
-  z-index: 1;
-  width: 6rem;
-  height: 2rem;
-  background: #eeeeee;
-  border-radius: 2rem;
+  //margin-left: 0.5rem;
+  /* z-index: 1; */
+  width: 80px;
+  height: 26px;
+  background: #e2e2e2;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  transition: all 0.1s ease-in-out;
 
   //디폴트 배경
   &::before {
     position: absolute;
     content: "전체";
-    color: #aaaaaa;
-    width: 3rem;
-    height: 2rem;
+    color: #8d8d8d;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     font-weight: bold;
-    font-size: 12px;
-    top: 0.3rem;
-    padding-left: 0.9rem;
+    padding-top: 1px;
+    padding-left: 12px;
     transition: all 0.1s ease-in-out;
   }
   //디폴트 원
   &::after {
     position: relative;
+    display: block;
     content: "판매중";
     font-weight: bold;
-    font-size: 12px;
-    padding-left: 0.4rem;
-    padding-top: 0.26rem;
-    display: block;
-    width: 3rem;
-    height: 1.6rem;
-    top: 0.2rem;
-    left: 2.8rem;
-    border-radius: 2rem;
+    text-align: center;
+    padding-top: 4px;
+    padding-left: 1px;
+    width: 40px;
+    height: 21px;
+    left: 37px;
+    border-radius: 20px;
     background: white;
     box-sizing: border-box;
     transition: all 0.1s ease-in-out;
@@ -71,38 +72,34 @@ const Label = styled.label`
     transition: all 0.1s ease-in-out;
     /* 선택 O 배경 */
     &::before {
-        position: absolute;
-        content: "판매중";
-        color: #aaaaaa;
-        width: 3rem;
-        height: 2rem;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        font-weight: bold;
-        font-size: 12px;
-        top: 0.3rem;
-        padding-left: 3.35rem;
-        transition: all 0.1s ease-in-out;
+      position: absolute;
+      content: "판매중";
+      color: #8d8d8d;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-weight: bold;
+      padding-top: 1px;
+      padding-left: 44.5px;
+      transition: all 0.1s ease-in-out;
     }
     //선택시 원
     &::after {
-        position: relative;
-        content: "전체";
-        font-weight: bold;
-        font-size: 12px;
-        padding-left: 0.7rem;
-        padding-top: 0.26rem;
-        display: block;
-        width: 3rem;
-        height: 1.6rem;
-        top: 0.2rem;
-        left: 0.2rem;
-        border-radius: 2rem;
-        background: white;
-        box-sizing: border-box;
-        transition: all 0.1s ease-in-out;
-        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
+      position: relative;
+      display: block;
+      content: "전체";
+      font-weight: bold;
+      text-align: center;
+      padding-top: 4px;
+      padding-left: 1px;
+      width: 40px;
+      height: 21px;
+      left: 2px;
+      border-radius: 20px;
+      background: white;
+      box-sizing: border-box;
+      transition: all 0.1s ease-in-out;
+      box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
     }`}
 `;
 
