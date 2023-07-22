@@ -72,6 +72,7 @@ const ItemContent = ({
 
 export default ItemContent;
 const Wrapper = styled.div`
+  z-index: -1;
   display: flex;
   width: 100%;
   justify-content: center;

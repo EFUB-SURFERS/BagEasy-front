@@ -1,13 +1,20 @@
 //components
 import Header from "../components/detail/Header";
+// import Header from "../components/Common/Header";
+import styled from "styled-components";
 import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = () => {
   return (
-    <div>
+    <Wrapper>
       <Header />
-      <ItemInfo />
-    </div>
+      <ItemInfo/>
+    </Wrapper>
   );
 };
 export default DetailPage;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
