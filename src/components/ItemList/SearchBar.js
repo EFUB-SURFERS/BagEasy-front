@@ -13,11 +13,12 @@ const SearchBar = ({ onToggle, filter }) => {
   }, [isOpen]);
   return (
     <SearchWrapper>
-      <Bar onClick={() => setIsOpen(true)}>
-        <Text>{uni}</Text>
-        <SearchBtn>
+      <Bar>
+        <Text>{uni ? uni : "Example University"}</Text>
+        {/* <SearchBtn>
           <SearchImg src={searchImg} />
-        </SearchBtn>
+        </SearchBtn> */}
+        <ChangeBtn onClick={() => setIsOpen(true)}>학교 변경</ChangeBtn>
       </Bar>
       <Toggle onToggle={onToggle} filter={filter} />
       {isOpen ? (
@@ -43,23 +44,28 @@ const SearchWrapper = styled.div`
   margin-top: 97px;
   position: fixed;
   width: 100%;
-  padding: 0 19px;
-  padding-bottom: 13px;
+  padding: 0 15px;
+  /* padding: 0 19px; */
+
+  padding-bottom: 10px;
 `;
 
 const Bar = styled.div`
   display: flex;
   align-items: center;
-  background: #efefef;
-  border-radius: 20px;
-  height: 39px;
+  /* background: #efefef; */
+  /* border-radius: 20px; */
+  height: 53px;
+  /* border: 1px solid black; */
 `;
 
 const Text = styled.div`
-  text-align: center;
-  font-weight: bold;
+  /* text-align: center; */
+  /* font-weight: bold; */
   font-size: 16px;
-  margin-left: 12px;
+  /* margin-left: 12px; */
+  /* border: 1px solid red; */
+  flex: auto;
 `;
 
 const SearchBtn = styled.div`
@@ -73,6 +79,20 @@ const SearchBtn = styled.div`
 const SearchImg = styled.img`
   max-width: 100%;
   height: auto;
+`;
+
+const ChangeBtn = styled.button`
+  width: 86px;
+  height: 32px;
+  margin-left: 10px;
+  background: #ffc700;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
 `;
 
 export default SearchBar;

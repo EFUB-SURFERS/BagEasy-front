@@ -13,6 +13,7 @@ const Toggle = ({ onToggle, filter }) => {
 const Wrapper = styled.div`
   display: flex;
   z-index: 0;
+  /* margin-left: 10px; */
 `;
 
 const CheckBox = styled.input`
@@ -21,7 +22,7 @@ const CheckBox = styled.input`
 
 const Label = styled.label`
   //margin-left: 0.5rem;
-  z-index: 1;
+  /* z-index: 1; */
   width: 86px;
   height: 32px;
   background: #e2e2e2;
