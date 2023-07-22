@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import title from "../assets/title.png";
 
 const Start = () => {
+  const handleStartClick = () => {
+    window.location.replace("/login");
+  };
+
   return (
     <StartScreenContainer>
       <Logo>
         <LogoImg src={logo} alt="logo" />
         <TitleImg src={title} alt="title" />
       </Logo>
-      <Button>시작하기</Button>
+      <Button onClick={handleStartClick}>시작하기</Button>
+
     </StartScreenContainer>
   );
 };
@@ -25,7 +30,7 @@ const StartScreenContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 168px;
-  height: 51px;
+
 `;
 
 const TitleImg = styled.img`

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const ListItem = ({ icon, text }) => (
-  <ListItemContainer>
+const ListItem = ({ icon, text, onClick }) => (
+  <ListItemContainer onClick = {onClick}>
     <Icon src={icon} alt={text} />
     <ListItemText>{text}</ListItemText>
   </ListItemContainer>

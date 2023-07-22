@@ -1,25 +1,38 @@
 import React from "react";
 import styled from "styled-components";
-import menubar from "../../assets/menubar.png";
-import chatImg from "../../assets/chatImg.png";
-import heart from "../../assets/heart.png";
+import list_gray from "../../assets/list_gray.png";
+import chat_gray from "../../assets/chat_gray.png";
+import heart_gray from "../../assets/heart_gray.png";
 import ListItem from "./ListItem";
 import UserInfo from "./UserInfo";
 
 const Contents = () => {
+  const handleHeartClick = () => {
+    window.location.replace("/favorites");
+  };
+
+  const handleChatClick = () => {
+    window.location.replace("/chats");
+  };
+
+  const handleListClick = () => {
+    window.location.replace("/deal");
+  };
+
   return (
     <Content>
       <UserInfo />
       <ListContainer>
-        <ListItem icon={heart} text="찜 목록" />
+        <ListItem icon={heart_gray} text="찜 목록" onClick={handleHeartClick}/>
         <Divider />
-        <ListItem icon={chatImg} text="채팅 목록" />
+        <ListItem icon={chat_gray} text="채팅 목록" onClick={handleChatClick}/>
         <Divider />
-        <ListItem icon={menubar} text="거래 내역" />
+        <ListItem icon={list_gray} text="거래 내역" onClick={handleListClick}/>
       </ListContainer>
     </Content>
   );
 };
+
 
 const Content = styled.div`
   display: flex;
