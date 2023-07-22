@@ -8,10 +8,12 @@ import SubMenuModal from "./SubMenuModal";
 import heart from "../../assets/heart.png";
 import emptyheart from "../../assets/emptyheart.png";
 import chatButton from "../../assets/chatButton.png";
+import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
 const Footer = () => {
-  const [isWirter, setIsWirter] = useState(true);
+  const [isWirter, setIsWirter] = useState(false);
+  const [isSolded, setIsSolded] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
@@ -45,8 +47,10 @@ const Footer = () => {
       <Price>30,000원</Price>
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
+      ) : isSolded ? (
+        <Button src={chatButton}></Button>
       ) : (
-        <ChatButton src={chatButton}></ChatButton>
+        <Button src={soldButton}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal
@@ -125,7 +129,7 @@ const Price = styled.div`
   margin-left: 18px;
 `;
 
-const ChatButton = styled.img`
+const Button = styled.img`
   width: 103px;
   height: 46px;
 
