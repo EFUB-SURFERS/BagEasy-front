@@ -48,3 +48,16 @@ export const deleteDetail = async postId => {
     console.log("에러 발생", err);
   }
 };
+
+// export const deleteDetail = async postId => {
+//   if (window.confirm("게시글을 삭제하시겠습니까?")) {
+//     try {
+//       const res = await client.delete(`posts/${postId}`);
+//       console.log(res.data);
+//       return res.data;
+//     } catch (err) {
+//       console.log("에러 발생", err);
+//     }
+
+//   }
+// };

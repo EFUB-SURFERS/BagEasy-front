@@ -1,14 +1,18 @@
+import { useParams } from "react-router-dom";
 //components
 import Header from "../components/detail/Header";
 // import Header from "../components/Common/Header";
+
 import styled from "styled-components";
 import ItemInfo from "../components/detail/ItemInfo";
 
-const DetailPage = () => {
+const DetailPage = ({}) => {
+  const { postId } = useParams();
+  console.log(postId);
   return (
     <Wrapper>
       <Header />
-      <ItemInfo/>
+      <ItemInfo postId={postId} />
     </Wrapper>
   );
 };

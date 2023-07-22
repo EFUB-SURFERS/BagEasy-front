@@ -9,21 +9,20 @@ import before from "../../assets/before.png";
 import spot from "../../assets/spot.png";
 
 const ItemContent = ({
-  sellerId,
+  sellerNickname,
   postTitle,
   postContent,
   imageResponseDtos,
 }) => {
-  // const images = [picture, picture2, next, before]; //이미지배열
-
-  const images = imageResponseDtos.map(x => x.imageUrl);
+  const images = imageResponseDtos
+    ? imageResponseDtos.map(item => item.imageUrl)
+    : [];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handlePreviousImage = event => {
     event.stopPropagation();
     setCurrentImageIndex(prevIndex => (prevIndex === 0 ? 0 : prevIndex - 1));
-    console.log("이전버튼");
   };
 
   const handleNextImage = event => {
@@ -31,7 +30,6 @@ const ItemContent = ({
     setCurrentImageIndex(prevIndex =>
       prevIndex === images.length - 1 ? prevIndex : prevIndex + 1,
     );
-    console.log("다음버튼");
   };
   const isFirstImage = currentImageIndex === 0;
   const isLastImage = currentImageIndex === images.length - 1;
@@ -55,7 +53,7 @@ const ItemContent = ({
       <Seller>
         <SellerProfile src={profile} />
         <SellerInfo>
-          <SellerNickname>{sellerId}</SellerNickname>
+          <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
             <img src={spot} />
             University of Northern Colorado
@@ -139,14 +137,16 @@ const SellerInfo = styled.div`
   width: 310px;
   height: 54px;
 `;
+
 const SellerNickname = styled.div`
   color: #000;
   font-family: Arial;
-  font-size: 17px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 `;
+
 const SellerUniv = styled.div`
   font-family: Arial;
   font-style: regular;

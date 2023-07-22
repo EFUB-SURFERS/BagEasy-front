@@ -220,7 +220,6 @@ const Unisection = styled.div`
 
   p {
     display: flex;
-
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;

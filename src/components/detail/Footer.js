@@ -12,7 +12,7 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = ({ postId, sellerId, price, isSolded }) => {
+const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
@@ -22,17 +22,21 @@ const Footer = ({ postId, sellerId, price, isSolded }) => {
     navigate("/create");
   };
 
-  // const handleDeleteClick = () => {
-  //   navigate("/delete");
-  // };
+  useEffect(() => {
+    setIsWirter(sellerNickname === myNickname);
+  }, [sellerNickname, myNickname]);
 
   const handleDeleteClick = async () => {
-    try {
-      const Id = postId;
-      const deleteData = await deleteDetail(Id);
-      console.log(deleteData);
-    } catch (err) {
-      console.log("error", err);
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
+      try {
+        const Id = postId;
+        const deleteData = await deleteDetail(Id);
+        console.log(deleteData);
+        alert("게시글이 삭제되었습니다.");
+        navigate(-1);
+      } catch (err) {
+        console.log("error", err);
+      }
     }
   };
 
@@ -58,9 +62,9 @@ const Footer = ({ postId, sellerId, price, isSolded }) => {
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
       ) : isSolded ? (
-        <Button src={chatButton}></Button>
-      ) : (
         <Button src={soldButton}></Button>
+      ) : (
+        <Button src={chatButton}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal

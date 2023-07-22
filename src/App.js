@@ -22,7 +22,7 @@ function App() {
       <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/chats" element={<ChatListPage />} />
       <Route path="/chats/:roomId" element={<ChatRoomPage />} />
-      <Route path="/detail/1" element={<DetailPage />} />
+      <Route path="/detail/:postId" element={<DetailPage />} />
       <Route path="/create" element={<CreateSalesPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/deal" element={<Purchase />} />
