@@ -3,10 +3,8 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 import Modal from "../UpdateUni/Modal";
-import searchBtn from "../../assets/searchBtn.png";
 import choiceuni from "../../assets/choiceuni.png";
 import emptyimage from "../../assets/emptyimage.png";
-import place from "../../assets/place.png";
 import redspot from "../../assets/redspot.png";
 
 const SalesContent = () => {
@@ -121,15 +119,10 @@ const SalesContent = () => {
 };
 export default SalesContent;
 
-// label태그
-
 const Wrapper = styled.div`
   width: 100%;
   position: relative;
-
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: column;
 `;
 
@@ -200,23 +193,6 @@ const Images = styled.div`
   }
 `;
 
-const VirtualImage = styled.div`
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #efefef;
-  margin-left: 17px;
-  margin-top: 30px;
-`;
-
-const Search = styled.div`
-  margin-left: 8.74px;
-  img {
-    width: 62px;
-    height: 31px;
-  }
-`;
-
 const Unisection = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -238,6 +214,7 @@ const Unisection = styled.div`
     font-weight: 400;
     line-height: normal;
     margin-right: 10px;
+    outline: none;
   }
 `;
 
@@ -260,6 +237,7 @@ const Titlesection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    outline: none;
   }
 `;
 
@@ -282,6 +260,7 @@ const PriceSection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    outline: none;
   }
 `;
 
@@ -304,7 +283,7 @@ const ContentSection = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-
+    outline: none;
     margin: 18px 23px 0px 30px;
   }
 `;
@@ -327,29 +306,6 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
-`;
-
-const Input = styled.div`
-  display: flex;
-  width: 211px;
-  height: 15px;
-  flex-direction: column;
-  flex-shrink: 0;
-  color: #b8b8b8;
-  font-family: Inter;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-`;
-
-const OutsideWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
 `;
 
 const Check = styled.img`
