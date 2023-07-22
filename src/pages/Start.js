@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import title from "../assets/title.png";
+import { useNavigate } from "react-router-dom";
 
 const Start = () => {
+  const navigate = useNavigate();
+
   const handleStartClick = () => {
     window.location.replace("/login");
   };
@@ -14,7 +17,7 @@ const Start = () => {
         <LogoImg src={logo} alt="logo" />
         <TitleImg src={title} alt="title" />
       </Logo>
-      <Button onClick={handleStartClick}>시작하기</Button>
+      <Button onClick={() => navigate("/login")} onClick={handleStartClick}>시작하기</Button>
 
     </StartScreenContainer>
   );
