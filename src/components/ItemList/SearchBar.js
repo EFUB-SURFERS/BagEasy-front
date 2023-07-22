@@ -38,16 +38,15 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 103px;
+  height: 93px;
   box-sizing: border-box;
-  background: white;
   margin-top: 97px;
   position: fixed;
   width: 100%;
   padding: 0 15px;
   /* padding: 0 19px; */
 
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 `;
 
 const Bar = styled.div`
@@ -55,8 +54,9 @@ const Bar = styled.div`
   align-items: center;
   /* background: #efefef; */
   /* border-radius: 20px; */
-  height: 53px;
+  height: 60px;
   /* border: 1px solid black; */
+  background: white;
 `;
 
 const Text = styled.div`

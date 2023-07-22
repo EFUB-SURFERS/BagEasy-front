@@ -13,7 +13,7 @@ const Toggle = ({ onToggle, filter }) => {
 const Wrapper = styled.div`
   display: flex;
   z-index: 0;
-  /* margin-left: 10px; */
+  margin-left: auto;
 `;
 
 const CheckBox = styled.input`
@@ -23,13 +23,13 @@ const CheckBox = styled.input`
 const Label = styled.label`
   //margin-left: 0.5rem;
   /* z-index: 1; */
-  width: 86px;
-  height: 32px;
+  width: 80px;
+  height: 26px;
   background: #e2e2e2;
   border-radius: 20px;
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 10px;
   transition: all 0.1s ease-in-out;
 
   //디폴트 배경
@@ -41,7 +41,8 @@ const Label = styled.label`
     justify-content: flex-start;
     align-items: center;
     font-weight: bold;
-    padding-left: 13px;
+    padding-top: 1px;
+    padding-left: 12px;
     transition: all 0.1s ease-in-out;
   }
   //디폴트 원
@@ -51,10 +52,11 @@ const Label = styled.label`
     content: "판매중";
     font-weight: bold;
     text-align: center;
-    padding-top: 5.5px;
-    width: 43px;
-    height: 26px;
-    left: 39px;
+    padding-top: 4px;
+    padding-left: 1px;
+    width: 40px;
+    height: 21px;
+    left: 37px;
     border-radius: 20px;
     background: white;
     box-sizing: border-box;
@@ -77,7 +79,8 @@ const Label = styled.label`
       justify-content: flex-start;
       align-items: center;
       font-weight: bold;
-      padding-left: 48px;
+      padding-top: 1px;
+      padding-left: 44.5px;
       transition: all 0.1s ease-in-out;
     }
     //선택시 원
@@ -87,10 +90,11 @@ const Label = styled.label`
       content: "전체";
       font-weight: bold;
       text-align: center;
-      padding-top: 5.5px;
-      width: 43px;
-      height: 26px;
-      left: 3px;
+      padding-top: 4px;
+      padding-left: 1px;
+      width: 40px;
+      height: 21px;
+      left: 2px;
       border-radius: 20px;
       background: white;
       box-sizing: border-box;

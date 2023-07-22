@@ -18,7 +18,7 @@ const ItemListPage = () => {
       <Header />
       <Buttons navigate={navigate} />
       <SearchBar onToggle={onToggle} filter={filter} />
-      <List margintop="190px" marginbottom="70px" />
+      <List margintop="180px" marginbottom="70px" />
       <WriteBtn />
     </Wrapper>
   );
