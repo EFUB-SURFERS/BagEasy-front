@@ -1,18 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+import { getDetail } from "../../api/posts";
+import { getMyProfile } from "../../api/member";
 
 import Comment from "../ItemList/Comment";
 import CommentList from "../ItemList/CommentList";
 import ItemContent from "./ItemContent";
 import Footer from "./Footer";
 
-const ItemInfo = () => {
+const ItemInfo = ({ postId }) => {
+  const [post, setPost] = useState("");
+  const [myNickname, setMyNickname] = useState("");
+
+  useEffect(() => {
+    fetchPostData();
+    userData();
+  }, []);
+
+  const fetchPostData = async () => {
+    try {
+      const getData = await getDetail(postId);
+      setPost(getData);
+      console.log("getData", getData);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  const userData = async () => {
+    try {
+      const getData = await getMyProfile();
+      setMyNickname(getData);
+      console.log("getData", getData);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  if (!post) {
+    console.log(getDetail);
+    return <div>Loading...</div>;
+  }
+
   return (
     <Div>
-      <ItemContent />
+      <ItemContent
+        sellerNickname={post.sellerNickname}
+        postTitle={post.postTitle}
+        postContent={post.postContent}
+        imageResponseDtos={post.imageResponseDtos}
+      />
       <CommentList />
       <Comment />
-      <Footer />
+      <Footer
+        postId={post.postId}
+        sellerNickname={post.sellerNickname}
+        price={post.price}
+        isSold={post.isSold}
+        myNickname={myNickname.nickname}
+      />
     </Div>
   );
 };
