@@ -170,14 +170,10 @@ const Item = styled.div`
   width: 100%;
   height: 200px;
 
-  padding-left: 23px;
-  padding-right: 10px;
-
   border-bottom: 0.5px solid #cecece;
 `;
 const ItemTitle = styled.div`
   display: flex;
-  width: 361px;
   height: 48px;
   flex-direction: column;
   justify-content: center;
@@ -189,13 +185,12 @@ const ItemTitle = styled.div`
   font-weight: 500;
   line-height: normal;
 
-  padding-left: 23px;
-  padding-top: 10px;
+  padding: 5px 20px;
   flex-shrink: 0;
 `;
 const ItemDescription = styled.div`
   display: flex;
-  width: 362px;
+  /* width: 362px; */
   height: 202px;
   flex-direction: column;
   flex-shrink: 0;
@@ -206,5 +201,6 @@ const ItemDescription = styled.div`
   font-weight: 400;
   line-height: normal;
 
-  padding-left: 23px;
+  padding: 0px 20px;
+  /* padding-left: 23px; */
 `;
