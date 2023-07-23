@@ -12,9 +12,8 @@ export const getProfile = async memberId => {
   }
 };
 
-//본인 프로필 조회 api
-//멤버 조회 api
-export const getMyProfile = async () => {
+// 본인 프로필 조회
+export const getMyProfile = async memberId => {
   try {
     const res = await client.get(`members/me`);
 
