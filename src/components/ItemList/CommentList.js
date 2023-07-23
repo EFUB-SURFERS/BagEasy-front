@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
-import openArrow from "../../assets/openArrow.png";
-import closeArrow from "../../assets/closeArrow.png";
-import sendBtn from "../../assets/sendBtn.png";
+import openArrow from "../../assets/itemListPage/openArrow.png";
+import closeArrow from "../../assets/itemListPage/closeArrow.png";
+import sendBtn from "../../assets/itemListPage/sendBtn.png";
 
 const CommentList = () => {
   const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import profileImg2 from "../../assets/profileImg2.png";
+import profileImg2 from "../../assets/itemListPage/profileImg2.png";
 
 const Comment = () => {
   return (

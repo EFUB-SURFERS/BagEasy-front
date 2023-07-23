@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import heartImg from "../../assets/heartImg.png";
-import itemImg from "../../assets/itemImg.png";
+import heartImg from "../../assets/itemListPage/heartImg.png";
+import itemImg from "../../assets/itemListPage/itemImg.png";
 
 const Item = () => {
   return (
