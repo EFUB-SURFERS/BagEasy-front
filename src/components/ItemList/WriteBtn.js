@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import postImg from "../../assets/postImg.png";
+import postImg from "../../assets/itemListPage/postImg.png";
 
 const WriteBtn = () => {
   return (

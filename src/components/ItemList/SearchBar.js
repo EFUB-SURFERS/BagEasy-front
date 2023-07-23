@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import searchImg from "../../assets/searchImg.png";
+import searchImg from "../../assets/itemListPage/searchImg.png";
 import styled from "styled-components";
 import Toggle from "./Toggle";
 import Modal from "./../UpdateUni/Modal";
