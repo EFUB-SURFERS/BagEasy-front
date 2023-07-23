@@ -1,9 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
+// import { Navigate, Outlet } from "react-router-dom";
 
-const isLogin = !!localStorage.getItem("bagtoken");
+// const isLogin = !!localStorage.getItem("bagtoken");
 
-const PrivateRoute = () => {
-  return isLogin ? <Outlet /> : <Navigate to="/login" />;
-};
+// const PrivateRoute = () => {
+//   return isLogin ? <Outlet /> : <Navigate to="/login" />;
+// };
 
-export default PrivateRoute;
+// export default PrivateRoute;

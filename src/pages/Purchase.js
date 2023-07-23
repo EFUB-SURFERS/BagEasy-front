@@ -6,8 +6,8 @@ import sofa from "../assets/sofa.png";
 import soccer from "../assets/soccer.png";
 import clock from "../assets/clock.png";
 import Bar from "../components/Purchase/Bar";
-import BuyItem from "../components/Purchase/BuyItem"; // Import BuyItem
-import SoldItem from "../components/Purchase/SoldItem"; // Import SoldItem
+import BuyItem from "../components/Purchase/BuyItem";
+import SoldItem from "../components/Purchase/SoldItem"; 
 
 const Purchase = () => {
   const [activeTab, setActiveTab] = useState("구매내역");
@@ -85,6 +85,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 390px;
+  padding-right: 5px;
 `;
 
 const Divider = styled.div`

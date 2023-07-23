@@ -20,8 +20,9 @@ function App() {
       <Route path="/" element={<Start />} />
       <Route path="/login" element={<GoogleLogin />} />
       <Route path="/loading" element={<Loading />} />
-      로그인 해야 접근 가능한 페이지
-      <Route element={<PrivateRoute />}>
+      {/* 로그인 해야 접근 가능한 페이지
+      <Route element={<PrivateRoute />}> */}
+          <Route>
         <Route path="/nickname" element={<Nickname />} />
         <Route path="/home" element={<ItemListPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />

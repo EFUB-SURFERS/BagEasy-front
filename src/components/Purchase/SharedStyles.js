@@ -26,7 +26,6 @@ export const Title = styled.div`
 
 export const TrashImage = styled.img`
   width: 30px;
-  height: 38px;
 `;
 
 export const Words = styled.div`

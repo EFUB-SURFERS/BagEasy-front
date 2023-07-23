@@ -5,9 +5,12 @@ import setting from "../../assets/setting.png";
 import Modal from "../UpdateUni/Modal";
 
 const UserInfo = () => {
+  const [uni, setUni] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [uni, setUni] = useState("Ewha Woman's University");
-
+  
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -17,7 +20,7 @@ const UserInfo = () => {
       <UserInfoContainer>
         <Username>8282duck</Username>
         <UniversityContainer>
-          <University>{uni}</University>
+          <University>{uni.length > 0 && !isOpen ? uni : "이화여자대학교"}</University>
           <Icon2 src={setting} alt="setting" onClick={() => {
             setIsOpen(true);
           }} />
