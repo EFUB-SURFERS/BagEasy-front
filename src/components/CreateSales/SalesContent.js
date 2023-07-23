@@ -45,7 +45,6 @@ const SalesContent = () => {
           ref={imgRef}
           id="file"
           onChange={saveImgFile}
-          // style={{ display: "none" }}
           multiple
         />
         {imgFile.length > 0 ? (
@@ -58,13 +57,6 @@ const SalesContent = () => {
       <Unisection>
         <Check src={redspot} alt="미완료" />
         <Title>학교</Title>
-        {/* <input
-          placeholder={isOpen ? "학교를 선택해주세요" : uni}
-          value={uni}
-          onChange={e => {
-            setModalInput(e.target.value);
-          }}
-        /> */}
         <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
         <ChoiceBtn onClick={toggleModal}>
           <img src={choiceuni} alt="검색" />
@@ -317,6 +309,7 @@ const Title = styled.div`
 
 const ChoiceBtn = styled.div`
   margin: auto;
+  margin-right: 20px;
   img {
     width: 85.359px;
     height: 31px;
