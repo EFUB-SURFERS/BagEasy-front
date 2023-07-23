@@ -11,7 +11,7 @@ import Footer from "./Footer";
 
 const ItemInfo = ({ postId }) => {
   const [post, setPost] = useState("");
-  const [myNickname, setMyNickname] = useState("");
+  const [myId, setMyId] = useState("");
 
   useEffect(() => {
     fetchPostData();
@@ -31,7 +31,7 @@ const ItemInfo = ({ postId }) => {
   const userData = async () => {
     try {
       const getData = await getMyProfile();
-      setMyNickname(getData);
+      setMyId(getData);
       console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
@@ -56,10 +56,10 @@ const ItemInfo = ({ postId }) => {
       <Comment />
       <Footer
         postId={post.postId}
-        sellerNickname={post.sellerNickname}
+        sellerId={post.sellerId}
         price={post.price}
         isSold={post.isSold}
-        myNickname={myNickname.nickname}
+        myId={myId.memberId}
       />
     </Div>
   );

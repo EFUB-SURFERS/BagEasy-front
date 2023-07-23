@@ -49,15 +49,16 @@ export const deleteDetail = async postId => {
   }
 };
 
-// export const deleteDetail = async postId => {
-//   if (window.confirm("게시글을 삭제하시겠습니까?")) {
-//     try {
-//       const res = await client.delete(`posts/${postId}`);
-//       console.log(res.data);
-//       return res.data;
-//     } catch (err) {
-//       console.log("에러 발생", err);
-//     }
-
-//   }
-// };
+// 판매글 작성 api
+export const createPost = async formData => {
+  try {
+    const res = await client.post(`posts`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res);
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};

@@ -1,11 +1,13 @@
+import React, { useState } from "react";
+import { createPost } from "../api/posts";
+import Modal from "../components/UpdateUni/Modal";
 import Header from "../components/CreateSales/Header";
 import SalesContent from "../components/CreateSales/SalesContent";
 
-const CreateSalesPage = ({isModified}) => {
+const CreateSalesPage = () => {
   return (
     <div>
-      <Header />
-      <SalesContent/>
+      <SalesContent />
     </div>
   );
 };

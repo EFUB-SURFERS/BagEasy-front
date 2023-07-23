@@ -12,7 +12,7 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
+const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
@@ -23,8 +23,8 @@ const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
   };
 
   useEffect(() => {
-    setIsWirter(sellerNickname === myNickname);
-  }, [sellerNickname, myNickname]);
+    setIsWirter(sellerId === myId);
+  }, [sellerId, myId]);
 
   const handleDeleteClick = async () => {
     if (window.confirm("게시글을 삭제하시겠습니까?")) {

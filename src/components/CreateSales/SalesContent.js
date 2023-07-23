@@ -1,13 +1,17 @@
 import styled from "styled-components";
-
+import client from "../../api/client";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/choiceuni.png";
 import emptyimage from "../../assets/emptyimage.png";
 import redspot from "../../assets/redspot.png";
+// import client from "../../api/client";
 
 const SalesContent = () => {
+  const navigate = useNavigate();
   const [uni, setUni] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -19,6 +23,7 @@ const SalesContent = () => {
   };
 
   const [imgFile, setImgFile] = useState([]);
+  const [imgData, setImgData] = useState([]);
   const imgRef = useRef();
 
   const saveImgFile = e => {
@@ -28,89 +33,170 @@ const SalesContent = () => {
     );
     const limitedFileURLList = fileURLList.slice(0, 10); //개수 최대 10개로 제한
     setImgFile(limitedFileURLList);
+    setImgData(fileArr);
+  };
+
+  const handleRegisterButtonClick = async () => {
+    try {
+      let data = {
+        postTitle: title,
+        postContent: content,
+        price: price,
+        school: uni,
+      };
+      const formData = new FormData();
+      for (let i = 0; i < imgData.length; i++) {
+        formData.append("image", imgData[i]);
+      }
+      formData.append(
+        "dto",
+        new Blob([JSON.stringify(data)], { type: "application/json" }),
+      );
+      await createPost(formData);
+    } catch (err) {
+      console.log("error", err);
+    }
   };
 
   return (
-    <Wrapper>
-      <Line />
-      <Images>
-        {/* <Check src={redspot} alt="미완료" /> */}
-        <AddBtn for="file">
-          <p>+</p>
-        </AddBtn>
-        <input
-          type="file"
-          name="file"
-          accept="image/*"
-          ref={imgRef}
-          id="file"
-          onChange={saveImgFile}
-          multiple
-        />
-        {imgFile.length > 0 ? (
-          imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
-        ) : (
-          <img src={emptyimage} />
-        )}
-      </Images>
-      <SubLine />
-      <Unisection>
-        <Check src={redspot} alt="미완료" />
-        <Title>학교</Title>
-        <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
-        <ChoiceBtn onClick={toggleModal}>
-          <img src={choiceuni} alt="검색" />
-        </ChoiceBtn>
-      </Unisection>
-      <SubLine />
-      <Titlesection>
-        <Check src={redspot} alt="미완료" />
-        <Title>제목</Title>
-        <input
-          placeholder="어떤 물품을 양도 중이신가요?"
-          value={title}
-          onChange={e => {
-            setTitle(e.target.value);
+    <>
+      <Wrapper1>
+        <Delete
+          onClick={() => {
+            navigate(-1);
           }}
-        />
-      </Titlesection>
-      <SubLine />
-      <PriceSection>
-        <Check src={redspot} alt="미완료" />
-        <Title>가격</Title>
-        <input
-          placeholder="어느 정도의 가격에 판매하실 예정인가요?"
-          value={price}
-          onChange={e => {
-            setPrice(e.target.value);
-          }}
-        />
-      </PriceSection>
-      <SubLine />
-      <ContentSection>
-        <Check src={redspot} alt="미완료" />
-        <Title>내용</Title>
-        <textarea
-          placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
+        >
+          X
+        </Delete>
+        <Done onClick={handleRegisterButtonClick}>완료</Done>
+      </Wrapper1>
+      <Wrapper>
+        <Line />
+        <Images>
+          {/* <Check src={redspot} alt="미완료" /> */}
+          <AddBtn for="file">
+            <p>+</p>
+          </AddBtn>
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            ref={imgRef}
+            id="file"
+            onChange={saveImgFile}
+            multiple
+          />
+          {imgFile.length > 0 ? (
+            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+          ) : (
+            <img src={emptyimage} />
+          )}
+        </Images>
+        <SubLine />
+        <Unisection>
+          <Check src={redspot} alt="미완료" />
+          <Title>학교</Title>
+          <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
+          <ChoiceBtn onClick={toggleModal}>
+            <img src={choiceuni} alt="검색" />
+          </ChoiceBtn>
+        </Unisection>
+        <SubLine />
+        <Titlesection>
+          <Check src={redspot} alt="미완료" />
+          <Title>제목</Title>
+          <input
+            placeholder="어떤 물품을 양도 중이신가요?"
+            value={title}
+            onChange={e => {
+              setTitle(e.target.value);
+            }}
+          />
+        </Titlesection>
+        <SubLine />
+        <PriceSection>
+          <Check src={redspot} alt="미완료" />
+          <Title>가격</Title>
+          <input
+            placeholder="어느 정도의 가격에 판매하실 예정인가요?"
+            value={price}
+            onChange={e => {
+              setPrice(e.target.value);
+            }}
+          />
+        </PriceSection>
+        <SubLine />
+        <ContentSection>
+          <Check src={redspot} alt="미완료" />
+          <Title>내용</Title>
+          <textarea
+            placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
           ex) 구매일시, 사용 기간, 생활 오염 정도 등"
-          value={content}
-          onChange={e => {
-            setContent(e.target.value);
-          }}
-        />
-      </ContentSection>
-      {isOpen ? (
-        <Modal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          uni={uni}
-          setUni={setUni}
-        />
-      ) : null}
-    </Wrapper>
+            value={content}
+            onChange={e => {
+              setContent(e.target.value);
+            }}
+          />
+        </ContentSection>
+        {isOpen ? (
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            uni={uni}
+            setUni={setUni}
+          />
+        ) : null}
+      </Wrapper>
+    </>
   );
 };
 export default SalesContent;
+const Wrapper1 = styled.div`
+  height: 117px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+`;
+
+const Delete = styled.div`
+  display: flex;
+  width: 36px;
+  height: 23px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  padding-left: 11px;
+  padding-top: 76px;
+  padding-bottom: 18px;
+`;
+
+const Done = styled.button`
+  border: 0;
+  outline: 0;
+  background: none;
+  color: #000;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  margin-right: 15px;
+  margin-top: 76px;
+  margin-bottom: 19px;
+`;
 
 const Wrapper = styled.div`
   width: 100%;
