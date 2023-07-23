@@ -47,6 +47,7 @@ const ItemInfo = ({ postId }) => {
     <Div>
       <ItemContent
         sellerNickname={post.sellerNickname}
+        school={post.school}
         postTitle={post.postTitle}
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}

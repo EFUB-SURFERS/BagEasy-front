@@ -13,6 +13,7 @@ const ItemContent = ({
   postTitle,
   postContent,
   imageResponseDtos,
+  school,
 }) => {
   const images = imageResponseDtos
     ? imageResponseDtos.map(item => item.imageUrl)
@@ -56,7 +57,7 @@ const ItemContent = ({
           <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
             <img src={spot} />
-            University of Northern Colorado
+            {school}
           </SellerUniv>
         </SellerInfo>
       </Seller>
