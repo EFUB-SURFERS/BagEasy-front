@@ -14,7 +14,6 @@ import Start from "./pages/Start";
 import Purchase from "./pages/Purchase";
 
 import PrivateRoute from "./components/Route/PrivateRoute";
-import CommentList from "./components/ItemList/CommentList";
 
 function App() {
   return (
@@ -26,7 +25,7 @@ function App() {
       {/* 로그인 해야 접근 가능한 페이지 */}
       <Route element={<PrivateRoute />}>
         <Route path="/nickname" element={<Nickname />} />
-        <Route path="/home" element={<CommentList />} />
+        <Route path="/home" element={<ItemListPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/chats" element={<ChatListPage />} />
         <Route path="/chats/:roomId" element={<ChatRoomPage />} />
