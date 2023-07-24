@@ -8,7 +8,7 @@ import ItemInfo from "../components/detail/ItemInfo";
 
 const DetailPage = ({}) => {
   const { postId } = useParams();
-  console.log(postId);
+  // console.log(postId);
   return (
     <Wrapper>
       <Header />
