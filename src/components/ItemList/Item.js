@@ -1,23 +1,32 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Item = () => {
+const Item = ({ post }) => {
+  const navigate = useNavigate();
+
+  const goToDetailPage = () => {
+    navigate(`/detail/${post.postId}`);
+  };
+
+  console.log(post);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={goToDetailPage}>
       <ImageWrapper>
-        <Image src={itemImg} />
+        <Image src={post.imageResponseDtos[0].imageUrl} />
       </ImageWrapper>
 
       <Info>
-        <Name>머그컵</Name>
-        <Price>15000원</Price>
+        <Name>{post.postTitle}</Name>
+        <Price>{`${post.price}원`}</Price>
         <Footer>
-          <Tag>판매중</Tag>
+          {post.isSold ? <SoldTag>판매완료</SoldTag> : <Tag>판매중</Tag>}
           <Favorites>
             <HeartImg src={heartImg} />
-            <FavoritesNum>2</FavoritesNum>
+            <FavoritesNum>{post.heartCount}</FavoritesNum>
           </Favorites>
         </Footer>
       </Info>
@@ -82,6 +91,16 @@ const Footer = styled.div`
   width: 100%;
   justify-content: space-around;
   margin-top: auto;
+`;
+
+const SoldTag = styled.div`
+  background: #cbcbcb;
+  border-radius: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0.3rem 1rem;
+  flex: none;
 `;
 
 const Tag = styled.div`
