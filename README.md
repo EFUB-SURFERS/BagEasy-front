@@ -14,7 +14,7 @@
 |이름|김예진|곽지우|송지민|이주희|조정민|
 |---|---|---|---|---|---|
 |사진|<img width="150px" alt="스크린샷 2023-07-25 오전 12 46 14" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/71dc6f6c-706d-43b5-951e-7a2a1ac78904">|<img width="150px" alt="스크린샷 2023-07-25 오전 12 45 48" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/cf199ccc-fe99-4a5d-a045-f8be0f71e450">|<img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/678ff507-7836-4c9c-ba4f-a58a2b9b9896">|<img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/76e28349-f536-46bc-8341-c46f8d3dab37">|<img width="150px" alt="스크린샷 2023-07-25 오전 12 46 00" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/07779d2c-e6e8-4b87-9e79-b2cbce093636">|
-|역할|시작 페이지 <br> 거래내역 페이지 <br> 마이페이지|판매글 열람 페이지 <br> 판매글 작성 페이지|채팅 페이지|구글 로그인 페이지 <br>  닉네임 설정 페이지|판매글 리스트 페이지 <br>  찜 목록 페이지| 
+|역할|시작 페이지 <br> 거래내역 페이지 <br> 마이페이지|판매글 열람 페이지 <br> 판매글 작성 페이지|채팅 페이지|구글 로그인 페이지 <br>  닉네임 설정 페이지|메인 페이지 <br>  찜 목록 페이지| 
 
 <br>
 
