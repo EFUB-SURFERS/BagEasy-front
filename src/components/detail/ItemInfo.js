@@ -22,7 +22,7 @@ const ItemInfo = ({ postId }) => {
     try {
       const getData = await getDetail(postId);
       setPost(getData);
-      console.log("getData", getData);
+      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -32,14 +32,14 @@ const ItemInfo = ({ postId }) => {
     try {
       const getData = await getMyProfile();
       setMyId(getData);
-      console.log("getData", getData);
+      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
   };
 
   if (!post) {
-    console.log(getDetail);
+    // console.log(getDetail);
     return <div>Loading...</div>;
   }
 

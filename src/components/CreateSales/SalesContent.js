@@ -12,32 +12,36 @@ import greenspot from "../../assets/greenspot.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
-  const [uni, setUni] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [content, setContent] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    //전송할 데이터
+    uni: "",
+    title: "",
+    price: "",
+    content: "",
+  });
+  const [imgFile, setImgFile] = useState([]); //전송할 이미지 데이터
+
+  const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
+  const imgRef = useRef();
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-
-  const [imgFile, setImgFile] = useState([]);
-  const [imgData, setImgData] = useState([]);
-  const imgRef = useRef();
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
     const fileURLList = Array.from(fileArr).map(file =>
       URL.createObjectURL(file),
     );
-    const limitedFileURLList = fileURLList.slice(0, 10); //개수 최대 10개로 제한
-    setImgFile(limitedFileURLList);
-    setImgData(fileArr);
+    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
+    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
+    setFormData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
-    if (imgFile && uni && title && price && content) //모든 내용이 있을 때만 등록 시도
+    const { uni, title, price, content, imgData } = formData;
+    if (imgFile.length > 0 && uni && title && price && content) {
+      //모든 데이터가 있을때 등록 시도
       try {
         let data = {
           postTitle: title,
@@ -47,33 +51,30 @@ const SalesContent = () => {
         };
         const formData = new FormData();
         for (let i = 0; i < imgData.length; i++) {
+          //순환문을 이용해서 이미지 배열 담기
           formData.append("image", imgData[i]);
         }
         formData.append(
           "dto",
           new Blob([JSON.stringify(data)], { type: "application/json" }),
         );
-        await createPost(formData);
+        const res = await createPost(formData);
+        console.log("res.postId", res.postId);
+        const postId = res.postId;
         alert("게시글이 등록되었습니다.");
-        navigate(`/deal`);
+        navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
         console.log("error", err);
       }
-    else {
-      alert("내용을 모두 채워주세요.");
+    } else {
+      alert("내용을 모두 채운 후 다시 등록해주세요.");
     }
   };
 
   return (
     <>
       <Wrapper1>
-        <Delete
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          X
-        </Delete>
+        <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
       </Wrapper1>
       <Wrapper>
@@ -104,18 +105,24 @@ const SalesContent = () => {
         </Images>
         <SubLine />
         <Unisection>
-          {/* <Check src = {uni} ? {redspot} : {greenspot} alt="미완료" />
-           */}
-          {uni.length > 0 ? <Check src={greenspot} /> : <Check src={redspot} />}
+          {formData.uni.length > 0 ? (
+            <Check src={greenspot} />
+          ) : (
+            <Check src={redspot} />
+          )}
           <Title>학교</Title>
-          <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
+          <p>
+            {formData.uni.length > 0 && !isOpen
+              ? formData.uni
+              : "학교를 선택해주세요"}
+          </p>
           <ChoiceBtn onClick={toggleModal}>
             <img src={choiceuni} alt="검색" />
           </ChoiceBtn>
         </Unisection>
         <SubLine />
         <Titlesection>
-          {title.length > 0 ? (
+          {formData.title.length > 0 ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
@@ -123,15 +130,15 @@ const SalesContent = () => {
           <Title>제목</Title>
           <input
             placeholder="어떤 물품을 양도 중이신가요?"
-            value={title}
+            value={formData.title}
             onChange={e => {
-              setTitle(e.target.value);
+              setFormData(prevData => ({ ...prevData, title: e.target.value }));
             }}
           />
         </Titlesection>
         <SubLine />
         <PriceSection>
-          {price.length > 0 ? (
+          {formData.price.length > 0 ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
@@ -139,26 +146,29 @@ const SalesContent = () => {
           <Title>가격</Title>
           <input
             placeholder="어느 정도의 가격에 판매하실 예정인가요?"
-            value={price}
+            value={formData.price}
             onChange={e => {
-              setPrice(e.target.value);
+              setFormData(prevData => ({ ...prevData, price: e.target.value }));
             }}
           />
         </PriceSection>
         <SubLine />
         <ContentSection>
-          {content.length > 0 ? (
+          {formData.content.length > 0 ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
           )}
           <Title>내용</Title>
           <textarea
-            placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
+            placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요.
           ex) 구매일시, 사용 기간, 생활 오염 정도 등"
-            value={content}
+            value={formData.content}
             onChange={e => {
-              setContent(e.target.value);
+              setFormData(prevData => ({
+                ...prevData,
+                content: e.target.value,
+              }));
             }}
           />
         </ContentSection>
@@ -166,8 +176,8 @@ const SalesContent = () => {
           <Modal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            uni={uni}
-            setUni={setUni}
+            uni={formData.uni}
+            setUni={uni => setFormData(prevData => ({ ...prevData, uni }))}
           />
         ) : null}
       </Wrapper>
@@ -175,6 +185,7 @@ const SalesContent = () => {
   );
 };
 export default SalesContent;
+
 const Wrapper1 = styled.div`
   height: 117px;
   width: 100%;

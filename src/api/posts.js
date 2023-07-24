@@ -18,8 +18,7 @@ export const FinishDeal = async (postId, buyerId) => {
 export const getDetail = async postId => {
   try {
     const res = await client.get(`posts/${postId}`);
-
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -30,7 +29,6 @@ export const getDetail = async postId => {
 export const getAllPosts = async postId => {
   try {
     const res = await client.get(`posts`);
-
     console.log(res.data);
     return res.data;
   } catch (err) {
@@ -58,6 +56,7 @@ export const createPost = async formData => {
       },
     });
     console.log(res);
+    return res.data;
   } catch (err) {
     console.log("에러 발생", err);
   }

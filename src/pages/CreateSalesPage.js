@@ -7,6 +7,7 @@ import SalesContent from "../components/CreateSales/SalesContent";
 const CreateSalesPage = () => {
   return (
     <div>
+      <Header handleCancel={handleCancel} handleRegister={handleRegister}/>
       <SalesContent />
     </div>
   );
