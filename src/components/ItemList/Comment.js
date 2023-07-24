@@ -24,8 +24,11 @@ const Root = styled.div`
   background: #ffee94;
   padding: 0.7rem;
   height: 3rem;
-  border-bottom: 1px solid grey;
   margin: 0rem 0.7rem;
+  & + & {
+    border-top: 1px solid #808080;
+  }
+
   /* border: 1px solid lightgrey; */
 `;
 
