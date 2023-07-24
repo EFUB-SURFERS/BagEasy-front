@@ -26,7 +26,7 @@ const Item = ({ post }) => {
           {post.isSold ? <SoldTag>판매완료</SoldTag> : <Tag>판매중</Tag>}
           <Favorites>
             <HeartImg src={heartImg} />
-            <FavoritesNum>2</FavoritesNum>
+            <FavoritesNum>{post.heartCount}</FavoritesNum>
           </Favorites>
         </Footer>
       </Info>
