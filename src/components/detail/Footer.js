@@ -12,7 +12,7 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
+const Footer = ({ heartCount, postId, sellerId, price, isSolded, myId }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
@@ -60,7 +60,7 @@ const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
           src={isHearted ? heart : emptyheart}
           onClick={handleHeartClick}
         />
-        <HeartCount>2</HeartCount>
+        <HeartCount>{heartCount}</HeartCount>
       </Heart>
       <Line />
       <Price>{price}</Price>

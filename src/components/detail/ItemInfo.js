@@ -55,6 +55,7 @@ const ItemInfo = ({ postId }) => {
       <CommentList />
       <Comment />
       <Footer
+        heartCount={post.heartCount}
         postId={post.postId}
         sellerId={post.sellerId}
         price={post.price}
