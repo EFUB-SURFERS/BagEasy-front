@@ -10,20 +10,40 @@ import emptyimage from "../../assets/emptyimage.png";
 import redspot from "../../assets/redspot.png";
 import greenspot from "../../assets/greenspot.png";
 
-const SalesContent = () => {
+const SalesContent = ({ originalData }) => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    //전송할 데이터
-    uni: "",
-    title: "",
-    price: "",
-    content: "",
-  });
-  const [imgFile, setImgFile] = useState([]); //전송할 이미지 데이터
+  const [loading, setLoading] = useState(true);
+  const [modifiedData, setModifiedData] = useState({});
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // 데이터를 받아온 후 modifiedData를 업데이트
+      setModifiedData({
+        uni: originalData?.school || "",
+        title: originalData?.postTitle || "",
+        price: originalData?.price || "",
+        content: originalData?.postContent || "",
+      });
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer); // 컴포넌트가 unmount되면 타이머를 클리어하여 메모리 누수 방지
+  }, [originalData]);
+
+  const images = originalData.imageResponseDtos
+    ? originalData.imageResponseDtos.map(item => item.imageUrl)
+    : [];
+
+  const [imgFile, setImgFile] = useState(images); //전송할 이미지 데이터
+
+  console.log("imageResponseDtos", originalData.imageResponseDtos);
+  console.log("images", images);
 
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
   const imgRef = useRef();
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
@@ -35,12 +55,12 @@ const SalesContent = () => {
     );
     const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
     setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setFormData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    setModifiedData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
-    const { uni, title, price, content, imgData } = formData;
-    if (imgFile.length > 0 && uni && title && price && content) {
+    const { uni, title, price, content, imgData } = modifiedData;
+    if (imgFile && uni && title && price && content) {
       //모든 데이터가 있을때 등록 시도
       try {
         let data = {
@@ -97,7 +117,7 @@ const SalesContent = () => {
             onChange={saveImgFile}
             multiple
           />
-          {imgFile.length > 0 ? (
+          {imgFile ? (
             imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
           ) : (
             <img src={emptyimage} />
@@ -105,15 +125,15 @@ const SalesContent = () => {
         </Images>
         <SubLine />
         <Unisection>
-          {formData.uni.length > 0 ? (
+          {modifiedData.uni ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
           )}
           <Title>학교</Title>
           <p>
-            {formData.uni.length > 0 && !isOpen
-              ? formData.uni
+            {modifiedData.uni && !isOpen
+              ? modifiedData.uni
               : "학교를 선택해주세요"}
           </p>
           <ChoiceBtn onClick={toggleModal}>
@@ -122,7 +142,7 @@ const SalesContent = () => {
         </Unisection>
         <SubLine />
         <Titlesection>
-          {formData.title.length > 0 ? (
+          {modifiedData.title ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
@@ -130,15 +150,18 @@ const SalesContent = () => {
           <Title>제목</Title>
           <input
             placeholder="어떤 물품을 양도 중이신가요?"
-            value={formData.title}
+            value={modifiedData.title}
             onChange={e => {
-              setFormData(prevData => ({ ...prevData, title: e.target.value }));
+              setModifiedData(prevData => ({
+                ...prevData,
+                title: e.target.value,
+              }));
             }}
-          />
+          ></input>
         </Titlesection>
         <SubLine />
         <PriceSection>
-          {formData.price.length > 0 ? (
+          {modifiedData.price ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
@@ -146,15 +169,18 @@ const SalesContent = () => {
           <Title>가격</Title>
           <input
             placeholder="어느 정도의 가격에 판매하실 예정인가요?"
-            value={formData.price}
+            value={modifiedData.price}
             onChange={e => {
-              setFormData(prevData => ({ ...prevData, price: e.target.value }));
+              setModifiedData(prevData => ({
+                ...prevData,
+                price: e.target.value,
+              }));
             }}
           />
         </PriceSection>
         <SubLine />
         <ContentSection>
-          {formData.content.length > 0 ? (
+          {modifiedData.content ? (
             <Check src={greenspot} />
           ) : (
             <Check src={redspot} />
@@ -163,9 +189,9 @@ const SalesContent = () => {
           <textarea
             placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요.
           ex) 구매일시, 사용 기간, 생활 오염 정도 등"
-            value={formData.content}
+            value={modifiedData.content}
             onChange={e => {
-              setFormData(prevData => ({
+              setModifiedData(prevData => ({
                 ...prevData,
                 content: e.target.value,
               }));
@@ -176,8 +202,8 @@ const SalesContent = () => {
           <Modal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
-            uni={formData.uni}
-            setUni={uni => setFormData(prevData => ({ ...prevData, uni }))}
+            uni={modifiedData.uni}
+            setUni={uni => setModifiedData(prevData => ({ ...prevData, uni }))}
           />
         ) : null}
       </Wrapper>
