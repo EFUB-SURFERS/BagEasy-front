@@ -18,8 +18,7 @@ export const FinishDeal = async (postId, buyerId) => {
 export const getDetail = async postId => {
   try {
     const res = await client.get(`posts/${postId}`);
-
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -27,10 +26,9 @@ export const getDetail = async postId => {
 };
 
 //판매글 전체조회 api
-export const getAllPosts = async postId => {
+export const getAllPosts = async () => {
   try {
     const res = await client.get(`posts`);
-
     console.log(res.data);
     return res.data;
   } catch (err) {
@@ -49,15 +47,17 @@ export const deleteDetail = async postId => {
   }
 };
 
-// export const deleteDetail = async postId => {
-//   if (window.confirm("게시글을 삭제하시겠습니까?")) {
-//     try {
-//       const res = await client.delete(`posts/${postId}`);
-//       console.log(res.data);
-//       return res.data;
-//     } catch (err) {
-//       console.log("에러 발생", err);
-//     }
-
-//   }
-// };
+// 판매글 작성 api
+export const createPost = async formData => {
+  try {
+    const res = await client.post(`posts`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};

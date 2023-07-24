@@ -12,7 +12,7 @@ const Toggle = ({ onToggle, filter }) => {
 
 const Wrapper = styled.div`
   display: flex;
-  z-index: 0;
+  /* z-index: 0; */
   margin-left: auto;
 `;
 
