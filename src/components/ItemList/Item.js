@@ -4,7 +4,6 @@ import heartImg from "../../assets/itemListPage/heartImg.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
 const Item = ({ post }) => {
-  console.log(post);
   return (
     <Wrapper>
       <ImageWrapper>

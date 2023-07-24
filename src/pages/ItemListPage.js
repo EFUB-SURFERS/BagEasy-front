@@ -22,7 +22,6 @@ const ItemListPage = () => {
       const data = await getAllPosts();
 
       setLoading(false);
-      console.log("data", data);
       setPosts(data);
     }
     fetchData();

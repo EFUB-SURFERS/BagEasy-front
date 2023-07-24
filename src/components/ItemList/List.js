@@ -5,16 +5,6 @@ import Item from "./Item";
 const List = ({ posts, margintop = "97px", marginbottom = 0 }) => {
   return (
     <Wrapper margintop={margintop} marginbottom={marginbottom}>
-      {/* <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item /> */}
       {posts.map((post, key) => (
         <Item post={post} key={key} />
       ))}
