@@ -27,7 +27,7 @@
 <br>
 
 ## 📁 폴더 구조
-```
+```javascript
 ├── node_modules
 ├── README.md
 ├── package-lock.json
