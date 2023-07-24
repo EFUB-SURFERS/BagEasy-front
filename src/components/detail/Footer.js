@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { getDetail, deleteDetail } from "../../api/posts";
+import { deleteDetail } from "../../api/posts";
+import { cancelLikes, addLikes } from "../../api/likes";
 
 import SubMenuModal from "./SubMenuModal";
 
@@ -23,16 +24,25 @@ const Footer = ({
 }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  // const [isHearted, setIsHearted] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
+
 
   const handleEditClick = ({}) => {
     navigate("/modify/" + postId);
   };
 
+
   useEffect(() => {
     setIsWirter(sellerId === myId);
+    setLoading(false);
   }, [sellerId, myId]);
+
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleDeleteClick = async () => {
     if (window.confirm("게시글을 삭제하시겠습니까?")) {
@@ -52,8 +62,23 @@ const Footer = ({
     setIsSubMenuOpen(prev => !prev);
   };
 
-  const handleHeartClick = () => {
-    isLiked(prev => !prev);
+  const handleHeartClick = async () => {
+    if (isLiked) {
+      try {
+        await cancelLikes(postId);
+      } catch (err) {
+        console.log("error", err);
+      }
+    } else {
+      try {
+        await addLikes(postId);
+        // setIsLiked(!isLiked);
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
+    window.location.reload();
+    // location.reload();
   };
 
   const handleChatClick = () => {
