@@ -6,6 +6,7 @@ import ChatRoomPage from "./pages/ChatRoomPage";
 import Loading from "./pages/LoadingPage";
 import DetailPage from "./pages/DetailPage";
 import CreateSalesPage from "./pages/CreateSalesPage";
+import ModifySalesPage from "./pages/ModifySalesPage";
 import ItemListPage from "./pages/ItemListPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import MyPage from "./pages/MyPage";
@@ -24,6 +25,7 @@ function App() {
       <Route path="/chats/:roomId" element={<ChatRoomPage />} />
       <Route path="/detail/:postId" element={<DetailPage />} />
       <Route path="/create" element={<CreateSalesPage />} />
+      <Route path="/modify/:postId" element={<ModifySalesPage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/deal" element={<Purchase />} />
       <Route path="/" element={<Start />} />

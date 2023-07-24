@@ -18,8 +18,8 @@ const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
-  const handleEditClick = () => {
-    navigate("/create");
+  const handleEditClick = ({}) => {
+    navigate("/modify/" + postId);
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
 
   const handleChatClick = () => {
     // 후에 roomId받아서 채팅방으로 이동
-    navigate("/chats/:roomId"); 
+    navigate("/chats/:roomId");
   };
 
   return (

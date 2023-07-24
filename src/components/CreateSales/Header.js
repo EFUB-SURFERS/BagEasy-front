@@ -1,21 +1,34 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ onRegisterButtonClick }) => {
-  const navigate = useNavigate();
+const Header = ({
+  handleCancel,
+  handleRegister,
+  handleRegisterButtonClick,
+}) => {
   return (
     <Wrapper>
-      <Delete
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        X
-      </Delete>
-      <Done onClick={onRegisterButtonClick}>완료</Done>
+      <Delete onClick={handleCancel}>X</Delete>
+      <Done onClick={handleRegisterButtonClick}>완료</Done>
     </Wrapper>
   );
 };
+
+// const Header = ({ onRegisterButtonClick }) => {
+//   const navigate = useNavigate();
+//   return (
+//     <Wrapper>
+//       <Delete
+//         onClick={() => {
+//           navigate(-1);
+//         }}
+//       >
+//         X
+//       </Delete>
+//       <Done onClick={onRegisterButtonClick}>완료</Done>
+//     </Wrapper>
+//   );
+// };
 export default Header;
 
 const Wrapper = styled.div`
