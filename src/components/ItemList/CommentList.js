@@ -1,12 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import { getComments } from "../../api/comments";
 
-const CommentList = () => {
+const CommentList = ({ postId }) => {
   const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getComments(2);
+
+      // setLoading(false);
+      setComments(data);
+    }
+    fetchData();
+  }, []);
+
   return (
     <Wrapper>
       <CommentWrapper open={open}>
@@ -23,12 +36,21 @@ const CommentList = () => {
         </Header>
 
         <List>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
+          {/* 더미 데이터 전달 */}
+          <Comment
+            comment={{
+              commentId: "1",
+              memberId: "1",
+              postId: "1",
+              commentContent: "우왕",
+              isSecret: "true",
+              createdAt: "2023-05-20T20:50:13.4478404",
+              modifiedAt: "2023-05-20T20:50:13.4478404",
+            }}
+          />
+          {comments.map(comment => (
+            <Comment comment={comment} />
+          ))}
         </List>
       </CommentWrapper>
       <Footer>

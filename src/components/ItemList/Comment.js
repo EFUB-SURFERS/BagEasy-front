@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Profile from "../Common/Profile";
 
-const Comment = () => {
+const Comment = ({ comment }) => {
   return (
     <Root>
       {/* <Profile>
@@ -11,7 +11,7 @@ const Comment = () => {
       <Profile nickname={"Jjm0829"} width="23px" height="23px" />
       <Wrapper>
         <Nickname>jjm0829</Nickname>
-        <Text>거래 원합니다. 채팅 확인해주세요...</Text>
+        <Text>{comment.commentContent}</Text>
       </Wrapper>
     </Root>
   );
