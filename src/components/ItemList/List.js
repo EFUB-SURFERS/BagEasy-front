@@ -2,9 +2,10 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = ({ margintop = "97px", marginbottom = 0 }) => {
+const List = ({ posts, margintop = "97px", marginbottom = 0 }) => {
   return (
     <Wrapper margintop={margintop} marginbottom={marginbottom}>
+      {/* <Item />
       <Item />
       <Item />
       <Item />
@@ -13,8 +14,10 @@ const List = ({ margintop = "97px", marginbottom = 0 }) => {
       <Item />
       <Item />
       <Item />
-      <Item />
-      <Item />
+      <Item /> */}
+      {posts.map((post, key) => (
+        <Item post={post} key={key} />
+      ))}
     </Wrapper>
   );
 };
