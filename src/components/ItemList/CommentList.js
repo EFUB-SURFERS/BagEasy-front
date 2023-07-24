@@ -25,7 +25,7 @@ const CommentList = ({ postId }) => {
       <CommentWrapper open={open}>
         <Header>
           <Text>댓글</Text>
-          <Count>2개</Count>
+          <Count>{`${comments.length}개`}</Count>
           <ArrowWrapper
             onClick={() => {
               setOpen(prev => !prev);
