@@ -1,11 +1,20 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
 const Item = ({ post }) => {
+  const navigate = useNavigate();
+
+  const goToDetailPage = () => {
+    navigate(`/detail/${post.postId}`);
+  };
+
+  console.log(post);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={goToDetailPage}>
       <ImageWrapper>
         <Image src={post.imageResponseDtos[0].imageUrl} />
       </ImageWrapper>
