@@ -30,11 +30,13 @@ const SalesContent = ({ originalData }) => {
     return () => clearTimeout(timer); // 컴포넌트가 unmount되면 타이머를 클리어하여 메모리 누수 방지
   }, [originalData]);
 
-  const images = originalData.imageResponseDtos
-    ? originalData.imageResponseDtos.map(item => item.imageUrl)
-    : [];
+  const images = originalData.imageResponseDtos;
 
-  const [imgFile, setImgFile] = useState(images); //전송할 이미지 데이터
+  // const images = originalData.imageResponseDtos
+  //   ? originalData.imageResponseDtos.map(item => item.imageUrl)
+  //   : [];
+
+  const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
 
   console.log("imageResponseDtos", originalData.imageResponseDtos);
   console.log("images", images);
@@ -100,7 +102,7 @@ const SalesContent = ({ originalData }) => {
       <Wrapper>
         <Line />
         <Images>
-          {imgFile.length > 0 ? (
+          {images.length > 0 ? (
             <Check className="check" src={greenspot} />
           ) : (
             <Check className="check" src={redspot} />
@@ -117,11 +119,20 @@ const SalesContent = ({ originalData }) => {
             onChange={saveImgFile}
             multiple
           />
-          {imgFile ? (
-            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
-          ) : (
-            <img src={emptyimage} />
-          )}
+          {imgFile &&
+            imgFile.map((fileURL, index) => (
+              <img key={index} src={fileURL} alt={`Image ${index}`} />
+            ))}
+
+          {/* 이미지 파일이 없으면 서버에서 가져온 이미지 출력 */}
+          {!imgFile &&
+            images.map(imageData => (
+              <img
+                key={imageData.imageId}
+                src={imageData.imageUrl}
+                alt={`Image ${imageData.imageId}`}
+              />
+            ))}
         </Images>
         <SubLine />
         <Unisection>
