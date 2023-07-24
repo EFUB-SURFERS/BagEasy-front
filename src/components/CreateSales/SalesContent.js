@@ -8,7 +8,7 @@ import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/choiceuni.png";
 import emptyimage from "../../assets/emptyimage.png";
 import redspot from "../../assets/redspot.png";
-// import client from "../../api/client";
+import greenspot from "../../assets/greenspot.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
@@ -37,26 +37,30 @@ const SalesContent = () => {
   };
 
   const handleRegisterButtonClick = async () => {
-    try {
-      let data = {
-        postTitle: title,
-        postContent: content,
-        price: price,
-        school: uni,
-      };
-      const formData = new FormData();
-      for (let i = 0; i < imgData.length; i++) {
-        formData.append("image", imgData[i]);
+    if (imgFile && uni && title && price && content) //모든 내용이 있을 때만 등록 시도
+      try {
+        let data = {
+          postTitle: title,
+          postContent: content,
+          price: price,
+          school: uni,
+        };
+        const formData = new FormData();
+        for (let i = 0; i < imgData.length; i++) {
+          formData.append("image", imgData[i]);
+        }
+        formData.append(
+          "dto",
+          new Blob([JSON.stringify(data)], { type: "application/json" }),
+        );
+        await createPost(formData);
+        alert("게시글이 등록되었습니다.");
+        navigate(`/deal`);
+      } catch (err) {
+        console.log("error", err);
       }
-      formData.append(
-        "dto",
-        new Blob([JSON.stringify(data)], { type: "application/json" }),
-      );
-      await createPost(formData);
-      alert("게시글이 등록되었습니다.");
-      navigate(`/deal`);
-    } catch (err) {
-      console.log("error", err);
+    else {
+      alert("내용을 모두 채워주세요.");
     }
   };
 
@@ -75,7 +79,11 @@ const SalesContent = () => {
       <Wrapper>
         <Line />
         <Images>
-          {/* <Check src={redspot} alt="미완료" /> */}
+          {imgFile.length > 0 ? (
+            <Check className="check" src={greenspot} />
+          ) : (
+            <Check className="check" src={redspot} />
+          )}
           <AddBtn for="file">
             <p>+</p>
           </AddBtn>
@@ -96,7 +104,9 @@ const SalesContent = () => {
         </Images>
         <SubLine />
         <Unisection>
-          <Check src={redspot} alt="미완료" />
+          {/* <Check src = {uni} ? {redspot} : {greenspot} alt="미완료" />
+           */}
+          {uni.length > 0 ? <Check src={greenspot} /> : <Check src={redspot} />}
           <Title>학교</Title>
           <p>{uni.length > 0 && !isOpen ? uni : "학교를 선택해주세요"}</p>
           <ChoiceBtn onClick={toggleModal}>
@@ -105,7 +115,11 @@ const SalesContent = () => {
         </Unisection>
         <SubLine />
         <Titlesection>
-          <Check src={redspot} alt="미완료" />
+          {title.length > 0 ? (
+            <Check src={greenspot} />
+          ) : (
+            <Check src={redspot} />
+          )}
           <Title>제목</Title>
           <input
             placeholder="어떤 물품을 양도 중이신가요?"
@@ -117,7 +131,11 @@ const SalesContent = () => {
         </Titlesection>
         <SubLine />
         <PriceSection>
-          <Check src={redspot} alt="미완료" />
+          {price.length > 0 ? (
+            <Check src={greenspot} />
+          ) : (
+            <Check src={redspot} />
+          )}
           <Title>가격</Title>
           <input
             placeholder="어느 정도의 가격에 판매하실 예정인가요?"
@@ -129,7 +147,11 @@ const SalesContent = () => {
         </PriceSection>
         <SubLine />
         <ContentSection>
-          <Check src={redspot} alt="미완료" />
+          {content.length > 0 ? (
+            <Check src={greenspot} />
+          ) : (
+            <Check src={redspot} />
+          )}
           <Title>내용</Title>
           <textarea
             placeholder="구매에 도움이 될 만한 물품의 세부 사항(특징)을 알려주세요. 
@@ -271,6 +293,11 @@ const Images = styled.div`
 
   #file {
     display: none;
+  }
+
+  .check {
+    width: 5px;
+    height: 5px;
   }
 `;
 
