@@ -1,13 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import profileImg2 from "../../assets/itemListPage/profileImg2.png";
+import Profile from "../Common/Profile";
 
 const Comment = () => {
   return (
     <Root>
-      <Profile>
+      {/* <Profile>
         <ProfileImg src={profileImg2} />
-      </Profile>
+      </Profile> */}
+      <Profile nickname={"Jjm0829"} />
       <Wrapper>
         <Nickname>jjm0829</Nickname>
         <Text>거래 원합니다. 채팅 확인해주세요...</Text>
@@ -27,14 +29,14 @@ const Root = styled.div`
   /* border: 1px solid lightgrey; */
 `;
 
-const Profile = styled.div`
-  width: 1.4rem;
-  height: 1.4rem;
-`;
+// const Profile = styled.div`
+//   width: 1.4rem;
+//   height: 1.4rem;
+// `;
 
-const ProfileImg = styled.img`
-  width: 100%;
-`;
+// const ProfileImg = styled.img`
+//   width: 100%;
+// `;
 
 const Wrapper = styled.div`
   display: flex;
