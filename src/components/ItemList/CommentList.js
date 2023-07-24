@@ -4,21 +4,43 @@ import Comment from "./Comment";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
-import { getComments } from "../../api/comments";
+import { getComments, createComment } from "../../api/comments";
+import { getMyProfile } from "../../api/member";
 
-const CommentList = ({ postId }) => {
+const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [refresh, setRefresh] = useState(0);
 
+  //댓글 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getComments(2);
-
-      // setLoading(false);
+      const data = await getComments(postId);
       setComments(data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
+
+  //댓글 작성
+  const postComment = () => {
+    async function postData() {
+      const memberId = await getMyProfile(1).memberId;
+      const data = await createComment(
+        postId,
+        {
+          memberId: memberId,
+          commentContent: comment,
+          isSecret: false,
+        },
+        { headers: { "Content-Type": "application/json" } },
+      );
+
+      setRefresh(prev => prev + 1);
+      setComment("");
+    }
+    postData();
+  };
 
   return (
     <Wrapper>
@@ -36,26 +58,20 @@ const CommentList = ({ postId }) => {
         </Header>
 
         <List>
-          {/* 더미 데이터 전달 */}
-          <Comment
-            comment={{
-              commentId: "1",
-              memberId: "1",
-              postId: "1",
-              commentContent: "우왕",
-              isSecret: "true",
-              createdAt: "2023-05-20T20:50:13.4478404",
-              modifiedAt: "2023-05-20T20:50:13.4478404",
-            }}
-          />
-          {comments.map(comment => (
-            <Comment comment={comment} />
+          {comments.map((comment, key) => (
+            <Comment comment={comment} key={key} />
           ))}
         </List>
       </CommentWrapper>
       <Footer>
-        <CommentInput placeholder="댓글 쓰기..." />
-        <SendBtn>
+        <CommentInput
+          placeholder="댓글 쓰기..."
+          value={comment}
+          onChange={e => {
+            setComment(e.target.value);
+          }}
+        />
+        <SendBtn onClick={postComment}>
           <SendImg src={sendBtn} />
         </SendBtn>
       </Footer>
