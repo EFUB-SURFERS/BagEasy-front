@@ -53,6 +53,8 @@ const SalesContent = () => {
         new Blob([JSON.stringify(data)], { type: "application/json" }),
       );
       await createPost(formData);
+      alert("게시글이 등록되었습니다.");
+      navigate(`/deal`);
     } catch (err) {
       console.log("error", err);
     }
