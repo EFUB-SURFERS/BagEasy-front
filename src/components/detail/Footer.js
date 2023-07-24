@@ -48,6 +48,11 @@ const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
     setIsHearted(prev => !prev);
   };
 
+  const handleChatClick = () => {
+    // 후에 roomId받아서 채팅방으로 이동
+    navigate("/chats/:roomId"); 
+  };
+
   return (
     <Wrapper>
       <Heart>
@@ -64,7 +69,7 @@ const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
       ) : isSolded ? (
         <Button src={soldButton}></Button>
       ) : (
-        <Button src={chatButton}></Button>
+        <Button src={chatButton} onClick={handleChatClick}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal
