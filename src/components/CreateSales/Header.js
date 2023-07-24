@@ -1,21 +1,34 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-  const navigate = useNavigate();
+const Header = ({
+  handleCancel,
+  handleRegister,
+  handleRegisterButtonClick,
+}) => {
   return (
     <Wrapper>
-      <Delete
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        X
-      </Delete>
-      <Done>완료</Done>
+      <Delete onClick={handleCancel}>X</Delete>
+      <Done onClick={handleRegisterButtonClick}>완료</Done>
     </Wrapper>
   );
 };
+
+// const Header = ({ onRegisterButtonClick }) => {
+//   const navigate = useNavigate();
+//   return (
+//     <Wrapper>
+//       <Delete
+//         onClick={() => {
+//           navigate(-1);
+//         }}
+//       >
+//         X
+//       </Delete>
+//       <Done onClick={onRegisterButtonClick}>완료</Done>
+//     </Wrapper>
+//   );
+// };
 export default Header;
 
 const Wrapper = styled.div`
@@ -49,7 +62,10 @@ const Delete = styled.div`
   padding-bottom: 18px;
 `;
 
-const Done = styled.div`
+const Done = styled.button`
+  border: 0;
+  outline: 0;
+  background: none;
   color: #000;
   font-family: Inter;
   font-size: 18px;
@@ -57,7 +73,7 @@ const Done = styled.div`
   font-weight: 400;
   line-height: normal;
 
-  padding-right: 15px;
-  padding-top: 76px;
-  padding-bottom: 19px;
+  margin-right: 15px;
+  margin-top: 76px;
+  margin-bottom: 19px;
 `;

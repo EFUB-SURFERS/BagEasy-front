@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import Duck from "../assets/duck.png";
+import Duck from "../assets/GoogleLogin/duck.png";
 import Arrow from "../assets/arrow.png";
-import GoogleBtn from "../assets/googleBtn.png";
+import GoogleBtn from "../assets/GoogleLogin/googleBtn.png";
 import { useNavigate } from "react-router-dom";
 
 const GoogleLogin = () => {

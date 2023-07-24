@@ -1,4 +1,4 @@
-import loading from "../assets/loadingIcon.gif";
+import loading from "../assets/Loading/loadingIcon.gif";
 import { styled } from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ const Loading = () => {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
   console.log(code);
-  
+
   const handleLoginPost = async code => {
     const data = {
       code: code,

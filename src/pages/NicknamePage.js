@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { PutNickName } from "../api/nickname";
 import axios from "axios";
 
 const Nickname = () => {

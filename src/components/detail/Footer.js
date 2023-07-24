@@ -12,19 +12,19 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
+const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
-  const handleEditClick = () => {
-    navigate("/create");
+  const handleEditClick = ({}) => {
+    navigate("/modify/" + postId);
   };
 
   useEffect(() => {
-    setIsWirter(sellerNickname === myNickname);
-  }, [sellerNickname, myNickname]);
+    setIsWirter(sellerId === myId);
+  }, [sellerId, myId]);
 
   const handleDeleteClick = async () => {
     if (window.confirm("게시글을 삭제하시겠습니까?")) {
@@ -48,6 +48,11 @@ const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
     setIsHearted(prev => !prev);
   };
 
+  const handleChatClick = () => {
+    // 후에 roomId받아서 채팅방으로 이동
+    navigate("/chats/:roomId");
+  };
+
   return (
     <Wrapper>
       <Heart>
@@ -64,7 +69,7 @@ const Footer = ({ postId, sellerNickname, price, isSolded, myNickname }) => {
       ) : isSolded ? (
         <Button src={soldButton}></Button>
       ) : (
-        <Button src={chatButton}></Button>
+        <Button src={chatButton} onClick={handleChatClick}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal
