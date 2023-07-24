@@ -12,10 +12,18 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = ({ heartCount, postId, sellerId, price, isSolded, myId }) => {
+const Footer = ({
+  isLiked,
+  heartCount,
+  postId,
+  sellerId,
+  price,
+  isSolded,
+  myId,
+}) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [isHearted, setIsHearted] = useState(false);
+  // const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
@@ -45,7 +53,7 @@ const Footer = ({ heartCount, postId, sellerId, price, isSolded, myId }) => {
   };
 
   const handleHeartClick = () => {
-    setIsHearted(prev => !prev);
+    isLiked(prev => !prev);
   };
 
   const handleChatClick = () => {
@@ -57,7 +65,7 @@ const Footer = ({ heartCount, postId, sellerId, price, isSolded, myId }) => {
     <Wrapper>
       <Heart>
         <HeartBtn
-          src={isHearted ? heart : emptyheart}
+          src={isLiked ? heart : emptyheart}
           onClick={handleHeartClick}
         />
         <HeartCount>{heartCount}</HeartCount>
