@@ -13,7 +13,10 @@ const List = ({ posts, margintop = "97px", marginbottom = 0 }) => {
 };
 
 const Wrapper = styled.div`
-  /* z-index: -1; */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
   /* background: lightgreen; */
   display: flex;
   flex-direction: column;
