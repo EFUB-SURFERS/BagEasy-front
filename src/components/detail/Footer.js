@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
+
+import { getDetail, deleteDetail } from "../../api/posts";
 
 import SubMenuModal from "./SubMenuModal";
 
@@ -11,19 +12,32 @@ import chatButton from "../../assets/chatButton.png";
 import soldButton from "../../assets/sold.png";
 import menubar from "../../assets/menubar.png";
 
-const Footer = () => {
-  const [isWirter, setIsWirter] = useState(false);
-  const [isSolded, setIsSolded] = useState(false);
+const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
+  const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
 
-  const handleEditClick = () => {
-    navigate("/create");
+  const handleEditClick = ({}) => {
+    navigate("/modify/" + postId);
   };
 
-  const handleDeleteClick = () => {
-    navigate("/delete");
+  useEffect(() => {
+    setIsWirter(sellerId === myId);
+  }, [sellerId, myId]);
+
+  const handleDeleteClick = async () => {
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
+      try {
+        const Id = postId;
+        const deleteData = await deleteDetail(Id);
+        console.log(deleteData);
+        alert("게시글이 삭제되었습니다.");
+        navigate(-1);
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
   };
 
   const toggleSubMenu = () => {
@@ -32,6 +46,11 @@ const Footer = () => {
 
   const handleHeartClick = () => {
     setIsHearted(prev => !prev);
+  };
+
+  const handleChatClick = () => {
+    // 후에 roomId받아서 채팅방으로 이동
+    navigate("/chats/:roomId");
   };
 
   return (
@@ -44,13 +63,13 @@ const Footer = () => {
         <HeartCount>2</HeartCount>
       </Heart>
       <Line />
-      <Price>30,000원</Price>
+      <Price>{price}</Price>
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
       ) : isSolded ? (
-        <Button src={chatButton}></Button>
-      ) : (
         <Button src={soldButton}></Button>
+      ) : (
+        <Button src={chatButton} onClick={handleChatClick}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import heartImg from "../../assets/heartImg.png";
-import itemImg from "../../assets/itemImg.png";
+import heartImg from "../../assets/itemListPage/heartImg.png";
+import itemImg from "../../assets/itemListPage/itemImg.png";
 
 const Item = () => {
   return (
@@ -17,7 +17,7 @@ const Item = () => {
           <Tag>판매중</Tag>
           <Favorites>
             <HeartImg src={heartImg} />
-            <FavoritesText>2</FavoritesText>
+            <FavoritesNum>2</FavoritesNum>
           </Favorites>
         </Footer>
       </Info>
@@ -27,12 +27,13 @@ const Item = () => {
 
 const Wrapper = styled.div`
   flex: 1;
-  margin: 0rem 1rem;
-  padding: 1rem 0rem;
+  margin: 0rem 1.7rem;
+  padding: 1.7rem 0rem;
   //height: 1rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid #d7d7d7;
+  //background: beige;
 `;
 
 const ImageWrapper = styled.div`
@@ -101,15 +102,15 @@ const Favorites = styled.div`
 `;
 
 const HeartImg = styled.img`
-  width: 13px;
+  width: 18px;
   transform: translateY(1px);
   /* border: 1px solid blue; */
 `;
 
-const FavoritesText = styled.div`
+const FavoritesNum = styled.div`
   margin-left: 5px;
   /* font-weight: bold; */
-  font-size: 15px;
+  font-size: 20px;
   /* border: 1px solid red; */
 `;
 
