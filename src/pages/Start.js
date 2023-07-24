@@ -2,15 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import title from "../assets/title.png";
+import { useNavigate } from "react-router-dom";
 
 const Start = () => {
+  const navigate = useNavigate();
+
   return (
     <StartScreenContainer>
       <Logo>
         <LogoImg src={logo} alt="logo" />
         <TitleImg src={title} alt="title" />
       </Logo>
-      <Button>시작하기</Button>
+      <Button onClick={() => navigate("/login")}>시작하기</Button>
     </StartScreenContainer>
   );
 };
