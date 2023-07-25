@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
-import title from "../assets/title.png";
+import logo from "../assets/StartPage/logo.png";
+import title from "../assets/StartPage/title.png";
 import { useNavigate } from "react-router-dom";
 
 const Start = () => {
