@@ -61,10 +61,10 @@ const Item = ({ post, setRefresh }) => {
 };
 
 const Wrapper = styled.div`
-  flex: 1;
-  margin: 0rem 1.7rem;
-  padding: 1.7rem 0rem;
-  //height: 1rem;
+  margin: 0 27px;
+  padding: 27px 0;
+  height: 167px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #d7d7d7;
