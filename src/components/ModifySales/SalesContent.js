@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import client from "../../api/client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
-import choiceuni from "../../assets/choiceuni.png";
-import emptyimage from "../../assets/emptyimage.png";
-import redspot from "../../assets/redspot.png";
-import greenspot from "../../assets/greenspot.png";
+import choiceuni from "../../assets/post/choiceuni.png";
+import emptyimage from "../../assets/post/emptyimage.png";
+import redspot from "../../assets/post/redspot.png";
+import greenspot from "../../assets/post/greenspot.png";
 
 const SalesContent = ({ originalData }) => {
   const navigate = useNavigate();

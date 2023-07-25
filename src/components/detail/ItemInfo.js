@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
-import { checkLikes } from "../../api/likes";
+import { getLikes } from "../../api/likes";
 
 import Comment from "../ItemList/Comment";
 import CommentList from "../ItemList/CommentList";
@@ -43,7 +43,7 @@ const ItemInfo = ({ postId }) => {
 
   const heartData = async () => {
     try {
-      const heartData = await checkLikes(postId);
+      const heartData = await getLikes(postId);
       setLikes(heartData);
     } catch (err) {
       console.log("error", err);
@@ -64,7 +64,7 @@ const ItemInfo = ({ postId }) => {
         imageResponseDtos={post.imageResponseDtos}
       />
       <CommentList />
-      <Comment />
+      {/* <Comment /> */}
       <Footer
         isLiked={likes.isLiked}
         heartCount={post.heartCount}

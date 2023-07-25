@@ -7,11 +7,11 @@ import { cancelLikes, addLikes } from "../../api/likes";
 
 import SubMenuModal from "./SubMenuModal";
 
-import heart from "../../assets/heart.png";
-import emptyheart from "../../assets/emptyheart.png";
-import chatButton from "../../assets/chatButton.png";
-import soldButton from "../../assets/sold.png";
-import menubar from "../../assets/menubar.png";
+import heart from "../../assets/post/heart.png";
+import emptyheart from "../../assets/post/emptyheart.png";
+import chatButton from "../../assets/post/chatButton.png";
+import soldButton from "../../assets/post/sold.png";
+import menubar from "../../assets/post/menubar.png";
 
 const Footer = ({
   isLiked,
