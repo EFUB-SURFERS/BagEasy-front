@@ -26,7 +26,7 @@ export const getDetail = async postId => {
 };
 
 //판매글 전체조회 api
-export const getAllPosts = async postId => {
+export const getAllPosts = async () => {
   try {
     const res = await client.get(`posts`);
     console.log(res.data);

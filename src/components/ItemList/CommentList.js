@@ -1,18 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
-import openArrow from "../../assets/openArrow.png";
-import closeArrow from "../../assets/closeArrow.png";
-import sendBtn from "../../assets/sendBtn.png";
+import openArrow from "../../assets/itemListPage/openArrow.png";
+import closeArrow from "../../assets/itemListPage/closeArrow.png";
+import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import { getComments, createComment } from "../../api/comments";
+import { getMyProfile } from "../../api/member";
 
-const CommentList = () => {
+const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [refresh, setRefresh] = useState(0);
+
+  //댓글 조회
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getComments(postId);
+      setComments(data);
+    }
+    fetchData();
+  }, [refresh]);
+
+  //댓글 작성
+  const postComment = () => {
+    async function postData() {
+      const memberId = await getMyProfile(1).memberId;
+      const data = await createComment(
+        postId,
+        {
+          memberId: memberId,
+          commentContent: comment,
+          isSecret: false,
+        },
+        { headers: { "Content-Type": "application/json" } },
+      );
+
+      setRefresh(prev => prev + 1);
+      setComment("");
+    }
+    postData();
+  };
+
   return (
     <Wrapper>
       <CommentWrapper open={open}>
         <Header>
           <Text>댓글</Text>
-          <Count>2개</Count>
+          <Count>{`${comments.length}개`}</Count>
           <ArrowWrapper
             onClick={() => {
               setOpen(prev => !prev);
@@ -23,17 +58,20 @@ const CommentList = () => {
         </Header>
 
         <List>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
+          {comments.map((comment, key) => (
+            <Comment comment={comment} key={key} />
+          ))}
         </List>
       </CommentWrapper>
       <Footer>
-        <CommentInput placeholder="댓글 쓰기..." />
-        <SendBtn>
+        <CommentInput
+          placeholder="댓글 쓰기..."
+          value={comment}
+          onChange={e => {
+            setComment(e.target.value);
+          }}
+        />
+        <SendBtn onClick={postComment}>
           <SendImg src={sendBtn} />
         </SendBtn>
       </Footer>
@@ -51,24 +89,29 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  height: 1.2rem;
+  height: 20px;
   display: flex;
   align-items: center;
-  padding: 0.3rem 0.7rem;
+  padding: 4px 13px;
   /* border: 1px solid grey; */
 `;
 
 const Text = styled.div`
-  padding-right: 0.5rem;
+  padding-right: 5px;
 `;
 
 const Count = styled.div`
-  color: grey;
+  color: #848484;
+  font-size: 12px;
 `;
 
 const ArrowWrapper = styled.div`
   margin-left: auto;
-  width: 1rem;
+  margin-top: 2px;
+  width: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Arrow = styled.img`
@@ -78,15 +121,17 @@ const Arrow = styled.img`
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 1rem;
+  border-radius: 10px;
   /* border: 1px solid grey; */
   /* margin: 1rem; */
+  box-sizing: border-box;
+  padding-bottom: 5px;
   margin: 46px 23px 48px 23px;
   width: 344px;
   overflow: hidden;
   background: #ffee94;
-  transition: all 2s;
-  height: ${props => !props.open && `6.1rem`};
+  /* transition: all 0.3s; */
+  height: ${props => (!props.open ? "95px" : "auto")};
 `;
 
 const List = styled.div``;
@@ -96,7 +141,7 @@ const Footer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid #cecece;
   padding-top: 15px;
   padding-bottom: 75px;
   //background: black;
@@ -105,15 +150,18 @@ const Footer = styled.div`
 const CommentInput = styled.input`
   //width: 18rem;
   flex: auto;
-  background: #dddddd;
-  height: 2.5rem;
+  background: #efefef;
+  height: 39px;
   padding: 0 10.99px;
   margin: 0 15px 0 20px;
   border-radius: 1rem;
-  font-size: 15px;
+  font-size: 14px;
   border: none;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    color: #b0b0b0;
   }
 `;
 

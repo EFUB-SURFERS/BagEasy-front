@@ -2,26 +2,24 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = ({ margintop = "97px", marginbottom = 0 }) => {
+const List = ({ posts, margintop = "97px", marginbottom = 0 }) => {
   return (
     <Wrapper margintop={margintop} marginbottom={marginbottom}>
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
+      {posts.length === 0 ? (
+        <NoList>목록이 없어요.</NoList>
+      ) : (
+        posts.map((post, key) => <Item post={post} key={key} />)
+      )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-  //background: lightgreen;
+  /* background: lightgreen; */
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -34,6 +32,13 @@ const Wrapper = styled.div`
   &::-webkit-scrollbar {
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
   }
+`;
+
+const NoList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
 `;
 
 export default List;

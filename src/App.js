@@ -21,7 +21,7 @@ function App() {
       <Route path="/" element={<Start />} />
       <Route path="/login" element={<GoogleLogin />} />
       <Route path="/loading" element={<Loading />} />
-      
+
       {/* 로그인 해야 접근 가능한 페이지 */}
       <Route element={<PrivateRoute />}>
         <Route path="/nickname" element={<Nickname />} />
@@ -34,8 +34,8 @@ function App() {
         <Route path="/modify/:postId" element={<ModifySalesPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/deal" element={<Purchase />} />
-          
-      <Route path="/" element={<Start />} />
+
+        <Route path="/" element={<Start />} />
       </Route>
     </Routes>
   );
