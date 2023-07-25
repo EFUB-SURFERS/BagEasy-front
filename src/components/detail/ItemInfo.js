@@ -73,6 +73,7 @@ const ItemInfo = ({ postId }) => {
         price={post.price}
         isSold={post.isSold}
         myId={myId.memberId}
+        sellerNickname={post.sellerNickname}
       />
     </Div>
   );
