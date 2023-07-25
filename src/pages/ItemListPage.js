@@ -34,7 +34,7 @@ const ItemListPage = () => {
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List posts={posts} margintop="180px" marginbottom="70px" />
+        <List posts={posts} margintop="138px" marginbottom="70px" />
       )}
       <WriteBtn />
     </Wrapper>
@@ -44,6 +44,7 @@ const ItemListPage = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: "Noto Sans KR";
 `;
 
 const Loader = styled.div`
