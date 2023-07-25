@@ -12,6 +12,8 @@ const ItemListPage = () => {
   const [filter, setFilter] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(0);
+
   const navigate = useNavigate();
   const onToggle = () => {
     setFilter(prev => !prev);
@@ -25,7 +27,7 @@ const ItemListPage = () => {
       setPosts(data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
   return (
     <Wrapper>
       <Header />
@@ -34,7 +36,12 @@ const ItemListPage = () => {
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List posts={posts} margintop="180px" marginbottom="70px" />
+        <List
+          posts={posts}
+          setRefresh={setRefresh}
+          margintop="138px"
+          marginbottom="70px"
+        />
       )}
       <WriteBtn />
     </Wrapper>
@@ -44,6 +51,7 @@ const ItemListPage = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: "Noto Sans KR";
 `;
 
 const Loader = styled.div`
