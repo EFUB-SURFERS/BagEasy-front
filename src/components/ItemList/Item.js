@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { addLike, checkLike, deleteLike } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
+import emptyheart from "../../assets/itemListPage/emptyheart.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Item = ({ post }) => {
+const Item = ({ post, setRefresh }) => {
+  const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
   const goToDetailPage = () => {
     navigate(`/detail/${post.postId}`);
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await checkLike(post.postId);
+
+      setIsLiked(data.isLiked);
+    }
+    fetchData();
+  }, []);
+
+  const like = async e => {
+    e.stopPropagation();
+
+    if (isLiked) {
+      await deleteLike(post.postId);
+      setIsLiked(false);
+    } else {
+      await addLike(post.postId);
+      setIsLiked(true);
+    }
+
+    setRefresh(prev => prev + 1);
   };
 
   console.log(post);
@@ -25,7 +51,7 @@ const Item = ({ post }) => {
         <Footer>
           {post.isSold ? <SoldTag>판매완료</SoldTag> : <Tag>판매중</Tag>}
           <Favorites>
-            <HeartImg src={heartImg} />
+            <HeartImg src={isLiked ? heartImg : emptyheart} onClick={like} />
             <FavoritesNum>{post.heartCount}</FavoritesNum>
           </Favorites>
         </Footer>
