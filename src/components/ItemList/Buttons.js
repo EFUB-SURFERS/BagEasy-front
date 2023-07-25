@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import chatImg from "../../assets/chatImg.png";
-import myPageImg from "../../assets/myPageImg.png";
+import chatImg from "../../assets/itemListPage/chatImg.png";
+import myPageImg from "../../assets/itemListPage/myPageImg.png";
 
 const Buttons = ({ navigate }) => {
   return (

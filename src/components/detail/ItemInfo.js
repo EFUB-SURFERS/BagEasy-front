@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
+import { getLikes } from "../../api/likes";
 
 import Comment from "../ItemList/Comment";
 import CommentList from "../ItemList/CommentList";
@@ -11,18 +12,20 @@ import Footer from "./Footer";
 
 const ItemInfo = ({ postId }) => {
   const [post, setPost] = useState("");
-  const [myNickname, setMyNickname] = useState("");
+  const [myId, setMyId] = useState("");
+  const [likes, setLikes] = useState("");
 
   useEffect(() => {
     fetchPostData();
     userData();
+    heartData();
   }, []);
 
   const fetchPostData = async () => {
     try {
       const getData = await getDetail(postId);
       setPost(getData);
-      console.log("getData", getData);
+      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -31,15 +34,23 @@ const ItemInfo = ({ postId }) => {
   const userData = async () => {
     try {
       const getData = await getMyProfile();
-      setMyNickname(getData);
-      console.log("getData", getData);
+      setMyId(getData);
+      // console.log("getData", getData);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  const heartData = async () => {
+    try {
+      const heartData = await getLikes(postId);
+      setLikes(heartData);
     } catch (err) {
       console.log("error", err);
     }
   };
 
   if (!post) {
-    console.log(getDetail);
     return <div>Loading...</div>;
   }
 
@@ -47,18 +58,21 @@ const ItemInfo = ({ postId }) => {
     <Div>
       <ItemContent
         sellerNickname={post.sellerNickname}
+        school={post.school}
         postTitle={post.postTitle}
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
       <CommentList />
-      <Comment />
+      {/* <Comment /> */}
       <Footer
+        isLiked={likes.isLiked}
+        heartCount={post.heartCount}
         postId={post.postId}
-        sellerNickname={post.sellerNickname}
+        sellerId={post.sellerId}
         price={post.price}
         isSold={post.isSold}
-        myNickname={myNickname.nickname}
+        myId={myId.memberId}
       />
     </Div>
   );

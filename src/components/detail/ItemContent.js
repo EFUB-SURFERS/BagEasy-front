@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import picture from "../../assets/picture.png";
-import profile from "../../assets/profile.png";
-import picture2 from "../../assets/picture2.png";
-import next from "../../assets/next.png";
-import before from "../../assets/before.png";
-import spot from "../../assets/spot.png";
+import profile from "../../assets/post/profile.png";
+import next from "../../assets/post/next.png";
+import before from "../../assets/post/before.png";
+import spot from "../../assets/post/spot.png";
 
 const ItemContent = ({
   sellerNickname,
   postTitle,
   postContent,
   imageResponseDtos,
+  school,
 }) => {
   const images = imageResponseDtos
     ? imageResponseDtos.map(item => item.imageUrl)
@@ -56,7 +55,7 @@ const ItemContent = ({
           <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
             <img src={spot} />
-            University of Northern Colorado
+            {school}
           </SellerUniv>
         </SellerInfo>
       </Seller>
@@ -169,14 +168,10 @@ const Item = styled.div`
   width: 100%;
   height: 200px;
 
-  padding-left: 23px;
-  padding-right: 10px;
-
   border-bottom: 0.5px solid #cecece;
 `;
 const ItemTitle = styled.div`
   display: flex;
-  width: 361px;
   height: 48px;
   flex-direction: column;
   justify-content: center;
@@ -188,13 +183,12 @@ const ItemTitle = styled.div`
   font-weight: 500;
   line-height: normal;
 
-  padding-left: 23px;
-  padding-top: 10px;
+  padding: 5px 20px;
   flex-shrink: 0;
 `;
 const ItemDescription = styled.div`
   display: flex;
-  width: 362px;
+  /* width: 362px; */
   height: 202px;
   flex-direction: column;
   flex-shrink: 0;
@@ -205,5 +199,6 @@ const ItemDescription = styled.div`
   font-weight: 400;
   line-height: normal;
 
-  padding-left: 23px;
+  padding: 0px 20px;
+  /* padding-left: 23px; */
 `;
