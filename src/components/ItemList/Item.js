@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { addLike, checkLike, deleteLike } from "../../api/likes";
+import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
@@ -16,7 +16,7 @@ const Item = ({ post, setRefresh }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await checkLike(post.postId);
+      const data = await getLikes(post.postId);
 
       setIsLiked(data.isLiked);
     }
@@ -27,10 +27,10 @@ const Item = ({ post, setRefresh }) => {
     e.stopPropagation();
 
     if (isLiked) {
-      await deleteLike(post.postId);
+      await cancelLikes(post.postId);
       setIsLiked(false);
     } else {
-      await addLike(post.postId);
+      await addLikes(post.postId);
       setIsLiked(true);
     }
 
