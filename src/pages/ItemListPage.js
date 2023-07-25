@@ -27,7 +27,7 @@ const ItemListPage = () => {
       setPosts(data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
   return (
     <Wrapper>
       <Header />
