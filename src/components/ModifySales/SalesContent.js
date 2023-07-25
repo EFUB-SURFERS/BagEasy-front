@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../../api/posts";
+import { modifyPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/post/choiceuni.png";
@@ -9,7 +9,7 @@ import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
 
-const SalesContent = ({ originalData }) => {
+const SalesContent = ({ postId, originalData }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
@@ -73,16 +73,14 @@ const SalesContent = ({ originalData }) => {
         const formData = new FormData();
         for (let i = 0; i < imgData.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("image", imgData[i]);
+          formData.append("addImage", imgData[i]);
         }
         formData.append(
           "dto",
           new Blob([JSON.stringify(data)], { type: "application/json" }),
         );
-        const res = await createPost(formData);
-        console.log("res.postId", res.postId);
-        const postId = res.postId;
-        alert("게시글이 등록되었습니다.");
+        const res = await modifyPost(postId, formData);
+        alert("게시글이 수정되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
         console.log("error", err);
