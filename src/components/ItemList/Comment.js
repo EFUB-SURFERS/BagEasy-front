@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import profileImg2 from "../../assets/itemListPage/profileImg2.png";
+import Profile from "../Common/Profile";
 
-const Comment = () => {
+const Comment = ({ comment }) => {
   return (
     <Root>
-      <Profile>
+      {/* <Profile>
         <ProfileImg src={profileImg2} />
-      </Profile>
+      </Profile> */}
+      <Profile nickname={"Jjm0829"} width="23px" height="23px" />
       <Wrapper>
         <Nickname>jjm0829</Nickname>
-        <Text>거래 원합니다. 채팅 확인해주세요...</Text>
+        <Text>{comment.commentContent}</Text>
       </Wrapper>
     </Root>
   );
@@ -20,20 +21,13 @@ const Root = styled.div`
   display: flex;
   align-items: center;
   background: #ffee94;
-  padding: 0.7rem;
-  height: 3rem;
-  border-bottom: 1px solid grey;
-  margin: 0rem 0.7rem;
-  /* border: 1px solid lightgrey; */
-`;
-
-const Profile = styled.div`
-  width: 1.4rem;
-  height: 1.4rem;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
+  padding: 13px 7px;
+  height: 68px;
+  box-sizing: border-box;
+  margin: 0rem 13px;
+  & + & {
+    border-top: 1px solid #a7a7a7;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -44,11 +38,12 @@ const Wrapper = styled.div`
 
 const Nickname = styled.div`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
+  margin-bottom: 2px;
 `;
 
 const Text = styled.div`
-  font-size: 14px;
+  font-size: 13px;
 `;
 
 export default Comment;

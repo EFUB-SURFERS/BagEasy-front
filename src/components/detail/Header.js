@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-import logo from "../../assets/logo.png";
-import revert from "../../assets/revert.png";
-import trash from "../../assets/trash.png";
+import logo from "../../assets/post/logo.png";
+import revert from "../../assets/post/revert.png";
 
 import { useNavigate } from "react-router-dom";
 
