@@ -2,15 +2,13 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = ({ posts, setRefresh, margintop = "97px", marginbottom = 0 }) => {
+const List = ({ posts, margintop = "97px", marginbottom = 0 }) => {
   return (
     <Wrapper margintop={margintop} marginbottom={marginbottom}>
       {posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
-        posts.map((post, key) => (
-          <Item post={post} setRefresh={setRefresh} key={key} />
-        ))
+        posts.map((post, key) => <Item post={post} key={key} />)
       )}
     </Wrapper>
   );

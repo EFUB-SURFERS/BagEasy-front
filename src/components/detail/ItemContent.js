@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import profile from "../../assets/post/profile.png";
-import next from "../../assets/post/next.png";
-import before from "../../assets/post/before.png";
-import spot from "../../assets/post/spot.png";
+import picture from "../../assets/picture.png";
+import profile from "../../assets/profile.png";
+import picture2 from "../../assets/picture2.png";
+import next from "../../assets/next.png";
+import before from "../../assets/before.png";
+import spot from "../../assets/spot.png";
 
 const ItemContent = ({
   sellerNickname,

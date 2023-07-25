@@ -61,18 +61,3 @@ export const createPost = async formData => {
     console.log("에러 발생", err);
   }
 };
-
-// 판매글 수정 api
-export const modifyPost = async (postId,formData) => {
-  try {
-    const res = await client.put(`posts/${postId}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(res);
-    return res.data;
-  } catch (err) {
-    console.log("에러 발생", err);
-  }
-};

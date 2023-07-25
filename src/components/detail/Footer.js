@@ -2,47 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { deleteDetail } from "../../api/posts";
-import { cancelLikes, addLikes } from "../../api/likes";
+import { getDetail, deleteDetail } from "../../api/posts";
 
 import SubMenuModal from "./SubMenuModal";
 
-import heart from "../../assets/post/heart.png";
-import emptyheart from "../../assets/post/emptyheart.png";
-import chatButton from "../../assets/post/chatButton.png";
-import soldButton from "../../assets/post/sold.png";
-import menubar from "../../assets/post/menubar.png";
+import heart from "../../assets/heart.png";
+import emptyheart from "../../assets/emptyheart.png";
+import chatButton from "../../assets/chatButton.png";
+import soldButton from "../../assets/sold.png";
+import menubar from "../../assets/menubar.png";
 
-const Footer = ({
-  isLiked,
-  heartCount,
-  postId,
-  sellerId,
-  price,
-  isSolded,
-  myId,
-}) => {
+const Footer = ({ postId, sellerId, price, isSolded, myId }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  const [isHearted, setIsHearted] = useState(false);
   const navigate = useNavigate();
-
 
   const handleEditClick = ({}) => {
     navigate("/modify/" + postId);
   };
 
-
   useEffect(() => {
     setIsWirter(sellerId === myId);
-    setLoading(false);
   }, [sellerId, myId]);
-
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const handleDeleteClick = async () => {
     if (window.confirm("게시글을 삭제하시겠습니까?")) {
@@ -62,23 +44,8 @@ const Footer = ({
     setIsSubMenuOpen(prev => !prev);
   };
 
-  const handleHeartClick = async () => {
-    if (isLiked) {
-      try {
-        await cancelLikes(postId);
-      } catch (err) {
-        console.log("error", err);
-      }
-    } else {
-      try {
-        await addLikes(postId);
-        // setIsLiked(!isLiked);
-      } catch (err) {
-        console.log("error", err);
-      }
-    }
-    window.location.reload();
-    // location.reload();
+  const handleHeartClick = () => {
+    setIsHearted(prev => !prev);
   };
 
   const handleChatClick = () => {
@@ -90,10 +57,10 @@ const Footer = ({
     <Wrapper>
       <Heart>
         <HeartBtn
-          src={isLiked ? heart : emptyheart}
+          src={isHearted ? heart : emptyheart}
           onClick={handleHeartClick}
         />
-        <HeartCount>{heartCount}</HeartCount>
+        <HeartCount>2</HeartCount>
       </Heart>
       <Line />
       <Price>{price}</Price>

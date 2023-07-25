@@ -1,15 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import postImg from "../../assets/itemListPage/postImg.png";
-import { useNavigate } from "react-router-dom";
 
 const WriteBtn = () => {
-  const navigate = useNavigate();
-  const goToCreateSalesPage = () => {
-    navigate("/create");
-  };
   return (
-    <Wrapper onClick={goToCreateSalesPage}>
+    <Wrapper>
       <Img src={postImg} />
       <Text>글쓰기</Text>
     </Wrapper>
