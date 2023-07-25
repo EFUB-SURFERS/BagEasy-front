@@ -36,12 +36,7 @@ const ItemListPage = () => {
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List
-          posts={posts}
-          setRefresh={setRefresh}
-          margintop="138px"
-          marginbottom="70px"
-        />
+        <List posts={posts} setRefresh={setRefresh} offset="138px" />
       )}
       <WriteBtn />
     </Wrapper>
