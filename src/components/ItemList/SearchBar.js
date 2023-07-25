@@ -8,9 +8,10 @@ import location from "../../assets/itemListPage/location.png";
 const SearchBar = ({ onToggle, filter }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
-  const [uniDisplay, setUniDisplay] = useState();
+  const [update, setUpdate] = useState(false);
+  const [uniDisplay, setUniDisplay] = useState("");
   useEffect(() => {
-    if (!isOpen) setUniDisplay(uni);
+    !isOpen && update && setUniDisplay(uni);
   }, [isOpen]);
   return (
     <Container>
@@ -19,7 +20,7 @@ const SearchBar = ({ onToggle, filter }) => {
         <LocationIcon>
           <Icon src={location} />
         </LocationIcon>
-        <Text>{uni ? uni : "University of Northern Colorado"}</Text>
+        <Text>{uniDisplay ? uniDisplay : "학교를 선택하세요."}</Text>
       </TextWrapper>
       <ChangeBtn onClick={() => setIsOpen(true)}>변경</ChangeBtn>
       {isOpen ? (
@@ -28,6 +29,7 @@ const SearchBar = ({ onToggle, filter }) => {
           setIsOpen={setIsOpen}
           uni={uni}
           setUni={setUni}
+          setUpdate={setUpdate}
         />
       ) : null}
     </Container>
