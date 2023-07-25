@@ -1,47 +1,30 @@
 import client from "./client";
 
 //양도글 찜하기 api
-export const addLike = async postId => {
+export const addLikes = async postId => {
   try {
-    const res = await client.post(`posts/${postId}/likes`);
-
-    console.log(res.data);
-    return res.data;
+    await client.post(`posts/${postId}/likes`);
+    console.log("찜하기");
   } catch (err) {
     console.log("에러 발생", err);
   }
 };
 
-//양도글 찜 해제하기
-export const deleteLike = async postId => {
+//게시글 찜하기 해제 api
+export const cancelLikes = async postId => {
   try {
     const res = await client.delete(`posts/${postId}/likes`);
-
-    console.log(res.data);
-    return res.data;
+    console.log("찜취소");
   } catch (err) {
     console.log("에러 발생", err);
   }
 };
 
-//찜 여부 조회
-export const checkLike = async postId => {
+//게시글 찜여부 조회 api
+export const getLikes = async postId => {
   try {
     const res = await client.get(`posts/${postId}/likes`);
-
-    console.log(res.data);
-    return res.data;
-  } catch (err) {
-    console.log("에러 발생", err);
-  }
-};
-
-//찜한 양도글 조회 api
-export const getLikes = async () => {
-  try {
-    const res = await client.get(`posts/likes`);
-
-    console.log(res.data);
+    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
