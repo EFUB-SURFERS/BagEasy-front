@@ -12,6 +12,8 @@ const ItemListPage = () => {
   const [filter, setFilter] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(0);
+
   const navigate = useNavigate();
   const onToggle = () => {
     setFilter(prev => !prev);
@@ -34,7 +36,12 @@ const ItemListPage = () => {
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List posts={posts} margintop="138px" marginbottom="70px" />
+        <List
+          posts={posts}
+          setRefresh={setRefresh}
+          margintop="138px"
+          marginbottom="70px"
+        />
       )}
       <WriteBtn />
     </Wrapper>
