@@ -1,23 +1,32 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import heartImg from "../../assets/heartImg.png";
-import itemImg from "../../assets/itemImg.png";
+import heartImg from "../../assets/itemListPage/heartImg.png";
+import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Item = () => {
+const Item = ({ post }) => {
+  const navigate = useNavigate();
+
+  const goToDetailPage = () => {
+    navigate(`/detail/${post.postId}`);
+  };
+
+  console.log(post);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={goToDetailPage}>
       <ImageWrapper>
-        <Image src={itemImg} />
+        <Image src={post.imageResponseDtos[0].imageUrl} />
       </ImageWrapper>
 
       <Info>
-        <Name>머그컵</Name>
-        <Price>15000원</Price>
+        <Name>{post.postTitle}</Name>
+        <Price>{`${post.price}원`}</Price>
         <Footer>
-          <Tag>판매중</Tag>
+          {post.isSold ? <SoldTag>판매완료</SoldTag> : <Tag>판매중</Tag>}
           <Favorites>
             <HeartImg src={heartImg} />
-            <FavoritesText>2</FavoritesText>
+            <FavoritesNum>{post.heartCount}</FavoritesNum>
           </Favorites>
         </Footer>
       </Info>
@@ -27,12 +36,13 @@ const Item = () => {
 
 const Wrapper = styled.div`
   flex: 1;
-  margin: 0rem 1rem;
-  padding: 1rem 0rem;
+  margin: 0rem 1.7rem;
+  padding: 1.7rem 0rem;
   //height: 1rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid #d7d7d7;
+  //background: beige;
 `;
 
 const ImageWrapper = styled.div`
@@ -83,6 +93,16 @@ const Footer = styled.div`
   margin-top: auto;
 `;
 
+const SoldTag = styled.div`
+  background: #cbcbcb;
+  border-radius: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0.3rem 1rem;
+  flex: none;
+`;
+
 const Tag = styled.div`
   background: #ffc700;
   border-radius: 2rem;
@@ -101,15 +121,15 @@ const Favorites = styled.div`
 `;
 
 const HeartImg = styled.img`
-  width: 13px;
+  width: 18px;
   transform: translateY(1px);
   /* border: 1px solid blue; */
 `;
 
-const FavoritesText = styled.div`
+const FavoritesNum = styled.div`
   margin-left: 5px;
   /* font-weight: bold; */
-  font-size: 15px;
+  font-size: 20px;
   /* border: 1px solid red; */
 `;
 

@@ -1,7 +1,7 @@
 import client from "./client";
 
-//게시글 찜하기 api
-export const addLikes = async postId => {
+//양도글 찜하기 api
+export const addLike = async postId => {
   try {
     await client.post(`posts/${postId}/likes`);
     console.log("찜하기");
