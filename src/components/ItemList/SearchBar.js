@@ -3,90 +3,96 @@ import searchImg from "../../assets/itemListPage/searchImg.png";
 import styled from "styled-components";
 import Toggle from "./Toggle";
 import Modal from "./../UpdateUni/Modal";
-import location from "../../assets/itemListPage/location.png";
 
 const SearchBar = ({ onToggle, filter }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
-  const [update, setUpdate] = useState(false);
-  const [uniDisplay, setUniDisplay] = useState("");
+  const [uniDisplay, setUniDisplay] = useState();
   useEffect(() => {
-    !isOpen && update && setUniDisplay(uni);
+    if (!isOpen) setUniDisplay(uni);
   }, [isOpen]);
   return (
-    <Container>
+    <SearchWrapper>
+      <Bar>
+        <Text>{uni ? uni : "Example University"}</Text>
+        {/* <SearchBtn>
+          <SearchImg src={searchImg} />
+        </SearchBtn> */}
+        <ChangeBtn onClick={() => setIsOpen(true)}>학교 변경</ChangeBtn>
+      </Bar>
       <Toggle onToggle={onToggle} filter={filter} />
-      <TextWrapper>
-        <LocationIcon>
-          <Icon src={location} />
-        </LocationIcon>
-        <Text>{uniDisplay ? uniDisplay : "학교를 선택하세요."}</Text>
-      </TextWrapper>
-      <ChangeBtn onClick={() => setIsOpen(true)}>변경</ChangeBtn>
       {isOpen ? (
         <Modal
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           uni={uni}
           setUni={setUni}
-          setUpdate={setUpdate}
         />
       ) : null}
-    </Container>
+    </SearchWrapper>
   );
 };
 
-const Container = styled.div`
+const SearchWrapper = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 93px;
+  box-sizing: border-box;
   margin-top: 97px;
   position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
-  box-sizing: border-box;
-  height: 41px;
-  background: #ffc700;
-  padding: 0 10px;
+  padding: 0 15px;
+  /* padding: 0 19px; */
+
+  /* padding-bottom: 10px; */
 `;
 
-const LocationIcon = styled.div`
-  width: 15px;
-  height: 15px;
-  padding-bottom: 4px;
-`;
-
-const Icon = styled.img`
-  width: 100%;
-`;
-
-const TextWrapper = styled.div`
+const Bar = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 240px;
+  /* background: #efefef; */
+  /* border-radius: 20px; */
+  height: 60px;
+  /* border: 1px solid black; */
+  background: white;
 `;
 
 const Text = styled.div`
-  color: white;
-  text-align: center;
-  font-weight: 500;
+  /* text-align: center; */
+  /* font-weight: bold; */
   font-size: 16px;
-  line-height: 21px;
-  margin-left: 10px;
-  padding-bottom: 3px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* margin-left: 12px; */
+  /* border: 1px solid red; */
+  flex: auto;
 `;
 
-const ChangeBtn = styled.div`
+const SearchBtn = styled.div`
+  width: 1.7rem;
+  right: 1rem;
+  transform: translateY(2px);
+  margin-right: 10px;
+  margin-left: auto;
+`;
+
+const SearchImg = styled.img`
+  max-width: 100%;
+  height: auto;
+`;
+
+const ChangeBtn = styled.button`
+  width: 86px;
+  height: 32px;
+  margin-left: 10px;
+  background: #ffc700;
+  border: none;
+  border-radius: 20px;
   color: white;
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-  text-decoration: underline;
-  text-underline-offset: 2px;
 `;
 
 export default SearchBar;

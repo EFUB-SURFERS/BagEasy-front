@@ -12,6 +12,8 @@ const Toggle = ({ onToggle, filter }) => {
 
 const Wrapper = styled.div`
   display: flex;
+  /* z-index: 0; */
+  margin-left: auto;
 `;
 
 const CheckBox = styled.input`
@@ -19,45 +21,47 @@ const CheckBox = styled.input`
 `;
 
 const Label = styled.label`
-  display: flex;
-  align-items: center;
+  //margin-left: 0.5rem;
+  /* z-index: 1; */
   width: 80px;
   height: 26px;
+  background: #e2e2e2;
   border-radius: 20px;
+  display: flex;
+  align-items: center;
   font-size: 10px;
   transition: all 0.1s ease-in-out;
-  background: white;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.15);
 
   //디폴트 배경
   &::before {
-    content: "전체";
     position: absolute;
+    content: "전체";
+    color: #8d8d8d;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: #8d8d8d;
+    font-weight: bold;
     padding-top: 1px;
     padding-left: 12px;
     transition: all 0.1s ease-in-out;
   }
   //디폴트 원
   &::after {
-    content: "판매중";
     position: relative;
     display: block;
+    content: "판매중";
+    font-weight: bold;
     text-align: center;
-    width: 38px;
-    height: 19px;
-    padding-top: 3px;
+    padding-top: 4px;
     padding-left: 1px;
-    left: 38px;
+    width: 40px;
+    height: 21px;
+    left: 37px;
     border-radius: 20px;
-    color: white;
-    background: #ffc700;
+    background: white;
     box-sizing: border-box;
     transition: all 0.1s ease-in-out;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
   }
 
   ${props =>
@@ -68,33 +72,34 @@ const Label = styled.label`
     transition: all 0.1s ease-in-out;
     /* 선택 O 배경 */
     &::before {
-      content: "판매중";
       position: absolute;
+      content: "판매중";
+      color: #8d8d8d;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      color: #8d8d8d;
+      font-weight: bold;
       padding-top: 1px;
-      padding-left: 44px;
+      padding-left: 44.5px;
       transition: all 0.1s ease-in-out;
     }
     //선택시 원
     &::after {
-      content: "전체";
       position: relative;
       display: block;
+      content: "전체";
+      font-weight: bold;
       text-align: center;
-      width: 38px;
-      height: 19px;
-      padding-top: 3px;
+      padding-top: 4px;
       padding-left: 1px;
-      left: 4px;
+      width: 40px;
+      height: 21px;
+      left: 2px;
       border-radius: 20px;
-      color: white;
-      background: #ffc700;
+      background: white;
       box-sizing: border-box;
       transition: all 0.1s ease-in-out;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+      box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
     }`}
 `;
 

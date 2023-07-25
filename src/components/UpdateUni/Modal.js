@@ -8,7 +8,7 @@ import { GetUniList } from "../../api/uni";
 //외부 api 연결이 아닌 유저정보 수정, 글 등록, 필터링 등을 위한 api 요청은 각 페이지 담당 분들이 진행해주세요.
 //해당 모달을 import해서 사용하는 예시는 components/UnpdateUni/SearchBar.js 참고하시면 됩니다.
 
-const Modal = ({ isOpen, setIsOpen, uni, setUni, setUpdate }) => {
+const Modal = ({ isOpen, setIsOpen, uni, setUni }) => {
   const [uniList, setUniList] = useState([]);
   const handleUniChange = e => {
     setUni(e.target.value);
@@ -17,7 +17,6 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni, setUpdate }) => {
   const handleItemClick = selectedUni => {
     setUni(selectedUni);
     setIsOpen(false);
-    setUpdate && setUpdate(true);
   };
   const getUniList = async () => {
     if (uni) {
@@ -36,7 +35,6 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni, setUpdate }) => {
       <Layer
         onClick={() => {
           setIsOpen(!isOpen);
-          setUpdate && setUpdate(false);
         }}
       ></Layer>
       <Container>

@@ -1,15 +1,16 @@
 import styled from "styled-components";
+import client from "../../api/client";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { modifyPost } from "../../api/posts";
+import { createPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
-import choiceuni from "../../assets/post/choiceuni.png";
-import emptyimage from "../../assets/post/emptyimage.png";
-import redspot from "../../assets/post/redspot.png";
-import greenspot from "../../assets/post/greenspot.png";
+import choiceuni from "../../assets/choiceuni.png";
+import emptyimage from "../../assets/emptyimage.png";
+import redspot from "../../assets/redspot.png";
+import greenspot from "../../assets/greenspot.png";
 
-const SalesContent = ({ postId, originalData }) => {
+const SalesContent = ({ originalData }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
@@ -29,13 +30,11 @@ const SalesContent = ({ postId, originalData }) => {
     return () => clearTimeout(timer); // 컴포넌트가 unmount되면 타이머를 클리어하여 메모리 누수 방지
   }, [originalData]);
 
-  const images = originalData.imageResponseDtos;
+  const images = originalData.imageResponseDtos
+    ? originalData.imageResponseDtos.map(item => item.imageUrl)
+    : [];
 
-  // const images = originalData.imageResponseDtos
-  //   ? originalData.imageResponseDtos.map(item => item.imageUrl)
-  //   : [];
-
-  const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
+  const [imgFile, setImgFile] = useState(images); //전송할 이미지 데이터
 
   console.log("imageResponseDtos", originalData.imageResponseDtos);
   console.log("images", images);
@@ -73,14 +72,16 @@ const SalesContent = ({ postId, originalData }) => {
         const formData = new FormData();
         for (let i = 0; i < imgData.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("addImage", imgData[i]);
+          formData.append("image", imgData[i]);
         }
         formData.append(
           "dto",
           new Blob([JSON.stringify(data)], { type: "application/json" }),
         );
-        const res = await modifyPost(postId, formData);
-        alert("게시글이 수정되었습니다.");
+        const res = await createPost(formData);
+        console.log("res.postId", res.postId);
+        const postId = res.postId;
+        alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
         console.log("error", err);
@@ -99,7 +100,7 @@ const SalesContent = ({ postId, originalData }) => {
       <Wrapper>
         <Line />
         <Images>
-          {images.length > 0 ? (
+          {imgFile.length > 0 ? (
             <Check className="check" src={greenspot} />
           ) : (
             <Check className="check" src={redspot} />
@@ -116,20 +117,11 @@ const SalesContent = ({ postId, originalData }) => {
             onChange={saveImgFile}
             multiple
           />
-          {imgFile &&
-            imgFile.map((fileURL, index) => (
-              <img key={index} src={fileURL} alt={`Image ${index}`} />
-            ))}
-
-          {/* 이미지 파일이 없으면 서버에서 가져온 이미지 출력 */}
-          {!imgFile &&
-            images.map(imageData => (
-              <img
-                key={imageData.imageId}
-                src={imageData.imageUrl}
-                alt={`Image ${imageData.imageId}`}
-              />
-            ))}
+          {imgFile ? (
+            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+          ) : (
+            <img src={emptyimage} />
+          )}
         </Images>
         <SubLine />
         <Unisection>
