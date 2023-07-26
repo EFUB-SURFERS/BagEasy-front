@@ -74,7 +74,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 120px;
   padding-bottom: 120px;
-  outline: 1px solid #cacaca;
+  outline: 1px solid #ededed;
   border-radius: 5px;
   overflow: hidden;
   flex: none;
