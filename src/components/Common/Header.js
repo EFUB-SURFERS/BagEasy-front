@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
-import logo from "../../assets/logo.png";
-import back from "../../assets/back.png";
+import logo from "../../assets/common/logo.png";
+import back from "../../assets/common/back.png";
 import { useNavigate } from "react-router-dom";
 //사용방법
 //헤더가 상단 고정이라 다음에 이어질 컴포넌트가 있다면
