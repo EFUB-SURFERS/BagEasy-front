@@ -144,7 +144,8 @@ const HeartImg = styled.img`
 
 const FavoritesNum = styled.div`
   margin-left: 5px;
-  font-size: 20px;
+  font-size: 13px;
+  font-weight: 400;
 `;
 
 export default Item;
