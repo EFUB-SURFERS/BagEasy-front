@@ -25,14 +25,13 @@ export const getMessages = async roomId => {
 };
 
 //채팅방 생성 api
-export const createRoom = async (postId, createMember) => {
+export const createRoom = async (postId, sellerNickname) => {
   try {
     const res = await client.post(`chatrooms`, {
       postId: postId,
-      createMember: createMember,
+      createMember: sellerNickname,
     });
 
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);

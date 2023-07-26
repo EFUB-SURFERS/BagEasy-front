@@ -1,7 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
+import Profile from "../../components/Common/Profile";
+const Item = ({
+  roomId,
+  createMember,
+  joinMember,
+  postId,
+  latestMessage,
+  yourNickname,
+}) => {
   //createMember, joinMember 중 자신 memberId 비교 후 상대방 프로필이미지, 이름 겟해오기
   //안 읽은 메세지 수 표시 어떻게??
   const navigate = useNavigate();
@@ -31,6 +39,7 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
     }
     return Math.floor(elapsedMin) + "분 전";
   };
+  const nickname = yourNickname;
   return (
     <Wrapper>
       <ChatItem
@@ -38,15 +47,18 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
           navigate(`/chats/${roomId}`);
         }}
       >
-        <p className="img">
+        <div className="img">
+          <Profile nickname={nickname} width={"67px"} height={"67px"} />
           <img src={""} alt="" />
-        </p>
+        </div>
         <div className="mainContainer">
-          <p className="name">Jimin_Song</p>
-          <p className="text">{latestMessage.context}</p>
+          <p className="name">{yourNickname}</p>
+          {latestMessage && <p className="text">{latestMessage.context}</p>}
         </div>
         <div className="subContainer">
-          <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
+          {latestMessage && (
+            <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
+          )}
           <p className="count">3</p>
         </div>
       </ChatItem>

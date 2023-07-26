@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
-import gallery from "../../assets/gallery.png";
-import deleteBtn from "../../assets/deleteBtn.png";
+import gallery from "../../assets/chat/gallery.png";
+import deleteBtn from "../../assets/chat/deleteBtn.png";
 import { useState, useRef } from "react";
 import { stompService } from "../../api/stomp";
 

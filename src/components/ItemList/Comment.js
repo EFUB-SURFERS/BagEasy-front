@@ -8,9 +8,9 @@ const Comment = ({ comment }) => {
       {/* <Profile>
         <ProfileImg src={profileImg2} />
       </Profile> */}
-      <Profile nickname={"Jjm0829"} width="23px" height="23px" />
+      <Profile nickname={comment.writer} width="23px" height="23px" />
       <Wrapper>
-        <Nickname>jjm0829</Nickname>
+        <Nickname>{comment.writer}</Nickname>
         <Text>{comment.commentContent}</Text>
       </Wrapper>
     </Root>

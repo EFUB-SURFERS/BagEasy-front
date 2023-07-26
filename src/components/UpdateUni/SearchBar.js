@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import place from "../../assets/place.png";
+import place from "../../assets/updateUni/place.png";
 import Modal from "./Modal";
 //디자인 수정으로 현재 해당 컴포넌트는 필요없어졌으나
 //모달 연결에 참고하시면 좋을것 같습니다.
