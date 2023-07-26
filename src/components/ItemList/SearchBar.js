@@ -49,6 +49,16 @@ const Container = styled.div`
   padding: 0 10px;
 `;
 
+const TextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 70%;
+  padding-left: 7px;
+  padding-right: 50px;
+  box-sizing: border-box;
+`;
+
 const LocationIcon = styled.div`
   width: 15px;
   height: 15px;
@@ -56,30 +66,23 @@ const LocationIcon = styled.div`
 `;
 
 const Icon = styled.img`
-  width: 100%;
-`;
-
-const TextWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 240px;
+  width: 15px;
 `;
 
 const Text = styled.div`
   color: white;
-  text-align: center;
   font-weight: 500;
   font-size: 16px;
   line-height: 21px;
   margin-left: 10px;
   padding-bottom: 3px;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
 `;
 
 const ChangeBtn = styled.div`
+  width: 26px;
   color: white;
   font-family: "Noto Sans KR";
   font-style: normal;
@@ -87,6 +90,7 @@ const ChangeBtn = styled.div`
   font-size: 13px;
   text-decoration: underline;
   text-underline-offset: 2px;
+  white-space: nowrap;
 `;
 
 export default SearchBar;
