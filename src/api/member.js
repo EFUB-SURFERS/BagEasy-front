@@ -13,7 +13,7 @@ export const getProfile = async memberId => {
 };
 
 // 본인 프로필 조회
-export const getMyProfile = async memberId => {
+export const getMyProfile = async () => {
   try {
     const res = await client.get(`members/me`);
     // console.log(res.data);

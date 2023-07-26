@@ -53,7 +53,7 @@ const Item = ({
         </div>
         <div className="mainContainer">
           <p className="name">{yourNickname}</p>
-          {latestMessage && <p className="text">{latestMessage.context}</p>}
+          {latestMessage && <p className="text">{latestMessage.content}</p>}
         </div>
         <div className="subContainer">
           {latestMessage && (

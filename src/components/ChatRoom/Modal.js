@@ -29,9 +29,9 @@ const Modal = ({
       <Container>
         <p className="yellow">거래를 확정하시겠습니까?</p>
         <p className="gray">거래 확정 뒤에는 취소가 불가합니다.</p>
-        <p className="btn">
+        <div className="btn">
           <Btn onClick={handleItemClick}>확정</Btn>
-        </p>
+        </div>
       </Container>
     </>
   );

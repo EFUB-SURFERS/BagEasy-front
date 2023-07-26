@@ -91,6 +91,7 @@ const Footer = ({
 
   const handleChatClick = async () => {
     const roomId = await getRoomId();
+    console.log(roomId);
     roomId && navigate(`/chats/${roomId}`);
   };
 

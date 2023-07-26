@@ -5,7 +5,7 @@ import client from "./client";
 export const FinishDeal = async (postId, buyerId) => {
   try {
     const res = await client.put(`posts/${postId}/isSold`, {
-      buyerId: { buyerId },
+      buyerId: buyerId,
     });
 
     console.log(res);
@@ -63,7 +63,7 @@ export const createPost = async formData => {
 };
 
 // 판매글 수정 api
-export const modifyPost = async (postId,formData) => {
+export const modifyPost = async (postId, formData) => {
   try {
     const res = await client.put(`posts/${postId}`, formData, {
       headers: {

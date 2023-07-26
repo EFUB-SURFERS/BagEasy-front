@@ -1,60 +1,100 @@
-import * as StompJs from "@stomp/stompjs";
+import { Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { saveMessage } from "./chat";
+import {
+  addNewMessage,
+  checkIsNewDate,
+  getSendTime,
+} from "../components/ChatRoom/MessagesContainer";
 
 let token = localStorage.getItem("bagtoken");
 
-const onMessage = ({ message }) => {
-  //서버에서 메세지 받으면 실행하는 함수
-  if (message.body) {
-    alert("got message with body " + message.body);
+let stompClient;
 
-    const datas = JSON.parse(message.body);
-    console.log("message", datas);
+//실시간으로 받은 메세지화면에 보여주기
+const renderMessage = newMessage => {
+  const DATE = new Date(
+    newMessage.sentAt - new Date().getTimezoneOffset() * 60 * 1000,
+  );
+  console.log(DATE);
+
+  const message = {
+    mine: false,
+    id: newMessage.sentAt,
+    senderName: newMessage.nickname,
+    contentType: newMessage.contentType,
+    content: newMessage.content,
+    sendTime: getSendTime(DATE.toString()),
+    sendDate: {
+      isNewDate: checkIsNewDate(DATE.toString()),
+      date: DATE.toString.substr(0, 10),
+    },
+  };
+
+  addNewMessage(message);
+};
+
+//서버에서 메세지 받으면 실행하는 함수
+const onMessage = data => {
+  alert(data.body);
+  if (data.body) {
+    console.log("data", data.body);
+    const newMessage = JSON.parse(data.body);
+    console.log("new-message", newMessage);
+
+    //talk 타입이면 post 요청
+    if (newMessage.contentType === "talk") {
+      saveMessage(newMessage);
+    }
+
+    //db 조회 없이 화면에 보여줄 수 있는 message 배열에 메세지 추가.
+    renderMessage(newMessage);
   } else {
     alert("got empty message");
   }
 };
 
-export const stompService = {
-  client: null,
+export const connectClient = roomId => {
+  stompClient = Stomp.over(() => {
+    const sock = new SockJS("https://server.bageasy.net/chat");
+    return sock;
+  });
 
-  connectClient: () => {
-    stompService.client = new StompJs.Client({
-      brokerURL: "ws://엔드포인트",
-      connectHeaders: {
+  stompClient.connect(
+    {
+      Authorization: `${token}`,
+      roomId: roomId,
+    },
+    () => {
+      console.log("연결 완료");
+      stompClient.subscribe(`/topic/group/${roomId}`, onMessage, {
         Authorization: `${token}`,
-      },
-      debug: function (str) {
-        console.log(str);
-      },
-      reconnectDelay: 5000,
-      heartbeatIncoming: 4000,
-      heartbeatOutgoing: 4000,
-      onConnect: () => {
-        stompService.client.subscribe("/주소", onMessage);
-      },
-      onStompError: frame => {
-        console.log("Broker reported error: " + frame.headers["message"]);
-        console.log("Additional details: " + frame.body);
-      },
-    });
+      });
+    },
+  );
+};
 
-    stompService.client.activate();
-  },
+export const disconnectClient = () => {
+  console.log("접속 끊음");
+  stompClient.deactivate();
+  //stompClient.unsubscribe();
+};
 
-  disconnectClient: () => {
-    console.log("접속 끊음");
-    stompService.client.deactivate();
-    //stompService.client.unsubscribe();
-  },
-  publishMessage: message => {
-    if (!stompService.client.connected) {
-      return;
-    }
-    //이미지인지 텍스트인지에 따른 전송형태 확인해야함
-    //수정예정
-    stompService.client.publish({
-      destination: "/주소",
-      body: JSON.stringify(message),
-    });
-  },
+export const publishMessage = (roomId, isImage, message) => {
+  if (!stompClient.connected) {
+    return;
+  }
+
+  stompClient.send(
+    "/app/chat",
+    {
+      Authorization: `${token}`,
+    },
+    JSON.stringify({
+      roomId: roomId,
+      contentType: "talk",
+      type: isImage,
+      content: message,
+    }),
+  );
 };

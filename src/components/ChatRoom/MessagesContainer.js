@@ -5,7 +5,39 @@ import YourMessage from "./YourMessage";
 import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
+
+//메세지 전송 날짜 확인 후 바뀌었으면 업데이트
+let newDate = "";
+let oldDate = "";
+
+//sendDate 스트링을 "PM/AM 시간:분" 으로 변환하는 함수
+export const getSendTime = sendDate => {
+  const hour = sendDate.substr(11, 2);
+  const minutes = sendDate.substr(14, 2);
+  if (hour < "12") {
+    return `AM ${hour}:${minutes}`;
+  } else if (hour === "12") {
+    return `PM ${hour}:${minutes}`;
+  } else {
+    return `PM 0${hour % 12}:${minutes}`;
+  }
+};
+export const checkIsNewDate = sendDate => {
+  newDate = sendDate.substr(0, 10);
+  if (oldDate === newDate) {
+    oldDate = newDate;
+    return false;
+  } else {
+    oldDate = newDate;
+    return true;
+  }
+};
+let newMessage;
+export const addNewMessage = message => {
+  newMessage = message;
+};
 const MessagesContainer = () => {
+  const [DBmessages, setDBMessages] = useState([]);
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef(null);
 
@@ -13,78 +45,30 @@ const MessagesContainer = () => {
   const { roomId } = useParams();
 
   useEffect(() => {
-    //채팅 리스트 조회 (채팅 내역)
-    //const res = getMessages(roomId);
-    //setMessages(res.chatList);
-    setMessages([
-      {
-        id: "iderf-23fd-dfasdf",
-        roomId: 2,
-        senderNo: 3,
-        senderName: "young",
-        contentType: "image",
-        content: "https://이미지url",
-        sendDate: "2023-05-20T20:50:13.4478404",
-        mine: true,
-      },
-      {
-        id: "adsf-23fd-dfasdff",
-        roomId: 2,
-        senderNo: 3,
-        senderName: "young",
-        contentType: "text",
-        content: "hello!",
-        sendDate: "2023-05-20T20:50:13.4478404",
-        mine: true,
-      },
-      {
-        id: "aasdf-23fd-adsf2",
-        roomId: 9,
-        senderNo: 4,
-        senderName: "pro1",
-        contentType: "text",
-        content: "거래중이신가요?",
-        sendDate: "2023-05-21T20:52:13.4478404",
-        mine: false,
-      },
-    ]);
-  }, []);
+    //DB에 저장되어있는 채팅 내역 조회 (채팅방 접속 시 한번)
+    const res = getMessages(roomId);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    setDBMessages(res.chatList);
+
+    console.log(DBmessages);
+
+    //실시간 + DB 총 메세지 배열
+    //setMessages(messages);
+    console.log(messages);
+  }, []);
 
   //새 메세지를 받으면 맨 아래로 스크롤
   const scrollToBottom = () => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   };
-  //sendDate 스트링을 "PM/AM 시간:분" 으로 변환하는 함수
-  const getSendTime = sendDate => {
-    const hour = sendDate.substr(11, 2);
-    const minutes = sendDate.substr(14, 2);
-    if (hour < "12") {
-      return `AM ${hour}:${minutes}`;
-    } else if (hour === "12") {
-      return `PM ${hour}:${minutes}`;
-    } else {
-      return `PM 0${hour % 12}:${minutes}`;
-    }
-  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-  //메세지 전송 날짜 확인 후 바뀌었으면 업데이트
-  let newDate = "";
-  let oldDate = "";
+  useEffect(() => {
+    setMessages([...messages]);
+  }, [newMessage]);
 
-  const checkIsNewDate = sendDate => {
-    newDate = sendDate.substr(0, 10);
-    if (oldDate === newDate) {
-      oldDate = newDate;
-      return false;
-    } else {
-      oldDate = newDate;
-      return true;
-    }
-  };
   return (
     <Wrapper ref={scrollRef}>
       <div>
@@ -107,7 +91,6 @@ const MessagesContainer = () => {
               <>
                 <YourMessage
                   key={message.id}
-                  senderNo={message.senderNo}
                   senderName={message.senderName}
                   contentType={message.contentType}
                   content={message.content}
@@ -130,15 +113,4 @@ export default MessagesContainer;
 const Wrapper = styled.div`
   height: 100%;
   overflow: auto;
-`;
-const Date = styled.div`
-  padding-top: 15px;
-  padding-bottom: 20px;
-  color: #6d6d6d;
-  text-align: center;
-  font-family: Noto Sans KR;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
 `;

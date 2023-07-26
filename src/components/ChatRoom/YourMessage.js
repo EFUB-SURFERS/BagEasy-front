@@ -3,7 +3,6 @@ import { styled } from "styled-components";
 //유저인포 겟으로 프로필이미지 얻기
 //로그인 완료되면 api 작업
 const YourMessage = ({
-  senderNo,
   senderName,
   contentType,
   content,
