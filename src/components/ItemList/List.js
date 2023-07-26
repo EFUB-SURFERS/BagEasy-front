@@ -5,7 +5,7 @@ import Item from "./Item";
 const List = ({ posts, setRefresh, offset = "97px" }) => {
   return (
     <Wrapper offset={offset}>
-      {posts.length === 0 ? (
+      {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
         posts.map((post, key) => (
