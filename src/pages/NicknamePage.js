@@ -50,11 +50,17 @@ const Nickname = () => {
             },
           },
         );
-        console.log(res);
+
         if (res.status == "400") {
-          setIsOverlap(true);
-          setIsFocused(true);
-          setTemp(nickname);
+          if (res.code === "EXPIRED_TOKEN") {
+            // 토큰 만료시 토큰 만료 경고 페이지로 이동
+          }
+          if (res.code === "DUPLICATE_NICKNAME") {
+            // 닉네임 중복
+            setIsOverlap(true);
+            setIsFocused(true);
+            setTemp(nickname);
+          }
         }
         if (res.status == "200") {
           setIsOverlap(false);
