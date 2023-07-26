@@ -30,3 +30,13 @@ export const getLikes = async postId => {
     console.log("에러 발생", err);
   }
 };
+
+export const getLikedPosts = async () => {
+  try {
+    const res = await client.get(`posts/likes`);
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
