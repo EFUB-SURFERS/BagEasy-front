@@ -1,23 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
+import emptyheart from "../../assets/itemListPage/emptyheart.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Item = () => {
+const Item = ({ post, setRefresh }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
+
+  const goToDetailPage = () => {
+    navigate(`/detail/${post.postId}`);
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getLikes(post.postId);
+
+      setIsLiked(data.isLiked);
+    }
+    fetchData();
+  }, []);
+
+  const like = async e => {
+    e.stopPropagation();
+
+    if (isLiked) {
+      await cancelLikes(post.postId);
+      setIsLiked(false);
+    } else {
+      await addLikes(post.postId);
+      setIsLiked(true);
+    }
+
+    setRefresh(prev => prev + 1);
+  };
+
+  console.log(post);
+
   return (
-    <Wrapper>
+    <Wrapper onClick={goToDetailPage}>
       <ImageWrapper>
-        <Image src={itemImg} />
+        <Image src={post.imageResponseDtos[0].imageUrl} />
       </ImageWrapper>
 
       <Info>
-        <Name>머그컵</Name>
-        <Price>15000원</Price>
+        <Name>{post.postTitle}</Name>
+        <Price>{`${post.price}원`}</Price>
         <Footer>
-          <Tag>판매중</Tag>
+          {post.isSold ? <SoldTag>판매완료</SoldTag> : <Tag>판매중</Tag>}
           <Favorites>
-            <HeartImg src={heartImg} />
-            <FavoritesNum>2</FavoritesNum>
+            <HeartImg src={isLiked ? heartImg : emptyheart} onClick={like} />
+            <FavoritesNum>{post.heartCount}</FavoritesNum>
           </Favorites>
         </Footer>
       </Info>
@@ -26,10 +61,10 @@ const Item = () => {
 };
 
 const Wrapper = styled.div`
-  flex: 1;
-  margin: 0rem 1.7rem;
-  padding: 1.7rem 0rem;
-  //height: 1rem;
+  margin: 0 27px;
+  padding: 27px 0;
+  height: 167px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #d7d7d7;
@@ -82,6 +117,16 @@ const Footer = styled.div`
   width: 100%;
   justify-content: space-around;
   margin-top: auto;
+`;
+
+const SoldTag = styled.div`
+  background: #cbcbcb;
+  border-radius: 2rem;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 0.3rem 1rem;
+  flex: none;
 `;
 
 const Tag = styled.div`

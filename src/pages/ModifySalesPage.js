@@ -24,7 +24,7 @@ const ModifySalesPage = () => {
 
   return (
     <div>
-      <SalesContent originalData={data} />
+      <SalesContent postId={postId} originalData={data} />
     </div>
   );
 };
