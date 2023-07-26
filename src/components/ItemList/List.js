@@ -9,7 +9,7 @@ const List = ({ posts, setRefresh, offset = "97px", liked = false }) => {
         <NoList>목록이 없어요.</NoList>
       ) : (
         posts.map((post, key) => (
-          <Item post={post} setRefresh={setRefresh} liked={true} key={key} />
+          <Item post={post} setRefresh={setRefresh} liked={liked} key={key} />
         ))
       )}
     </Wrapper>
