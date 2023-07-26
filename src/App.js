@@ -12,6 +12,7 @@ import FavoritesPage from "./pages/FavoritesPage";
 import MyPage from "./pages/MyPage";
 import Start from "./pages/Start";
 import Purchase from "./pages/Purchase";
+import Empty from "./pages/EmptyPage";
 
 import PrivateRoute from "./components/Route/PrivateRoute";
 
@@ -34,9 +35,10 @@ function App() {
         <Route path="/modify/:postId" element={<ModifySalesPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/deal" element={<Purchase />} />
-
         <Route path="/" element={<Start />} />
       </Route>
+      {/* 빈 페이지 */}
+      <Route path="*" element={<Empty />} />
     </Routes>
   );
 }
