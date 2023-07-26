@@ -1,18 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
-import openArrow from "../../assets/openArrow.png";
-import closeArrow from "../../assets/closeArrow.png";
-import profileImg1 from "../../assets/profileImg1.png";
+import openArrow from "../../assets/itemListPage/openArrow.png";
+import closeArrow from "../../assets/itemListPage/closeArrow.png";
+import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import { getComments, createComment } from "../../api/comments";
+import { getMyProfile } from "../../api/member";
 
-const CommentList = () => {
+const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [refresh, setRefresh] = useState(0);
+
+  //댓글 조회
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getComments(postId);
+      setComments(data);
+    }
+    fetchData();
+  }, [refresh]);
+
+  //댓글 작성
+  const postComment = () => {
+    async function postData() {
+      const memberId = await getMyProfile(1).memberId;
+      const data = await createComment(
+        postId,
+        {
+          memberId: memberId,
+          commentContent: comment,
+          isSecret: false,
+        },
+        { headers: { "Content-Type": "application/json" } },
+      );
+
+      setRefresh(prev => prev + 1);
+      setComment("");
+    }
+    postData();
+  };
+
   return (
     <Wrapper>
       <CommentWrapper open={open}>
         <Header>
           <Text>댓글</Text>
-          <Count>2개</Count>
+          <Count>{`${comments.length}개`}</Count>
           <ArrowWrapper
             onClick={() => {
               setOpen(prev => !prev);
@@ -23,50 +58,60 @@ const CommentList = () => {
         </Header>
 
         <List>
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
-          <Comment />
+          {comments.map((comment, key) => (
+            <Comment comment={comment} key={key} />
+          ))}
         </List>
       </CommentWrapper>
-
       <Footer>
-        <Profile>
-          <ProfileImg src={profileImg1} />
-        </Profile>
-        <CommentInput placeholder="댓글 쓰기..." />
+        <CommentInput
+          placeholder="댓글 쓰기..."
+          value={comment}
+          onChange={e => {
+            setComment(e.target.value);
+          }}
+        />
+        <SendBtn onClick={postComment}>
+          <SendImg src={sendBtn} />
+        </SendBtn>
       </Footer>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid lightgrey;
+  justify-content: center;
+  align-items: center;
+  /* border-top: 1px solid lightgrey; */
 `;
 
 const Header = styled.div`
-  height: 1.2rem;
+  height: 20px;
   display: flex;
   align-items: center;
-  padding: 0.3rem 0.7rem;
+  padding: 4px 13px;
   /* border: 1px solid grey; */
 `;
 
 const Text = styled.div`
-  padding-right: 0.5rem;
+  padding-right: 5px;
 `;
 
 const Count = styled.div`
-  color: grey;
+  color: #848484;
+  font-size: 12px;
 `;
 
 const ArrowWrapper = styled.div`
   margin-left: auto;
-  width: 1rem;
+  margin-top: 2px;
+  width: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Arrow = styled.img`
@@ -76,44 +121,58 @@ const Arrow = styled.img`
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 1rem;
+  border-radius: 10px;
   /* border: 1px solid grey; */
-  margin: 1rem;
+  /* margin: 1rem; */
+  box-sizing: border-box;
+  padding-bottom: 5px;
+  margin: 46px 23px 48px 23px;
+  width: 344px;
   overflow: hidden;
   background: #ffee94;
-  transition: all 2s;
-  height: ${props => !props.open && `5.3rem`};
+  /* transition: all 0.3s; */
+  height: ${props => (!props.open ? "95px" : "auto")};
 `;
 
 const List = styled.div``;
 
 const Footer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
-  border-top: 1px solid lightgrey;
-  padding: 1rem;
-`;
-
-const Profile = styled.div`
-  width: 1.4rem;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
+  justify-content: center;
+  border-top: 1px solid #cecece;
+  padding-top: 15px;
+  padding-bottom: 75px;
+  //background: black;
 `;
 
 const CommentInput = styled.input`
-  width: 100%;
-  margin-left: 0.5rem;
-  background: #eeeeee;
-  height: 2.5rem;
-  padding: 0rem 1rem;
+  //width: 18rem;
+  flex: auto;
+  background: #efefef;
+  height: 39px;
+  padding: 0 10.99px;
+  margin: 0 15px 0 20px;
   border-radius: 1rem;
   font-size: 14px;
   border: none;
   &:focus {
     outline: none;
   }
+  &::placeholder {
+    color: #b0b0b0;
+  }
+`;
+
+const SendBtn = styled.div`
+  width: 1.8rem;
+  margin-right: 20px;
+  flex: none;
+`;
+
+const SendImg = styled.img`
+  width: 100%;
 `;
 
 export default CommentList;

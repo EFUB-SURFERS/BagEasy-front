@@ -1,24 +1,104 @@
 import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 const Nickname = () => {
+  const [nickname, setNickName] = useState(""); // 닉네임 입력받기
+  const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
+  const [isFocused, setIsFocused] = useState(false); // focus 여부
+  const [temp, setTemp] = useState(""); // 현재 입력값이 중복되는지 체크
+  const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
 
-  const handleNavigateHome = () => {
-    navigate("/home");
+  const handleNickName = e => {
+    setNickName(e.target.value);
+  };
+
+  // focus 여부 감지
+  useEffect(() => {
+    const inputElement = inputRef.current;
+    inputElement.addEventListener("focus", () => setIsFocused(true));
+    inputElement.addEventListener("blur", () => setIsFocused(false));
+
+    return () => {
+      inputElement.removeEventListener("focus", () => setIsFocused(true));
+      inputElement.removeEventListener("blur", () => setIsFocused(false));
+    };
+  }, []);
+
+  const putNickName = async () => {
+    if (nickname.length < 2) {
+      setIsFocused(true);
+    } else {
+      const token = localStorage.getItem("bagtoken");
+
+      try {
+        const res = await axios.put(
+          "https://server.bageasy.net/members/nickname",
+          {
+            nickname: nickname,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          },
+        );
+
+        if (res.status == "400") {
+          if (res.code === "EXPIRED_TOKEN") {
+            // 토큰 만료시 토큰 만료 경고 페이지로 이동
+          }
+          if (res.code === "DUPLICATE_NICKNAME") {
+            // 닉네임 중복
+            setIsOverlap(true);
+            setIsFocused(true);
+            setTemp(nickname);
+          }
+        }
+        if (res.status == "200") {
+          setIsOverlap(false);
+          setIsFocused(false);
+          setTemp("");
+          navigate("/home");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (
     <NickNameContainer>
       <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
       <Copy>닉네임을 입력해주세요!</Copy>
-      <Input placeholder="여기에 입력하세요..." />
-      <Btn onClick={handleNavigateHome}>확인</Btn>
+      <Copy2>이후 닉네임 변경이 불가하니 신중하게 결정해주세요.</Copy2>
+      <Container>
+        <Input
+          placeholder="여기에 입력하세요..."
+          onChange={handleNickName}
+          ref={inputRef}
+          color={
+            isFocused &&
+            (nickname.length < 2 || (isOverlap && nickname === temp))
+              ? "T"
+              : "F"
+          }
+        />
+        {isFocused && nickname.length < 2 && (
+          <Copy3>- 닉네임을 2글자 이상 입력해주세요.</Copy3>
+        )}
+        {isFocused && isOverlap && nickname === temp && (
+          <Copy3>- 중복되는 닉네임입니다.</Copy3>
+        )}
+      </Container>
+      <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>
   );
 };
@@ -28,6 +108,11 @@ const NickNameContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 66px;
+`;
+
+const Container = styled.div`
+  height: 10rem;
+  margin-bottom: 360px;
 `;
 
 const ArrowIcon = styled.img`
@@ -47,17 +132,27 @@ const Copy = styled.h2`
   margin-left: 20px;
 `;
 
+const Copy2 = styled(Copy)`
+  font-size: 12px;
+  font-weight: 400;
+`;
+
+const Copy3 = styled(Copy2)`
+  font-size: 12px;
+  font-weight: 400;
+  color: red;
+`;
+
 const Input = styled.input`
   width: 311px;
   height: 47px;
   border-radius: 23.5px;
   background: #efefef;
-  border: none;
+  border: ${props => (props.color === "T" ? "1px solid red" : "none")};
   padding-left: 15px;
   font-size: 15px;
   font-weight: 400;
-  margin-top: 240px;
-  margin-bottom: 250px;
+  margin-top: 190px;
   outline: none;
 `;
 

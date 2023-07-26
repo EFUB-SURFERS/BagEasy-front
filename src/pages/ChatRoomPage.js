@@ -3,11 +3,20 @@ import Header from "../components/ChatRoom/Header";
 import Form from "../components/ChatRoom/Form";
 import MessagesContainer from "../components/ChatRoom/MessagesContainer";
 import { styled } from "styled-components";
+import { stompService } from "../api/stomp";
+import { useParams } from "react-router-dom";
 const ChatRoom = () => {
   const formRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
+  //채팅방 id 받아오기
+  const { roomId } = useParams();
+  console.log(roomId);
+
   useEffect(() => {
+    //클라이언트 생성 및 연결
+    stompService.connectClient();
+
     //form 높이에 따른 messagesContainer 사이즈 조정
     const resizeObserver = new ResizeObserver(entries => {
       const formHeight = entries[0].contentRect.height;
@@ -17,6 +26,8 @@ const ChatRoom = () => {
     });
 
     resizeObserver.observe(formRef.current);
+
+    return () => stompService.disconnectClient();
   }, []);
 
   return (
@@ -52,11 +63,13 @@ const Wrapper = styled.div`
     top: 97px;
     left: 0;
     right: 0;
+    z-index: -1;
   }
   .form {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0px;
+    z-index: -1;
   }
 `;

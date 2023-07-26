@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import chatImg from "../../assets/chatImg.png";
-import myPageImg from "../../assets/myPageImg.png";
+import chatImg from "../../assets/itemListPage/chatImg.png";
+import myPageImg from "../../assets/itemListPage/myPageImg.png";
 
 const Buttons = ({ navigate }) => {
   return (
@@ -20,7 +20,7 @@ const ButtonWrapper = styled.div`
   position: fixed;
   //margin-top: -140px;
   right: 0;
-  z-index: 10;
+  //z-index: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;

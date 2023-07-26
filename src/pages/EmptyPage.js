@@ -1,32 +1,26 @@
 import { styled } from "styled-components";
-import Duck from "../assets/duck.png";
+import Duck from "../assets/GoogleLogin/duck.png";
 import Arrow from "../assets/arrow.png";
-import GoogleBtn from "../assets/googleBtn.png";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const Empty = () => {
   const navigate = useNavigate();
 
   const handleNavigateBack = () => {
     navigate(-1);
   };
-
-  const handleNavigateGoogle = () => {
-    navigate("/nickname");
-  };
-
   return (
-    <SignUpContainer>
+    <Container>
       <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
-      <Copy>안녕하세요</Copy>
-      <Copy>구글 계정이 있나요?</Copy>
       <Character src={Duck} />
-      <GBtn src={GoogleBtn} onClick={handleNavigateGoogle} />
-    </SignUpContainer>
+      <P>이 페이지는 텅~ 비었어요.</P>
+    </Container>
   );
 };
 
-const SignUpContainer = styled.div`
+export default Empty;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,19 +42,9 @@ const ArrowIcon = styled.img`
   cursor: pointer;
 `;
 
-const GBtn = styled.img`
-  width: 328px;
-  height: 46px;
-  margin-top: 200px;
-  cursor: pointer;
-`;
-
-const Copy = styled.h2`
-  font-size: 20px;
+const P = styled.p`
+  margin-top: 5.5rem;
+  color: #767676;
   font-weight: 600;
-  margin: 3px;
-  align-self: flex-start;
-  margin-left: 20px;
+  font-size: 1.2rem;
 `;
-
-export default SignUp;

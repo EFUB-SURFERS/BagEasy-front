@@ -1,30 +1,37 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const MyMessage = () => {
-  const images = true;
+const MyMessage = ({ contentType, content, sendTime, sendDate }) => {
   return (
-    <Wrapper>
-      <Time>PM 2:00</Time>
-      {images ? (
-        <ImageContainer>
-          <img
-            src={"https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"}
-            alt=""
-          />
-        </ImageContainer>
-      ) : (
-        <Text>
-          안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건 구매하고
-          싶습니다! 안녕하세요~ 물건 구매하고 싶습니다! 안녕하세요~ 물건
-          구매하고 싶습니다! 안녕하세요~ 물건 구매하고 싶습니다!
-        </Text>
-      )}
-    </Wrapper>
+    <>
+      {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
+      <Wrapper>
+        <Time>{sendTime}</Time>
+        {contentType === "image" ? (
+          <ImageContainer>
+            <img src={content} alt="" />
+          </ImageContainer>
+        ) : (
+          <Text>{content}</Text>
+        )}
+      </Wrapper>
+    </>
   );
 };
 
 export default MyMessage;
+const Date = styled.div`
+  padding-top: 15px;
+  padding-bottom: 20px;
+  color: #6d6d6d;
+  text-align: center;
+  font-family: Noto Sans KR;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
 const ImageContainer = styled.div`
   margin-left: 7px;
   margin-right: 12px;

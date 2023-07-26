@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import place from "../../assets/place.png";
+import place from "../../assets/updateUni/place.png";
 import Modal from "./Modal";
-//모달창 열렸을때 뒷 화면 background: rgba(0, 0, 0, 0.05); 처리 따로 해야함.
+//디자인 수정으로 현재 해당 컴포넌트는 필요없어졌으나
+//모달 연결에 참고하시면 좋을것 같습니다.
+//추후 삭제예정
+//검색버튼이 아닌 회색 필드를 클릭해야 모달 나옵니다.
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
