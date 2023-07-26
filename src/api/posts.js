@@ -26,7 +26,7 @@ export const getDetail = async postId => {
 };
 
 //판매글 전체조회 api
-export const getAllPosts = async postId => {
+export const getAllPosts = async () => {
   try {
     const res = await client.get(`posts`);
     console.log(res.data);
@@ -51,6 +51,21 @@ export const deleteDetail = async postId => {
 export const createPost = async formData => {
   try {
     const res = await client.post(`posts`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 판매글 수정 api
+export const modifyPost = async (postId,formData) => {
+  try {
+    const res = await client.put(`posts/${postId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
