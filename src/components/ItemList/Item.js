@@ -6,7 +6,7 @@ import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Item = ({ post, setRefresh }) => {
+const Item = ({ post, setRefresh, liked = false }) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
@@ -48,6 +48,7 @@ const Item = ({ post, setRefresh }) => {
       <Info>
         <Name>{post.postTitle}</Name>
         <Price>{`${post.price}원`}</Price>
+        {liked && <School>{post.school}</School>}
         <Footer>
           <Tag isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
           <Favorites>
@@ -105,6 +106,12 @@ const Name = styled.div`
 const Price = styled.div`
   flex: none;
   font-size: 16px;
+  color: grey;
+`;
+
+const School = styled.div`
+  flex: none;
+  font-size: 13px;
   color: grey;
 `;
 
