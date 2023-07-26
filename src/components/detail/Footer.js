@@ -22,13 +22,11 @@ const Footer = ({
   price,
   isSold,
   myId,
-  sellerNickname,
+  myNickname,
 }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  //const [roomId, setRoomId] = useState();
-
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
@@ -83,7 +81,8 @@ const Footer = ({
 
   const getRoomId = async () => {
     try {
-      const data = await createRoom(postId, sellerNickname);
+      const data = await createRoom(postId, myNickname);
+      console.log(data);
       return data.roomId;
     } catch (error) {
       console.log("에러 발생", error);
@@ -92,7 +91,7 @@ const Footer = ({
 
   const handleChatClick = async () => {
     const roomId = await getRoomId();
-    navigate(`/chats/${roomId}`);
+    roomId && navigate(`/chats/${roomId}`);
   };
 
   return (
