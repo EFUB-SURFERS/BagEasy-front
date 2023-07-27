@@ -6,41 +6,49 @@ import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
+import { getChatRoom } from "../../api/chat";
 const Header = () => {
   const [isFinished, setIsFinished] = useState(false);
-  const [isSold, setIsSold] = useState(false);
+  //const [isSold, setIsSold] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  let sellerId, buyerId;
+  const [roomInfo, setRoomInfo] = useState({});
+  const [postInfo, setPostInfo] = useState({});
+  const [isSeller, setIsSeller] = useState(false);
+
   const navigate = useNavigate();
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
-  console.log(roomId);
+  //console.log(roomId);
 
-  //판매글 상세 정보 저장
-  const [detail, setDetail] = useState({});
+  const getHeaderData = async () => {
+    const res = await getChatRoom(roomId);
+    setRoomInfo(res);
+    getPostData(res);
+    checkIsSeller(res);
+  };
+  const getPostData = async room => {
+    const res = await getDetail(room.postId);
+    setPostInfo(res);
+  };
+
+  const checkIsSeller = async room => {
+    //본인 프로필 조회
+    //본인 닉네임과 판매자 닉네임 비교
+    //같으면 거래 성사버튼 보이게 처리.
+    const myNickname = localStorage.getItem("myNickname");
+    console.log(myNickname);
+    if (myNickname === room.joinMember) {
+      setIsSeller(true);
+    }
+  };
 
   useEffect(() => {
-    //룸아이디로 채팅방 정보 조회 (postId, createMember, joinMember)
-    //buyerId= createMember , seller=joinMember
-    //거래 확정 모달에 buyerId, postId 넘기기
-    //const [roomInfo,setRoomInfo]=useState();
-    //
-    //
-    //본인 프로필 조회
-    //본인 아이디와 판매자 아이디 비교
-    //같으면 거래 성사버튼 보이게
-    const myProfile = getMyProfile();
-    if (myProfile.memberId) {
-    }
-    //
-    //
-    //postId로 상세정보 조회
-    //const res = getDetail(postId);
-    //setDetail(res);
+    //헤더에 보이는 정보 get
+    //채팅방 개별 정보 조회로 룸아이디를 얻어 판매글 상세 정보 조회, 판매자인지 확인
+    getHeaderData();
   }, []);
 
-  //buyerId 는 chatRoomPage에서 받아오기 (판매자 누군지 판별한뒤 남은 멤버)
   const openModal = () => {
     setIsOpen(!isOpen);
   };
@@ -55,27 +63,40 @@ const Header = () => {
           <img src={back} alt="뒤로가기" />
         </Btn>
         <ItemContainer>
-          <ItemImg $isSold={isSold}>
-            {detail.imageResponseDtos && (
+          <ItemImg $isSold={postInfo.isSold}>
+            {postInfo.imageResponseDtos && (
               <img
-                src={detail.imageResponseDtos[0].imageUrl}
+                src={postInfo.imageResponseDtos[0].imageUrl}
                 alt="물건이미지"
               />
             )}
           </ItemImg>
           <div>
             <div className="wrapper">
-              <p className="isSold">{isSold ? "판매완료" : "판매중"}</p>
-              <Title $isSold={isSold}>{detail.postTitle}</Title>
+              <p className="isSold">
+                {postInfo.isSold ? "판매완료" : "판매중"}
+              </p>
+              <Title $isSold={postInfo.isSold}>{postInfo.postTitle}</Title>
             </div>
             <div className="wrapper">
-              <p className="price">{detail.price}</p>
-              {isFinished ? (
-                <FinishBtn $isFinished={isFinished}>거래 확정</FinishBtn>
+              <p className="price">{postInfo.price}원</p>
+              {isSeller ? (
+                <>
+                  {isFinished ? (
+                    <FinishBtn $isFinished={postInfo.isSold}>
+                      거래 확정
+                    </FinishBtn>
+                  ) : (
+                    <FinishBtn
+                      onClick={openModal}
+                      $isFinished={postInfo.isSold}
+                    >
+                      거래 확정하기
+                    </FinishBtn>
+                  )}
+                </>
               ) : (
-                <FinishBtn onClick={openModal} $isFinished={isFinished}>
-                  거래 확정하기
-                </FinishBtn>
+                <></>
               )}
               {isOpen ? (
                 <Modal
@@ -83,10 +104,9 @@ const Header = () => {
                   setIsOpen={setIsOpen}
                   setIsFinished={setIsFinished}
                   isFinished={isFinished}
-                  setIsSold={setIsSold}
-                  isSold={isSold}
-                  postId={detail.postId}
-                  buyerId={buyerId}
+                  isSold={postInfo.isSold}
+                  postId={postInfo.postId}
+                  buyerNickname={roomInfo.createMember}
                 />
               ) : (
                 <></>
