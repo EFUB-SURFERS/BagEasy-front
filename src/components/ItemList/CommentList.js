@@ -6,6 +6,8 @@ import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { getComments, createComment } from "../../api/comments";
 import { getMyProfile } from "../../api/member";
+import ReplyList from "./ReplyList";
+import CommentReplies from "./CommentReplies";
 
 const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
@@ -59,10 +61,11 @@ const CommentList = ({ postId = 1 }) => {
 
         <List>
           {comments.map((comment, key) => (
-            <Comment comment={comment} key={key} />
+            <CommentReplies comment={comment} key={key} />
           ))}
         </List>
       </CommentWrapper>
+
       <Footer>
         <CommentInput
           placeholder="댓글 쓰기..."
@@ -85,7 +88,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border-top: 1px solid lightgrey; */
+  font-family: "Noto Sans KR";
 `;
 
 const Header = styled.div`
@@ -93,7 +96,6 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 4px 13px;
-  /* border: 1px solid grey; */
 `;
 
 const Text = styled.div`
@@ -122,16 +124,12 @@ const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  /* border: 1px solid grey; */
-  /* margin: 1rem; */
   box-sizing: border-box;
   padding-bottom: 5px;
   margin: 46px 23px 48px 23px;
-  width: 344px;
   overflow: hidden;
   background: #ffee94;
-  /* transition: all 0.3s; */
-  height: ${props => (!props.open ? "95px" : "auto")};
+  height: ${props => (!props.open ? "90px" : "auto")};
 `;
 
 const List = styled.div``;
@@ -144,11 +142,9 @@ const Footer = styled.div`
   border-top: 1px solid #cecece;
   padding-top: 15px;
   padding-bottom: 75px;
-  //background: black;
 `;
 
 const CommentInput = styled.input`
-  //width: 18rem;
   flex: auto;
   background: #efefef;
   height: 39px;

@@ -12,33 +12,31 @@ import emptyheart from "../../assets/post/emptyheart.png";
 import chatButton from "../../assets/post/chatButton.png";
 import soldButton from "../../assets/post/sold.png";
 import menubar from "../../assets/post/menubar.png";
+import { createRoom } from "../../api/chat";
 
 const Footer = ({
   isLiked,
   heartCount,
   postId,
-  sellerId,
+  sellerNickname,
   price,
-  isSolded,
+  isSold,
   myId,
+  myNickname,
 }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
-
 
   const handleEditClick = ({}) => {
     navigate("/modify/" + postId);
   };
 
-
   useEffect(() => {
-    setIsWirter(sellerId === myId);
+    setIsWirter(sellerNickname === myNickname);
     setLoading(false);
-  }, [sellerId, myId]);
-
+  }, [sellerNickname, myNickname]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -81,9 +79,19 @@ const Footer = ({
     // location.reload();
   };
 
-  const handleChatClick = () => {
-    // 후에 roomId받아서 채팅방으로 이동
-    navigate("/chats/:roomId");
+  const getRoomId = async () => {
+    try {
+      const data = await createRoom(postId, myNickname);
+      console.log(data);
+      return data.roomId;
+    } catch (error) {
+      console.log("에러 발생", error);
+    }
+  };
+
+  const handleChatClick = async () => {
+    const roomId = await getRoomId();
+    roomId && navigate(`/chats/${roomId}`);
   };
 
   return (
@@ -99,7 +107,7 @@ const Footer = ({
       <Price>{price}</Price>
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
-      ) : isSolded ? (
+      ) : isSold ? (
         <Button src={soldButton}></Button>
       ) : (
         <Button src={chatButton} onClick={handleChatClick}></Button>

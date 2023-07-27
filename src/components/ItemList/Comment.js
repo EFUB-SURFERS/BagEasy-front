@@ -1,39 +1,56 @@
 import React from "react";
 import styled from "styled-components";
 import Profile from "../Common/Profile";
+import dots from "../../assets/itemListPage/dots.png";
+import ReplyList from "./ReplyList";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, isReply = false }) => {
   return (
-    <Root>
-      {/* <Profile>
-        <ProfileImg src={profileImg2} />
-      </Profile> */}
-      <Profile nickname={"Jjm0829"} width="23px" height="23px" />
-      <Wrapper>
-        <Nickname>jjm0829</Nickname>
-        <Text>{comment.commentContent}</Text>
-      </Wrapper>
-    </Root>
+    <Container>
+      <Root isReply={isReply}>
+        <ProfileWrapper isReply={isReply}>
+          <Profile
+            nickname={!isReply ? comment.writer : "nickname"}
+            width="24px"
+            height="24px"
+          />
+        </ProfileWrapper>
+        <TextWrapper>
+          <Nickname>{!isReply ? comment.writer : "nickname"}</Nickname>
+          <Text>
+            {!isReply ? comment.commentContent : comment.replyContent}
+          </Text>
+        </TextWrapper>
+        <Button>
+          <Dots src={dots} />
+        </Button>
+      </Root>
+    </Container>
   );
 };
 
-const Root = styled.div`
-  display: flex;
-  align-items: center;
-  background: #ffee94;
-  padding: 13px 7px;
-  height: 68px;
-  box-sizing: border-box;
-  margin: 0rem 13px;
-  & + & {
-    border-top: 1px solid #a7a7a7;
-  }
-`;
-
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 0.7rem;
+`;
+
+const Root = styled.div`
+  display: flex;
+  background: #ffee94;
+  margin: 0 15px;
+  padding: 8px 0;
+  margin-left: ${props => props.isReply && "50px"};
+  box-sizing: border-box;
+`;
+
+const ProfileWrapper = styled.div`
+  padding-top: 3px;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
 `;
 
 const Nickname = styled.div`
@@ -44,6 +61,14 @@ const Nickname = styled.div`
 
 const Text = styled.div`
   font-size: 13px;
+`;
+
+const Button = styled.div`
+  margin-left: auto;
+`;
+
+const Dots = styled.img`
+  width: 12px;
 `;
 
 export default Comment;

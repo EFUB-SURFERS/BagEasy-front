@@ -5,7 +5,6 @@ import { modifyPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/post/choiceuni.png";
-import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
 
@@ -22,29 +21,30 @@ const SalesContent = ({ postId, originalData }) => {
         title: originalData?.postTitle || "",
         price: originalData?.price || "",
         content: originalData?.postContent || "",
+        imgData: originalData?.imageResponseDtos || "",
       });
       setLoading(false);
     }, 100);
-
-    return () => clearTimeout(timer); // 컴포넌트가 unmount되면 타이머를 클리어하여 메모리 누수 방지
+    return () => clearTimeout(timer);
   }, [originalData]);
 
   const images = originalData.imageResponseDtos;
+  console.log("images", images);
 
-  // const images = originalData.imageResponseDtos
-  //   ? originalData.imageResponseDtos.map(item => item.imageUrl)
-  //   : [];
+  const images2 = originalData.imageResponseDtos
+    ? originalData.imageResponseDtos.map(item => item.imageUrl)
+    : [];
 
   const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
 
-  console.log("imageResponseDtos", originalData.imageResponseDtos);
-  console.log("images", images);
-
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
+
   const imgRef = useRef();
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
@@ -61,7 +61,8 @@ const SalesContent = ({ postId, originalData }) => {
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = modifiedData;
-    if (imgFile && uni && title && price && content) {
+    console.log("imgData", imgData);
+    if (imgData && uni && title && price && content) {
       //모든 데이터가 있을때 등록 시도
       try {
         let data = {
@@ -89,6 +90,39 @@ const SalesContent = ({ postId, originalData }) => {
       alert("내용을 모두 채운 후 다시 등록해주세요.");
     }
   };
+
+  // const handleRegisterButtonClick = async () => {
+  //   const { uni, title, price, content, imgData } = modifiedData;
+  //   console.log("imgData", imgData);
+  //   if (!uni || !title || !price || !content) {
+  //     alert("내용을 모두 채운 후 다시 등록해주세요.");
+  //     return;
+  //   }
+  //   try {
+  //     let data = {
+  //       postTitle: title,
+  //       postContent: content,
+  //       price: price,
+  //       school: uni,
+  //     };
+  //     console.log("data", data);
+  //     const formData = new FormData();
+  //     const imagesToSend = imgData || images2;
+  //     for (let i = 0; i < imagesToSend.length; i++) {
+  //       formData.append("addImage", imagesToSend[i]);
+  //     }
+  //     formData.append(
+  //       "dto",
+  //       new Blob([JSON.stringify(data)], { type: "application/json" }),
+  //     );
+  //     const res = await modifyPost(postId, formData);
+  //     console.log(res);
+  //     alert("게시글이 수정되었습니다.");
+  //     navigate(`/detail/` + postId);
+  //   } catch (err) {
+  //     console.log("error", err);
+  //   }
+  // };
 
   return (
     <>
@@ -120,8 +154,6 @@ const SalesContent = ({ postId, originalData }) => {
             imgFile.map((fileURL, index) => (
               <img key={index} src={fileURL} alt={`Image ${index}`} />
             ))}
-
-          {/* 이미지 파일이 없으면 서버에서 가져온 이미지 출력 */}
           {!imgFile &&
             images.map(imageData => (
               <img
