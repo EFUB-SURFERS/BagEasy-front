@@ -19,34 +19,36 @@ const Header = () => {
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
-  console.log(roomId);
+  //console.log(roomId);
 
-  //채팅방 개별 정보 조회 프로미스 해결
-  const resolvePromise = async () => await getChatRoom(roomId);
+  const getHeaderData = async () => {
+    const res = await getChatRoom(roomId);
+    setRoomInfo(res);
+    getPostData(res);
+    checkIsSeller(res);
+  };
+  const getPostData = async room => {
+    const res = await getDetail(room.postId);
+    setPostInfo(res);
+  };
 
-  useEffect(() => {
-    //채팅방 개별 정보 조회
-    (async () => {
-      const res = await resolvePromise();
-      setRoomInfo(res);
-    })();
-
+  const checkIsSeller = async room => {
     //본인 프로필 조회
     //본인 닉네임과 판매자 닉네임 비교
     //같으면 거래 성사버튼 보이게 처리.
-    const myProfile = getMyProfile();
-    if (myProfile.nickname === roomInfo.joinMember) {
+    const myNickname = localStorage.getItem("myNickname");
+    console.log(myNickname);
+    if (myNickname === room.joinMember) {
       setIsSeller(true);
     }
+  };
 
-    //판매글 상세 정보 조회
-    if (roomInfo) {
-      const res = getDetail(roomInfo.postId);
-      setPostInfo(res);
-    }
+  useEffect(() => {
+    //헤더에 보이는 정보 get
+    //채팅방 개별 정보 조회로 룸아이디를 얻어 판매글 상세 정보 조회, 판매자인지 확인
+    getHeaderData();
   }, []);
 
-  //buyerId 는 chatRoomPage에서 받아오기 (판매자 누군지 판별한뒤 남은 멤버)
   const openModal = () => {
     setIsOpen(!isOpen);
   };
@@ -98,7 +100,7 @@ const Header = () => {
                   setIsSold={setIsSold}
                   isSold={isSold}
                   postId={postInfo.postId}
-                  buyerId={roomInfo.createMember}
+                  buyerNickname={roomInfo.createMember}
                 />
               ) : (
                 <></>

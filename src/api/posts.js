@@ -2,10 +2,10 @@ import client from "./client";
 //판매글 관련 api 요청 함수 여기에 구현해주세요
 
 //판매글 구매 확정 api
-export const FinishDeal = async (postId, buyerId) => {
+export const FinishDeal = async (postId, buyerNickname) => {
   try {
     const res = await client.put(`posts/${postId}/isSold`, {
-      buyerId: buyerId,
+      buyerNickname: buyerNickname,
     });
 
     console.log(res);

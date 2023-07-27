@@ -1,60 +1,41 @@
 import { Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { saveMessage } from "./chat";
-import {
-  addNewMessage,
-  checkIsNewDate,
-  getSendTime,
-} from "../components/ChatRoom/MessagesContainer";
 
 let token = localStorage.getItem("bagtoken");
 
 let stompClient;
 
-//실시간으로 받은 메세지화면에 보여주기
-const renderMessage = newMessage => {
-  const DATE = new Date(
-    newMessage.sentAt - new Date().getTimezoneOffset() * 60 * 1000,
-  );
-  console.log(DATE);
-
-  const message = {
-    mine: false,
-    id: newMessage.sentAt,
-    senderName: newMessage.nickname,
-    contentType: newMessage.contentType,
-    content: newMessage.content,
-    sendTime: getSendTime(DATE.toString()),
-    sendDate: {
-      isNewDate: checkIsNewDate(DATE.toString()),
-      date: DATE.toString.substr(0, 10),
-    },
-  };
-
-  addNewMessage(message);
-};
-
 //서버에서 메세지 받으면 실행하는 함수
-const onMessage = data => {
-  alert(data.body);
+const onMessage = (data, onNewMessage) => {
   if (data.body) {
-    console.log("data", data.body);
     const newMessage = JSON.parse(data.body);
-    console.log("new-message", newMessage);
 
-    //talk 타입이면 post 요청
-    if (newMessage.contentType === "talk") {
+    const myNickname = localStorage.getItem("myNickname");
+
+    //db 조회 없이 화면에 보여줄 수 있도록 실시간 메세지 추가.
+    if (
+      newMessage.contentType === "talk" &&
+      newMessage.nickname !== myNickname
+    ) {
+      //받은 메세지가 상대가 보낸 메세지이고 talk 타입이면 post 요청
+      console.log("상대의 메세지에요");
       saveMessage(newMessage);
     }
 
-    //db 조회 없이 화면에 보여줄 수 있는 message 배열에 메세지 추가.
-    renderMessage(newMessage);
+    //mine 프로퍼티 추가해서 리덕스 저장
+    if (newMessage.contentType === "talk") {
+      newMessage.mine = true;
+      if (newMessage.nickname !== myNickname) newMessage.mine = false;
+
+      onNewMessage(newMessage);
+    }
   } else {
     alert("got empty message");
   }
 };
 
-export const connectClient = roomId => {
+export const connectClient = (roomId, onNewMessage) => {
   stompClient = Stomp.over(() => {
     const sock = new SockJS("https://server.bageasy.net/chat");
     return sock;
@@ -67,9 +48,13 @@ export const connectClient = roomId => {
     },
     () => {
       console.log("연결 완료");
-      stompClient.subscribe(`/topic/group/${roomId}`, onMessage, {
-        Authorization: `${token}`,
-      });
+      stompClient.subscribe(
+        `/topic/group/${roomId}`,
+        data => onMessage(data, onNewMessage),
+        {
+          Authorization: `${token}`,
+        },
+      );
     },
   );
 };
@@ -86,7 +71,7 @@ export const publishMessage = (roomId, isImage, message) => {
   }
 
   stompClient.send(
-    "/app/chat",
+    "/app/message",
     {
       Authorization: `${token}`,
     },

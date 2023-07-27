@@ -9,12 +9,12 @@ const Modal = ({
   isSold,
   setIsSold,
   postId,
-  buyerId,
+  buyerNickname,
 }) => {
   const handleItemClick = () => {
     setIsOpen(false);
     //거래 성사 요청 보내기
-    FinishDeal(postId, buyerId);
+    FinishDeal(postId, buyerNickname);
     setIsFinished(!isFinished);
     setIsSold(!isSold);
   };

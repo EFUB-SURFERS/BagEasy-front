@@ -5,7 +5,7 @@ import YourMessage from "./YourMessage";
 import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 //메세지 전송 날짜 확인 후 바뀌었으면 업데이트
 let newDate = "";
 let oldDate = "";
@@ -32,30 +32,44 @@ export const checkIsNewDate = sendDate => {
     return true;
   }
 };
-let newMessage;
-export const addNewMessage = message => {
-  newMessage = message;
-};
+
 const MessagesContainer = () => {
   const [DBmessages, setDBMessages] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [yourNickname, setYourNickname] = useState("");
+  const [realtimeMessages, setRealTimeMessages] = useState([]);
   const scrollRef = useRef(null);
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
 
+  //리덕스 스토어에서 실시간 메세지 가져오는 함수 (메세지 받을 때 마다 추가되고 자신의 연결 끊기면 초기화)
+  const newMessage = useSelector(state => state);
+
+  const getTotalMessage = async () => {
+    //db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
+    const res = await getMessages(roomId);
+    res && setDBMessages(res.chatList);
+    setYourNickname(res.nickname);
+    addRealTimeMessages(res.chatList);
+  };
+  const addRealTimeMessages = db => {
+    //접속 중이지 않을 때 상대에게 도착한 메세지 있다면 추가
+    const firstData = realtimeMessages && [...db, ...realtimeMessages];
+    setMessages(firstData);
+  };
+
   useEffect(() => {
-    //DB에 저장되어있는 채팅 내역 조회 (채팅방 접속 시 한번)
-    const res = getMessages(roomId);
-
-    setDBMessages(res.chatList);
-
-    console.log(DBmessages);
-
-    //실시간 + DB 총 메세지 배열
-    //setMessages(messages);
-    console.log(messages);
+    //접속시 db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
+    getTotalMessage();
   }, []);
+
+  useEffect(() => {
+    console.log("here", newMessage);
+    newMessage && setMessages([...messages, ...newMessage]);
+
+    console.log(messages);
+  }, [newMessage]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
   const scrollToBottom = () => {
@@ -64,10 +78,6 @@ const MessagesContainer = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  useEffect(() => {
-    setMessages([...messages]);
-  }, [newMessage]);
 
   return (
     <Wrapper ref={scrollRef}>
@@ -80,11 +90,13 @@ const MessagesContainer = () => {
                   key={message.id}
                   contentType={message.contentType}
                   content={message.content}
-                  sendTime={getSendTime(message.sendDate)}
+                  /*sendTime={getSendTime(message.sendDate)}
                   sendDate={{
                     isNewDate: checkIsNewDate(message.sendDate),
                     date: message.sendDate.substr(0, 10),
-                  }}
+                  }}*/
+                  sendTime={1}
+                  sendDate={1}
                 />
               </>
             ) : (
@@ -94,11 +106,13 @@ const MessagesContainer = () => {
                   senderName={message.senderName}
                   contentType={message.contentType}
                   content={message.content}
-                  sendTime={getSendTime(message.sendDate)}
+                  /*sendTime={getSendTime(message.sendDate)}
                   sendDate={{
                     isNewDate: checkIsNewDate(message.sendDate),
                     date: message.sendDate.substr(0, 10),
-                  }}
+                  }}*/
+                  sendTime={1}
+                  sendDate={1}
                 />
               </>
             );
