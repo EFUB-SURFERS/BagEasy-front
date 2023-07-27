@@ -65,10 +65,7 @@ const MessagesContainer = () => {
   }, []);
 
   useEffect(() => {
-    console.log("here", newMessage);
     newMessage && setMessages([...messages, ...newMessage]);
-
-    console.log(messages);
   }, [newMessage]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
