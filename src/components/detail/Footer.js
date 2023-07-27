@@ -18,7 +18,7 @@ const Footer = ({
   isLiked,
   heartCount,
   postId,
-  sellerId,
+  sellerNickname,
   price,
   isSold,
   myId,
@@ -34,9 +34,9 @@ const Footer = ({
   };
 
   useEffect(() => {
-    setIsWirter(sellerId === myId);
+    setIsWirter(sellerNickname === myNickname);
     setLoading(false);
-  }, [sellerId, myId]);
+  }, [sellerNickname, myNickname]);
 
   if (loading) {
     return <div>Loading...</div>;
