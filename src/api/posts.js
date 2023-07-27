@@ -5,7 +5,7 @@ import client from "./client";
 export const FinishDeal = async (postId, buyerNickname) => {
   try {
     const res = await client.put(`posts/${postId}/isSold`, {
-      buyerNickname: buyerNickname,
+      buyerNickName: buyerNickname,
     });
 
     console.log(res);

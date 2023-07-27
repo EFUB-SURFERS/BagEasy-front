@@ -87,7 +87,7 @@ const MessagesContainer = () => {
             return message.mine ? (
               <>
                 <MyMessage
-                  key={message.id}
+                  key={message.id || message.sentAt}
                   contentType={message.contentType}
                   content={message.content}
                   /*sendTime={getSendTime(message.sendDate)}
@@ -102,7 +102,7 @@ const MessagesContainer = () => {
             ) : (
               <>
                 <YourMessage
-                  key={message.id}
+                  key={message.id || message.sentAt}
                   senderName={message.senderName}
                   contentType={message.contentType}
                   content={message.content}

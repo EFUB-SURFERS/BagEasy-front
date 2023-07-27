@@ -1,22 +1,11 @@
 import React from "react";
 import { styled } from "styled-components";
 import { FinishDeal } from "../../api/posts";
-const Modal = ({
-  isOpen,
-  setIsOpen,
-  isFinished,
-  setIsFinished,
-  isSold,
-  setIsSold,
-  postId,
-  buyerNickname,
-}) => {
+const Modal = ({ isOpen, setIsOpen, postId, buyerNickname }) => {
   const handleItemClick = () => {
     setIsOpen(false);
     //거래 성사 요청 보내기
     FinishDeal(postId, buyerNickname);
-    setIsFinished(!isFinished);
-    setIsSold(!isSold);
   };
 
   return (

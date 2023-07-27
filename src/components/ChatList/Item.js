@@ -10,8 +10,6 @@ const Item = ({
   latestMessage,
   yourNickname,
 }) => {
-  //createMember, joinMember 중 자신 memberId 비교 후 상대방 프로필이미지, 이름 겟해오기
-  //안 읽은 메세지 수 표시 어떻게??
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
@@ -39,7 +37,7 @@ const Item = ({
     }
     return Math.floor(elapsedMin) + "분 전";
   };
-  const nickname = yourNickname;
+
   return (
     <Wrapper>
       <ChatItem
@@ -48,7 +46,7 @@ const Item = ({
         }}
       >
         <div className="img">
-          <Profile nickname={nickname} width={"67px"} height={"67px"} />
+          <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
           <img src={""} alt="" />
         </div>
         <div className="mainContainer">
@@ -56,9 +54,7 @@ const Item = ({
           {latestMessage && <p className="text">{latestMessage.content}</p>}
         </div>
         <div className="subContainer">
-          {latestMessage && (
-            <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
-          )}
+          {latestMessage && <p className="time">{latestMessage.sentAt}</p>}
           <p className="count">3</p>
         </div>
       </ChatItem>

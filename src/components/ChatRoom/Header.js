@@ -9,7 +9,7 @@ import { getMyProfile } from "../../api/member";
 import { getChatRoom } from "../../api/chat";
 const Header = () => {
   const [isFinished, setIsFinished] = useState(false);
-  const [isSold, setIsSold] = useState(false);
+  //const [isSold, setIsSold] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
@@ -63,7 +63,7 @@ const Header = () => {
           <img src={back} alt="뒤로가기" />
         </Btn>
         <ItemContainer>
-          <ItemImg $isSold={isSold}>
+          <ItemImg $isSold={postInfo.isSold}>
             {postInfo.imageResponseDtos && (
               <img
                 src={postInfo.imageResponseDtos[0].imageUrl}
@@ -73,17 +73,24 @@ const Header = () => {
           </ItemImg>
           <div>
             <div className="wrapper">
-              <p className="isSold">{isSold ? "판매완료" : "판매중"}</p>
-              <Title $isSold={isSold}>{postInfo.postTitle}</Title>
+              <p className="isSold">
+                {postInfo.isSold ? "판매완료" : "판매중"}
+              </p>
+              <Title $isSold={postInfo.isSold}>{postInfo.postTitle}</Title>
             </div>
             <div className="wrapper">
-              <p className="price">{postInfo.price}</p>
+              <p className="price">{postInfo.price}원</p>
               {isSeller ? (
                 <>
                   {isFinished ? (
-                    <FinishBtn $isFinished={isFinished}>거래 확정</FinishBtn>
+                    <FinishBtn $isFinished={postInfo.isSold}>
+                      거래 확정
+                    </FinishBtn>
                   ) : (
-                    <FinishBtn onClick={openModal} $isFinished={isFinished}>
+                    <FinishBtn
+                      onClick={openModal}
+                      $isFinished={postInfo.isSold}
+                    >
                       거래 확정하기
                     </FinishBtn>
                   )}
@@ -97,8 +104,7 @@ const Header = () => {
                   setIsOpen={setIsOpen}
                   setIsFinished={setIsFinished}
                   isFinished={isFinished}
-                  setIsSold={setIsSold}
-                  isSold={isSold}
+                  isSold={postInfo.isSold}
                   postId={postInfo.postId}
                   buyerNickname={roomInfo.createMember}
                 />

@@ -2,37 +2,32 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 import { getChatRooms } from "../../api/chat";
-import { getMyProfile } from "../../api/member";
+
 const List = () => {
   const [chatRooms, setChatRooms] = useState([]);
-  const resolvePromiseRooms = async () => await getChatRooms();
-  const resolvePromiseProfile = async () => await getMyProfile();
-  const [myNickname, setMyNickname] = useState("");
   const [yourNickname, setYourNickname] = useState("");
 
   useEffect(() => {
-    let res, myProfile;
-    //프로미스 해결
-    (async () => {
-      res = await resolvePromiseRooms();
-      console.log(res);
-      setChatRooms(res);
-    })();
-
-    (async () => {
-      myProfile = await resolvePromiseProfile();
-      setMyNickname(myProfile.nickname);
-    })();
+    getChatRoomsData();
   }, []);
+
+  const getChatRoomsData = async () => {
+    const res = await getChatRooms();
+    setChatRooms(res);
+
+    const myNickname = localStorage.getItem("myNickname");
+    myNickname === res.createMember
+      ? setYourNickname(res.joinMember)
+      : setYourNickname(res.createMember);
+  };
 
   return (
     <>
       <ChatList>
         {chatRooms &&
+          yourNickname &&
           chatRooms.map(room => {
-            myNickname === room.createMember
-              ? setYourNickname(room.joinMember)
-              : setYourNickname(room.createMember);
+            //내가 구매자인경우 상대는 판매자
             return (
               <Item
                 key={room.roomId}
