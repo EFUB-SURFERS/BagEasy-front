@@ -22,7 +22,7 @@ const FavoritesPage = () => {
   return (
     <Wrapper>
       <Header />
-      <List posts={posts} setRefresh={setRefresh} />
+      <List posts={posts} setRefresh={setRefresh} liked={true} />
     </Wrapper>
   );
 };
