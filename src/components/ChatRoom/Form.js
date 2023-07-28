@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 const Form = () => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
-  const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
   const { roomId } = useParams();
@@ -32,12 +31,10 @@ const Form = () => {
   };
   //메세지 전송 ( stompjs: send )
   const sendMessage = () => {
-    console.log("click");
     let content = "";
     let isImage;
     imgFile ? (content = imgFile) : (content = text);
     imgFile ? (isImage = 1) : (isImage = 0);
-    console.log(text);
     content && publishMessage(roomId, isImage, content);
     setText("");
   };
