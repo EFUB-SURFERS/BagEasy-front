@@ -50,7 +50,7 @@ export const getChatRoom = async roomId => {
 //서버에서 받은 newMessage 디비 저장용 post 요청
 export const saveMessage = async newMessage => {
   try {
-    const res = await client.post(`chatrooms/callback`, newMessage);
+    await client.post(`chatrooms/callback`, newMessage);
   } catch (err) {
     console.log("에러 발생", err);
   }
