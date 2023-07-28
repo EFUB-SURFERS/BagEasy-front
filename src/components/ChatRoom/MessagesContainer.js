@@ -60,12 +60,14 @@ const MessagesContainer = () => {
   };
 
   useEffect(() => {
-    //접속시 db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
+    //접속시 db에 있던 채팅 기록 가져오기
     getTotalMessage();
+    console.log("디비 조회");
   }, []);
 
   useEffect(() => {
-    newMessage && setMessages([...messages, ...newMessage]);
+    //양쪽 접속 중일때 실시간으로 보내고 받은 메세지 가져오기 ( DB 조회 X )
+    newMessage && setMessages([...messages, newMessage]);
   }, [newMessage]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
