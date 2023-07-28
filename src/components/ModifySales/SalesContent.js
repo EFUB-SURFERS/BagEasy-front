@@ -90,40 +90,7 @@ const SalesContent = ({ postId, originalData }) => {
       alert("내용을 모두 채운 후 다시 등록해주세요.");
     }
   };
-
-  // const handleRegisterButtonClick = async () => {
-  //   const { uni, title, price, content, imgData } = modifiedData;
-  //   console.log("imgData", imgData);
-  //   if (!uni || !title || !price || !content) {
-  //     alert("내용을 모두 채운 후 다시 등록해주세요.");
-  //     return;
-  //   }
-  //   try {
-  //     let data = {
-  //       postTitle: title,
-  //       postContent: content,
-  //       price: price,
-  //       school: uni,
-  //     };
-  //     console.log("data", data);
-  //     const formData = new FormData();
-  //     const imagesToSend = imgData || images2;
-  //     for (let i = 0; i < imagesToSend.length; i++) {
-  //       formData.append("addImage", imagesToSend[i]);
-  //     }
-  //     formData.append(
-  //       "dto",
-  //       new Blob([JSON.stringify(data)], { type: "application/json" }),
-  //     );
-  //     const res = await modifyPost(postId, formData);
-  //     console.log(res);
-  //     alert("게시글이 수정되었습니다.");
-  //     navigate(`/detail/` + postId);
-  //   } catch (err) {
-  //     console.log("error", err);
-  //   }
-  // };
-
+  
   return (
     <>
       <Header>
