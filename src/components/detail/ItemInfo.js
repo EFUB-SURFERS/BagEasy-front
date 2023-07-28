@@ -13,6 +13,7 @@ const ItemInfo = ({ postId }) => {
   const [post, setPost] = useState("");
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
+  const [count, setCount] = useState("");
 
   useEffect(() => {
     fetchPostData();
@@ -47,6 +48,11 @@ const ItemInfo = ({ postId }) => {
     }
   };
 
+  const updateLikes = newLikes => {
+    setLikes(newLikes);
+    fetchPostData();
+  };
+
   if (!post) {
     return <div>Loading...</div>;
   }
@@ -63,12 +69,13 @@ const ItemInfo = ({ postId }) => {
       <CommentList />
       <Footer
         isLiked={likes.isLiked}
+        setIsLiked={updateLikes}
         heartCount={post.heartCount}
+        setCount={count.setCount}
         postId={post.postId}
         sellerNickname={post.sellerNickname}
         price={post.price}
         isSold={post.isSold}
-        myId={myId.memberId}
         myNickname={myId.nickname}
       />
     </Div>
