@@ -79,7 +79,9 @@ const MessagesContainer = () => {
     const sendDate = new Date(
       sentAt - new Date().getTimezoneOffset() * 60 * 1000,
     );
-    const newDate = `${sendDate.getFullYear()}.${sendDate.getMonth()}.${sendDate.getDate()}`;
+    const newDate = `${sendDate.getFullYear()}.${
+      sendDate.getMonth() + 1
+    }.${sendDate.getDate()}`;
     if (date === newDate) {
       return { isNewDate: false, date: newDate };
     } else {
