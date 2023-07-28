@@ -1,9 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
+import Profile from "../Common/Profile";
 //유저인포 겟으로 프로필이미지 얻기
 //로그인 완료되면 api 작업
 const YourMessage = ({
-  senderName,
+  yourNickname,
   contentType,
   content,
   sendTime,
@@ -13,9 +14,17 @@ const YourMessage = ({
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
       <Wrapper>
-        <img className="profileImg" src={"image"} alt=""></img>
+        <div className="profileImg">
+          {yourNickname && (
+            <Profile
+              nickname={yourNickname}
+              width={"36px"}
+              height={"36px"}
+            ></Profile>
+          )}
+        </div>
         <div>
-          <Name>{senderName}</Name>
+          <Name>{yourNickname}</Name>
           {contentType === "image" ? (
             <ImageContainer>
               <img src={content} alt="" />
