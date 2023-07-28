@@ -1,4 +1,4 @@
-const initialState = [];
+const initialState = "";
 
 //메세지 저장 액션함수
 export const addNewMessage = newMessage => {
@@ -12,7 +12,7 @@ export const addNewMessage = newMessage => {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_MESSAGE":
-      return [...state, action.newMessage];
+      return action.newMessage;
 
     default:
       return state;

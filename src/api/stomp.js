@@ -14,24 +14,19 @@ const onMessage = (data, onNewMessage) => {
     const myNickname = localStorage.getItem("myNickname");
 
     //db 조회 없이 화면에 보여줄 수 있도록 실시간 메세지 추가.
-    if (
-      newMessage.contentType === "talk" &&
-      newMessage.nickname !== myNickname
-    ) {
-      //받은 메세지가 상대가 보낸 메세지이고 talk 타입이면 post 요청
-      console.log("상대의 메세지에요");
-      saveMessage(newMessage);
-    }
-
-    //mine 프로퍼티 추가해서 리덕스 저장
     if (newMessage.contentType === "talk") {
+      //받은 메세지가 talk 타입이면 post 요청 주체(본인)닉네임 추가해서 post 요청
+      newMessage.callbackNickname = myNickname;
+      saveMessage(newMessage);
+
+      //mine 프로퍼티 추가해서 리덕스 저장
       newMessage.mine = true;
       if (newMessage.nickname !== myNickname) newMessage.mine = false;
 
       onNewMessage(newMessage);
+    } else {
+      alert("got empty message");
     }
-  } else {
-    alert("got empty message");
   }
 };
 
