@@ -10,7 +10,7 @@ import {
   Price,
 } from "./SharedStyles";
 import trash from "../../assets/trash.png";
-import getBuyList from "../../api/buy.js";
+import getBuyList from "../../api/list.js";
 import { useEffect, useState } from "react";
 
 const BuyItem = ({ image, title, subtitle, price }) => {
@@ -27,6 +27,8 @@ const BuyItem = ({ image, title, subtitle, price }) => {
       console.log("error", err);
     }
   };
+
+  //buylist.image
   return (
     <>
       <ListItemContainer>
