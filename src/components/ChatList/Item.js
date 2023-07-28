@@ -13,7 +13,10 @@ const Item = ({
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
-    const elapsedSec = new Date().getTime() - sentAt;
+    const elapsedSec =
+      new Date().getTime() -
+      sentAt +
+      new Date().getTimezoneOffset() * 60 * 1000;
 
     //지난 분,시간,일,개월,년
     const elapsedMin = elapsedSec / (1000 * 60);
