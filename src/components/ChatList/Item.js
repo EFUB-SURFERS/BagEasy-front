@@ -13,8 +13,7 @@ const Item = ({
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
-    const date = new Date(sentAt);
-    const elapsedSec = new Date().getTime() - date.getTime();
+    const elapsedSec = new Date().getTime() - sentAt;
 
     //지난 분,시간,일,개월,년
     const elapsedMin = elapsedSec / (1000 * 60);
@@ -54,8 +53,10 @@ const Item = ({
           {latestMessage && <p className="text">{latestMessage.content}</p>}
         </div>
         <div className="subContainer">
-          {latestMessage && <p className="time">{latestMessage.sentAt}</p>}
-          <p className="count">3</p>
+          {latestMessage && (
+            <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
+          )}
+          {false && <p className="count">3</p>}
         </div>
       </ChatItem>
       <Line />
