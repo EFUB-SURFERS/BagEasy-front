@@ -1,54 +1,74 @@
 import React from "react";
 import styled from "styled-components";
-import profileImg2 from "../../assets/profileImg2.png";
+import Profile from "../Common/Profile";
+import dots from "../../assets/itemListPage/dots.png";
+import ReplyList from "./ReplyList";
 
-const Comment = () => {
+const Comment = ({ comment, isReply = false }) => {
   return (
-    <Root>
-      <Profile>
-        <ProfileImg src={profileImg2} />
-      </Profile>
-      <Wrapper>
-        <Nickname>jjm0829</Nickname>
-        <Text>거래 원합니다. 채팅 확인해주세요...</Text>
-      </Wrapper>
-    </Root>
+    <Container>
+      <Root isReply={isReply}>
+        <ProfileWrapper isReply={isReply}>
+          <Profile
+            nickname={!isReply ? comment.writer : "nickname"}
+            width="24px"
+            height="24px"
+          />
+        </ProfileWrapper>
+        <TextWrapper>
+          <Nickname>{!isReply ? comment.writer : "nickname"}</Nickname>
+          <Text>
+            {!isReply ? comment.commentContent : comment.replyContent}
+          </Text>
+        </TextWrapper>
+        <Button>
+          <Dots src={dots} />
+        </Button>
+      </Root>
+    </Container>
   );
 };
 
-const Root = styled.div`
-  display: flex;
-  align-items: center;
-  background: #ffee94;
-  padding: 0.7rem;
-  height: 3rem;
-  border-bottom: 1px solid grey;
-  margin: 0rem 0.7rem;
-  /* border: 1px solid lightgrey; */
-`;
-
-const Profile = styled.div`
-  width: 1.4rem;
-  height: 1.4rem;
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
-`;
-
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 0.7rem;
+`;
+
+const Root = styled.div`
+  display: flex;
+  background: #ffee94;
+  margin: 0 15px;
+  padding: 8px 0;
+  margin-left: ${props => props.isReply && "50px"};
+  box-sizing: border-box;
+`;
+
+const ProfileWrapper = styled.div`
+  padding-top: 3px;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
 `;
 
 const Nickname = styled.div`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 700;
+  margin-bottom: 2px;
 `;
 
 const Text = styled.div`
-  font-size: 14px;
+  font-size: 13px;
+`;
+
+const Button = styled.div`
+  margin-left: auto;
+`;
+
+const Dots = styled.img`
+  width: 12px;
 `;
 
 export default Comment;

@@ -1,9 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
-import gallery from "../../assets/gallery.png";
-import deleteBtn from "../../assets/deleteBtn.png";
+import gallery from "../../assets/chat/gallery.png";
+import deleteBtn from "../../assets/chat/deleteBtn.png";
 import { useState, useRef } from "react";
-import { stompService } from "../../api/stomp";
+import { publishMessage } from "../../api/stomp";
+import { useParams } from "react-router-dom";
 
 const Form = () => {
   const [text, setText] = useState("");
@@ -11,6 +12,7 @@ const Form = () => {
   const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
+  const { roomId } = useParams();
 
   //사진 첨부 및 미리보기
   const uploadImg = () => {
@@ -28,12 +30,16 @@ const Form = () => {
     setPreviewImg();
     setImgFile();
   };
-  //메세지 전송 ( stompjs: publish )
+  //메세지 전송 ( stompjs: send )
   const sendMessage = () => {
-    //백 완성 후 수정예정
-    imgFile ? setMessage(imgFile) : setMessage(text);
-    message && stompService.publishMessage(message);
-    setMessage("");
+    console.log("click");
+    let content = "";
+    let isImage;
+    imgFile ? (content = imgFile) : (content = text);
+    imgFile ? (isImage = 1) : (isImage = 0);
+    console.log(text);
+    content && publishMessage(roomId, isImage, content);
+    setText("");
   };
 
   return (

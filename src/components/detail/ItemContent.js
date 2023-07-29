@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from "react";
-
 import styled from "styled-components";
 
-import picture from "../../assets/picture.png";
-import profile from "../../assets/profile.png";
-import picture2 from "../../assets/picture2.png";
-import next from "../../assets/next.png";
-import before from "../../assets/before.png";
-import spot from "../../assets/spot.png";
+import Profile from "../Common/Profile";
+import profile from "../../assets/post/profile.png";
+import next from "../../assets/post/next.png";
+import before from "../../assets/post/before.png";
+import spot from "../../assets/post/spot.png";
 
-const ItemContent = () => {
-  const images = [picture, picture2, next, before]; //이미지배열
+const ItemContent = ({
+  sellerNickname,
+  postTitle,
+  postContent,
+  imageResponseDtos,
+  school,
+}) => {
+  const images = imageResponseDtos
+    ? imageResponseDtos.map(item => item.imageUrl)
+    : [];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handlePreviousImage = event => {
     event.stopPropagation();
     setCurrentImageIndex(prevIndex => (prevIndex === 0 ? 0 : prevIndex - 1));
-    console.log("이전버튼");
   };
 
   const handleNextImage = event => {
@@ -24,7 +30,6 @@ const ItemContent = () => {
     setCurrentImageIndex(prevIndex =>
       prevIndex === images.length - 1 ? prevIndex : prevIndex + 1,
     );
-    console.log("다음버튼");
   };
   const isFirstImage = currentImageIndex === 0;
   const isLastImage = currentImageIndex === images.length - 1;
@@ -46,23 +51,20 @@ const ItemContent = () => {
         )}
       </ItemImages>
       <Seller>
-        <SellerProfile src={profile} />
+        <SellerProfile>
+          <Profile nickname={sellerNickname} width="50px" height="50px" />
+        </SellerProfile>
         <SellerInfo>
-          <SellerNickname>jjm0829</SellerNickname>
+          <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
             <img src={spot} />
-            University of Northern Colorado
+            {school}
           </SellerUniv>
         </SellerInfo>
       </Seller>
       <Item>
-        <ItemTitle>이불, 침대시트, 베개 판매합니다.</ItemTitle>
-        <ItemDescription>
-          4개월동안 사용했습니다. <br />
-          상태 아주 깨끗하고 좋아요. <br />
-          거래 전에 세탁해서 드립니다. <br />
-          연락 많이 주세요!
-        </ItemDescription>
+        <ItemTitle>{postTitle}</ItemTitle>
+        <ItemDescription>{postContent}</ItemDescription>
       </Item>
     </Wrapper>
   );
@@ -116,10 +118,10 @@ const Seller = styled.div`
   border-bottom: 0.5px solid #808080;
 `;
 
-const SellerProfile = styled.img`
+const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 50px;
+  /* border-radius: 50px; */
 
   margin-top: 17px;
   margin-left: 16px;
@@ -137,21 +139,23 @@ const SellerInfo = styled.div`
   width: 310px;
   height: 54px;
 `;
+
 const SellerNickname = styled.div`
   color: #000;
   font-family: Arial;
-  font-size: 17px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 `;
+
 const SellerUniv = styled.div`
   font-family: Arial;
   font-style: regular;
   font-size: 13px;
   color: #848484;
 
-  margin-top: 6px;
+  /* margin-top: 6px; */
   img {
     width: 12px;
     height: 12px;
@@ -167,14 +171,10 @@ const Item = styled.div`
   width: 100%;
   height: 200px;
 
-  padding-left: 23px;
-  padding-right: 10px;
-
   border-bottom: 0.5px solid #cecece;
 `;
 const ItemTitle = styled.div`
   display: flex;
-  width: 361px;
   height: 48px;
   flex-direction: column;
   justify-content: center;
@@ -186,13 +186,12 @@ const ItemTitle = styled.div`
   font-weight: 500;
   line-height: normal;
 
-  padding-left: 23px;
-  padding-top: 10px;
+  padding: 5px 20px;
   flex-shrink: 0;
 `;
 const ItemDescription = styled.div`
   display: flex;
-  width: 362px;
+  /* width: 362px; */
   height: 202px;
   flex-direction: column;
   flex-shrink: 0;
@@ -203,5 +202,6 @@ const ItemDescription = styled.div`
   font-weight: 400;
   line-height: normal;
 
-  padding-left: 23px;
+  padding: 0px 20px;
+  /* padding-left: 23px; */
 `;

@@ -1,11 +1,12 @@
-import Header from "../components/CreateSales/Header";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import SalesContent from "../components/CreateSales/SalesContent";
 
 const CreateSalesPage = () => {
+  const { postId } = useParams();
   return (
     <div>
-      <Header />
-      <SalesContent />
+      <SalesContent postId={postId} />
     </div>
   );
 };

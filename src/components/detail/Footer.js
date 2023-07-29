@@ -1,56 +1,115 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
+
+import { deleteDetail } from "../../api/posts";
+import { cancelLikes, addLikes } from "../../api/likes";
 
 import SubMenuModal from "./SubMenuModal";
 
-import heart from "../../assets/heart.png";
-import emptyheart from "../../assets/emptyheart.png";
-import chatButton from "../../assets/chatButton.png";
-import soldButton from "../../assets/sold.png";
-import menubar from "../../assets/menubar.png";
+import heart from "../../assets/post/heart.png";
+import emptyheart from "../../assets/post/emptyheart.png";
+import chatButton from "../../assets/post/chatButton.png";
+import soldButton from "../../assets/post/sold.png";
+import menubar from "../../assets/post/menubar.png";
+import { createRoom } from "../../api/chat";
 
-const Footer = () => {
-  const [isWirter, setIsWirter] = useState(false);
-  const [isSolded, setIsSolded] = useState(false);
+const Footer = ({
+  isLiked,
+  setIsLiked,
+  heartCount,
+  postId,
+  sellerNickname,
+  price,
+  isSold,
+  myNickname,
+}) => {
+  const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const [isHearted, setIsHearted] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleEditClick = () => {
-    navigate("/create");
+  const handleEditClick = ({}) => {
+    navigate("/modify/" + postId);
   };
 
-  const handleDeleteClick = () => {
-    navigate("/delete");
+  useEffect(() => {
+    setIsWirter(sellerNickname === myNickname);
+    setLoading(false);
+  }, [sellerNickname, myNickname]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const handleDeleteClick = async () => {
+    if (window.confirm("게시글을 삭제하시겠습니까?")) {
+      try {
+        const Id = postId;
+        const deleteData = await deleteDetail(Id);
+        console.log(deleteData);
+        alert("게시글이 삭제되었습니다.");
+        navigate("/home");
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
   };
 
   const toggleSubMenu = () => {
     setIsSubMenuOpen(prev => !prev);
   };
 
-  const handleHeartClick = () => {
-    setIsHearted(prev => !prev);
+  const handleHeartClick = async () => {
+    if (isLiked) {
+      try {
+        await cancelLikes(postId);
+      } catch (err) {
+        console.log("error", err);
+      }
+    } else {
+      try {
+        await addLikes(postId);
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
+    setIsLiked(prevLikes => ({ ...prevLikes, isLiked: !prevLikes.isLiked }));
+  };
+
+  const getRoomId = async () => {
+    try {
+      const data = await createRoom(postId, myNickname);
+      console.log(data);
+      return data.roomId;
+    } catch (error) {
+      console.log("에러 발생", error);
+    }
+  };
+
+  const handleChatClick = async () => {
+    const roomId = await getRoomId();
+    console.log(roomId);
+    roomId && navigate(`/chats/${roomId}`);
   };
 
   return (
     <Wrapper>
       <Heart>
         <HeartBtn
-          src={isHearted ? heart : emptyheart}
+          src={isLiked ? heart : emptyheart}
           onClick={handleHeartClick}
         />
-        <HeartCount>2</HeartCount>
+        <HeartCount>{heartCount}</HeartCount>
       </Heart>
       <Line />
-      <Price>30,000원</Price>
+      <Price>{price}</Price>
       {isWirter ? (
         <MenuBar src={menubar} onClick={toggleSubMenu} />
-      ) : isSolded ? (
-        <Button src={chatButton}></Button>
-      ) : (
+      ) : isSold ? (
         <Button src={soldButton}></Button>
+      ) : (
+        <Button src={chatButton} onClick={handleChatClick}></Button>
       )}
       {isSubMenuOpen && (
         <SubMenuModal

@@ -1,14 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
-  //createMember, joinMember 중 자신 memberId 비교 후 상대방 프로필이미지, 이름 겟해오기
-  //안 읽은 메세지 수 표시 어떻게??
+import Profile from "../../components/Common/Profile";
+const Item = ({
+  roomId,
+  createMember,
+  joinMember,
+  postId,
+  latestMessage,
+  yourNickname,
+}) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
-    const date = new Date(sentAt);
-    const elapsedSec = new Date().getTime() - date.getTime();
+    const elapsedSec =
+      new Date().getTime() -
+      sentAt +
+      new Date().getTimezoneOffset() * 60 * 1000;
 
     //지난 분,시간,일,개월,년
     const elapsedMin = elapsedSec / (1000 * 60);
@@ -31,6 +39,7 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
     }
     return Math.floor(elapsedMin) + "분 전";
   };
+
   return (
     <Wrapper>
       <ChatItem
@@ -38,16 +47,19 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
           navigate(`/chats/${roomId}`);
         }}
       >
-        <p className="img">
+        <div className="img">
+          <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
           <img src={""} alt="" />
-        </p>
+        </div>
         <div className="mainContainer">
-          <p className="name">Jimin_Song</p>
-          <p className="text">{latestMessage.context}</p>
+          <p className="name">{yourNickname}</p>
+          {latestMessage && <p className="text">{latestMessage.content}</p>}
         </div>
         <div className="subContainer">
-          <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
-          <p className="count">3</p>
+          {latestMessage && (
+            <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
+          )}
+          {false && <p className="count">3</p>}
         </div>
       </ChatItem>
       <Line />
