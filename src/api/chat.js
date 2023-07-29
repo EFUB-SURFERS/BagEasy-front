@@ -4,7 +4,7 @@ import client from "./client";
 export const getChatRooms = async () => {
   try {
     const res = await client.get(`chatrooms`);
-
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);

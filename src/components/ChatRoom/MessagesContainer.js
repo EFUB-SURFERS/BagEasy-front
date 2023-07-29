@@ -6,30 +6,24 @@ import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-//메세지 전송 날짜 확인 후 바뀌었으면 업데이트
-let newDate = "";
-let oldDate = "";
 
-//sendDate 스트링을 "PM/AM 시간:분" 으로 변환하는 함수
-export const getSendTime = sendDate => {
-  const hour = sendDate.substr(11, 2);
-  const minutes = sendDate.substr(14, 2);
-  if (hour < "12") {
+//sentAt 밀리세컨드를 "PM/AM 시간:분" 으로 변환하는 함수
+const getSendTime = sentAt => {
+  const sendDate = new Date(
+    sentAt - new Date().getTimezoneOffset() * 60 * 1000,
+  );
+  const hour = sendDate.getHours();
+  let minutes = sendDate.getMinutes();
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (hour < 12) {
     return `AM ${hour}:${minutes}`;
-  } else if (hour === "12") {
+  } else if (hour === 12) {
     return `PM ${hour}:${minutes}`;
   } else {
-    return `PM 0${hour % 12}:${minutes}`;
-  }
-};
-export const checkIsNewDate = sendDate => {
-  newDate = sendDate.substr(0, 10);
-  if (oldDate === newDate) {
-    oldDate = newDate;
-    return false;
-  } else {
-    oldDate = newDate;
-    return true;
+    return `PM ${hour % 12}:${minutes}`;
   }
 };
 
@@ -38,6 +32,7 @@ const MessagesContainer = () => {
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
   const [realtimeMessages, setRealTimeMessages] = useState([]);
+
   const scrollRef = useRef(null);
 
   //경로에서 roomId 받아오기
@@ -60,12 +55,14 @@ const MessagesContainer = () => {
   };
 
   useEffect(() => {
-    //접속시 db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
+    //접속시 db에 있던 채팅 기록 가져오기
     getTotalMessage();
+    console.log();
   }, []);
 
   useEffect(() => {
-    newMessage && setMessages([...messages, ...newMessage]);
+    //양쪽 접속 중일때 실시간으로 보내고 받은 메세지 가져오기 ( DB 조회 X )
+    newMessage && setMessages([...messages, newMessage]);
   }, [newMessage]);
 
   //새 메세지를 받으면 맨 아래로 스크롤
@@ -76,24 +73,37 @@ const MessagesContainer = () => {
     scrollToBottom();
   }, [messages]);
 
+  let date = "";
+  //메세지 전송 날짜 확인 후 바뀌었으면 업데이트
+  const checkIsNewDate = sentAt => {
+    const sendDate = new Date(
+      sentAt - new Date().getTimezoneOffset() * 60 * 1000,
+    );
+    const newDate = `${sendDate.getFullYear()}.${
+      sendDate.getMonth() + 1
+    }.${sendDate.getDate()}`;
+    if (date === newDate) {
+      return { isNewDate: false, date: newDate };
+    } else {
+      date = newDate;
+      return { isNewDate: true, date: newDate };
+    }
+  };
+
   return (
     <Wrapper ref={scrollRef}>
       <div>
         {messages &&
           messages.map(message => {
+            console.log(getSendTime(message.sentAt));
             return message.mine ? (
               <>
                 <MyMessage
                   key={message.id || message.sentAt}
                   contentType={message.contentType}
                   content={message.content}
-                  /*sendTime={getSendTime(message.sendDate)}
-                  sendDate={{
-                    isNewDate: checkIsNewDate(message.sendDate),
-                    date: message.sendDate.substr(0, 10),
-                  }}*/
-                  sendTime={1}
-                  sendDate={1}
+                  sendTime={getSendTime(message.sentAt)}
+                  sendDate={checkIsNewDate(message.sentAt)}
                 />
               </>
             ) : (
@@ -103,13 +113,8 @@ const MessagesContainer = () => {
                   senderName={message.senderName}
                   contentType={message.contentType}
                   content={message.content}
-                  /*sendTime={getSendTime(message.sendDate)}
-                  sendDate={{
-                    isNewDate: checkIsNewDate(message.sendDate),
-                    date: message.sendDate.substr(0, 10),
-                  }}*/
-                  sendTime={1}
-                  sendDate={1}
+                  sendTime={getSendTime(message.sentAt)}
+                  sendDate={checkIsNewDate(message.sentAt)}
                 />
               </>
             );
