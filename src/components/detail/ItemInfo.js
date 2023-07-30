@@ -5,7 +5,6 @@ import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
 import { getLikes } from "../../api/likes";
 
-import Comment from "../ItemList/Comment";
 import CommentList from "../ItemList/CommentList";
 import ItemContent from "./ItemContent";
 import Footer from "./Footer";
@@ -14,6 +13,7 @@ const ItemInfo = ({ postId }) => {
   const [post, setPost] = useState("");
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
+  const [count, setCount] = useState("");
 
   useEffect(() => {
     fetchPostData();
@@ -25,7 +25,6 @@ const ItemInfo = ({ postId }) => {
     try {
       const getData = await getDetail(postId);
       setPost(getData);
-      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -35,7 +34,6 @@ const ItemInfo = ({ postId }) => {
     try {
       const getData = await getMyProfile();
       setMyId(getData);
-      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -48,6 +46,11 @@ const ItemInfo = ({ postId }) => {
     } catch (err) {
       console.log("error", err);
     }
+  };
+
+  const updateLikes = newLikes => {
+    setLikes(newLikes);
+    fetchPostData();
   };
 
   if (!post) {
@@ -64,15 +67,15 @@ const ItemInfo = ({ postId }) => {
         imageResponseDtos={post.imageResponseDtos}
       />
       <CommentList />
-      {/* <Comment /> */}
       <Footer
         isLiked={likes.isLiked}
+        setIsLiked={updateLikes}
         heartCount={post.heartCount}
+        setCount={count.setCount}
         postId={post.postId}
-        sellerId={post.sellerId}
+        sellerNickname={post.sellerNickname}
         price={post.price}
         isSold={post.isSold}
-        myId={myId.memberId}
         myNickname={myId.nickname}
       />
     </Div>

@@ -16,12 +16,12 @@ import { createRoom } from "../../api/chat";
 
 const Footer = ({
   isLiked,
+  setIsLiked,
   heartCount,
   postId,
-  sellerId,
+  sellerNickname,
   price,
   isSold,
-  myId,
   myNickname,
 }) => {
   const [isWirter, setIsWirter] = useState(true);
@@ -34,9 +34,9 @@ const Footer = ({
   };
 
   useEffect(() => {
-    setIsWirter(sellerId === myId);
+    setIsWirter(sellerNickname === myNickname);
     setLoading(false);
-  }, [sellerId, myId]);
+  }, [sellerNickname, myNickname]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -49,7 +49,7 @@ const Footer = ({
         const deleteData = await deleteDetail(Id);
         console.log(deleteData);
         alert("게시글이 삭제되었습니다.");
-        navigate(-1);
+        navigate("/home");
       } catch (err) {
         console.log("error", err);
       }
@@ -70,13 +70,11 @@ const Footer = ({
     } else {
       try {
         await addLikes(postId);
-        // setIsLiked(!isLiked);
       } catch (err) {
         console.log("error", err);
       }
     }
-    window.location.reload();
-    // location.reload();
+    setIsLiked(prevLikes => ({ ...prevLikes, isLiked: !prevLikes.isLiked }));
   };
 
   const getRoomId = async () => {
@@ -91,6 +89,7 @@ const Footer = ({
 
   const handleChatClick = async () => {
     const roomId = await getRoomId();
+    console.log(roomId);
     roomId && navigate(`/chats/${roomId}`);
   };
 

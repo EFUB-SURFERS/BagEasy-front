@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import Profile from "../Common/Profile";
 import profile from "../../assets/post/profile.png";
 import next from "../../assets/post/next.png";
 import before from "../../assets/post/before.png";
@@ -50,7 +51,9 @@ const ItemContent = ({
         )}
       </ItemImages>
       <Seller>
-        <SellerProfile src={profile} />
+        <SellerProfile>
+          <Profile nickname={sellerNickname} width="50px" height="50px" />
+        </SellerProfile>
         <SellerInfo>
           <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
@@ -115,10 +118,10 @@ const Seller = styled.div`
   border-bottom: 0.5px solid #808080;
 `;
 
-const SellerProfile = styled.img`
+const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 50px;
+  /* border-radius: 50px; */
 
   margin-top: 17px;
   margin-left: 16px;

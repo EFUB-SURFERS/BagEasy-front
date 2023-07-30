@@ -13,10 +13,10 @@ export const getProfile = async memberId => {
 };
 
 // 본인 프로필 조회
-export const getMyProfile = async memberId => {
+export const getMyProfile = async () => {
   try {
     const res = await client.get(`members/me`);
-    // console.log(res.data);
+    //console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);

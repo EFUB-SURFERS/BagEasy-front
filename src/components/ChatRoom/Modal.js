@@ -1,22 +1,11 @@
 import React from "react";
 import { styled } from "styled-components";
 import { FinishDeal } from "../../api/posts";
-const Modal = ({
-  isOpen,
-  setIsOpen,
-  isFinished,
-  setIsFinished,
-  isSold,
-  setIsSold,
-  postId,
-  buyerId,
-}) => {
+const Modal = ({ isOpen, setIsOpen, postId, buyerNickname }) => {
   const handleItemClick = () => {
     setIsOpen(false);
     //거래 성사 요청 보내기
-    FinishDeal(postId, buyerId);
-    setIsFinished(!isFinished);
-    setIsSold(!isSold);
+    FinishDeal(postId, buyerNickname);
   };
 
   return (
@@ -29,9 +18,9 @@ const Modal = ({
       <Container>
         <p className="yellow">거래를 확정하시겠습니까?</p>
         <p className="gray">거래 확정 뒤에는 취소가 불가합니다.</p>
-        <p className="btn">
+        <div className="btn">
           <Btn onClick={handleItemClick}>확정</Btn>
-        </p>
+        </div>
       </Container>
     </>
   );

@@ -2,10 +2,10 @@ import client from "./client";
 //판매글 관련 api 요청 함수 여기에 구현해주세요
 
 //판매글 구매 확정 api
-export const FinishDeal = async (postId, buyerId) => {
+export const FinishDeal = async (postId, buyerNickname) => {
   try {
     const res = await client.put(`posts/${postId}/isSold`, {
-      buyerId: { buyerId },
+      buyerNickName: buyerNickname,
     });
 
     console.log(res);
@@ -63,7 +63,7 @@ export const createPost = async formData => {
 };
 
 // 판매글 수정 api
-export const modifyPost = async (postId,formData) => {
+export const modifyPost = async (postId, formData) => {
   try {
     const res = await client.put(`posts/${postId}`, formData, {
       headers: {
@@ -71,6 +71,25 @@ export const modifyPost = async (postId,formData) => {
       },
     });
     console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 학교별 판매글 조회 api
+export const getPostBySchool = async schoolName => {
+  try {
+    const res = await client.post(
+      `posts/school`,
+      { schoolName: schoolName },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
