@@ -2,18 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
-import sendBtn from "../../assets/itemListPage/sendBtn.png";
-import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
-import lockGreen from "../../assets/itemListPage/lockGreen.png";
-import { getComments, createComment } from "../../api/comments";
-import { getMyProfile } from "../../api/member";
+import { getComments } from "../../api/comments";
 import CommentReplies from "./CommentReplies";
+import CommentInput from "./CommentInput";
 
 const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState("");
-  const [isSecret, setIsSecret] = useState(false);
   const [refresh, setRefresh] = useState(0);
 
   //댓글 조회
@@ -24,26 +19,6 @@ const CommentList = ({ postId = 1 }) => {
     }
     fetchData();
   }, [refresh]);
-
-  //댓글 작성
-  const postComment = () => {
-    async function postData() {
-      const memberId = await getMyProfile().memberId;
-      await createComment(
-        postId,
-        {
-          memberId: memberId,
-          commentContent: comment,
-          isSecret: isSecret,
-        },
-        { headers: { "Content-Type": "application/json" } },
-      );
-
-      setRefresh(prev => prev + 1);
-      setComment("");
-    }
-    comment && postData();
-  };
 
   return (
     <Wrapper>
@@ -66,23 +41,7 @@ const CommentList = ({ postId = 1 }) => {
           ))}
         </List>
       </CommentWrapper>
-
-      <Footer>
-        <CommentInput
-          placeholder="댓글 쓰기..."
-          value={comment}
-          onChange={e => {
-            setComment(e.target.value);
-          }}
-        />
-        <Lock
-          src={isSecret ? lockGreen : lockLightgrey}
-          onClick={() => setIsSecret(prev => !prev)}
-        />
-        <SendBtn onClick={postComment}>
-          <SendImg src={sendBtn} />
-        </SendBtn>
-      </Footer>
+      <CommentInput postId={postId} setRefresh={setRefresh} />
     </Wrapper>
   );
 };
@@ -139,49 +98,5 @@ const Arrow = styled.img`
 `;
 
 const List = styled.div``;
-
-const Footer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-top: 1px solid #cecece;
-  padding-top: 15px;
-  padding-bottom: 92px;
-  position: relative;
-`;
-
-const CommentInput = styled.input`
-  flex: auto;
-  background: #efefef;
-  height: 39px;
-  padding: 0 10.99px;
-  margin: 0 15px 0 20px;
-  border-radius: 1rem;
-  font-size: 14px;
-  border: none;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: #b0b0b0;
-  }
-`;
-
-const Lock = styled.img`
-  position: absolute;
-  width: 12px;
-  right: 77px;
-`;
-
-const SendBtn = styled.div`
-  width: 1.8rem;
-  margin-right: 20px;
-  flex: none;
-`;
-
-const SendImg = styled.img`
-  width: 100%;
-`;
 
 export default CommentList;
