@@ -60,7 +60,7 @@ const Form = () => {
       setPreviewImg();
       setImgFile();
     } catch (err) {
-      console.log("압축실패");
+      alert("파일 사이즈가 너무 커서 전송할 수 없습니다.");
     }
   };
 

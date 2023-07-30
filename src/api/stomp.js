@@ -25,7 +25,8 @@ const onMessage = (data, onNewMessage) => {
 
       onNewMessage(newMessage);
     } else {
-      alert("got empty message");
+      //notice 메세지 처리
+      //alert("got empty message");
     }
   }
 };
@@ -57,7 +58,7 @@ export const connectClient = (roomId, onNewMessage) => {
 export const disconnectClient = () => {
   console.log("접속 끊음");
   stompClient.deactivate();
-  //stompClient.unsubscribe();
+  stompClient.unsubscribe();
 };
 
 export const publishMessage = (roomId, isImage, message) => {
