@@ -19,8 +19,10 @@ const CommentReplies = ({ comment }) => {
         isSecret: "false",
       });
     }
-    postData();
-    setReplyContent("");
+    if (replyContent) {
+      postData();
+      setReplyContent("");
+    }
     setReplying(false);
   };
 
