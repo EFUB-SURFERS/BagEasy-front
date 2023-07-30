@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Arrow from "../assets/arrow.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import axios from "axios";
 
 const Nickname = () => {
@@ -9,6 +10,7 @@ const Nickname = () => {
   const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
   const [isFocused, setIsFocused] = useState(false); // focus 여부
   const [temp, setTemp] = useState(""); // 현재 입력값이 중복되는지 체크
+  const [expired, setExpired] = useState(false);
   const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
 
@@ -51,9 +53,12 @@ const Nickname = () => {
           },
         );
 
+        console.log(res);
+
         if (res.status == "400") {
           if (res.code === "EXPIRED_TOKEN") {
-            // 토큰 만료시 토큰 만료 경고 페이지로 이동
+            // 토큰 만료
+            setExpired(true);
           }
           if (res.code === "DUPLICATE_NICKNAME") {
             // 닉네임 중복
@@ -98,6 +103,7 @@ const Nickname = () => {
           <Copy3>- 중복되는 닉네임입니다.</Copy3>
         )}
       </Container>
+      {expired && <TokenRefreshModal />}
       <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>
   );
