@@ -53,6 +53,7 @@ const ImageContainer = styled.div`
   img {
     max-width: 235px;
     border-radius: 10px;
+    max-height: 150px;
   }
 `;
 const Wrapper = styled.div`
