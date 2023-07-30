@@ -18,7 +18,7 @@ const TokenRefreshModal = () => {
   const RefreshToken = async () => {
     const token = localStorage.getItem("bagtoken");
     try {
-      const res = await axios.post("http://server.bageasy.net/auth/reissue", {
+      const res = await axios.post("https://server.bageasy.net/auth/reissue", {
         headers: {
           Authorization: token,
         },
