@@ -6,14 +6,13 @@ import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getChatRoom } from "../../api/chat";
-
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 const Header = () => {
-  const [isFinished, setIsFinished] = useState(false);
-  //const [isSold, setIsSold] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   const navigate = useNavigate();
 
@@ -45,7 +44,15 @@ const Header = () => {
   useEffect(() => {
     //헤더에 보이는 정보 get
     //채팅방 개별 정보 조회로 룸아이디를 얻어 판매글 상세 정보 조회, 판매자인지 확인
-    getHeaderData();
+    try {
+      getHeaderData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const openModal = () => {
@@ -53,6 +60,7 @@ const Header = () => {
   };
   return (
     <div>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <HeaderDiv>
         <Btn
           onClick={() => {
@@ -81,7 +89,7 @@ const Header = () => {
               <p className="price">{postInfo.price}원</p>
               {isSeller ? (
                 <>
-                  {isFinished ? (
+                  {postInfo.isSold ? (
                     <FinishBtn $isFinished={postInfo.isSold}>
                       거래 확정
                     </FinishBtn>
@@ -101,8 +109,6 @@ const Header = () => {
                 <Modal
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
-                  setIsFinished={setIsFinished}
-                  isFinished={isFinished}
                   isSold={postInfo.isSold}
                   postId={postInfo.postId}
                   buyerNickname={roomInfo.createMember}
