@@ -90,6 +90,7 @@ const Wrapper = styled.div`
 `;
 
 const CommentWrapper = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -139,7 +140,7 @@ const Footer = styled.div`
   justify-content: center;
   border-top: 1px solid #cecece;
   padding-top: 15px;
-  padding-bottom: 75px;
+  padding-bottom: 92px;
 `;
 
 const CommentInput = styled.input`
