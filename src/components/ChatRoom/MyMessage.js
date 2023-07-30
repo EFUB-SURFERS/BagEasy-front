@@ -1,13 +1,13 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const MyMessage = ({ contentType, content, sendTime, sendDate }) => {
+const MyMessage = ({ content, sendTime, sendDate, type }) => {
   return (
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
       <Wrapper>
         <Time>{sendTime}</Time>
-        {contentType === "image" ? (
+        {type === 1 ? (
           <ImageContainer>
             <img src={content} alt="" />
           </ImageContainer>

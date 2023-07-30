@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
-import { getMyProfile } from "../../api/member";
 import { getChatRoom } from "../../api/chat";
+
 const Header = () => {
   const [isFinished, setIsFinished] = useState(false);
   //const [isSold, setIsSold] = useState(false);
@@ -19,7 +19,6 @@ const Header = () => {
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
-  //console.log(roomId);
 
   const getHeaderData = async () => {
     const res = await getChatRoom(roomId);
@@ -37,7 +36,7 @@ const Header = () => {
     //본인 닉네임과 판매자 닉네임 비교
     //같으면 거래 성사버튼 보이게 처리.
     const myNickname = localStorage.getItem("myNickname");
-    console.log(myNickname);
+
     if (myNickname === room.joinMember) {
       setIsSeller(true);
     }

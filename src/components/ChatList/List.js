@@ -26,7 +26,6 @@ const List = () => {
               ? (yourNickname = room.joinMember)
               : (yourNickname = room.createMember);
 
-            console.log(room.joinMember);
             return (
               <Item
                 key={room.roomId}
