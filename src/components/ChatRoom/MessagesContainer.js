@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 //sentAt 밀리세컨드를 "PM/AM 시간:분" 으로 변환하는 함수
 const getSendTime = sentAt => {
@@ -30,8 +31,8 @@ const getSendTime = sentAt => {
 const MessagesContainer = () => {
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
-
   const scrollRef = useRef(null);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
@@ -48,7 +49,15 @@ const MessagesContainer = () => {
 
   useEffect(() => {
     //접속시 db에 있던 채팅 기록 가져오기
-    getTotalMessage();
+    try {
+      getTotalMessage();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -82,37 +91,40 @@ const MessagesContainer = () => {
   };
 
   return (
-    <Wrapper ref={scrollRef}>
-      <div>
-        {messages &&
-          messages.map(message => {
-            return message.mine ? (
-              <>
-                <MyMessage
-                  key={message.id || message.sentAt}
-                  contentType={message.contentType}
-                  content={message.content}
-                  sendTime={getSendTime(message.sentAt)}
-                  sendDate={checkIsNewDate(message.sentAt)}
-                  type={message.type}
-                />
-              </>
-            ) : (
-              <>
-                <YourMessage
-                  key={message.id || message.sentAt}
-                  yourNickname={yourNickname}
-                  contentType={message.contentType}
-                  content={message.content}
-                  sendTime={getSendTime(message.sentAt)}
-                  sendDate={checkIsNewDate(message.sentAt)}
-                  type={message.type}
-                />
-              </>
-            );
-          })}
-      </div>
-    </Wrapper>
+    <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      <Wrapper ref={scrollRef}>
+        <div>
+          {messages &&
+            messages.map(message => {
+              return message.mine ? (
+                <>
+                  <MyMessage
+                    key={message.id || message.sentAt}
+                    contentType={message.contentType}
+                    content={message.content}
+                    sendTime={getSendTime(message.sentAt)}
+                    sendDate={checkIsNewDate(message.sentAt)}
+                    type={message.type}
+                  />
+                </>
+              ) : (
+                <>
+                  <YourMessage
+                    key={message.id || message.sentAt}
+                    yourNickname={yourNickname}
+                    contentType={message.contentType}
+                    content={message.content}
+                    sendTime={getSendTime(message.sentAt)}
+                    sendDate={checkIsNewDate(message.sentAt)}
+                    type={message.type}
+                  />
+                </>
+              );
+            })}
+        </div>
+      </Wrapper>
+    </>
   );
 };
 

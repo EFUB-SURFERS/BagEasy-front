@@ -12,6 +12,7 @@ import emptyheart from "../../assets/post/emptyheart.png";
 import chatButton from "../../assets/post/chatButton.png";
 import soldButton from "../../assets/post/sold.png";
 import menubar from "../../assets/post/menubar.png";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 import { createRoom } from "../../api/chat";
 
 const Footer = ({
@@ -27,6 +28,7 @@ const Footer = ({
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState("false");
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
@@ -86,35 +88,47 @@ const Footer = ({
   };
 
   const handleChatClick = async () => {
-    const roomId = await getRoomId();
-    roomId && navigate(`/chats/${roomId}`);
+    try {
+      const roomId = await getRoomId();
+
+      roomId && navigate(`/chats/${roomId}`);
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   };
 
   return (
-    <Wrapper>
-      <Heart>
-        <HeartBtn
-          src={isLiked ? heart : emptyheart}
-          onClick={handleHeartClick}
-        />
-        <HeartCount>{heartCount}</HeartCount>
-      </Heart>
-      <Line />
-      <Price>{price}</Price>
-      {isWirter ? (
-        <MenuBar src={menubar} onClick={toggleSubMenu} />
-      ) : isSold ? (
-        <Button src={soldButton}></Button>
-      ) : (
-        <Button src={chatButton} onClick={handleChatClick}></Button>
-      )}
-      {isSubMenuOpen && (
-        <SubMenuModal
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
-      )}
-    </Wrapper>
+    <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      <Wrapper>
+        <Heart>
+          <HeartBtn
+            src={isLiked ? heart : emptyheart}
+            onClick={handleHeartClick}
+          />
+          <HeartCount>{heartCount}</HeartCount>
+        </Heart>
+        <Line />
+        <Price>{price}</Price>
+        {isWirter ? (
+          <MenuBar src={menubar} onClick={toggleSubMenu} />
+        ) : isSold ? (
+          <Button src={soldButton}></Button>
+        ) : (
+          <Button src={chatButton} onClick={handleChatClick}></Button>
+        )}
+        {isSubMenuOpen && (
+          <SubMenuModal
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+          />
+        )}
+      </Wrapper>
+    </>
   );
 };
 

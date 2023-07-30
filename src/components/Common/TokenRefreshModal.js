@@ -27,11 +27,13 @@ const TokenRefreshModal = () => {
 
       if (res.status == "200") {
         // 토큰이 성공적으로 발급된 경우
-        localStorage.setItem(res.data.accessToken);
+        localStorage.setItem("bagtoken", res.data.accessToken);
+        localStorage.setItem("isExpired", "false");
         handleNavigateHome();
       }
       if (res.status == "401") {
         // refresh token도 만료된 경우 -> 다시 로그인 하도록
+        localStorage.setItem("isExpired", "false");
         handleNavigateLogin();
       }
     } catch (err) {
@@ -50,7 +52,10 @@ const TokenRefreshModal = () => {
 
 const Container = styled.div`
   position: absolute;
-  margin-top: 25vh;
+  left: 1vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const P = styled.p`
