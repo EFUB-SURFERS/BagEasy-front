@@ -8,7 +8,6 @@ import { getMyProfile } from "../../api/member";
 
 const SearchBar = ({ onToggle, filter }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [defaultUni, setDefaultUni] = useState("");
   const [uni, setUni] = useState("");
   const [update, setUpdate] = useState(false);
   const [uniDisplay, setUniDisplay] = useState("");
@@ -17,7 +16,7 @@ const SearchBar = ({ onToggle, filter }) => {
   useEffect(() => {
     async function fetchData() {
       const data = getMyProfile();
-      setDefaultUni(data.school);
+      setUniDisplay(data.school);
     }
     fetchData();
   }, []);
@@ -34,13 +33,7 @@ const SearchBar = ({ onToggle, filter }) => {
         <LocationIcon>
           <Icon src={location} />
         </LocationIcon>
-        <Text>
-          {uniDisplay
-            ? uniDisplay
-            : defaultUni
-            ? defaultUni
-            : "학교를 선택하세요."}
-        </Text>
+        <Text>{uniDisplay ? uniDisplay : "학교를 선택하세요."}</Text>
       </TextWrapper>
       <ChangeBtn onClick={() => setIsOpen(true)}>변경</ChangeBtn>
       {isOpen ? (
