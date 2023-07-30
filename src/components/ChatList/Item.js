@@ -78,7 +78,7 @@ const ChatItem = styled.div`
     margin: 0;
   }
   .img {
-    margin: 15px 0px 30px 0px;
+    margin: 15px 0px 35px 0px;
     width: 67px;
     height: 67px;
     display: flex;
@@ -146,7 +146,7 @@ const ChatItem = styled.div`
   }
 `;
 const Line = styled.div`
-  width: 90%;
+  width: 380px;
   height: 0.5px;
   background: #d9d9d9;
 `;
