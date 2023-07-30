@@ -25,8 +25,8 @@ const CommentList = ({ postId = 1 }) => {
   //댓글 작성
   const postComment = () => {
     async function postData() {
-      const memberId = await getMyProfile(1).memberId;
-      const data = await createComment(
+      const memberId = await getMyProfile().memberId;
+      await createComment(
         postId,
         {
           memberId: memberId,
@@ -89,6 +89,18 @@ const Wrapper = styled.div`
   font-family: "Noto Sans KR";
 `;
 
+const CommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding-bottom: 5px;
+  margin: 46px 23px 48px 23px;
+  overflow: hidden;
+  background: #ffee94;
+  height: ${props => (!props.open ? "90px" : "auto")};
+`;
+
 const Header = styled.div`
   height: 20px;
   display: flex;
@@ -116,18 +128,6 @@ const ArrowWrapper = styled.div`
 
 const Arrow = styled.img`
   width: 100%;
-`;
-
-const CommentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  box-sizing: border-box;
-  padding-bottom: 5px;
-  margin: 46px 23px 48px 23px;
-  overflow: hidden;
-  background: #ffee94;
-  height: ${props => (!props.open ? "90px" : "auto")};
 `;
 
 const List = styled.div``;
