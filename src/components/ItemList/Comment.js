@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Profile from "../Common/Profile";
 import dots from "../../assets/itemListPage/dots.png";
 import CommentModal from "./CommentModal";
+import lockGrey from "../../assets/itemListPage/lockGrey.png";
 
 const Comment = ({ comment, isReply = false, setReplying }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +15,23 @@ const Comment = ({ comment, isReply = false, setReplying }) => {
           <Profile nickname={comment.writer} width="24px" height="24px" />
         </ProfileWrapper>
 
-        <TextWrapper>
+        <Wrapper>
           <Nickname>{comment.writer}</Nickname>
-          <Text>
-            {!isReply ? comment.commentContent : comment.replyContent}
-          </Text>
-        </TextWrapper>
+          <TextWrapper>
+            {comment.isSecret && (
+              <LockWrapper>
+                <Lock src={lockGrey} />
+              </LockWrapper>
+            )}
+            <Text isSecret={comment.isSecret}>
+              {comment.isSecret
+                ? "비밀 댓글입니다."
+                : !isReply
+                ? comment.commentContent
+                : comment.replyContent}
+            </Text>
+          </TextWrapper>
+        </Wrapper>
 
         <Button onClick={() => setIsOpen(true)}>
           <Dots src={dots} />
@@ -50,7 +62,7 @@ const ProfileWrapper = styled.div`
   padding-top: 3px;
 `;
 
-const TextWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 15px;
@@ -62,8 +74,24 @@ const Nickname = styled.div`
   margin-bottom: 2px;
 `;
 
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const LockWrapper = styled.div`
+  width: 9px;
+  margin-right: 3px;
+`;
+
+const Lock = styled.img`
+  width: 100%;
+`;
+
 const Text = styled.div`
+  flex: 1;
   font-size: 13px;
+  color: ${props => (props.isSecret ? "#909090" : "black")};
 `;
 
 const Button = styled.div`
