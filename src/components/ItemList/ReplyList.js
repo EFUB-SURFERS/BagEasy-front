@@ -20,7 +20,7 @@ const mockReplies = [
   },
 ];
 
-const ReplyList = ({ commentId }) => {
+const ReplyList = ({ commentId, setReplying }) => {
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,12 @@ const ReplyList = ({ commentId }) => {
   return (
     <Root>
       {mockReplies.map((reply, key) => (
-        <Comment comment={reply} isReply={true} key={key} />
+        <Comment
+          comment={reply}
+          isReply={true}
+          key={key}
+          setReplying={setReplying}
+        />
       ))}
     </Root>
   );

@@ -1,13 +1,18 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const CommentModal = ({ setIsOpen }) => {
+const CommentModal = ({ setIsOpen, setReplying }) => {
+  const onReply = () => {
+    setIsOpen(false);
+    setReplying(true);
+  };
+
   return (
     <>
       <Background onClick={() => setIsOpen(false)}></Background>
       <Wrapper>
         <Text>삭제</Text>
-        <Text>답글달기</Text>
+        <Text onClick={onReply}>답글달기</Text>
       </Wrapper>
     </>
   );

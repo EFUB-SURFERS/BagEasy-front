@@ -4,7 +4,7 @@ import Profile from "../Common/Profile";
 import dots from "../../assets/itemListPage/dots.png";
 import CommentModal from "./CommentModal";
 
-const Comment = ({ comment, isReply = false }) => {
+const Comment = ({ comment, isReply = false, setReplying }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -28,7 +28,9 @@ const Comment = ({ comment, isReply = false }) => {
         <Button onClick={() => setIsOpen(true)}>
           <Dots src={dots} />
         </Button>
-        {isOpen && <CommentModal setIsOpen={setIsOpen} />}
+        {isOpen && (
+          <CommentModal setIsOpen={setIsOpen} setReplying={setReplying} />
+        )}
       </Root>
     </Container>
   );
