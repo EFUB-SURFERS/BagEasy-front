@@ -59,7 +59,6 @@ const SalesContent = ({ postId, originalData }) => {
     const { uni, title, price, content, imgData } = modifiedData;
     console.log("imgData", imgData);
     if (imgData && uni && title && price && content) {
-      //모든 데이터가 있을때 등록 시도
       try {
         let data = {
           postTitle: title,
