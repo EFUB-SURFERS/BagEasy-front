@@ -3,6 +3,8 @@ import styled from "styled-components";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
+import lockGreen from "../../assets/itemListPage/lockGreen.png";
 import { getComments, createComment } from "../../api/comments";
 import { getMyProfile } from "../../api/member";
 import CommentReplies from "./CommentReplies";
@@ -11,6 +13,7 @@ const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [isSecret, setIsSecret] = useState(false);
   const [refresh, setRefresh] = useState(0);
 
   //댓글 조회
@@ -31,7 +34,7 @@ const CommentList = ({ postId = 1 }) => {
         {
           memberId: memberId,
           commentContent: comment,
-          isSecret: false,
+          isSecret: isSecret,
         },
         { headers: { "Content-Type": "application/json" } },
       );
@@ -71,6 +74,10 @@ const CommentList = ({ postId = 1 }) => {
           onChange={e => {
             setComment(e.target.value);
           }}
+        />
+        <Lock
+          src={isSecret ? lockGreen : lockLightgrey}
+          onClick={() => setIsSecret(prev => !prev)}
         />
         <SendBtn onClick={postComment}>
           <SendImg src={sendBtn} />
@@ -141,6 +148,7 @@ const Footer = styled.div`
   border-top: 1px solid #cecece;
   padding-top: 15px;
   padding-bottom: 92px;
+  position: relative;
 `;
 
 const CommentInput = styled.input`
@@ -158,6 +166,12 @@ const CommentInput = styled.input`
   &::placeholder {
     color: #b0b0b0;
   }
+`;
+
+const Lock = styled.img`
+  position: absolute;
+  width: 12px;
+  right: 77px;
 `;
 
 const SendBtn = styled.div`
