@@ -6,11 +6,16 @@ import Modal from "./../UpdateUni/Modal";
 import location from "../../assets/itemListPage/location.png";
 import { getMyProfile } from "../../api/member";
 
-const SearchBar = ({ onToggle, filter }) => {
+const SearchBar = ({
+  onToggle,
+  filter,
+  uniDisplay,
+  setUniDisplay,
+  setRefresh,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
   const [update, setUpdate] = useState(false);
-  const [uniDisplay, setUniDisplay] = useState("");
 
   //유저의 학교명 가져오기
   useEffect(() => {
@@ -23,7 +28,10 @@ const SearchBar = ({ onToggle, filter }) => {
 
   //학교명 업데이트
   useEffect(() => {
-    !isOpen && update && setUniDisplay(uni);
+    if (!isOpen && update) {
+      setUniDisplay(uni);
+      setRefresh(prev => prev + 1);
+    }
   }, [isOpen]);
 
   return (
