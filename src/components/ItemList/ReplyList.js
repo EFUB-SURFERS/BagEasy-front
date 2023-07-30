@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Profile from "../Common/Profile";
-import dots from "../../assets/itemListPage/dots.png";
 import { getReplies } from "../../api/replies";
 import Comment from "./Comment";
 
@@ -22,7 +20,7 @@ const mockReplies = [
   },
 ];
 
-const ReplyList = ({ commentId }) => {
+const ReplyList = ({ commentId, setReplying }) => {
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
@@ -35,8 +33,13 @@ const ReplyList = ({ commentId }) => {
 
   return (
     <Root>
-      {mockReplies.map((reply, key) => (
-        <Comment comment={reply} isReply={true} key={key} />
+      {replies.map((reply, key) => (
+        <Comment
+          comment={reply}
+          isReply={true}
+          key={key}
+          setReplying={setReplying}
+        />
       ))}
     </Root>
   );

@@ -49,7 +49,6 @@ const Footer = ({
       try {
         const Id = postId;
         const deleteData = await deleteDetail(Id);
-        console.log(deleteData);
         alert("게시글이 삭제되었습니다.");
         navigate("/home");
       } catch (err) {
@@ -82,7 +81,6 @@ const Footer = ({
   const getRoomId = async () => {
     try {
       const data = await createRoom(postId, myNickname);
-      console.log(data);
       return data.roomId;
     } catch (error) {
       console.log("에러 발생", error);

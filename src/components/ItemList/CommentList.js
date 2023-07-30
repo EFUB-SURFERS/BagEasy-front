@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Comment from "./Comment";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { getComments, createComment } from "../../api/comments";
 import { getMyProfile } from "../../api/member";
-import ReplyList from "./ReplyList";
 import CommentReplies from "./CommentReplies";
 
 const CommentList = ({ postId = 1 }) => {
@@ -27,8 +25,8 @@ const CommentList = ({ postId = 1 }) => {
   //댓글 작성
   const postComment = () => {
     async function postData() {
-      const memberId = await getMyProfile(1).memberId;
-      const data = await createComment(
+      const memberId = await getMyProfile().memberId;
+      await createComment(
         postId,
         {
           memberId: memberId,
@@ -41,7 +39,7 @@ const CommentList = ({ postId = 1 }) => {
       setRefresh(prev => prev + 1);
       setComment("");
     }
-    postData();
+    comment && postData();
   };
 
   return (
@@ -91,6 +89,19 @@ const Wrapper = styled.div`
   font-family: "Noto Sans KR";
 `;
 
+const CommentWrapper = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding-bottom: 5px;
+  margin: 46px 23px 48px 23px;
+  overflow: hidden;
+  background: #ffee94;
+  height: ${props => (!props.open ? "90px" : "auto")};
+`;
+
 const Header = styled.div`
   height: 20px;
   display: flex;
@@ -120,18 +131,6 @@ const Arrow = styled.img`
   width: 100%;
 `;
 
-const CommentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  box-sizing: border-box;
-  padding-bottom: 5px;
-  margin: 46px 23px 48px 23px;
-  overflow: hidden;
-  background: #ffee94;
-  height: ${props => (!props.open ? "90px" : "auto")};
-`;
-
 const List = styled.div``;
 
 const Footer = styled.div`
@@ -141,7 +140,7 @@ const Footer = styled.div`
   justify-content: center;
   border-top: 1px solid #cecece;
   padding-top: 15px;
-  padding-bottom: 75px;
+  padding-bottom: 92px;
 `;
 
 const CommentInput = styled.input`
