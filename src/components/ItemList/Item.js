@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
-import itemImg from "../../assets/itemListPage/itemImg.png";
 
 const Item = ({ post, setRefresh, liked = false }) => {
   const [isLiked, setIsLiked] = useState(false);

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Profile from "../Common/Profile";
-import dots from "../../assets/itemListPage/dots.png";
 import { getReplies } from "../../api/replies";
 import Comment from "./Comment";
 

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Comment from "./Comment";
 import openArrow from "../../assets/itemListPage/openArrow.png";
 import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { getComments, createComment } from "../../api/comments";
 import { getMyProfile } from "../../api/member";
-import ReplyList from "./ReplyList";
 import CommentReplies from "./CommentReplies";
 
 const CommentList = ({ postId = 1 }) => {
