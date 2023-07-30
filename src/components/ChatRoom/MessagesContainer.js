@@ -28,10 +28,8 @@ const getSendTime = sentAt => {
 };
 
 const MessagesContainer = () => {
-  const [DBmessages, setDBMessages] = useState([]);
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
-  const [realtimeMessages, setRealTimeMessages] = useState([]);
 
   const scrollRef = useRef(null);
 
@@ -44,20 +42,13 @@ const MessagesContainer = () => {
   const getTotalMessage = async () => {
     //db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
     const res = await getMessages(roomId);
-    res && setDBMessages(res.chatList);
+    res && setMessages(res.chatList);
     setYourNickname(res.nickname);
-    addRealTimeMessages(res.chatList);
-  };
-  const addRealTimeMessages = db => {
-    //접속 중이지 않을 때 상대에게 도착한 메세지 있다면 추가
-    const firstData = realtimeMessages && [...db, ...realtimeMessages];
-    setMessages(firstData);
   };
 
   useEffect(() => {
     //접속시 db에 있던 채팅 기록 가져오기
     getTotalMessage();
-    console.log();
   }, []);
 
   useEffect(() => {
@@ -95,7 +86,6 @@ const MessagesContainer = () => {
       <div>
         {messages &&
           messages.map(message => {
-            console.log(getSendTime(message.sentAt));
             return message.mine ? (
               <>
                 <MyMessage
@@ -104,17 +94,19 @@ const MessagesContainer = () => {
                   content={message.content}
                   sendTime={getSendTime(message.sentAt)}
                   sendDate={checkIsNewDate(message.sentAt)}
+                  type={message.type}
                 />
               </>
             ) : (
               <>
                 <YourMessage
                   key={message.id || message.sentAt}
-                  senderName={message.senderName}
+                  yourNickname={yourNickname}
                   contentType={message.contentType}
                   content={message.content}
                   sendTime={getSendTime(message.sentAt)}
                   sendDate={checkIsNewDate(message.sentAt)}
+                  type={message.type}
                 />
               </>
             );

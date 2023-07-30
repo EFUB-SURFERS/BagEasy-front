@@ -5,7 +5,7 @@ import MessagesContainer from "../components/ChatRoom/MessagesContainer";
 import { styled } from "styled-components";
 import { connectClient, disconnectClient } from "../api/stomp";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addNewMessage } from "../Redux/chatRedux";
 const ChatRoom = () => {
   const formRef = useRef(null);

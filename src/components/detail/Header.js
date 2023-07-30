@@ -20,9 +20,6 @@ const Header = () => {
         <Logo>
           <img src={logo} alt="로고" />
         </Logo>
-        {/* <Trash>
-        <img src={trash} alt="휴지통" />
-      </Trash> */}
       </HeaderDiv>
     </Wrapper>
   );
@@ -35,13 +32,6 @@ const Wrapper = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  /* height: 68px;
-  width: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffffff; */
 `;
 
 const HeaderDiv = styled.div`
