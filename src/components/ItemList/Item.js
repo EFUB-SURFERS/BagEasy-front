@@ -37,8 +37,6 @@ const Item = ({ post, setRefresh, liked = false }) => {
     setRefresh(prev => prev + 1);
   };
 
-  console.log(post);
-
   return (
     <Wrapper onClick={goToDetailPage}>
       <ImageWrapper>

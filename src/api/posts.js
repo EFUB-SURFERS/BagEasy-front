@@ -89,7 +89,7 @@ export const getPostBySchool = async schoolName => {
         },
       },
     );
-    console.log(res);
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
