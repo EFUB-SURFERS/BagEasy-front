@@ -9,10 +9,6 @@ const Comment = ({ comment, isReply = false, setReplying, nickname }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
 
-  useEffect(() => {
-    if (comment.isSecret && comment.writer !== nickname) setHide(true);
-  }, []);
-
   return (
     <Container>
       <Root isReply={isReply}>
@@ -23,13 +19,13 @@ const Comment = ({ comment, isReply = false, setReplying, nickname }) => {
         <Wrapper>
           <Nickname>{comment.writer}</Nickname>
           <TextWrapper>
-            {hide && (
+            {comment.isSecret && (
               <LockWrapper>
                 <Lock src={lockGrey} />
               </LockWrapper>
             )}
-            <Text hide={hide}>
-              {hide
+            <Text hide={comment.isSecret && comment.writer !== nickname}>
+              {comment.isSecret && comment.writer !== nickname
                 ? "비밀 댓글입니다."
                 : !isReply
                 ? comment.commentContent
