@@ -39,7 +39,7 @@ const CommentList = ({ postId = 1 }) => {
       setRefresh(prev => prev + 1);
       setComment("");
     }
-    postData();
+    comment && postData();
   };
 
   return (
