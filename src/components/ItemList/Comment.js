@@ -4,10 +4,27 @@ import Profile from "../Common/Profile";
 import dots from "../../assets/itemListPage/dots.png";
 import CommentModal from "./CommentModal";
 import lockGrey from "../../assets/itemListPage/lockGrey.png";
+import { deleteReply } from "../../api/replies";
+import { deleteComment } from "../../api/comments";
 
-const Comment = ({ comment, isReply = false, setReplying, nickname }) => {
+const Comment = ({
+  comment,
+  isReply = false,
+  setReplying,
+  nickname,
+  setRefresh,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
+
+  const onDelete = () => {
+    async function deleteData() {
+      isReply ? deleteReply(comment.replyId) : deleteComment(comment.commentId);
+      setRefresh(prev => prev + 1);
+    }
+    deleteData();
+    //window.location.reload();
+  };
 
   return (
     <Container>
@@ -38,7 +55,12 @@ const Comment = ({ comment, isReply = false, setReplying, nickname }) => {
           <Dots src={dots} />
         </Button>
         {isOpen && (
-          <CommentModal setIsOpen={setIsOpen} setReplying={setReplying} />
+          <CommentModal
+            setIsOpen={setIsOpen}
+            setReplying={setReplying}
+            isMine={nickname === comment.writer}
+            onDelete={onDelete}
+          />
         )}
       </Root>
     </Container>

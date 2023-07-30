@@ -35,7 +35,12 @@ const CommentList = ({ postId = 1 }) => {
       <YellowWrapper open={open}>
         <CommentHeader comments={comments} open={open} setOpen={setOpen} />
         {comments.map((comment, key) => (
-          <CommentReplies comment={comment} key={key} nickname={nickname} />
+          <CommentReplies
+            comment={comment}
+            key={key}
+            nickname={nickname}
+            setRefresh={setRefresh}
+          />
         ))}
       </YellowWrapper>
       <CommentInput postId={postId} setRefresh={setRefresh} />

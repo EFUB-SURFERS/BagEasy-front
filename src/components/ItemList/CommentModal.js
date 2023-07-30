@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const CommentModal = ({ setIsOpen, setReplying }) => {
+const CommentModal = ({ setIsOpen, setReplying, isMine, onDelete }) => {
   const onReply = () => {
     setIsOpen(false);
     setReplying(true);
@@ -10,8 +10,17 @@ const CommentModal = ({ setIsOpen, setReplying }) => {
   return (
     <>
       <Background onClick={() => setIsOpen(false)}></Background>
-      <Wrapper>
-        <Text>삭제</Text>
+      <Wrapper isMine={isMine}>
+        {isMine && (
+          <Text
+            onClick={() => {
+              onDelete();
+              setIsOpen(false);
+            }}
+          >
+            삭제
+          </Text>
+        )}
         <Text onClick={onReply}>답글달기</Text>
       </Wrapper>
     </>
@@ -35,7 +44,7 @@ const Wrapper = styled.div`
   right: 35px;
   margin-top: 3px;
   width: 63px;
-  height: 48px;
+  height: ${props => (props.isMine ? "48px" : "24px")};
 
   display: flex;
   flex-direction: column;
