@@ -18,7 +18,6 @@ export const FinishDeal = async (postId, buyerNickname) => {
 export const getDetail = async postId => {
   try {
     const res = await client.get(`posts/${postId}`);
-    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -71,6 +70,25 @@ export const modifyPost = async (postId, formData) => {
       },
     });
     console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 학교별 판매글 조회 api
+export const getPostBySchool = async schoolName => {
+  try {
+    const res = await client.post(
+      `posts/school`,
+      { schoolName: schoolName },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);

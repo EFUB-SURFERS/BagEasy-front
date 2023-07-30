@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import Header from "../components/ChatRoom/Header";
 import Form from "../components/ChatRoom/Form";
 import MessagesContainer from "../components/ChatRoom/MessagesContainer";
 import { styled } from "styled-components";
 import { connectClient, disconnectClient } from "../api/stomp";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addNewMessage } from "../Redux/chatRedux";
 const ChatRoom = () => {
   const formRef = useRef(null);

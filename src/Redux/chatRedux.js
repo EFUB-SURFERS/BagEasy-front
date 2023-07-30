@@ -1,4 +1,4 @@
-const initialState = "";
+const initialState = {};
 
 //메세지 저장 액션함수
 export const addNewMessage = newMessage => {
