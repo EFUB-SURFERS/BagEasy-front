@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Profile from "../Common/Profile";
 import dots from "../../assets/itemListPage/dots.png";
-import ReplyList from "./ReplyList";
+import CommentModal from "./CommentModal";
 
 const Comment = ({ comment, isReply = false }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Container>
       <Root isReply={isReply}>
@@ -15,15 +17,18 @@ const Comment = ({ comment, isReply = false }) => {
             height="24px"
           />
         </ProfileWrapper>
+
         <TextWrapper>
           <Nickname>{!isReply ? comment.writer : "nickname"}</Nickname>
           <Text>
             {!isReply ? comment.commentContent : comment.replyContent}
           </Text>
         </TextWrapper>
-        <Button>
+
+        <Button onClick={() => setIsOpen(true)}>
           <Dots src={dots} />
         </Button>
+        {isOpen && <CommentModal setIsOpen={setIsOpen} />}
       </Root>
     </Container>
   );
@@ -65,6 +70,7 @@ const Text = styled.div`
 
 const Button = styled.div`
   margin-left: auto;
+  /* background: white; */
 `;
 
 const Dots = styled.img`
