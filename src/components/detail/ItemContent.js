@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Profile from "../Common/Profile";
-import profile from "../../assets/post/profile.png";
 import next from "../../assets/post/next.png";
 import before from "../../assets/post/before.png";
 import spot from "../../assets/post/spot.png";
@@ -121,7 +120,6 @@ const Seller = styled.div`
 const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
-  /* border-radius: 50px; */
 
   margin-top: 17px;
   margin-left: 16px;
@@ -191,7 +189,6 @@ const ItemTitle = styled.div`
 `;
 const ItemDescription = styled.div`
   display: flex;
-  /* width: 362px; */
   height: 202px;
   flex-direction: column;
   flex-shrink: 0;
@@ -203,5 +200,4 @@ const ItemDescription = styled.div`
   line-height: normal;
 
   padding: 0px 20px;
-  /* padding-left: 23px; */
 `;

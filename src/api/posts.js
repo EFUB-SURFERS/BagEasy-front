@@ -18,7 +18,6 @@ export const FinishDeal = async (postId, buyerNickname) => {
 export const getDetail = async postId => {
   try {
     const res = await client.get(`posts/${postId}`);
-    // console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
