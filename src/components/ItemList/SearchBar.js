@@ -4,15 +4,29 @@ import styled from "styled-components";
 import Toggle from "./Toggle";
 import Modal from "./../UpdateUni/Modal";
 import location from "../../assets/itemListPage/location.png";
+import { getMyProfile } from "../../api/member";
 
 const SearchBar = ({ onToggle, filter }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [defaultUni, setDefaultUni] = useState("");
   const [uni, setUni] = useState("");
   const [update, setUpdate] = useState(false);
   const [uniDisplay, setUniDisplay] = useState("");
+
+  //유저의 학교명 가져오기
+  useEffect(() => {
+    async function fetchData() {
+      const data = getMyProfile();
+      setDefaultUni(data.school);
+    }
+    fetchData();
+  }, []);
+
+  //학교명 업데이트
   useEffect(() => {
     !isOpen && update && setUniDisplay(uni);
   }, [isOpen]);
+
   return (
     <Container>
       <Toggle onToggle={onToggle} filter={filter} />
@@ -20,7 +34,13 @@ const SearchBar = ({ onToggle, filter }) => {
         <LocationIcon>
           <Icon src={location} />
         </LocationIcon>
-        <Text>{uniDisplay ? uniDisplay : "학교를 선택하세요."}</Text>
+        <Text>
+          {uniDisplay
+            ? uniDisplay
+            : defaultUni
+            ? defaultUni
+            : "학교를 선택하세요."}
+        </Text>
       </TextWrapper>
       <ChangeBtn onClick={() => setIsOpen(true)}>변경</ChangeBtn>
       {isOpen ? (
