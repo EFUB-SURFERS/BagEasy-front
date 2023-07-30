@@ -39,6 +39,7 @@ const CommentList = ({ postId = 1 }) => {
             comment={comment}
             key={key}
             nickname={nickname}
+            refresh={refresh}
             setRefresh={setRefresh}
           />
         ))}

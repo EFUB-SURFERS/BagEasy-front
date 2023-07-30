@@ -20,16 +20,23 @@ const mockReplies = [
   },
 ];
 
-const ReplyList = ({ commentId, setReplying, nickname, setRefresh }) => {
+const ReplyList = ({
+  commentId,
+  setReplying,
+  nickname,
+  refresh,
+  setRefresh,
+}) => {
   const [replies, setReplies] = useState([]);
 
+  //대댓글 조회
   useEffect(() => {
     async function fetchData() {
       const data = await getReplies(commentId);
       setReplies(data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <Root>

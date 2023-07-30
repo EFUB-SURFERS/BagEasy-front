@@ -6,7 +6,7 @@ import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { createReply } from "../../api/replies";
 import { getMyProfile } from "../../api/member";
 
-const CommentReplies = ({ comment, nickname, setRefresh }) => {
+const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
 
@@ -21,6 +21,7 @@ const CommentReplies = ({ comment, nickname, setRefresh }) => {
     if (replyContent) {
       postData();
       setReplyContent("");
+      setRefresh(prev => prev + 1);
     }
     setReplying(false);
   };
@@ -37,6 +38,7 @@ const CommentReplies = ({ comment, nickname, setRefresh }) => {
         commentId={comment.commentId}
         setReplying={setReplying}
         nickname={nickname}
+        refresh={refresh}
         setRefresh={setRefresh}
       />
       {replying && (
