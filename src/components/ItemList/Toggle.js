@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const Toggle = ({ onToggle, filter }) => {
+const Toggle = ({ onToggle, onSales }) => {
   return (
     <Wrapper>
       <CheckBox type="checkbox" id="toggle" onChange={onToggle} />
-      <Label htmlFor="toggle" checked={filter} />
+      <Label htmlFor="toggle" checked={!onSales} />
     </Wrapper>
   );
 };

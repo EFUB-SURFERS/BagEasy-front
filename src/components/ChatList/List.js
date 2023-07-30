@@ -2,13 +2,22 @@ import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 import { getChatRooms } from "../../api/chat";
-
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 const List = () => {
   const [chatRooms, setChatRooms] = useState([]);
   let yourNickname = "";
   const myNickname = localStorage.getItem("myNickname");
+  const [isModalVisible, setIsModalVisible] = useState("false");
   useEffect(() => {
-    getChatRoomsData();
+    try {
+      getChatRoomsData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const getChatRoomsData = async () => {
@@ -18,6 +27,7 @@ const List = () => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <ChatList>
         {chatRooms &&
           chatRooms.map(room => {
@@ -26,7 +36,6 @@ const List = () => {
               ? (yourNickname = room.joinMember)
               : (yourNickname = room.createMember);
 
-            console.log(room.joinMember);
             return (
               <Item
                 key={room.roomId}

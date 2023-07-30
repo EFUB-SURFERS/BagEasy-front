@@ -41,7 +41,6 @@ const SalesContent = () => {
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = formData;
     if (imgFile.length > 0 && uni && title && price && content) {
-      //모든 데이터가 있을때 등록 시도
       try {
         let data = {
           postTitle: title,
@@ -59,7 +58,6 @@ const SalesContent = () => {
           new Blob([JSON.stringify(data)], { type: "application/json" }),
         );
         const res = await createPost(formData);
-        console.log("res.postId", res.postId);
         const postId = res.postId;
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동

@@ -1,22 +1,25 @@
 import React from "react";
 import { styled } from "styled-components";
+import Profile from "../Common/Profile";
 //유저인포 겟으로 프로필이미지 얻기
 //로그인 완료되면 api 작업
-const YourMessage = ({
-  senderName,
-  contentType,
-  content,
-  sendTime,
-  sendDate,
-}) => {
+const YourMessage = ({ yourNickname, content, sendTime, sendDate, type }) => {
   return (
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
       <Wrapper>
-        <img className="profileImg" src={"image"} alt=""></img>
+        <div className="profileImg">
+          {yourNickname && (
+            <Profile
+              nickname={yourNickname}
+              width={"36px"}
+              height={"36px"}
+            ></Profile>
+          )}
+        </div>
         <div>
-          <Name>{senderName}</Name>
-          {contentType === "image" ? (
+          <Name>{yourNickname}</Name>
+          {type === 1 ? (
             <ImageContainer>
               <img src={content} alt="" />
             </ImageContainer>
@@ -50,6 +53,7 @@ const ImageContainer = styled.div`
   img {
     max-width: 235px;
     border-radius: 10px;
+    max-height: 150px;
   }
 `;
 const Wrapper = styled.div`
