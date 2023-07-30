@@ -33,7 +33,7 @@ const ReplyList = ({ commentId, setReplying }) => {
 
   return (
     <Root>
-      {mockReplies.map((reply, key) => (
+      {replies.map((reply, key) => (
         <Comment
           comment={reply}
           isReply={true}

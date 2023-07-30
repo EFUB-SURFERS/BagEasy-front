@@ -3,11 +3,24 @@ import Comment from "./Comment";
 import { styled } from "styled-components";
 import ReplyList from "./ReplyList";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import { createReply } from "../../api/replies";
+import { getMyProfile } from "../../api/member";
 
 const CommentReplies = ({ comment }) => {
   const [replying, setReplying] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
 
+  //대댓글 작성
   const postReply = () => {
+    async function postData() {
+      await createReply(comment.postId, comment.commentId, {
+        nickname: await getMyProfile().nickname,
+        replyContent: replyContent,
+        isSecret: "false",
+      });
+    }
+    postData();
+    setReplyContent("");
     setReplying(false);
   };
 
@@ -17,7 +30,11 @@ const CommentReplies = ({ comment }) => {
       <ReplyList commentId={comment.commentId} setReplying={setReplying} />
       {replying && (
         <Wrapper>
-          <ReplyInput placeholder="답글 달기..." />
+          <ReplyInput
+            placeholder="답글 달기..."
+            value={replyContent}
+            onChange={e => setReplyContent(e.target.value)}
+          />
           <SendBtn onClick={postReply}>
             <SendImg src={sendBtn} />
           </SendBtn>
