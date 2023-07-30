@@ -6,7 +6,7 @@ import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { createReply } from "../../api/replies";
 import { getMyProfile } from "../../api/member";
 
-const CommentReplies = ({ comment }) => {
+const CommentReplies = ({ comment, nickname }) => {
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
 
@@ -28,8 +28,16 @@ const CommentReplies = ({ comment }) => {
 
   return (
     <Root>
-      <Comment comment={comment} setReplying={setReplying} />
-      <ReplyList commentId={comment.commentId} setReplying={setReplying} />
+      <Comment
+        comment={comment}
+        setReplying={setReplying}
+        nickname={nickname}
+      />
+      <ReplyList
+        commentId={comment.commentId}
+        setReplying={setReplying}
+        nickname={nickname}
+      />
       {replying && (
         <Wrapper>
           <ReplyInput

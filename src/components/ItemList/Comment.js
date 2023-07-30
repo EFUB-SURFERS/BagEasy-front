@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Profile from "../Common/Profile";
 import dots from "../../assets/itemListPage/dots.png";
 import CommentModal from "./CommentModal";
 import lockGrey from "../../assets/itemListPage/lockGrey.png";
 
-const Comment = ({ comment, isReply = false, setReplying }) => {
+const Comment = ({ comment, isReply = false, setReplying, nickname }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    if (comment.isSecret && comment.writer !== nickname) setHide(true);
+  }, []);
 
   return (
     <Container>
@@ -18,13 +23,13 @@ const Comment = ({ comment, isReply = false, setReplying }) => {
         <Wrapper>
           <Nickname>{comment.writer}</Nickname>
           <TextWrapper>
-            {comment.isSecret && (
+            {hide && (
               <LockWrapper>
                 <Lock src={lockGrey} />
               </LockWrapper>
             )}
-            <Text isSecret={comment.isSecret}>
-              {comment.isSecret
+            <Text hide={hide}>
+              {hide
                 ? "비밀 댓글입니다."
                 : !isReply
                 ? comment.commentContent
@@ -91,7 +96,7 @@ const Lock = styled.img`
 const Text = styled.div`
   flex: 1;
   font-size: 13px;
-  color: ${props => (props.isSecret ? "#909090" : "black")};
+  color: ${props => (props.hide ? "#909090" : "black")};
 `;
 
 const Button = styled.div`

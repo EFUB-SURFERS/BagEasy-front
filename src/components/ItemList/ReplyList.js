@@ -20,7 +20,7 @@ const mockReplies = [
   },
 ];
 
-const ReplyList = ({ commentId, setReplying }) => {
+const ReplyList = ({ commentId, setReplying, nickname }) => {
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const ReplyList = ({ commentId, setReplying }) => {
           isReply={true}
           key={key}
           setReplying={setReplying}
+          nickname={nickname}
         />
       ))}
     </Root>

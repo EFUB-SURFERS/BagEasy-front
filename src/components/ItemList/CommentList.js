@@ -4,11 +4,13 @@ import { getComments } from "../../api/comments";
 import CommentReplies from "./CommentReplies";
 import CommentInput from "./CommentInput";
 import CommentHeader from "./CommentHeader";
+import { getMyProfile } from "../../api/member";
 
 const CommentList = ({ postId = 1 }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [refresh, setRefresh] = useState(0);
+  const [nickname, setNickname] = useState("nickname");
 
   //댓글 조회
   useEffect(() => {
@@ -19,12 +21,21 @@ const CommentList = ({ postId = 1 }) => {
     fetchData();
   }, [refresh]);
 
+  //닉네임 조회
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getMyProfile();
+      data && setNickname(data.nickname);
+    }
+    fetchData();
+  }, []);
+
   return (
     <Wrapper>
       <YellowWrapper open={open}>
         <CommentHeader comments={comments} open={open} setOpen={setOpen} />
         {comments.map((comment, key) => (
-          <CommentReplies comment={comment} key={key} />
+          <CommentReplies comment={comment} key={key} nickname={nickname} />
         ))}
       </YellowWrapper>
       <CommentInput postId={postId} setRefresh={setRefresh} />
