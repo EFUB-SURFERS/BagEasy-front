@@ -6,10 +6,15 @@ import Buttons from "../components/ItemList/Buttons";
 import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
-import { getAllPosts, getPostBySchool } from "../api/posts";
+import {
+  getAllPosts,
+  getPostBySchool,
+  getPostonSales,
+  getpostsBySchoolOnSales,
+} from "../api/posts";
 
 const ItemListPage = () => {
-  const [filter, setFilter] = useState(true);
+  const [onSales, setOnSales] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
@@ -17,19 +22,27 @@ const ItemListPage = () => {
 
   const navigate = useNavigate();
   const onToggle = () => {
-    setFilter(prev => !prev);
+    setOnSales(prev => !prev);
   };
 
+  //글 조회
   useEffect(() => {
     async function fetchData() {
-      const data = uniDisplay
-        ? await getPostBySchool(uniDisplay)
-        : await getAllPosts();
+      if (onSales) {
+        const data = uniDisplay
+          ? await getpostsBySchoolOnSales(uniDisplay)
+          : await getPostonSales();
+        setPosts(data);
+      } else {
+        const data = uniDisplay
+          ? await getPostBySchool(uniDisplay)
+          : await getAllPosts();
+        setPosts(data);
+      }
       setLoading(false);
-      setPosts(data);
     }
     fetchData();
-  }, [refresh]);
+  }, [refresh, onSales]);
 
   return (
     <Wrapper>
@@ -37,7 +50,7 @@ const ItemListPage = () => {
       <Buttons navigate={navigate} />
       <SearchBar
         onToggle={onToggle}
-        filter={filter}
+        onSales={onSales}
         uniDisplay={uniDisplay}
         setUniDisplay={setUniDisplay}
         setRefresh={setRefresh}
