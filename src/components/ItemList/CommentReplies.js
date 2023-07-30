@@ -14,7 +14,6 @@ const CommentReplies = ({ comment, nickname }) => {
   const postReply = () => {
     async function postData() {
       await createReply(comment.postId, comment.commentId, {
-        nickname: await getMyProfile().nickname,
         replyContent: replyContent,
         isSecret: "false",
       });

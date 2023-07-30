@@ -13,11 +13,9 @@ const CommentInput = ({ postId, setRefresh }) => {
   //댓글 작성
   const postComment = () => {
     async function postData() {
-      const memberId = await getMyProfile().memberId;
       await createComment(
         postId,
         {
-          memberId: memberId,
           commentContent: comment,
           isSecret: isSecret,
         },
@@ -26,6 +24,7 @@ const CommentInput = ({ postId, setRefresh }) => {
 
       setRefresh(prev => prev + 1);
       setComment("");
+      setIsSecret(false);
     }
     comment && postData();
   };
