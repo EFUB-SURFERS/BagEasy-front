@@ -31,10 +31,6 @@ const SalesContent = ({ postId, originalData }) => {
   const images = originalData.imageResponseDtos;
   console.log("images", images);
 
-  const images2 = originalData.imageResponseDtos
-    ? originalData.imageResponseDtos.map(item => item.imageUrl)
-    : [];
-
   const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
 
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
@@ -90,7 +86,7 @@ const SalesContent = ({ postId, originalData }) => {
       alert("내용을 모두 채운 후 다시 등록해주세요.");
     }
   };
-  
+
   return (
     <>
       <Header>

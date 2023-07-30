@@ -49,7 +49,7 @@ const Footer = ({
         const deleteData = await deleteDetail(Id);
         console.log(deleteData);
         alert("게시글이 삭제되었습니다.");
-        navigate(-1);
+        navigate("/home");
       } catch (err) {
         console.log("error", err);
       }
