@@ -10,16 +10,12 @@ const Comment = ({ comment, isReply = false, setReplying }) => {
   return (
     <Container>
       <Root isReply={isReply}>
-        <ProfileWrapper isReply={isReply}>
-          <Profile
-            nickname={!isReply ? comment.writer : "nickname"}
-            width="24px"
-            height="24px"
-          />
+        <ProfileWrapper>
+          <Profile nickname={comment.writer} width="24px" height="24px" />
         </ProfileWrapper>
 
         <TextWrapper>
-          <Nickname>{!isReply ? comment.writer : "nickname"}</Nickname>
+          <Nickname>{comment.writer}</Nickname>
           <Text>
             {!isReply ? comment.commentContent : comment.replyContent}
           </Text>
