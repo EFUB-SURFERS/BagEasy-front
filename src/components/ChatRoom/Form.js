@@ -5,7 +5,7 @@ import deleteBtn from "../../assets/chat/deleteBtn.png";
 import { useState, useRef } from "react";
 import { publishMessage } from "../../api/stomp";
 import { useParams } from "react-router-dom";
-
+import imageCompression from "browser-image-compression";
 const Form = () => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
@@ -17,6 +17,7 @@ const Form = () => {
   const uploadImg = () => {
     let file = imgRef.current.files[0];
     setImgFile(file);
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -31,12 +32,36 @@ const Form = () => {
   };
   //메세지 전송 ( stompjs: send )
   const sendMessage = () => {
-    let content = "";
-    let isImage;
-    imgFile ? (content = imgFile) : (content = text);
-    imgFile ? (isImage = 1) : (isImage = 0);
-    content && publishMessage(roomId, isImage, content);
+    if (imgFile) {
+      sendImg();
+    } else {
+      text && sendText();
+    }
+  };
+
+  const sendText = () => {
+    publishMessage(roomId, 0, text);
     setText("");
+  };
+  const sendImg = async () => {
+    //이미지파일 1MB이하로 압축, BASE64로 인코딩한 뒤 전송
+    const options = {
+      maxSizeMB: 1,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(imgFile, options);
+      console.log(previewImg);
+      const compressedreader = new FileReader();
+      compressedreader.readAsDataURL(compressedFile);
+      compressedreader.onloadend = () => {
+        publishMessage(roomId, 1, compressedreader.result);
+      };
+      setPreviewImg();
+      setImgFile();
+    } catch (err) {
+      console.log("압축실패");
+    }
   };
 
   return (
@@ -55,6 +80,7 @@ const Form = () => {
       )}
       <Inputs>
         <input
+          accept=".jpg, .jpeg, .png"
           type="file"
           id="file"
           multiple

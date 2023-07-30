@@ -94,6 +94,7 @@ const MessagesContainer = () => {
                   content={message.content}
                   sendTime={getSendTime(message.sentAt)}
                   sendDate={checkIsNewDate(message.sentAt)}
+                  type={message.type}
                 />
               </>
             ) : (
@@ -105,6 +106,7 @@ const MessagesContainer = () => {
                   content={message.content}
                   sendTime={getSendTime(message.sentAt)}
                   sendDate={checkIsNewDate(message.sentAt)}
+                  type={message.type}
                 />
               </>
             );

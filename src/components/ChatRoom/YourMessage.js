@@ -3,13 +3,7 @@ import { styled } from "styled-components";
 import Profile from "../Common/Profile";
 //유저인포 겟으로 프로필이미지 얻기
 //로그인 완료되면 api 작업
-const YourMessage = ({
-  yourNickname,
-  contentType,
-  content,
-  sendTime,
-  sendDate,
-}) => {
+const YourMessage = ({ yourNickname, content, sendTime, sendDate, type }) => {
   return (
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
@@ -25,7 +19,7 @@ const YourMessage = ({
         </div>
         <div>
           <Name>{yourNickname}</Name>
-          {contentType === "image" ? (
+          {type === 1 ? (
             <ImageContainer>
               <img src={content} alt="" />
             </ImageContainer>
