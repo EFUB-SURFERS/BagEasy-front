@@ -10,6 +10,7 @@ const UserInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [myProfile, setMyProfile] = useState({});
   const [uni, setUni] = useState("");
+  const [uniToShow, setUniToShow] = useState("");
   const [update, setUpdate] = useState(false);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const UserInfo = () => {
 
   useEffect(() => {
     if (update) {
+      setUniToShow(uni);
       updateSchool(uni);
       console.log("몇번");
     }
@@ -35,7 +37,7 @@ const UserInfo = () => {
     try {
       const res = await getMyProfile();
       setMyProfile(res);
-      res.school ? setUni(res.school) : setUni("");
+      res.school ? setUniToShow(res.school) : setUniToShow("");
     } catch (err) {
       console.log("error", err);
     }
@@ -54,7 +56,9 @@ const UserInfo = () => {
       <UserInfoContainer>
         <Username>{myProfile.nickname}</Username>
         <UniversityContainer>
-          <University>{uni ? uni : "학교를 설정해주세요"}</University>
+          <University>
+            {uniToShow ? uniToShow : "학교를 설정해주세요"}
+          </University>
           <Icon2
             src={setting}
             alt="setting"
@@ -73,7 +77,6 @@ const UserInfo = () => {
           />
         ) : null}
       </UserInfoContainer>
-
       <Line />
     </>
   );
@@ -81,12 +84,7 @@ const UserInfo = () => {
 
 const AvatarContainer = styled.div`
   margin-top: 46px;
-`;
-
-const AvatarImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  margin-bottom: 20px;
 `;
 
 const UserInfoContainer = styled.div`
