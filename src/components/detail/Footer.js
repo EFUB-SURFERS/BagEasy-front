@@ -113,7 +113,7 @@ const Footer = ({
           <HeartCount>{heartCount}</HeartCount>
         </Heart>
         <Line />
-        <Price>{price}</Price>
+        <Price>{price}원</Price>
         {isWirter ? (
           <MenuBar src={menubar} onClick={toggleSubMenu} />
         ) : isSold ? (
