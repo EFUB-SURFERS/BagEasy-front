@@ -42,42 +42,40 @@ const UserInfo = () => {
   };
 
   return (
-    myProfile && (
-      <>
-        <AvatarContainer>
-          <Profile
-            nickname={myProfile.nickname}
-            width={"100px"}
-            height={"100px"}
+    <>
+      <AvatarContainer>
+        <Profile
+          nickname={myProfile.nickname}
+          width={"100px"}
+          height={"100px"}
+        />
+      </AvatarContainer>
+
+      <UserInfoContainer>
+        <Username>{myProfile.nickname}</Username>
+        <UniversityContainer>
+          <University>{uni ? uni : "학교를 설정해주세요"}</University>
+          <Icon2
+            src={setting}
+            alt="setting"
+            onClick={() => {
+              setIsOpen(true);
+            }}
           />
-        </AvatarContainer>
+        </UniversityContainer>
+        {isOpen ? (
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            uni={uni}
+            setUni={setUni}
+            setUpdate={setUpdate}
+          />
+        ) : null}
+      </UserInfoContainer>
 
-        <UserInfoContainer>
-          <Username>{myProfile.nickname}</Username>
-          <UniversityContainer>
-            <University>{uni ? uni : "학교를 설정해주세요"}</University>
-            <Icon2
-              src={setting}
-              alt="setting"
-              onClick={() => {
-                setIsOpen(true);
-              }}
-            />
-          </UniversityContainer>
-          {isOpen ? (
-            <Modal
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              uni={uni}
-              setUni={setUni}
-              setUpdate={setUpdate}
-            />
-          ) : null}
-        </UserInfoContainer>
-
-        <Line />
-      </>
-    )
+      <Line />
+    </>
   );
 };
 
