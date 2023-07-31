@@ -113,11 +113,11 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <p>
+          <UniText>
             {formData.uni.length > 0 && !isOpen
               ? formData.uni
               : "학교를 선택해주세요"}
-          </p>
+          </UniText>
           <ChoiceBtn onClick={toggleModal}>
             <img src={choiceuni} alt="검색" />
           </ChoiceBtn>
@@ -321,8 +321,9 @@ const Unisection = styled.div`
   height: 24px;
   margin-top: 18px;
   margin-bottom: 19px;
+  /* display: inline-block; */
 
-  input {
+  /* input {
     border: 0;
     display: flex;
     width: 175px;
@@ -336,9 +337,9 @@ const Unisection = styled.div`
     line-height: normal;
     margin-right: 10px;
     outline: none;
-  }
+  } */
 
-  p {
+  /* .uniText {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -346,11 +347,11 @@ const Unisection = styled.div`
     color: #b8b8b8;
     text-align: center;
     font-family: Inter;
-    font-size: 13px;
+    font-size: 50px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-  }
+  } */
 `;
 
 const Titlesection = styled.div`
@@ -448,4 +449,22 @@ const Check = styled.img`
   width: 5px;
   height: 5px;
   margin: 0px -25px 0px 20px;
+`;
+
+const UniText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #b8b8b8;
+  text-align: left;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 180px;
 `;
