@@ -24,12 +24,12 @@ const SoldItemList = () => {
       {sellList &&
         sellList.map(item => (
           <Item
-            key={item.id}
-            image={item.image}
-            title={item.title}
-            subtitle={item.subtitle}
+            key={item.postId}
+            image={item.imageResponseDtos[0].imageUrl}
+            title={item.postTitle}
+            subtitle={item.school}
             price={item.price}
-            completed={item.completed}
+            completed={item.isSold}
           />
         ))}
     </div>

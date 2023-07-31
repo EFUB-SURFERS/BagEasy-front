@@ -1,7 +1,7 @@
 import React from "react";
 import getBuyList from "../../api/buy.js";
 import { useEffect, useState } from "react";
-import Buys from "./Buys.js"
+import Buys from "./Buys.js";
 
 const BuyItem = () => {
   const [buyList, setBuyList] = useState([]);
@@ -22,15 +22,16 @@ const BuyItem = () => {
 
   return (
     <>
-      {buyList&&buyList.map(item => (
-        <Buys
-          key={item.id}
-          image={item.image}
-          title={item.title}
-          subtitle={item.subtitle}
-          price={item.price}
-        />
-      ))}
+      {buyList &&
+        buyList.map(item => (
+          <Buys
+            key={item.postId}
+            image={item.imageResponseDtos[0].imageUrl}
+            title={"테스트 제목 길이 테스트 제목 길이 테스트 제목 길이 테스타"}
+            subtitle={item.school}
+            price={item.price}
+          />
+        ))}
     </>
   );
 };

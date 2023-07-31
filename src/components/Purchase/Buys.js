@@ -4,14 +4,10 @@ import {
   ListImage,
   TitleContainer,
   Title,
-  TrashImage,
   Words,
   Subtitle,
-  Check,
-  CheckButton,
   Price,
 } from "./SharedStyles";
-import trash from "../../assets/trash.png";
 
 const Buys = ({ image, title, subtitle, price }) => {
   return (
@@ -20,10 +16,9 @@ const Buys = ({ image, title, subtitle, price }) => {
       <Words>
         <TitleContainer>
           <Title>{title}</Title>
-          <TrashImage src={trash} alt="trash" />
         </TitleContainer>
         <Subtitle>{subtitle}</Subtitle>
-        <Price>{price}</Price>
+        <Price>{price}원</Price>
       </Words>
     </ListItemContainer>
   );

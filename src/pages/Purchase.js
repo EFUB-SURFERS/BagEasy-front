@@ -24,40 +24,14 @@ const Purchase = () => {
         <ListContainer>
           {activeTab === "구매내역" && (
             <>
-              <BuyItem
-                image={book}
-                title="미시경제학 새 책 팔아.."
-                subtitle="학교이름"
-                price="10000원"
-              />
-              <Divider />
-              <BuyItem
-                image={sofa}
-                title="소파"
-                subtitle="학교이름"
-                price="20000원"
-              />
+              <BuyItem />
               <Divider />
             </>
           )}
 
           {activeTab === "판매내역" && (
             <>
-              <SoldItem
-                image={soccer}
-                title="축구공 단돈 3000원.."
-                subtitle="학교이름"
-                price="3000원"
-                completed={false}
-              />
-              <Divider />
-              <SoldItem
-                image={clock}
-                title="자명종 시계"
-                subtitle="이화여자대학교"
-                price="5000원"
-                completed={true}
-              />
+              <SoldItem/>
               <Divider />
             </>
           )}
