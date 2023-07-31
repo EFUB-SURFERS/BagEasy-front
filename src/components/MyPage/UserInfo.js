@@ -21,7 +21,6 @@ const UserInfo = () => {
     if (update) {
       setUniToShow(uni);
       updateSchool(uni);
-      console.log("몇번");
     }
   }, [update]);
 
