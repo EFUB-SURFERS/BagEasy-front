@@ -153,7 +153,6 @@ const SellerUniv = styled.div`
   font-size: 13px;
   color: #848484;
 
-  /* margin-top: 6px; */
   img {
     width: 12px;
     height: 12px;
@@ -177,11 +176,11 @@ const ItemTitle = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  color: #000;
+  color: #000000;
   font-family: Noto Sans KR;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 550;
   line-height: normal;
 
   padding: 5px 20px;
@@ -198,6 +197,7 @@ const ItemDescription = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  white-space: pre;
 
   padding: 0px 20px;
 `;
