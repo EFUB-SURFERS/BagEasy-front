@@ -9,23 +9,22 @@ const UserInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [myProfile, setMyProfile] = useState({});
   const [uni, setUni] = useState("");
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     getMyprofileData();
   }, []);
 
   useEffect(() => {
-    if (uni !== "") {
-      updateSchool();
+    if (update) {
+      updateSchool(uni);
+      console.log("몇번");
     }
-  }, [uni]);
+  }, [update]);
+
   const updateSchool = async uni => {
     try {
-      const res = await putSchool();
+      const res = await putSchool(uni);
     } catch (err) {
       console.log("error", err);
     }
@@ -64,6 +63,7 @@ const UserInfo = () => {
             setIsOpen={setIsOpen}
             uni={uni}
             setUni={setUni}
+            setUpdate={setUpdate}
           />
         ) : null}
       </UserInfoContainer>
