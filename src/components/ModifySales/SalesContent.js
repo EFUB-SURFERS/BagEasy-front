@@ -361,7 +361,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 180px;
+    width: 250px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
