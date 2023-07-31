@@ -33,7 +33,7 @@ export const getReplies = async commentId => {
 //대댓글 삭제 api
 export const deleteReply = async replyId => {
   try {
-    const res = await client.delete(`repies/${replyId}`);
+    const res = await client.delete(`replies/${replyId}`);
 
     console.log(res.data);
     return res.data;

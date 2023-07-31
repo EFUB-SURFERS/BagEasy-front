@@ -1,21 +1,41 @@
 import React, { useEffect, useState } from "react";
-import searchImg from "../../assets/itemListPage/searchImg.png";
 import styled from "styled-components";
 import Toggle from "./Toggle";
 import Modal from "./../UpdateUni/Modal";
 import location from "../../assets/itemListPage/location.png";
+import { getMyProfile } from "../../api/member";
 
-const SearchBar = ({ onToggle, filter }) => {
+const SearchBar = ({
+  onToggle,
+  onSales,
+  uniDisplay,
+  setUniDisplay,
+  setRefresh,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
   const [update, setUpdate] = useState(false);
-  const [uniDisplay, setUniDisplay] = useState("");
+
+  //유저의 학교명 가져오기
   useEffect(() => {
-    !isOpen && update && setUniDisplay(uni);
+    async function fetchData() {
+      const data = getMyProfile();
+      setUniDisplay(data.school);
+    }
+    fetchData();
+  }, []);
+
+  //학교명 업데이트
+  useEffect(() => {
+    if (!isOpen && update) {
+      setUniDisplay(uni);
+      setRefresh(prev => prev + 1);
+    }
   }, [isOpen]);
+
   return (
     <Container>
-      <Toggle onToggle={onToggle} filter={filter} />
+      <Toggle onToggle={onToggle} onSales={onSales} />
       <TextWrapper>
         <LocationIcon>
           <Icon src={location} />

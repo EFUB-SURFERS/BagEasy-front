@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Profile from "../Common/Profile";
-import dots from "../../assets/itemListPage/dots.png";
 import { getReplies } from "../../api/replies";
 import Comment from "./Comment";
 
@@ -22,21 +20,35 @@ const mockReplies = [
   },
 ];
 
-const ReplyList = ({ commentId }) => {
+const ReplyList = ({
+  commentId,
+  setReplying,
+  nickname,
+  refresh,
+  setRefresh,
+}) => {
   const [replies, setReplies] = useState([]);
 
+  //대댓글 조회
   useEffect(() => {
     async function fetchData() {
       const data = await getReplies(commentId);
       setReplies(data);
     }
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return (
     <Root>
-      {mockReplies.map((reply, key) => (
-        <Comment comment={reply} isReply={true} key={key} />
+      {replies.map((reply, key) => (
+        <Comment
+          comment={reply}
+          isReply={true}
+          key={key}
+          setReplying={setReplying}
+          nickname={nickname}
+          setRefresh={setRefresh}
+        />
       ))}
     </Root>
   );

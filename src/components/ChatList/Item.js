@@ -2,14 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Profile from "../../components/Common/Profile";
-const Item = ({
-  roomId,
-  createMember,
-  joinMember,
-  postId,
-  latestMessage,
-  yourNickname,
-}) => {
+const Item = ({ roomId, latestMessage, yourNickname }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {

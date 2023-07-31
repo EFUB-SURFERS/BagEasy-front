@@ -28,7 +28,7 @@ export const getDetail = async postId => {
 export const getAllPosts = async () => {
   try {
     const res = await client.get(`posts`);
-    console.log(res.data);
+    console.log("판매글 전체조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -70,6 +70,55 @@ export const modifyPost = async (postId, formData) => {
       },
     });
     console.log(res);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 판매중인 글 조회 api
+export const getPostonSales = async schoolName => {
+  try {
+    const res = await client.get(`posts/sales`);
+    console.log("판매중인 글 조회", res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 학교별 판매글 조회 api
+export const getPostBySchool = async schoolName => {
+  try {
+    const res = await client.post(
+      `posts/school`,
+      { schoolName: schoolName },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    console.log("학교별 판매글 조회", res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
+
+// 학교별 판매중인 글 조회 api
+export const getpostsBySchoolOnSales = async schoolName => {
+  try {
+    const res = await client.post(
+      `posts/school/sales`,
+      { schoolName: schoolName },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    console.log("학교별 판매중인 글 조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
