@@ -22,3 +22,16 @@ export const getMyProfile = async () => {
     console.log("에러 발생", err);
   }
 };
+
+//학교 변경
+export const putSchool = async school => {
+  try {
+    const res = await client.put(`members/school`, {
+      school: school,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+  }
+};
