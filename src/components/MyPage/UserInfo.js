@@ -4,28 +4,28 @@ import myPageImg from "../../assets/myPageImg.png";
 import setting from "../../assets/setting.png";
 import Modal from "../UpdateUni/Modal";
 import { getMyProfile, putSchool } from "../../api/member";
+import Profile from "../Common/Profile";
 
 const UserInfo = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [myProfile, setMyProfile] = useState({});
   const [uni, setUni] = useState("");
-
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     getMyprofileData();
   }, []);
 
   useEffect(() => {
-    if (uni !== "") {
-      updateSchool();
+    if (update) {
+      updateSchool(uni);
+      console.log("몇번");
     }
-  }, [uni]);
+  }, [update]);
+
   const updateSchool = async uni => {
     try {
-      const res = await putSchool();
+      const res = await putSchool(uni);
     } catch (err) {
       console.log("error", err);
     }
@@ -42,33 +42,42 @@ const UserInfo = () => {
   };
 
   return (
-    <>
-      <AvatarContainer>
-        <AvatarImage src={myPageImg} alt="Avatar" />
-      </AvatarContainer>
-      <UserInfoContainer>
-        <Username>{myProfile.nickname}</Username>
-        <UniversityContainer>
-          <University>{uni ? uni : "학교를 설정해주세요"}</University>
-          <Icon2
-            src={setting}
-            alt="setting"
-            onClick={() => {
-              setIsOpen(true);
-            }}
+    myProfile && (
+      <>
+        <AvatarContainer>
+          <Profile
+            nickname={myProfile.nickname}
+            width={"100px"}
+            height={"100px"}
           />
-        </UniversityContainer>
-        {isOpen ? (
-          <Modal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            uni={uni}
-            setUni={setUni}
-          />
-        ) : null}
-      </UserInfoContainer>
-      <Line />
-    </>
+        </AvatarContainer>
+
+        <UserInfoContainer>
+          <Username>{myProfile.nickname}</Username>
+          <UniversityContainer>
+            <University>{uni ? uni : "학교를 설정해주세요"}</University>
+            <Icon2
+              src={setting}
+              alt="setting"
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            />
+          </UniversityContainer>
+          {isOpen ? (
+            <Modal
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              uni={uni}
+              setUni={setUni}
+              setUpdate={setUpdate}
+            />
+          ) : null}
+        </UserInfoContainer>
+
+        <Line />
+      </>
+    )
   );
 };
 
