@@ -25,6 +25,7 @@ export const getLikes = async postId => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
 
@@ -34,5 +35,6 @@ export const getLikedPosts = async () => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };

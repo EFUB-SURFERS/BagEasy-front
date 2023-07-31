@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import Comment from "./Comment";
 import { styled } from "styled-components";
-import ReplyList from "./ReplyList";
-import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { createReply } from "../../api/replies";
-import { getMyProfile } from "../../api/member";
+import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
+import lockGreen from "../../assets/itemListPage/lockGreen.png";
 
-const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
-  const [replying, setReplying] = useState(false);
+const ReplyInput = ({ comment, setRefresh, setReplying }) => {
   const [replyContent, setReplyContent] = useState("");
+  const [isSecret, setIsSecret] = useState(false);
 
   //대댓글 작성
   const postReply = () => {
     async function postData() {
       await createReply(comment.postId, comment.commentId, {
         replyContent: replyContent,
-        isSecret: "false",
+        isSecret: isSecret,
       });
     }
     if (replyContent) {
@@ -27,39 +26,24 @@ const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
   };
 
   return (
-    <Root>
-      <Comment
-        comment={comment}
-        setReplying={setReplying}
-        nickname={nickname}
-        setRefresh={setRefresh}
+    <Wrapper>
+      <Input
+        placeholder="답글 달기..."
+        value={replyContent}
+        onChange={e => setReplyContent(e.target.value)}
       />
-      <ReplyList
-        commentId={comment.commentId}
-        setReplying={setReplying}
-        nickname={nickname}
-        refresh={refresh}
-        setRefresh={setRefresh}
+      <Lock
+        src={isSecret ? lockGreen : lockLightgrey}
+        onClick={() => setIsSecret(prev => !prev)}
       />
-      {replying && (
-        <Wrapper>
-          <ReplyInput
-            placeholder="답글 달기..."
-            value={replyContent}
-            onChange={e => setReplyContent(e.target.value)}
-          />
-          <SendBtn onClick={postReply}>
-            <SendImg src={sendBtn} />
-          </SendBtn>
-        </Wrapper>
-      )}
-    </Root>
+      <SendBtn onClick={postReply}>
+        <SendImg src={sendBtn} />
+      </SendBtn>
+    </Wrapper>
   );
 };
 
-const Root = styled.div`
-  //outline: 1px solid red;
-`;
+export default ReplyInput;
 
 const Wrapper = styled.div`
   padding: 5px 10px 7px 50px;
@@ -68,7 +52,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const ReplyInput = styled.input`
+const Input = styled.input`
   display: block;
   box-sizing: border-box;
   padding: 0px 10px;
@@ -85,6 +69,13 @@ const ReplyInput = styled.input`
   }
 `;
 
+const Lock = styled.img`
+  position: absolute;
+  width: 10px;
+  right: 55px;
+  bottom: 15px;
+`;
+
 const SendBtn = styled.div`
   width: 20px;
   margin-right: 20px;
@@ -98,5 +89,3 @@ const SendBtn = styled.div`
 const SendImg = styled.img`
   width: 100%;
 `;
-
-export default CommentReplies;
