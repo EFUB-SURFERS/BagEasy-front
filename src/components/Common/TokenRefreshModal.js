@@ -27,8 +27,10 @@ const TokenRefreshModal = () => {
 
       if (res.status == "200") {
         // 토큰이 성공적으로 발급된 경우
+
         localStorage.setItem("bagtoken", res.data.accessToken);
         localStorage.setItem("isExpired", "false");
+        localStorage.setItem(res.data.accessToken);
         handleNavigateHome();
       }
       if (res.status == "401") {
@@ -52,7 +54,6 @@ const TokenRefreshModal = () => {
 
 const Container = styled.div`
   position: absolute;
-  left: 1vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

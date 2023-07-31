@@ -6,7 +6,7 @@ import sendBtn from "../../assets/itemListPage/sendBtn.png";
 import { createReply } from "../../api/replies";
 import { getMyProfile } from "../../api/member";
 
-const CommentReplies = ({ comment }) => {
+const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
   const [replying, setReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
 
@@ -14,7 +14,6 @@ const CommentReplies = ({ comment }) => {
   const postReply = () => {
     async function postData() {
       await createReply(comment.postId, comment.commentId, {
-        nickname: await getMyProfile().nickname,
         replyContent: replyContent,
         isSecret: "false",
       });
@@ -22,14 +21,26 @@ const CommentReplies = ({ comment }) => {
     if (replyContent) {
       postData();
       setReplyContent("");
+      setRefresh(prev => prev + 1);
     }
     setReplying(false);
   };
 
   return (
     <Root>
-      <Comment comment={comment} setReplying={setReplying} />
-      <ReplyList commentId={comment.commentId} setReplying={setReplying} />
+      <Comment
+        comment={comment}
+        setReplying={setReplying}
+        nickname={nickname}
+        setRefresh={setRefresh}
+      />
+      <ReplyList
+        commentId={comment.commentId}
+        setReplying={setReplying}
+        nickname={nickname}
+        refresh={refresh}
+        setRefresh={setRefresh}
+      />
       {replying && (
         <Wrapper>
           <ReplyInput
