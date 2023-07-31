@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
-import title from "../assets/title.png";
+import logo from "../assets/StartPage/logo.png";
+import title from "../assets/StartPage/title.png";
 import { useNavigate } from "react-router-dom";
 
 const Start = () => {
@@ -14,6 +14,7 @@ const Start = () => {
         <TitleImg src={title} alt="title" />
       </Logo>
       <Button onClick={() => navigate("/login")}>시작하기</Button>
+
     </StartScreenContainer>
   );
 };
@@ -28,7 +29,7 @@ const StartScreenContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 168px;
-  height: 51px;
+
 `;
 
 const TitleImg = styled.img`
