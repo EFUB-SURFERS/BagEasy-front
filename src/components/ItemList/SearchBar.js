@@ -7,7 +7,7 @@ import { getMyProfile } from "../../api/member";
 
 const SearchBar = ({
   onToggle,
-  filter,
+  onSales,
   uniDisplay,
   setUniDisplay,
   setRefresh,
@@ -35,7 +35,7 @@ const SearchBar = ({
 
   return (
     <Container>
-      <Toggle onToggle={onToggle} filter={filter} />
+      <Toggle onToggle={onToggle} onSales={onSales} />
       <TextWrapper>
         <LocationIcon>
           <Icon src={location} />

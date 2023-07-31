@@ -29,7 +29,6 @@ const SalesContent = ({ postId, originalData }) => {
   }, [originalData]);
 
   const images = originalData.imageResponseDtos;
-  console.log("images", images);
 
   const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
 
@@ -57,7 +56,10 @@ const SalesContent = ({ postId, originalData }) => {
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = modifiedData;
-    console.log("imgData", imgData);
+    if (isNaN(price)) {
+      alert("가격에는 숫자만 입력해 주세요.");
+      return;
+    }
     if (imgData && uni && title && price && content) {
       try {
         let data = {
@@ -82,7 +84,7 @@ const SalesContent = ({ postId, originalData }) => {
         console.log("error", err);
       }
     } else {
-      alert("내용을 모두 채운 후 다시 등록해주세요.");
+      alert("내용을 모두 채운 후 다시 등록해 주세요.");
     }
   };
 
@@ -133,11 +135,11 @@ const SalesContent = ({ postId, originalData }) => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <p>
+          <UniText>
             {modifiedData.uni && !isOpen
               ? modifiedData.uni
               : "학교를 선택해주세요"}
-          </p>
+          </UniText>
           <ChoiceBtn onClick={toggleModal}>
             <img src={choiceuni} alt="검색" />
           </ChoiceBtn>
@@ -347,36 +349,6 @@ const Unisection = styled.div`
   height: 24px;
   margin-top: 18px;
   margin-bottom: 19px;
-
-  input {
-    border: 0;
-    display: flex;
-    width: 175px;
-    flex-direction: column;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-right: 10px;
-    outline: none;
-  }
-
-  p {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    text-align: center;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
 `;
 
 const Titlesection = styled.div`
@@ -389,7 +361,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 180px;
+    width: 250px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
@@ -435,6 +407,7 @@ const ContentSection = styled.div`
   textarea {
     border: 0;
     display: flex;
+    width: 337px;
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
@@ -445,7 +418,8 @@ const ContentSection = styled.div`
     font-weight: 400;
     line-height: normal;
     outline: none;
-    margin: 18px 23px 0px 30px;
+    white-space: pre-wrap;
+    margin: 18px 30px;
   }
 `;
 
@@ -474,4 +448,22 @@ const Check = styled.img`
   width: 5px;
   height: 5px;
   margin: 0px -25px 0px 20px;
+`;
+
+const UniText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #b8b8b8;
+  text-align: left;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 180px;
 `;

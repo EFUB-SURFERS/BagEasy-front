@@ -80,8 +80,9 @@ const Footer = ({
 
   const getRoomId = async () => {
     try {
-      const data = await createRoom(postId, myNickname);
-      return data.roomId;
+      const roomId = await createRoom(postId, myNickname);
+
+      return roomId;
     } catch (error) {
       console.log("에러 발생", error);
     }
@@ -113,7 +114,7 @@ const Footer = ({
           <HeartCount>{heartCount}</HeartCount>
         </Heart>
         <Line />
-        <Price>{price}</Price>
+        <Price>{price}원</Price>
         {isWirter ? (
           <MenuBar src={menubar} onClick={toggleSubMenu} />
         ) : isSold ? (
