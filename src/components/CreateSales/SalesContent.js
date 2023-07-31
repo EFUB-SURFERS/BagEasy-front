@@ -321,37 +321,6 @@ const Unisection = styled.div`
   height: 24px;
   margin-top: 18px;
   margin-bottom: 19px;
-  /* display: inline-block; */
-
-  /* input {
-    border: 0;
-    display: flex;
-    width: 175px;
-    flex-direction: column;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-right: 10px;
-    outline: none;
-  } */
-
-  /* .uniText {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    text-align: center;
-    font-family: Inter;
-    font-size: 50px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  } */
 `;
 
 const Titlesection = styled.div`
@@ -410,6 +379,7 @@ const ContentSection = styled.div`
   textarea {
     border: 0;
     display: flex;
+    width: 337px;
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
@@ -420,7 +390,8 @@ const ContentSection = styled.div`
     font-weight: 400;
     line-height: normal;
     outline: none;
-    margin: 18px 23px 0px 30px;
+    white-space: pre-wrap;
+    margin: 18px 30px;
   }
 `;
 
