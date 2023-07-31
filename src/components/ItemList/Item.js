@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-const Item = ({ post, setRefresh, liked = false }) => {
+const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
@@ -13,11 +14,18 @@ const Item = ({ post, setRefresh, liked = false }) => {
     navigate(`/detail/${post.postId}`);
   };
 
+  //찜 여부 조회
   useEffect(() => {
     async function fetchData() {
       const data = await getLikes(post.postId);
 
-      setIsLiked(data.isLiked);
+      //토큰 만료시
+      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
+        localStorage.setItem("isExpired", true);
+        setIsExpired(localStorage.getItem("isExpired"));
+      } else {
+        setIsLiked(data.isLiked);
+      }
     }
     fetchData();
   }, []);

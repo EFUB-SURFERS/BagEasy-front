@@ -24,17 +24,6 @@ export const getDetail = async postId => {
   }
 };
 
-//판매글 전체조회 api
-export const getAllPosts = async () => {
-  try {
-    const res = await client.get(`posts`);
-    console.log("판매글 전체조회", res.data);
-    return res.data;
-  } catch (err) {
-    console.log("에러 발생", err);
-  }
-};
-
 //판매글 삭제 api
 export const deleteDetail = async postId => {
   try {
@@ -76,6 +65,18 @@ export const modifyPost = async (postId, formData) => {
   }
 };
 
+//판매글 전체조회 api
+export const getAllPosts = async () => {
+  try {
+    const res = await client.get(`posts`);
+    console.log("판매글 전체조회", res.data);
+    return res.data;
+  } catch (err) {
+    console.log("에러 발생", err);
+    return err;
+  }
+};
+
 // 판매중인 글 조회 api
 export const getPostonSales = async schoolName => {
   try {
@@ -84,6 +85,7 @@ export const getPostonSales = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
 
@@ -103,6 +105,7 @@ export const getPostBySchool = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
 
@@ -122,5 +125,6 @@ export const getpostsBySchoolOnSales = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
