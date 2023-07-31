@@ -40,6 +40,10 @@ const SalesContent = () => {
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = formData;
+    if (isNaN(price)) {
+      alert("가격에는 숫자만 입력해 주세요.");
+      return;
+    }
     if (imgFile.length > 0 && uni && title && price && content) {
       try {
         let data = {
@@ -65,7 +69,7 @@ const SalesContent = () => {
         console.log("error", err);
       }
     } else {
-      alert("내용을 모두 채운 후 다시 등록해주세요.");
+      alert("내용을 모두 채운 후 다시 등록해 주세요.");
     }
   };
 
@@ -359,7 +363,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 180px;
+    width: 250px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
