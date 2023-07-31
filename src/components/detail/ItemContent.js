@@ -170,6 +170,7 @@ const Item = styled.div`
 
   border-bottom: 0.5px solid #cecece;
 `;
+
 const ItemTitle = styled.div`
   display: flex;
   height: 48px;
@@ -184,19 +185,17 @@ const ItemTitle = styled.div`
   line-height: normal;
 
   padding: 5px 20px;
-  flex-shrink: 0;
 `;
+
 const ItemDescription = styled.div`
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   color: #000;
   font-family: Noto Sans KR;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  white-space: pre;
-
+  /* white-space: pre-wrap; */
   padding: 0px 20px 30px;
 `;
