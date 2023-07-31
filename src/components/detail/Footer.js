@@ -12,33 +12,33 @@ import emptyheart from "../../assets/post/emptyheart.png";
 import chatButton from "../../assets/post/chatButton.png";
 import soldButton from "../../assets/post/sold.png";
 import menubar from "../../assets/post/menubar.png";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
+import { createRoom } from "../../api/chat";
 
 const Footer = ({
   isLiked,
+  setIsLiked,
   heartCount,
   postId,
-  sellerId,
+  sellerNickname,
   price,
-  isSolded,
-  myId,
+  isSold,
+  myNickname,
 }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [isModalVisible, setIsModalVisible] = useState("false");
   const navigate = useNavigate();
-
 
   const handleEditClick = ({}) => {
     navigate("/modify/" + postId);
   };
 
-
   useEffect(() => {
-    setIsWirter(sellerId === myId);
+    setIsWirter(sellerNickname === myNickname);
     setLoading(false);
-  }, [sellerId, myId]);
-
+  }, [sellerNickname, myNickname]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -49,9 +49,8 @@ const Footer = ({
       try {
         const Id = postId;
         const deleteData = await deleteDetail(Id);
-        console.log(deleteData);
         alert("게시글이 삭제되었습니다.");
-        navigate(-1);
+        navigate("/home");
       } catch (err) {
         console.log("error", err);
       }
@@ -72,45 +71,64 @@ const Footer = ({
     } else {
       try {
         await addLikes(postId);
-        // setIsLiked(!isLiked);
       } catch (err) {
         console.log("error", err);
       }
     }
-    window.location.reload();
-    // location.reload();
+    setIsLiked(prevLikes => ({ ...prevLikes, isLiked: !prevLikes.isLiked }));
   };
 
-  const handleChatClick = () => {
-    // 후에 roomId받아서 채팅방으로 이동
-    navigate("/chats/:roomId");
+  const getRoomId = async () => {
+    try {
+      const data = await createRoom(postId, myNickname);
+      return data.roomId;
+    } catch (error) {
+      console.log("에러 발생", error);
+    }
+  };
+
+  const handleChatClick = async () => {
+    try {
+      const roomId = await getRoomId();
+
+      roomId && navigate(`/chats/${roomId}`);
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   };
 
   return (
-    <Wrapper>
-      <Heart>
-        <HeartBtn
-          src={isLiked ? heart : emptyheart}
-          onClick={handleHeartClick}
-        />
-        <HeartCount>{heartCount}</HeartCount>
-      </Heart>
-      <Line />
-      <Price>{price}</Price>
-      {isWirter ? (
-        <MenuBar src={menubar} onClick={toggleSubMenu} />
-      ) : isSolded ? (
-        <Button src={soldButton}></Button>
-      ) : (
-        <Button src={chatButton} onClick={handleChatClick}></Button>
-      )}
-      {isSubMenuOpen && (
-        <SubMenuModal
-          onEditClick={handleEditClick}
-          onDeleteClick={handleDeleteClick}
-        />
-      )}
-    </Wrapper>
+    <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      <Wrapper>
+        <Heart>
+          <HeartBtn
+            src={isLiked ? heart : emptyheart}
+            onClick={handleHeartClick}
+          />
+          <HeartCount>{heartCount}</HeartCount>
+        </Heart>
+        <Line />
+        <Price>{price}원</Price>
+        {isWirter ? (
+          <MenuBar src={menubar} onClick={toggleSubMenu} />
+        ) : isSold ? (
+          <Button src={soldButton}></Button>
+        ) : (
+          <Button src={chatButton} onClick={handleChatClick}></Button>
+        )}
+        {isSubMenuOpen && (
+          <SubMenuModal
+            onEditClick={handleEditClick}
+            onDeleteClick={handleDeleteClick}
+          />
+        )}
+      </Wrapper>
+    </>
   );
 };
 

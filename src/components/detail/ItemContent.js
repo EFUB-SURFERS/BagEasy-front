@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import profile from "../../assets/post/profile.png";
+import Profile from "../Common/Profile";
 import next from "../../assets/post/next.png";
 import before from "../../assets/post/before.png";
 import spot from "../../assets/post/spot.png";
@@ -50,7 +50,9 @@ const ItemContent = ({
         )}
       </ItemImages>
       <Seller>
-        <SellerProfile src={profile} />
+        <SellerProfile>
+          <Profile nickname={sellerNickname} width="50px" height="50px" />
+        </SellerProfile>
         <SellerInfo>
           <SellerNickname>{sellerNickname}</SellerNickname>
           <SellerUniv>
@@ -115,10 +117,9 @@ const Seller = styled.div`
   border-bottom: 0.5px solid #808080;
 `;
 
-const SellerProfile = styled.img`
+const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 50px;
 
   margin-top: 17px;
   margin-left: 16px;
@@ -152,7 +153,6 @@ const SellerUniv = styled.div`
   font-size: 13px;
   color: #848484;
 
-  /* margin-top: 6px; */
   img {
     width: 12px;
     height: 12px;
@@ -176,11 +176,11 @@ const ItemTitle = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  color: #000;
+  color: #000000;
   font-family: Noto Sans KR;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 550;
   line-height: normal;
 
   padding: 5px 20px;
@@ -188,7 +188,6 @@ const ItemTitle = styled.div`
 `;
 const ItemDescription = styled.div`
   display: flex;
-  /* width: 362px; */
   height: 202px;
   flex-direction: column;
   flex-shrink: 0;
@@ -198,7 +197,7 @@ const ItemDescription = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  white-space: pre;
 
   padding: 0px 20px;
-  /* padding-left: 23px; */
 `;

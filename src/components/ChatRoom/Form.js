@@ -1,21 +1,23 @@
 import React from "react";
 import { styled } from "styled-components";
-import gallery from "../../assets/gallery.png";
-import deleteBtn from "../../assets/deleteBtn.png";
+import gallery from "../../assets/chat/gallery.png";
+import deleteBtn from "../../assets/chat/deleteBtn.png";
 import { useState, useRef } from "react";
-import { stompService } from "../../api/stomp";
-
+import { publishMessage } from "../../api/stomp";
+import { useParams } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 const Form = () => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
-  const [message, setMessage] = useState();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
+  const { roomId } = useParams();
 
   //사진 첨부 및 미리보기
   const uploadImg = () => {
     let file = imgRef.current.files[0];
     setImgFile(file);
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -28,12 +30,38 @@ const Form = () => {
     setPreviewImg();
     setImgFile();
   };
-  //메세지 전송 ( stompjs: publish )
+  //메세지 전송 ( stompjs: send )
   const sendMessage = () => {
-    //백 완성 후 수정예정
-    imgFile ? setMessage(imgFile) : setMessage(text);
-    message && stompService.publishMessage(message);
-    setMessage("");
+    if (imgFile) {
+      sendImg();
+    } else {
+      text && sendText();
+    }
+  };
+
+  const sendText = () => {
+    publishMessage(roomId, 0, text);
+    setText("");
+  };
+  const sendImg = async () => {
+    //이미지파일 1MB이하로 압축, BASE64로 인코딩한 뒤 전송
+    const options = {
+      maxSizeMB: 1,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(imgFile, options);
+      console.log(previewImg);
+      const compressedreader = new FileReader();
+      compressedreader.readAsDataURL(compressedFile);
+      compressedreader.onloadend = () => {
+        publishMessage(roomId, 1, compressedreader.result);
+      };
+      setPreviewImg();
+      setImgFile();
+    } catch (err) {
+      alert("파일 사이즈가 너무 커서 전송할 수 없습니다.");
+    }
   };
 
   return (
@@ -52,6 +80,7 @@ const Form = () => {
       )}
       <Inputs>
         <input
+          accept=".jpg, .jpeg, .png"
           type="file"
           id="file"
           multiple

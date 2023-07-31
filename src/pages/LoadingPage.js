@@ -25,7 +25,7 @@ const Loading = () => {
         const accessToken = res.data.accessToken;
         console.log(accessToken);
         localStorage.setItem("bagtoken", accessToken);
-
+        localStorage.setItem("myNickname", res.data.nickname);
         // 신규/기존 회원 여부에 따라 다른 주소로 Redirect
         res.data.isExistingMember ? navigate("/home") : navigate("/nickname");
       }

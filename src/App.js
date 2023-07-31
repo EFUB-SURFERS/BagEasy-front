@@ -12,7 +12,13 @@ import FavoritesPage from "./pages/FavoritesPage";
 import MyPage from "./pages/MyPage";
 import Start from "./pages/Start";
 import Purchase from "./pages/Purchase";
+<<<<<<< HEAD
 // import PrivateRoute from "./components/Route/PrivateRoute";
+=======
+import Empty from "./pages/EmptyPage";
+
+import PrivateRoute from "./components/Route/PrivateRoute";
+>>>>>>> bb9fef2a8241dfc128c9303e8a256d8a562eb347
 
 function App() {
   return (
@@ -33,9 +39,10 @@ function App() {
         <Route path="/modify/:postId" element={<ModifySalesPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/deal" element={<Purchase />} />
-
         <Route path="/" element={<Start />} />
       </Route>
+      {/* 빈 페이지 */}
+      <Route path="*" element={<Empty />} />
     </Routes>
   );
 }
