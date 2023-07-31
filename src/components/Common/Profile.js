@@ -23,7 +23,7 @@ const Profile = ({ nickname, width, height }) => {
   return (
     <>
       <ProfileIcon color={random_choice} width={width} height={height}>
-        {nickname[0]}
+        {nickname ? nickname[0] : null}
       </ProfileIcon>
     </>
   );

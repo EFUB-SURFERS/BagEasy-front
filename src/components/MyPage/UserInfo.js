@@ -1,32 +1,90 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import myPageImg from "../../assets/myPageImg.png";
 import setting from "../../assets/setting.png";
+import Modal from "../UpdateUni/Modal";
+import { getMyProfile, putSchool } from "../../api/member";
+import Profile from "../Common/Profile";
 
-const UserInfo = () => (
-  <>
-    <AvatarContainer>
-      <AvatarImage src={myPageImg} alt="Avatar" />
-    </AvatarContainer>
-    <UserInfoContainer>
-      <Username>8282duck</Username>
-      <UniversityContainer>
-        <University>Ewha Woman's University</University>
-        <Icon2 src={setting} alt="setting" />
-      </UniversityContainer>
-    </UserInfoContainer>
-    <Line />
-  </>
-);
+const UserInfo = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [myProfile, setMyProfile] = useState({});
+  const [uni, setUni] = useState("");
+  const [uniToShow, setUniToShow] = useState("");
+  const [update, setUpdate] = useState(false);
+
+  useEffect(() => {
+    getMyprofileData();
+  }, []);
+
+  useEffect(() => {
+    if (update) {
+      setUniToShow(uni);
+      updateSchool(uni);
+      console.log("몇번");
+    }
+  }, [update]);
+
+  const updateSchool = async uni => {
+    try {
+      const res = await putSchool(uni);
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  const getMyprofileData = async () => {
+    try {
+      const res = await getMyProfile();
+      setMyProfile(res);
+      res.school ? setUniToShow(res.school) : setUniToShow("");
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
+  return (
+    <>
+      <AvatarContainer>
+        <Profile
+          nickname={myProfile.nickname}
+          width={"100px"}
+          height={"100px"}
+        />
+      </AvatarContainer>
+
+      <UserInfoContainer>
+        <Username>{myProfile.nickname}</Username>
+        <UniversityContainer>
+          <University>
+            {uniToShow ? uniToShow : "학교를 설정해주세요"}
+          </University>
+          <Icon2
+            src={setting}
+            alt="setting"
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          />
+        </UniversityContainer>
+        {isOpen ? (
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            uni={uni}
+            setUni={setUni}
+            setUpdate={setUpdate}
+          />
+        ) : null}
+      </UserInfoContainer>
+      <Line />
+    </>
+  );
+};
 
 const AvatarContainer = styled.div`
   margin-top: 46px;
-`;
-
-const AvatarImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  margin-bottom: 20px;
 `;
 
 const UserInfoContainer = styled.div`
@@ -58,6 +116,7 @@ const Icon2 = styled.img`
   width: 20px;
   height: 20px;
   margin-left: 10px;
+  cursor: pointer; /* Add this to indicate the icon is clickable */
 `;
 
 const Line = styled.div`
@@ -66,4 +125,5 @@ const Line = styled.div`
   background-color: #d9d9d9;
   margin-bottom: 10px;
 `;
+
 export default UserInfo;

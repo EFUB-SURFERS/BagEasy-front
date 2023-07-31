@@ -5,7 +5,7 @@ import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
 import { getLikes } from "../../api/likes";
 
-import CommentList from "../ItemList/CommentList";
+import CommentList from "../Comment/CommentList";
 import ItemContent from "./ItemContent";
 import Footer from "./Footer";
 
@@ -66,7 +66,7 @@ const ItemInfo = ({ postId }) => {
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
-      <CommentList />
+      <CommentList postId={postId} />
       <Footer
         isLiked={likes.isLiked}
         setIsLiked={updateLikes}
