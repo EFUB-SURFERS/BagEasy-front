@@ -80,8 +80,9 @@ const Footer = ({
 
   const getRoomId = async () => {
     try {
-      const data = await createRoom(postId, myNickname);
-      return data.roomId;
+      const roomId = await createRoom(postId, myNickname);
+
+      return roomId;
     } catch (error) {
       console.log("에러 발생", error);
     }
