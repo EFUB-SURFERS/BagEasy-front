@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import { createReply } from "../../api/replies";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
+import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
+import lockGreen from "../../assets/itemListPage/lockGreen.png";
 
 const ReplyInput = ({ comment, setRefresh, setReplying }) => {
   const [replyContent, setReplyContent] = useState("");
+  const [isSecret, setIsSecret] = useState(false);
 
   //대댓글 작성
   const postReply = () => {
     async function postData() {
       await createReply(comment.postId, comment.commentId, {
         replyContent: replyContent,
-        isSecret: "false",
+        isSecret: isSecret,
       });
     }
     if (replyContent) {
@@ -28,6 +31,10 @@ const ReplyInput = ({ comment, setRefresh, setReplying }) => {
         placeholder="답글 달기..."
         value={replyContent}
         onChange={e => setReplyContent(e.target.value)}
+      />
+      <Lock
+        src={isSecret ? lockGreen : lockLightgrey}
+        onClick={() => setIsSecret(prev => !prev)}
       />
       <SendBtn onClick={postReply}>
         <SendImg src={sendBtn} />
@@ -60,6 +67,13 @@ const Input = styled.input`
   &::placeholder {
     color: #b0b0b0;
   }
+`;
+
+const Lock = styled.img`
+  position: absolute;
+  width: 10px;
+  right: 55px;
+  bottom: 15px;
 `;
 
 const SendBtn = styled.div`
