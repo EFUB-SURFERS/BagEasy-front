@@ -1,25 +1,17 @@
 import React from "react";
-import {
-  ListItemContainer,
-  ListImage,
-  TitleContainer,
-  Title,
-  TrashImage,
-  Words,
-  Subtitle,
-  Price,
-} from "./SharedStyles";
-import trash from "../../assets/trash.png";
-import getBuyList from "../../api/list.js";
+import getBuyList from "../../api/buy.js";
 import { useEffect, useState } from "react";
+import Buys from "./Buys.js"
 
-const BuyItem = ({ image, title, subtitle, price }) => {
+const BuyItem = () => {
   const [buyList, setBuyList] = useState([]);
+
   useEffect(() => {
-    getList();
+    getBuyListData();
     console.log(buyList);
   }, []);
-  const getList = async () => {
+
+  const getBuyListData = async () => {
     try {
       const getbuyList = await getBuyList();
       setBuyList(getbuyList);
@@ -28,20 +20,17 @@ const BuyItem = ({ image, title, subtitle, price }) => {
     }
   };
 
-  //buylist.image
   return (
     <>
-      <ListItemContainer>
-        <ListImage src={image} alt="item" />
-        <Words>
-          <TitleContainer>
-            <Title>{title}</Title>
-            <TrashImage src={trash} alt="trash" />
-          </TitleContainer>
-          <Subtitle>{subtitle}</Subtitle>
-          <Price>{price}</Price>
-        </Words>
-      </ListItemContainer>
+      {buyList&&buyList.map(item => (
+        <Buys
+          key={item.id}
+          image={item.image}
+          title={item.title}
+          subtitle={item.subtitle}
+          price={item.price}
+        />
+      ))}
     </>
   );
 };

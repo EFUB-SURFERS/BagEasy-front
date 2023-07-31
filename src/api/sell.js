@@ -1,5 +1,4 @@
 // 판매내역
-
 import client from "./client";
 
 const getSellList = async () => {
