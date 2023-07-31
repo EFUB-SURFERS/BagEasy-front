@@ -166,7 +166,7 @@ const Item = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 200px;
+  height: 100%;
 
   border-bottom: 0.5px solid #cecece;
 `;
@@ -188,7 +188,6 @@ const ItemTitle = styled.div`
 `;
 const ItemDescription = styled.div`
   display: flex;
-  height: 202px;
   flex-direction: column;
   flex-shrink: 0;
   color: #000;
@@ -199,5 +198,5 @@ const ItemDescription = styled.div`
   line-height: normal;
   white-space: pre;
 
-  padding: 0px 20px;
+  padding: 0px 20px 30px;
 `;
