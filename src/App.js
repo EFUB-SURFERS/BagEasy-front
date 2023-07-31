@@ -12,13 +12,9 @@ import FavoritesPage from "./pages/FavoritesPage";
 import MyPage from "./pages/MyPage";
 import Start from "./pages/Start";
 import Purchase from "./pages/Purchase";
-<<<<<<< HEAD
-// import PrivateRoute from "./components/Route/PrivateRoute";
-=======
 import Empty from "./pages/EmptyPage";
 
 import PrivateRoute from "./components/Route/PrivateRoute";
->>>>>>> bb9fef2a8241dfc128c9303e8a256d8a562eb347
 
 function App() {
   return (
@@ -26,9 +22,8 @@ function App() {
       <Route path="/" element={<Start />} />
       <Route path="/login" element={<GoogleLogin />} />
       <Route path="/loading" element={<Loading />} />
-   <Route>
       {/* 로그인 해야 접근 가능한 페이지 */}
-      {/* <Route element={<PrivateRoute />}> */}
+      <Route element={<PrivateRoute />}>
         <Route path="/nickname" element={<Nickname />} />
         <Route path="/home" element={<ItemListPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
