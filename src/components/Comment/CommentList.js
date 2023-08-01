@@ -49,7 +49,7 @@ const CommentList = ({ postId = 1 }) => {
   return (
     <Wrapper>
       {isExpired === "true" && <TokenRefreshModal />}
-      <YellowWrapper open={open}>
+      <YellowWrapper $open={open}>
         <CommentHeader comments={comments} open={open} setOpen={setOpen} />
         {comments.map((comment, key) => (
           <CommentReplies
@@ -85,7 +85,7 @@ const YellowWrapper = styled.div`
   margin: 46px 23px 48px 23px;
   overflow: hidden;
   background: #ffee94;
-  height: ${props => (!props.open ? "90px" : "auto")};
+  height: ${props => (!props.$open ? "90px" : "auto")};
 `;
 
 const List = styled.div``;
