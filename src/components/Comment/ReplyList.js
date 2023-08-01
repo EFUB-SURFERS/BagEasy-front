@@ -40,16 +40,17 @@ const ReplyList = ({
 
   return (
     <Root>
-      {replies.map((reply, key) => (
-        <Comment
-          comment={reply}
-          isReply={true}
-          key={key}
-          setReplying={setReplying}
-          nickname={nickname}
-          setRefresh={setRefresh}
-        />
-      ))}
+      {replies &&
+        replies.map((reply, key) => (
+          <Comment
+            comment={reply}
+            isReply={true}
+            key={key}
+            setReplying={setReplying}
+            nickname={nickname}
+            setRefresh={setRefresh}
+          />
+        ))}
     </Root>
   );
 };
