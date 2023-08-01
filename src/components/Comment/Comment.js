@@ -17,9 +17,12 @@ const Comment = ({
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
 
-  const onDelete = () => {
+  //댓글,대댓글 삭제
+  const onDelete = async () => {
     async function deleteData() {
-      isReply ? deleteReply(comment.replyId) : deleteComment(comment.commentId);
+      isReply
+        ? await deleteReply(comment.replyId)
+        : await deleteComment(comment.commentId);
       setRefresh(prev => prev + 1);
     }
     deleteData();
