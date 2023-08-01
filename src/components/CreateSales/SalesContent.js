@@ -29,12 +29,6 @@ const SalesContent = () => {
   };
 
   const saveImgFile = e => {
-    // const fileArr = imgRef.current.files;
-    // const fileURLList = Array.from(fileArr).map(file =>
-    //   URL.createObjectURL(file),
-    // );
-    // const limitedFileURLList = Array.from(fileURLList).slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    // setImgFile(prevImgFile => [...prevImgFile, ...limitedFileURLList]);
     const fileArr = imgRef.current.files;
     const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
     setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
