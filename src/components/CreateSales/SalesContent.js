@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 import Modal from "../UpdateUni/Modal";
 
@@ -12,6 +13,8 @@ import greenspot from "../../assets/post/greenspot.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
+
   const [formData, setFormData] = useState({
     //전송할 데이터
     uni: "",
@@ -30,12 +33,9 @@ const SalesContent = () => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const fileURLList = Array.from(fileArr).map(file =>
-      URL.createObjectURL(file),
-    );
-    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setFormData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
+    setFormData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
@@ -53,9 +53,9 @@ const SalesContent = () => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgFile.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("image", imgData[i]);
+          formData.append("image", imgFile[i]);
         }
         formData.append(
           "dto",
@@ -66,7 +66,11 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
       alert("내용을 모두 채운 후 다시 등록해 주세요.");
@@ -75,6 +79,7 @@ const SalesContent = () => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
@@ -100,7 +105,9 @@ const SalesContent = () => {
             multiple
           />
           {imgFile.length > 0 ? (
-            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+            imgFile.map((file, index) => (
+              <img key={index} src={URL.createObjectURL(file)} />
+            ))
           ) : (
             <img src={emptyimage} />
           )}
