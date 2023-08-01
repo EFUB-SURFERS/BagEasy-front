@@ -118,7 +118,7 @@ const NickNameContainer = styled.div`
 
 const Container = styled.div`
   height: 10rem;
-  margin-bottom: 360px;
+  margin-bottom: 10rem;
 `;
 
 const ArrowIcon = styled.img`
@@ -173,6 +173,8 @@ const Btn = styled.button`
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
+  position: absolute;
+  bottom: 7rem;
 `;
 
 export default Nickname;
