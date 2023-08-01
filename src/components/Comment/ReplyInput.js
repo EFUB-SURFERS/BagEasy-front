@@ -12,16 +12,21 @@ const ReplyInput = ({ comment, setRefresh, setReplying }) => {
   //대댓글 작성
   const postReply = () => {
     async function postData() {
-      await createReply(comment.postId, comment.commentId, {
+      const data = await createReply(comment.postId, comment.commentId, {
         replyContent: replyContent,
         isSecret: isSecret,
       });
+
+      //토큰 만료시
+      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
+        localStorage.setItem("isExpired", true);
+      } else {
+        setReplyContent("");
+        setRefresh(prev => prev + 1);
+        setIsSecret(false);
+      }
     }
-    if (replyContent) {
-      postData();
-      setReplyContent("");
-      setRefresh(prev => prev + 1);
-    }
+    replyContent && postData();
     setReplying(false);
   };
 
