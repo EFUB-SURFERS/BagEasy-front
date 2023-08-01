@@ -1,14 +1,24 @@
 import React from "react";
 import getBuyList from "../../api/buy.js";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
+
 import { useEffect, useState } from "react";
 import Buys from "./Buys.js";
 
 const BuyItem = () => {
   const [buyList, setBuyList] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    getBuyListData();
-    console.log(buyList);
+    try {
+      getBuyListData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const getBuyListData = async () => {
@@ -22,6 +32,8 @@ const BuyItem = () => {
 
   return (
     <>
+      {" "}
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       {buyList &&
         buyList.map(item => (
           <Buys

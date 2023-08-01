@@ -7,9 +7,11 @@ import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/post/choiceuni.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
 
@@ -30,11 +32,12 @@ const SalesContent = ({ postId, originalData }) => {
 
   const images = originalData.imageResponseDtos;
 
-  const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
+  const [imgFile, setImgFile] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
 
   const imgRef = useRef();
+  console.log("imgFile", imgFile);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -46,12 +49,9 @@ const SalesContent = ({ postId, originalData }) => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const fileURLList = Array.from(fileArr).map(file =>
-      URL.createObjectURL(file),
-    );
-    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setModifiedData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
+    setModifiedData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
@@ -60,7 +60,7 @@ const SalesContent = ({ postId, originalData }) => {
       alert("가격에는 숫자만 입력해 주세요.");
       return;
     }
-    if (imgData && uni && title && price && content) {
+    if (imgFile && uni && title && price && content) {
       try {
         let data = {
           postTitle: title,
@@ -69,9 +69,9 @@ const SalesContent = ({ postId, originalData }) => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgFile.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("addImage", imgData[i]);
+          formData.append("addImage", imgFile[i]);
         }
         formData.append(
           "dto",
@@ -81,7 +81,11 @@ const SalesContent = ({ postId, originalData }) => {
         alert("게시글이 수정되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
       alert("내용을 모두 채운 후 다시 등록해 주세요.");
@@ -90,6 +94,7 @@ const SalesContent = ({ postId, originalData }) => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
@@ -114,18 +119,21 @@ const SalesContent = ({ postId, originalData }) => {
             onChange={saveImgFile}
             multiple
           />
-          {imgFile &&
-            imgFile.map((fileURL, index) => (
-              <img key={index} src={fileURL} alt={`Image ${index}`} />
-            ))}
-          {!imgFile &&
-            images.map(imageData => (
-              <img
-                key={imageData.imageId}
-                src={imageData.imageUrl}
-                alt={`Image ${imageData.imageId}`}
-              />
-            ))}
+          {imgFile.length > 0
+            ? imgFile.map((file, index) => (
+                <img
+                  key={index}
+                  src={URL.createObjectURL(file)}
+                  alt={`Image ${index}`}
+                />
+              ))
+            : modifiedData.imgData.map(file => (
+                <img
+                  key={file.imageId}
+                  src={file.imageUrl}
+                  alt={`Image ${file.imageId}`}
+                />
+              ))}
         </Images>
         <SubLine />
         <Unisection>
