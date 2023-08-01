@@ -10,6 +10,7 @@ import choiceuni from "../../assets/post/choiceuni.png";
 import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import close from "../../assets/post/close.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
@@ -81,7 +82,9 @@ const SalesContent = () => {
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
-        <Delete onClick={() => navigate(-1)}>X</Delete>
+        <Delete onClick={() => navigate(-1)}>
+          <Close src={close} />
+        </Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
       </Header>
       <Wrapper>
@@ -445,4 +448,10 @@ const UniText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   width: 180px;
+`;
+
+const Close = styled.img`
+  width: 20px;
+  height: 20px;
+  padding-left: 5px;
 `;

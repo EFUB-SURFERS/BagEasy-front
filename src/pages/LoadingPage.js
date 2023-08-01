@@ -23,29 +23,22 @@ const Loading = () => {
     const data = {
       code: code,
     };
-    try {
-      const res = await axios.post(
-        "https://server.bageasy.net/auth/login",
-        data,
-      );
-      if (res.status == "200") {
-        // 토큰 localstorage에 저장
-        const accessToken = res.data.accessToken;
-        localStorage.setItem("bagtoken", accessToken);
-        localStorage.setItem("myNickname", res.data.nickname);
-        // 신규/기존 회원 여부 저장
-        setIsExistingMember(res.data.isExistingMember);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    return await axios
+      .post("https://server.bageasy.net/auth/login", data)
+      .then(res => localStorage.setItem("bagtoken", res.data.accessToken))
+      .then(() => navigate("/home"));
+
+    // localStorage.setItem("myNickname", res.data.nickname);
+
+    // setIsExistingMember(res.data.isExistingMember);
   };
 
   useEffect(() => {
     if (code) {
-      handleLoginPost(code).then(() =>
-        isExistingMember ? handleHome() : handleNickName(),
-      );
+      handleLoginPost(code);
+      // .then(() =>
+      //   isExistingMember ? handleHome() : handleNickName(),
+      // );
       console.log(isExistingMember);
     } else {
       console.log("로그인 재시도하세요.");
