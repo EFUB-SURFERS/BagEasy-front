@@ -8,10 +8,17 @@ import {
   Subtitle,
   Price,
 } from "./SharedStyles";
+import { useNavigate } from "react-router-dom";
 
-const Buys = ({ image, title, subtitle, price }) => {
+const Buys = ({ image, title, subtitle, price, postId }) => {
+  const navigate = useNavigate();
+
   return (
-    <ListItemContainer>
+    <ListItemContainer
+      onClick={() => {
+        navigate(`/detail/${postId}`);
+      }}
+    >
       <ListImage src={image} alt="item" />
       <Words>
         <TitleContainer>

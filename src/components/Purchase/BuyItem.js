@@ -42,6 +42,7 @@ const BuyItem = () => {
             title={"테스트 제목 길이 테스트 제목 길이 테스트 제목 길이 테스타"}
             subtitle={item.school}
             price={item.price}
+            postId={item.postId}
           />
         ))}
     </>
