@@ -3,14 +3,21 @@ import { styled } from "styled-components";
 import Item from "./Item";
 import { getChatRooms } from "../../api/chat";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
+import { getMyProfile } from "../../api/member";
 const List = () => {
   const [chatRooms, setChatRooms] = useState([]);
+  const [myNickname, setMyNickname] = useState("");
   let yourNickname = "";
-  const myNickname = localStorage.getItem("myNickname");
+
   const [isModalVisible, setIsModalVisible] = useState("false");
+  const getMynickname = async () => {
+    const data = await getMyProfile();
+    setMyNickname(data.nickname);
+  };
   useEffect(() => {
     try {
       getChatRoomsData();
+      getMynickname();
     } catch (err) {
       if (err.response && err.response.status === 401) {
         //토큰 만료시 모달 띄우기

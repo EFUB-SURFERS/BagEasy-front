@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getChatRoom } from "../../api/chat";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
+import { getMyProfile } from "../../api/member";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
@@ -21,22 +22,21 @@ const Header = () => {
 
   const getHeaderData = async () => {
     const res = await getChatRoom(roomId);
+    const mydata = await getMyProfile();
     setRoomInfo(res);
     getPostData(res);
-    checkIsSeller(res);
+    checkIsSeller(res, mydata);
   };
   const getPostData = async room => {
     const res = await getDetail(room.postId);
     setPostInfo(res);
   };
 
-  const checkIsSeller = async room => {
+  const checkIsSeller = async (room, mydata) => {
     //본인 프로필 조회
     //본인 닉네임과 판매자 닉네임 비교
     //같으면 거래 성사버튼 보이게 처리.
-    const myNickname = localStorage.getItem("myNickname");
-
-    if (myNickname === room.joinMember) {
+    if (mydata.nickname === room.joinMember) {
       setIsSeller(true);
     }
   };
