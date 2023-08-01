@@ -37,7 +37,6 @@ const SalesContent = ({ postId, originalData }) => {
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
 
   const imgRef = useRef();
-  console.log("imgFile", imgFile);
 
   if (loading) {
     return <div>Loading...</div>;

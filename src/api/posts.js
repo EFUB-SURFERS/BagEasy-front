@@ -28,7 +28,6 @@ export const getDetail = async postId => {
 export const deleteDetail = async postId => {
   try {
     const res = await client.delete(`posts/${postId}`);
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -43,7 +42,6 @@ export const createPost = async formData => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -58,7 +56,6 @@ export const modifyPost = async (postId, formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
