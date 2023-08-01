@@ -88,6 +88,10 @@ const ChatItem = styled.div`
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .time {
     margin: 32px 0px 0px 0px;
@@ -110,6 +114,10 @@ const ChatItem = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .count {
     margin-top: 5px;
