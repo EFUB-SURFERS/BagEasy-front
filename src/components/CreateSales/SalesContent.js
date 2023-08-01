@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 import Modal from "../UpdateUni/Modal";
 
@@ -12,6 +13,8 @@ import greenspot from "../../assets/post/greenspot.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
+
   const [formData, setFormData] = useState({
     //전송할 데이터
     uni: "",
@@ -63,7 +66,11 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
       alert("내용을 모두 채운 후 다시 등록해 주세요.");
@@ -72,6 +79,7 @@ const SalesContent = () => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
