@@ -37,7 +37,6 @@ const Wrapper = styled.div`
 const HeaderDiv = styled.div`
   height: 68px;
   width: 100%;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,7 +63,7 @@ const Btn = styled.div`
   padding-bottom: 14px;
 
   img {
-    width: 20px;
-    height: 35px;
+    width: 16px;
+    height: 24px;
   }
 `;

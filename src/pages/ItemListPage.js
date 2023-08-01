@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../components/Common/Header";
+import Header from "../components/ItemList/Header";
 import Buttons from "../components/ItemList/Buttons";
 import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
