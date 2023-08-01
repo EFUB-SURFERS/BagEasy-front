@@ -36,25 +36,33 @@ const List = () => {
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <ChatList>
-        {chatRooms &&
-          chatRooms.map(room => {
-            //내가 구매자인경우 상대는 판매자
-            myNickname === room.createMember
-              ? (yourNickname = room.joinMember)
-              : (yourNickname = room.createMember);
+        {chatRooms ? (
+          <>
+            {chatRooms &&
+              chatRooms.map(room => {
+                //내가 구매자인경우 상대는 판매자
+                myNickname === room.createMember
+                  ? (yourNickname = room.joinMember)
+                  : (yourNickname = room.createMember);
 
-            return (
-              <Item
-                key={room.roomId}
-                createMember={room.createMember}
-                joinMember={room.joinMember}
-                yourNickname={yourNickname}
-                roomId={room.roomId}
-                postId={room.postId}
-                latestMessage={room.latestMessage}
-              />
-            );
-          })}
+                return (
+                  <Item
+                    key={room.roomId}
+                    createMember={room.createMember}
+                    joinMember={room.joinMember}
+                    yourNickname={yourNickname}
+                    roomId={room.roomId}
+                    postId={room.postId}
+                    latestMessage={room.latestMessage}
+                  />
+                );
+              })}
+          </>
+        ) : (
+          <div className="empty">
+            대화 기록이 없습니다. <br /> 채팅을 보내 대화를 시작하세요.
+          </div>
+        )}
       </ChatList>
     </>
   );
@@ -63,4 +71,13 @@ const List = () => {
 export default List;
 const ChatList = styled.div`
   padding-top: 112px;
+  .empty {
+    margin-top: 50px;
+    font-family: Arial;
+    font-style: regular;
+    font-size: 1rem;
+    color: #848484;
+
+    text-align: center;
+  }
 `;
