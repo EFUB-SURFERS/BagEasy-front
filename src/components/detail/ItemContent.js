@@ -90,10 +90,10 @@ const NextBtn = styled.div`
   position: absolute;
   right: 0;
   img {
-    width: 14px;
+    width: 22px;
     height: 83px;
     padding-top: 153px;
-    padding-right: 22px;
+    padding-right: 20px;
   }
 `;
 
@@ -101,10 +101,10 @@ const BeforeBtn = styled.div`
   position: absolute;
   left: 0;
   img {
-    width: 14px;
+    width: 22px;
     height: 83px;
     padding-top: 153px;
-    padding-left: 22px;
+    padding-left: 20px;
   }
 `;
 
