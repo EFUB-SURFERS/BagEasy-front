@@ -26,7 +26,10 @@ const Loading = () => {
     return await axios
       .post("https://server.bageasy.net/auth/login", data)
       .then(res => localStorage.setItem("bagtoken", res.data.accessToken))
-      .then(() => navigate("/home"));
+      .then(res => setIsExistingMember(res.data.isExistingMember))
+      .then(() =>
+        isExistingMember ? navigate("/home") : navigate("/nickname"),
+      );
 
     // localStorage.setItem("myNickname", res.data.nickname);
 
