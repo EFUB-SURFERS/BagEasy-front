@@ -14,7 +14,7 @@ const Header = () => {
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState("false");
-
+  const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
 
   //경로에서 roomId 받아오기
@@ -53,7 +53,7 @@ const Header = () => {
         setIsModalVisible(localStorage.getItem("isExpired"));
       }
     }
-  }, []);
+  }, [isUpdate]);
 
   const openModal = () => {
     setIsOpen(!isOpen);
@@ -107,6 +107,8 @@ const Header = () => {
               )}
               {isOpen ? (
                 <Modal
+                  setIsUpdate={setIsUpdate}
+                  isUpdate={isUpdate}
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
                   isSold={postInfo.isSold}
