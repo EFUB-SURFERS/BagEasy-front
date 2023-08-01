@@ -61,7 +61,7 @@ const ChatRoom = () => {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  });
+  }, []);
   return (
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
