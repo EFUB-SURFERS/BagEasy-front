@@ -50,9 +50,10 @@ const ArrowIcon = styled.img`
 `;
 
 const GBtn = styled.img`
+  position: absolute;
+  bottom: 7rem;
   width: 328px;
   height: 46px;
-  margin-top: 200px;
   cursor: pointer;
 `;
 
