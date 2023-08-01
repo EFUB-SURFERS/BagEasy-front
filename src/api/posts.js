@@ -7,8 +7,6 @@ export const FinishDeal = async (postId, buyerNickname) => {
     const res = await client.put(`posts/${postId}/isSold`, {
       buyerNickName: buyerNickname,
     });
-
-    console.log(res);
   } catch (err) {
     console.log("에러 발생", err);
   }
@@ -28,7 +26,6 @@ export const getDetail = async postId => {
 export const deleteDetail = async postId => {
   try {
     const res = await client.delete(`posts/${postId}`);
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -43,7 +40,6 @@ export const createPost = async formData => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -58,7 +54,6 @@ export const modifyPost = async (postId, formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -69,7 +64,6 @@ export const modifyPost = async (postId, formData) => {
 export const getAllPosts = async () => {
   try {
     const res = await client.get(`posts`);
-    console.log("판매글 전체조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -81,7 +75,6 @@ export const getAllPosts = async () => {
 export const getPostonSales = async schoolName => {
   try {
     const res = await client.get(`posts/sales`);
-    console.log("판매중인 글 조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -101,7 +94,6 @@ export const getPostBySchool = async schoolName => {
         },
       },
     );
-    console.log("학교별 판매글 조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
@@ -121,7 +113,6 @@ export const getpostsBySchoolOnSales = async schoolName => {
         },
       },
     );
-    console.log("학교별 판매중인 글 조회", res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
