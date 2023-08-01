@@ -6,6 +6,7 @@ import Buttons from "../components/ItemList/Buttons";
 import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
+import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import {
   getAllPosts,
   getPostBySchool,
@@ -19,33 +20,43 @@ const ItemListPage = () => {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
   const [uniDisplay, setUniDisplay] = useState("");
+  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
 
   const navigate = useNavigate();
   const onToggle = () => {
     setOnSales(prev => !prev);
   };
 
-  //글 조회
+  //양도글 리스트 조회
   useEffect(() => {
+    let data = null;
     async function fetchData() {
       if (onSales) {
-        const data = uniDisplay
+        data = uniDisplay
           ? await getpostsBySchoolOnSales(uniDisplay)
           : await getPostonSales();
-        setPosts(data);
       } else {
-        const data = uniDisplay
+        data = uniDisplay
           ? await getPostBySchool(uniDisplay)
           : await getAllPosts();
-        setPosts(data);
       }
-      setLoading(false);
+
+      //토큰 만료시
+      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
+        localStorage.setItem("isExpired", true);
+        setIsExpired(localStorage.getItem("isExpired"));
+      } else {
+        setPosts(data);
+        setLoading(false);
+      }
     }
+
     fetchData();
   }, [refresh, onSales]);
 
   return (
     <Wrapper>
+      {isExpired === "true" && <TokenRefreshModal />}
       <Header />
       <Buttons navigate={navigate} />
       <SearchBar
@@ -58,7 +69,12 @@ const ItemListPage = () => {
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List posts={posts} setRefresh={setRefresh} offset="138px" />
+        <List
+          posts={posts}
+          setRefresh={setRefresh}
+          offset="138px"
+          setIsExpired={setIsExpired}
+        />
       )}
       <WriteBtn />
     </Wrapper>

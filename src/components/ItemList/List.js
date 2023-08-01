@@ -2,14 +2,26 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = ({ posts, setRefresh, offset = "97px", liked = false }) => {
+const List = ({
+  posts,
+  setRefresh,
+  offset = "97px",
+  liked = false,
+  setIsExpired,
+}) => {
   return (
     <Wrapper offset={offset}>
       {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
         posts.map((post, key) => (
-          <Item post={post} setRefresh={setRefresh} liked={liked} key={key} />
+          <Item
+            post={post}
+            setRefresh={setRefresh}
+            liked={liked}
+            key={key}
+            setIsExpired={setIsExpired}
+          />
         ))
       )}
     </Wrapper>
