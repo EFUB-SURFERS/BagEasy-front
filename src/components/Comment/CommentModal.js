@@ -10,7 +10,7 @@ const CommentModal = ({ setIsOpen, setReplying, isMine, onDelete }) => {
   return (
     <>
       <Background onClick={() => setIsOpen(false)}></Background>
-      <Wrapper isMine={isMine}>
+      <Wrapper $isMine={isMine}>
         {isMine && (
           <Text
             onClick={() => {
@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   right: 35px;
   margin-top: 3px;
   width: 63px;
-  height: ${props => (props.isMine ? "48px" : "24px")};
+  height: ${props => (props.$isMine ? "48px" : "24px")};
 
   display: flex;
   flex-direction: column;

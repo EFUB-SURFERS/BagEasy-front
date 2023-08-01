@@ -17,9 +17,12 @@ const Comment = ({
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
 
-  const onDelete = () => {
+  //댓글,대댓글 삭제
+  const onDelete = async () => {
     async function deleteData() {
-      isReply ? deleteReply(comment.replyId) : deleteComment(comment.commentId);
+      isReply
+        ? await deleteReply(comment.replyId)
+        : await deleteComment(comment.commentId);
       setRefresh(prev => prev + 1);
     }
     deleteData();
@@ -28,7 +31,7 @@ const Comment = ({
 
   return (
     <Container>
-      <Root isReply={isReply}>
+      <Root $isReply={isReply}>
         <ProfileWrapper>
           <Profile nickname={comment.writer} width="24px" height="24px" />
         </ProfileWrapper>
@@ -41,7 +44,7 @@ const Comment = ({
                 <Lock src={lockGrey} />
               </LockWrapper>
             )}
-            <Text hide={comment.isSecret && comment.writer !== nickname}>
+            <Text $hide={comment.isSecret && comment.writer !== nickname}>
               {comment.isSecret && comment.writer !== nickname
                 ? "비밀 댓글입니다."
                 : !isReply
@@ -77,7 +80,7 @@ const Root = styled.div`
   background: #ffee94;
   margin: 0 15px;
   padding: 8px 0;
-  margin-left: ${props => props.isReply && "50px"};
+  margin-left: ${props => props.$isReply && "50px"};
   box-sizing: border-box;
 `;
 
@@ -114,7 +117,7 @@ const Lock = styled.img`
 const Text = styled.div`
   flex: 1;
   font-size: 13px;
-  color: ${props => (props.hide ? "#909090" : "black")};
+  color: ${props => (props.$hide ? "#909090" : "black")};
 `;
 
 const Button = styled.div`

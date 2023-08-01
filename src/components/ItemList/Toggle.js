@@ -5,7 +5,7 @@ const Toggle = ({ onToggle, onSales }) => {
   return (
     <Wrapper>
       <CheckBox type="checkbox" id="toggle" onChange={onToggle} />
-      <Label htmlFor="toggle" checked={!onSales} />
+      <Label htmlFor="toggle" $checked={!onSales} />
     </Wrapper>
   );
 };
@@ -61,7 +61,7 @@ const Label = styled.label`
   }
 
   ${props =>
-    props.checked &&
+    props.$checked &&
     `
     //선택시 배경
     /* 배경색 변경 트랜지션 */

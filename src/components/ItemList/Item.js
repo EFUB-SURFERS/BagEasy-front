@@ -55,7 +55,7 @@ const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
         <Price>{`${post.price}원`}</Price>
         {liked && <School>{post.school}</School>}
         <Footer>
-          <Tag isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
+          <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
           <Favorites>
             <HeartImg src={isLiked ? heartImg : emptyheart} onClick={like} />
             <FavoritesNum>{post.heartCount}</FavoritesNum>
@@ -136,7 +136,7 @@ const Tag = styled.div`
   width: 75px;
   height: 28px;
   box-sizing: border-box;
-  background: ${props => (props.isSold ? `#cbcbcb` : `#FFC700`)};
+  background: ${props => (props.$isSold ? `#cbcbcb` : `#FFC700`)};
   border-radius: 15px;
   color: white;
   font-weight: 700;
