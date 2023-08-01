@@ -4,6 +4,7 @@ import myPageImg from "../../assets/myPageImg.png";
 import setting from "../../assets/setting.png";
 import Modal from "../UpdateUni/Modal";
 import { getMyProfile, putSchool } from "../../api/member";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 import Profile from "../Common/Profile";
 
 const UserInfo = () => {
@@ -12,9 +13,18 @@ const UserInfo = () => {
   const [uni, setUni] = useState("");
   const [uniToShow, setUniToShow] = useState("");
   const [update, setUpdate] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    getMyprofileData();
+    try {
+      getMyprofileData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -45,6 +55,7 @@ const UserInfo = () => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <AvatarContainer>
         <Profile
           nickname={myProfile.nickname}
