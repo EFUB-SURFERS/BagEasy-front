@@ -1,14 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
-  //createMember, joinMember 중 자신 memberId 비교 후 상대방 프로필이미지, 이름 겟해오기
-  //안 읽은 메세지 수 표시 어떻게??
+import Profile from "../../components/Common/Profile";
+const Item = ({ roomId, latestMessage, yourNickname }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
-    const date = new Date(sentAt);
-    const elapsedSec = new Date().getTime() - date.getTime();
+    const elapsedSec =
+      new Date().getTime() -
+      sentAt +
+      new Date().getTimezoneOffset() * 60 * 1000;
 
     //지난 분,시간,일,개월,년
     const elapsedMin = elapsedSec / (1000 * 60);
@@ -31,6 +32,7 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
     }
     return Math.floor(elapsedMin) + "분 전";
   };
+
   return (
     <Wrapper>
       <ChatItem
@@ -38,16 +40,19 @@ const Item = ({ roomId, createMember, joinMember, postId, latestMessage }) => {
           navigate(`/chats/${roomId}`);
         }}
       >
-        <p className="img">
+        <div className="img">
+          <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
           <img src={""} alt="" />
-        </p>
+        </div>
         <div className="mainContainer">
-          <p className="name">Jimin_Song</p>
-          <p className="text">{latestMessage.context}</p>
+          <p className="name">{yourNickname}</p>
+          {latestMessage && <p className="text">{latestMessage.content}</p>}
         </div>
         <div className="subContainer">
-          <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
-          <p className="count">3</p>
+          {latestMessage && (
+            <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
+          )}
+          {false && <p className="count">3</p>}
         </div>
       </ChatItem>
       <Line />
@@ -66,7 +71,7 @@ const ChatItem = styled.div`
     margin: 0;
   }
   .img {
-    margin: 15px 0px 30px 0px;
+    margin: 15px 0px 35px 0px;
     width: 67px;
     height: 67px;
     display: flex;
@@ -83,6 +88,10 @@ const ChatItem = styled.div`
     font-style: normal;
     font-weight: 300;
     line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .time {
     margin: 32px 0px 0px 0px;
@@ -105,6 +114,10 @@ const ChatItem = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .count {
     margin-top: 5px;
@@ -134,7 +147,7 @@ const ChatItem = styled.div`
   }
 `;
 const Line = styled.div`
-  width: 90%;
+  width: 380px;
   height: 0.5px;
   background: #d9d9d9;
 `;

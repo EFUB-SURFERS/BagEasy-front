@@ -12,7 +12,6 @@ const ModifySalesPage = () => {
     try {
       const getData = await getDetail(postId);
       setData(getData);
-      // console.log(post);
     } catch (err) {
       console.log("error", err);
     }

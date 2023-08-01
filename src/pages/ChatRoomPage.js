@@ -3,19 +3,22 @@ import Header from "../components/ChatRoom/Header";
 import Form from "../components/ChatRoom/Form";
 import MessagesContainer from "../components/ChatRoom/MessagesContainer";
 import { styled } from "styled-components";
-import { stompService } from "../api/stomp";
+import { connectClient, disconnectClient } from "../api/stomp";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addNewMessage } from "../Redux/chatRedux";
 const ChatRoom = () => {
   const formRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  //채팅방 id 받아오기
   const { roomId } = useParams();
-  console.log(roomId);
+
+  const dispatch = useDispatch();
+  const onNewMessage = newMessage => dispatch(addNewMessage(newMessage));
 
   useEffect(() => {
     //클라이언트 생성 및 연결
-    stompService.connectClient();
+    connectClient(roomId, onNewMessage);
 
     //form 높이에 따른 messagesContainer 사이즈 조정
     const resizeObserver = new ResizeObserver(entries => {
@@ -23,11 +26,11 @@ const ChatRoom = () => {
       if (messagesContainerRef.current) {
         messagesContainerRef.current.style.bottom = `${formHeight}px`;
       }
-    });
+    }, []);
 
     resizeObserver.observe(formRef.current);
 
-    return () => stompService.disconnectClient();
+    return () => disconnectClient();
   }, []);
 
   return (

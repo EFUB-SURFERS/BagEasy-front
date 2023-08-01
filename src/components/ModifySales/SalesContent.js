@@ -5,12 +5,13 @@ import { modifyPost } from "../../api/posts";
 
 import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/post/choiceuni.png";
-import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
 
@@ -22,47 +23,43 @@ const SalesContent = ({ postId, originalData }) => {
         title: originalData?.postTitle || "",
         price: originalData?.price || "",
         content: originalData?.postContent || "",
+        imgData: originalData?.imageResponseDtos || "",
       });
       setLoading(false);
     }, 100);
-
-    return () => clearTimeout(timer); // 컴포넌트가 unmount되면 타이머를 클리어하여 메모리 누수 방지
+    return () => clearTimeout(timer);
   }, [originalData]);
 
   const images = originalData.imageResponseDtos;
 
-  // const images = originalData.imageResponseDtos
-  //   ? originalData.imageResponseDtos.map(item => item.imageUrl)
-  //   : [];
-
-  const [imgFile, setImgFile] = useState(); //전송할 이미지 데이터
-
-  console.log("imageResponseDtos", originalData.imageResponseDtos);
-  console.log("images", images);
+  const [imgFile, setImgFile] = useState([]);
 
   const [isOpen, setIsOpen] = useState(false); //모달 상태 관리
+
   const imgRef = useRef();
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const fileURLList = Array.from(fileArr).map(file =>
-      URL.createObjectURL(file),
-    );
-    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setModifiedData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
+    setModifiedData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = modifiedData;
+    if (isNaN(price)) {
+      alert("가격에는 숫자만 입력해 주세요.");
+      return;
+    }
     if (imgFile && uni && title && price && content) {
-      //모든 데이터가 있을때 등록 시도
       try {
         let data = {
           postTitle: title,
@@ -71,9 +68,9 @@ const SalesContent = ({ postId, originalData }) => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgFile.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("addImage", imgData[i]);
+          formData.append("addImage", imgFile[i]);
         }
         formData.append(
           "dto",
@@ -83,15 +80,20 @@ const SalesContent = ({ postId, originalData }) => {
         alert("게시글이 수정되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
-      alert("내용을 모두 채운 후 다시 등록해주세요.");
+      alert("내용을 모두 채운 후 다시 등록해 주세요.");
     }
   };
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
@@ -116,20 +118,21 @@ const SalesContent = ({ postId, originalData }) => {
             onChange={saveImgFile}
             multiple
           />
-          {imgFile &&
-            imgFile.map((fileURL, index) => (
-              <img key={index} src={fileURL} alt={`Image ${index}`} />
-            ))}
-
-          {/* 이미지 파일이 없으면 서버에서 가져온 이미지 출력 */}
-          {!imgFile &&
-            images.map(imageData => (
-              <img
-                key={imageData.imageId}
-                src={imageData.imageUrl}
-                alt={`Image ${imageData.imageId}`}
-              />
-            ))}
+          {imgFile.length > 0
+            ? imgFile.map((file, index) => (
+                <img
+                  key={index}
+                  src={URL.createObjectURL(file)}
+                  alt={`Image ${index}`}
+                />
+              ))
+            : modifiedData.imgData.map(file => (
+                <img
+                  key={file.imageId}
+                  src={file.imageUrl}
+                  alt={`Image ${file.imageId}`}
+                />
+              ))}
         </Images>
         <SubLine />
         <Unisection>
@@ -139,11 +142,11 @@ const SalesContent = ({ postId, originalData }) => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <p>
+          <UniText>
             {modifiedData.uni && !isOpen
               ? modifiedData.uni
               : "학교를 선택해주세요"}
-          </p>
+          </UniText>
           <ChoiceBtn onClick={toggleModal}>
             <img src={choiceuni} alt="검색" />
           </ChoiceBtn>
@@ -353,36 +356,6 @@ const Unisection = styled.div`
   height: 24px;
   margin-top: 18px;
   margin-bottom: 19px;
-
-  input {
-    border: 0;
-    display: flex;
-    width: 175px;
-    flex-direction: column;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-right: 10px;
-    outline: none;
-  }
-
-  p {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    text-align: center;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
 `;
 
 const Titlesection = styled.div`
@@ -395,7 +368,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 180px;
+    width: 250px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
@@ -441,6 +414,7 @@ const ContentSection = styled.div`
   textarea {
     border: 0;
     display: flex;
+    width: 337px;
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
@@ -451,7 +425,8 @@ const ContentSection = styled.div`
     font-weight: 400;
     line-height: normal;
     outline: none;
-    margin: 18px 23px 0px 30px;
+    white-space: pre-wrap;
+    margin: 18px 30px;
   }
 `;
 
@@ -480,4 +455,22 @@ const Check = styled.img`
   width: 5px;
   height: 5px;
   margin: 0px -25px 0px 20px;
+`;
+
+const UniText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #b8b8b8;
+  text-align: left;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 180px;
 `;

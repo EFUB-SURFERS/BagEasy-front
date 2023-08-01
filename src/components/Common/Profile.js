@@ -7,13 +7,13 @@ const Profile = ({ nickname, width, height }) => {
 
   // 새로고침했을 때 배경 바뀌지 않게 로컬스토리지에 저장
   const getRandomChoice = () => {
-    const storedChoice = localStorage.getItem("random_choice");
+    const storedChoice = localStorage.getItem(nickname);
     if (storedChoice && color_list.includes(storedChoice)) {
       return storedChoice;
     } else {
       const random_num = Math.floor(Math.random() * 5);
       const randomChoice = color_list[random_num];
-      localStorage.setItem("random_choice", randomChoice);
+      localStorage.setItem(nickname, randomChoice);
       return randomChoice;
     }
   };
@@ -23,7 +23,7 @@ const Profile = ({ nickname, width, height }) => {
   return (
     <>
       <ProfileIcon color={random_choice} width={width} height={height}>
-        {nickname[0]}
+        {nickname ? nickname[0] : null}
       </ProfileIcon>
     </>
   );

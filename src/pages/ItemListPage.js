@@ -6,37 +6,75 @@ import Buttons from "../components/ItemList/Buttons";
 import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
-import { getAllPosts } from "../api/posts";
+import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import {
+  getAllPosts,
+  getPostBySchool,
+  getPostonSales,
+  getpostsBySchoolOnSales,
+} from "../api/posts";
 
 const ItemListPage = () => {
-  const [filter, setFilter] = useState(true);
+  const [onSales, setOnSales] = useState(true);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
+  const [uniDisplay, setUniDisplay] = useState("");
+  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
 
   const navigate = useNavigate();
   const onToggle = () => {
-    setFilter(prev => !prev);
+    setOnSales(prev => !prev);
   };
 
+  //양도글 리스트 조회
   useEffect(() => {
+    let data = null;
     async function fetchData() {
-      const data = await getAllPosts();
+      if (onSales) {
+        data = uniDisplay
+          ? await getpostsBySchoolOnSales(uniDisplay)
+          : await getPostonSales();
+      } else {
+        data = uniDisplay
+          ? await getPostBySchool(uniDisplay)
+          : await getAllPosts();
+      }
 
-      setLoading(false);
-      setPosts(data);
+      //토큰 만료시
+      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
+        localStorage.setItem("isExpired", true);
+        setIsExpired(localStorage.getItem("isExpired"));
+      } else {
+        setPosts(data);
+        setLoading(false);
+      }
     }
+
     fetchData();
-  }, [refresh]);
+  }, [refresh, onSales]);
+
   return (
     <Wrapper>
+      {isExpired === "true" && <TokenRefreshModal />}
       <Header />
       <Buttons navigate={navigate} />
-      <SearchBar onToggle={onToggle} filter={filter} />
+      <SearchBar
+        onToggle={onToggle}
+        onSales={onSales}
+        uniDisplay={uniDisplay}
+        setUniDisplay={setUniDisplay}
+        setRefresh={setRefresh}
+      />
       {loading ? (
         <Loader>loading...</Loader>
       ) : (
-        <List posts={posts} setRefresh={setRefresh} offset="138px" />
+        <List
+          posts={posts}
+          setRefresh={setRefresh}
+          offset="138px"
+          setIsExpired={setIsExpired}
+        />
       )}
       <WriteBtn />
     </Wrapper>

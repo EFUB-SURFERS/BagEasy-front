@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 import Modal from "../UpdateUni/Modal";
 
@@ -12,6 +13,8 @@ import greenspot from "../../assets/post/greenspot.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
+
   const [formData, setFormData] = useState({
     //전송할 데이터
     uni: "",
@@ -30,18 +33,18 @@ const SalesContent = () => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const fileURLList = Array.from(fileArr).map(file =>
-      URL.createObjectURL(file),
-    );
-    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setFormData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
+    setFormData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = formData;
+    if (isNaN(price)) {
+      alert("가격에는 숫자만 입력해 주세요.");
+      return;
+    }
     if (imgFile.length > 0 && uni && title && price && content) {
-      //모든 데이터가 있을때 등록 시도
       try {
         let data = {
           postTitle: title,
@@ -50,29 +53,33 @@ const SalesContent = () => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgFile.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("image", imgData[i]);
+          formData.append("image", imgFile[i]);
         }
         formData.append(
           "dto",
           new Blob([JSON.stringify(data)], { type: "application/json" }),
         );
         const res = await createPost(formData);
-        console.log("res.postId", res.postId);
         const postId = res.postId;
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
-      alert("내용을 모두 채운 후 다시 등록해주세요.");
+      alert("내용을 모두 채운 후 다시 등록해 주세요.");
     }
   };
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>X</Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
@@ -98,7 +105,9 @@ const SalesContent = () => {
             multiple
           />
           {imgFile.length > 0 ? (
-            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+            imgFile.map((file, index) => (
+              <img key={index} src={URL.createObjectURL(file)} />
+            ))
           ) : (
             <img src={emptyimage} />
           )}
@@ -111,11 +120,11 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <p>
+          <UniText>
             {formData.uni.length > 0 && !isOpen
               ? formData.uni
               : "학교를 선택해주세요"}
-          </p>
+          </UniText>
           <ChoiceBtn onClick={toggleModal}>
             <img src={choiceuni} alt="검색" />
           </ChoiceBtn>
@@ -319,36 +328,6 @@ const Unisection = styled.div`
   height: 24px;
   margin-top: 18px;
   margin-bottom: 19px;
-
-  input {
-    border: 0;
-    display: flex;
-    width: 175px;
-    flex-direction: column;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-right: 10px;
-    outline: none;
-  }
-
-  p {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #b8b8b8;
-    text-align: center;
-    font-family: Inter;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
 `;
 
 const Titlesection = styled.div`
@@ -361,7 +340,7 @@ const Titlesection = styled.div`
   input {
     border: 0;
     display: flex;
-    width: 180px;
+    width: 250px;
     flex-direction: column;
     flex-shrink: 0;
     color: #b8b8b8;
@@ -407,6 +386,7 @@ const ContentSection = styled.div`
   textarea {
     border: 0;
     display: flex;
+    width: 337px;
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
@@ -417,7 +397,8 @@ const ContentSection = styled.div`
     font-weight: 400;
     line-height: normal;
     outline: none;
-    margin: 18px 23px 0px 30px;
+    white-space: pre-wrap;
+    margin: 18px 30px;
   }
 `;
 
@@ -446,4 +427,22 @@ const Check = styled.img`
   width: 5px;
   height: 5px;
   margin: 0px -25px 0px 20px;
+`;
+
+const UniText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #b8b8b8;
+  text-align: left;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 180px;
 `;

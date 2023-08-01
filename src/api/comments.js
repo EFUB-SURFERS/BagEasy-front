@@ -6,11 +6,10 @@ export const createComment = async (postId, body) => {
     const res = await client.post(`posts/${postId}/comments`, body, {
       headers: { "Content-Type": "application/json" },
     });
-
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
 
@@ -18,11 +17,10 @@ export const createComment = async (postId, body) => {
 export const getComments = async postId => {
   try {
     const res = await client.get(`posts/${postId}/comments`);
-
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };
 
@@ -30,10 +28,9 @@ export const getComments = async postId => {
 export const deleteComment = async commentId => {
   try {
     const res = await client.delete(`comments/${commentId}`);
-
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    return err;
   }
 };

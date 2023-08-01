@@ -68,6 +68,7 @@ const Nickname = () => {
           }
         }
         if (res.status == "200") {
+          localStorage.setItem("myNickname", res.data.nickname);
           setIsOverlap(false);
           setIsFocused(false);
           setTemp("");

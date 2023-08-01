@@ -1,24 +1,48 @@
-import React from 'react';
-import { ListItemContainer, ListImage, TitleContainer, Title, TrashImage, Words, Subtitle, Check, CheckButton, Price } from './SharedStyles';
-import trash from '../../assets/trash.png';
+import React, { useEffect, useState } from "react";
+import getSellList from "../../api/sell.js";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
+import Item from "./Sold";
 
-const SoldItem = ({ image, title, subtitle, price, completed }) => (
-  <ListItemContainer>
-    <ListImage src={image} alt="item" />
-    <Words>
-      <TitleContainer>
-        <Title>{title}</Title>
-        <TrashImage src={trash} alt="trash" />
-      </TitleContainer>
-      <Subtitle>{subtitle}</Subtitle>
-      <Check>
-        <CheckButton completed={completed}>
-          {completed ? '성사완료' : '성사미완료'}
-        </CheckButton>
-        <Price>{price}</Price>
-      </Check>
-    </Words>
-  </ListItemContainer>
-);
+const SoldItemList = () => {
+  const [sellList, setSellList] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
-export default SoldItem;
+  useEffect(() => {
+    try {
+      getSellListData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
+  }, []);
+
+  const getSellListData = async () => {
+    try {
+      const res = await getSellList();
+      setSellList(res);
+    } catch (err) {
+      console.log("error", err.res);
+    }
+  };
+
+  return (
+    <div>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {sellList &&
+        sellList.map(item => (
+          <Item
+            key={item.postId}
+            image={item.imageResponseDtos[0].imageUrl}
+            title={item.postTitle}
+            subtitle={item.school}
+            price={item.price}
+            completed={item.isSold}
+          />
+        ))}
+    </div>
+  );
+};
+export default SoldItemList;

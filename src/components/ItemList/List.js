@@ -2,14 +2,26 @@ import React from "react";
 import { styled } from "styled-components";
 import Item from "./Item";
 
-const List = ({ posts, setRefresh, offset = "97px" }) => {
+const List = ({
+  posts,
+  setRefresh,
+  offset = "97px",
+  liked = false,
+  setIsExpired,
+}) => {
   return (
-    <Wrapper offset={offset}>
-      {posts.length === 0 ? (
+    <Wrapper $offset={offset}>
+      {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
         posts.map((post, key) => (
-          <Item post={post} setRefresh={setRefresh} key={key} />
+          <Item
+            post={post}
+            setRefresh={setRefresh}
+            liked={liked}
+            key={key}
+            setIsExpired={setIsExpired}
+          />
         ))
       )}
     </Wrapper>
@@ -23,8 +35,8 @@ const Wrapper = styled.div`
   z-index: -1;
   display: flex;
   flex-direction: column;
-  margin-top: ${props => props.offset};
-  padding-bottom: ${props => props.offset};
+  margin-top: ${props => props.$offset};
+  padding-bottom: ${props => props.$offset};
   box-sizing: border-box;
   overflow: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */

@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
 import { getLikes } from "../../api/likes";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-import Comment from "../ItemList/Comment";
-import CommentList from "../ItemList/CommentList";
+import CommentList from "../Comment/CommentList";
 import ItemContent from "./ItemContent";
 import Footer from "./Footer";
 
@@ -14,18 +14,27 @@ const ItemInfo = ({ postId }) => {
   const [post, setPost] = useState("");
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
+  const [count, setCount] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    fetchPostData();
-    userData();
-    heartData();
+    try {
+      fetchPostData();
+      userData();
+      heartData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const fetchPostData = async () => {
     try {
       const getData = await getDetail(postId);
       setPost(getData);
-      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -35,7 +44,6 @@ const ItemInfo = ({ postId }) => {
     try {
       const getData = await getMyProfile();
       setMyId(getData);
-      // console.log("getData", getData);
     } catch (err) {
       console.log("error", err);
     }
@@ -50,12 +58,18 @@ const ItemInfo = ({ postId }) => {
     }
   };
 
+  const updateLikes = newLikes => {
+    setLikes(newLikes);
+    fetchPostData();
+  };
+
   if (!post) {
     return <div>Loading...</div>;
   }
 
   return (
     <Div>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <ItemContent
         sellerNickname={post.sellerNickname}
         school={post.school}
@@ -63,16 +77,17 @@ const ItemInfo = ({ postId }) => {
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
-      <CommentList />
-      {/* <Comment /> */}
+      <CommentList postId={postId} />
       <Footer
         isLiked={likes.isLiked}
+        setIsLiked={updateLikes}
         heartCount={post.heartCount}
+        setCount={count.setCount}
         postId={post.postId}
-        sellerId={post.sellerId}
+        sellerNickname={post.sellerNickname}
         price={post.price}
         isSold={post.isSold}
-        myId={myId.memberId}
+        myNickname={myId.nickname}
       />
     </Div>
   );
