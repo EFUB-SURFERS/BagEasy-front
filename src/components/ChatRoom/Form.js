@@ -63,6 +63,10 @@ const Form = () => {
       alert("파일 사이즈가 너무 커서 전송할 수 없습니다.");
     }
   };
+  const handleSubmit = e => {
+    e.preventDefault();
+    sendMessage();
+  };
 
   return (
     <Wrapper $previewImg={previewImg}>
@@ -78,7 +82,7 @@ const Form = () => {
       ) : (
         <Line />
       )}
-      <Inputs>
+      <Inputs onSubmit={handleSubmit}>
         <input
           accept=".jpg, .jpeg, .png"
           type="file"
@@ -151,7 +155,7 @@ const PreviewContainer = styled.div`
   background: #ffee94;
   align-items: center;
 `;
-const Inputs = styled.div`
+const Inputs = styled.form`
   position: fixed;
   bottom: 0;
   left: 0;
