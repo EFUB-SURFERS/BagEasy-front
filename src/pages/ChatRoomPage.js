@@ -22,9 +22,16 @@ const ChatRoom = () => {
     const res = await getMyProfile();
     localStorage.setItem("myNicknameForChat", res.nickname);
   };
+
+  function handleVisibilityChange() {
+    if (document.visibilityState === "visible") {
+      // 웹 앱이 포그라운드로 돌아왔을 때 소켓 재연결 요청
+      connectClient(roomId, onNewMessage);
+    }
+  }
+
   useEffect(() => {
     //클라이언트 생성 및 연결
-
     try {
       connectClient(roomId, onNewMessage);
       getMynickname();
@@ -48,6 +55,13 @@ const ChatRoom = () => {
     return () => disconnectClient();
   }, []);
 
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  });
   return (
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
