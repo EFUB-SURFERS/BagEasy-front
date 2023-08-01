@@ -30,7 +30,15 @@ const UserInfo = () => {
   useEffect(() => {
     if (update) {
       setUniToShow(uni);
-      updateSchool(uni);
+      try {
+        updateSchool(uni);
+      } catch (err) {
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
+      }
       console.log("몇번");
     }
   }, [update]);
