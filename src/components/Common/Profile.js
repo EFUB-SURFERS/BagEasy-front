@@ -37,7 +37,7 @@ const ProfileIcon = styled.div`
   justify-content: center;
   border-radius: 50%;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 2rem;
   color: white;
   background-color: ${props => props.color};
 `;
