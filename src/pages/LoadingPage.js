@@ -57,7 +57,7 @@ const Loading = () => {
   return (
     <LoadingConatiner>
       <LoadingIcon src={loading} />
-      <H2> 로그인중입니다...</H2>
+      <H2>로그인중입니다...</H2>
     </LoadingConatiner>
   );
 };
