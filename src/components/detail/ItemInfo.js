@@ -101,5 +101,5 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 68px;
+  padding-top: 97px;
 `;
