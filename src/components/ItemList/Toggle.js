@@ -49,7 +49,7 @@ const Label = styled.label`
     text-align: center;
     width: 38px;
     height: 19px;
-    padding-top: 3px;
+    padding-top: 4px;
     padding-left: 1px;
     left: 38px;
     border-radius: 20px;
@@ -86,7 +86,7 @@ const Label = styled.label`
       text-align: center;
       width: 38px;
       height: 19px;
-      padding-top: 3px;
+      padding-top: 4px;
       padding-left: 1px;
       left: 4px;
       border-radius: 20px;
