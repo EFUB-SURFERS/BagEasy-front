@@ -13,9 +13,20 @@ const Comment = ({
   setReplying,
   nickname,
   setRefresh,
+  postWriter,
+  commentWriter,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
+
+  //비밀댓글 숨김여부 설정
+  useEffect(() => {
+    comment.isSecret &&
+      nickname !== comment.writer &&
+      nickname !== postWriter &&
+      nickname !== commentWriter &&
+      setHide(true);
+  }, []);
 
   //댓글,대댓글 삭제
   const onDelete = async () => {
@@ -44,8 +55,8 @@ const Comment = ({
                 <Lock src={lockGrey} />
               </LockWrapper>
             )}
-            <Text $hide={comment.isSecret && comment.writer !== nickname}>
-              {comment.isSecret && comment.writer !== nickname
+            <Text $hide={hide}>
+              {hide
                 ? "비밀 댓글입니다."
                 : !isReply
                 ? comment.commentContent
@@ -122,7 +133,13 @@ const Text = styled.div`
 
 const Button = styled.div`
   margin-left: auto;
-  /* background: white; */
+  &:hover {
+    cursor: pointer;
+  }
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
 `;
 
 const Dots = styled.img`

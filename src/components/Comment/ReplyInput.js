@@ -79,6 +79,9 @@ const Lock = styled.img`
   width: 10px;
   right: 55px;
   bottom: 15px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendBtn = styled.div`
@@ -89,6 +92,9 @@ const SendBtn = styled.div`
   right: 0px;
   top: 10px;
   box-sizing: border-box;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendImg = styled.img`

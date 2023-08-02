@@ -51,7 +51,7 @@ const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
       </ImageWrapper>
 
       <Info>
-        <Name>{post.postTitle}</Name>
+        <Title>{post.postTitle}</Title>
         <Price>{`${post.price}원`}</Price>
         {liked && <School>{post.school}</School>}
         <Footer>
@@ -74,6 +74,9 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #d7d7d7;
+  &:hover {
+    cursor: default;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -102,16 +105,18 @@ const Info = styled.div`
   box-sizing: border-box;
 `;
 
-const Name = styled.div`
+const Title = styled.div`
   font-weight: bold;
   font-size: 20px;
   flex: none;
+  padding-bottom: 3px;
 `;
 
 const Price = styled.div`
   flex: none;
   font-size: 16px;
   color: grey;
+  padding-bottom: 4px;
 `;
 
 const School = styled.div`
@@ -152,6 +157,9 @@ const Favorites = styled.div`
 const HeartImg = styled.img`
   width: 18px;
   transform: translateY(1px);
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const FavoritesNum = styled.div`
