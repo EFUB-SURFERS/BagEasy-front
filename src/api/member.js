@@ -16,7 +16,6 @@ export const getProfile = async memberId => {
 export const getMyProfile = async () => {
   try {
     const res = await client.get(`members/me`);
-
     return res.data;
   } catch (err) {
     throw err;
