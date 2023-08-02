@@ -33,9 +33,13 @@ const Loading = () => {
         localStorage.setItem("bagtoken", accessToken);
         localStorage.setItem("myNickname", res.data.nickname);
         // 신규/기존 회원 여부 저장
-        const t = localStorage.getItem("bagtoken");
-        console.log("Received access token:", t);
-        res.data.isExistingMember ? handleHome() : handleNickName();
+        setTimeout(() => {
+          if (res.data.isExistingMember) {
+            handleHome();
+          } else {
+            handleNickName();
+          }
+        }, 100); // Adjust the delay as needed
       }
     } catch (error) {
       console.log(error);
