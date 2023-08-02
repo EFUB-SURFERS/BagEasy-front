@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 const Loading = () => {
   const navigate = useNavigate();
-  const [isExistingMember, setIsExistingMember] = useState(false);
 
   const handleHome = () => {
     navigate("/home");
@@ -31,12 +30,13 @@ const Loading = () => {
       if (res.status == "200") {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
-
-        console.log(res);
         localStorage.setItem("bagtoken", accessToken);
 
+        const isExistingMember = res.data.isExistingMember;
         // 신규/기존 회원 여부 저장
-        setIsExistingMember(res.data.isExistingMember);
+        isExistingMember
+          ? window.location.replace("/home")
+          : window.location.replace("/nickname");
       }
     } catch (error) {
       console.log(error);
@@ -45,10 +45,7 @@ const Loading = () => {
 
   useEffect(() => {
     if (code) {
-      handleLoginPost(code).then(() =>
-        isExistingMember ? handleHome() : handleNickName(),
-      );
-      console.log(isExistingMember);
+      handleLoginPost(code);
     } else {
       console.log("로그인 재시도하세요.");
     }
