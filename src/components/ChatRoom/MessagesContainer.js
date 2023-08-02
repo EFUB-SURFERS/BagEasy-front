@@ -6,7 +6,6 @@ import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 //sentAt 밀리세컨드를 "PM/AM 시간:분" 으로 변환하는 함수
 const getSendTime = sentAt => {
@@ -28,11 +27,10 @@ const getSendTime = sentAt => {
   }
 };
 
-const MessagesContainer = () => {
+const MessagesContainer = ({ setIsModalVisible }) => {
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
   const scrollRef = useRef(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
@@ -91,7 +89,6 @@ const MessagesContainer = () => {
 
   return (
     <>
-      {isModalVisible && <TokenRefreshModal />}
       <Wrapper ref={scrollRef}>
         {messages ? (
           <div>

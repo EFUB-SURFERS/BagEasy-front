@@ -6,14 +6,12 @@ import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getChatRoom } from "../../api/chat";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 import { getMyProfile } from "../../api/member";
-const Header = () => {
+const Header = ({ setIsModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
 
@@ -66,7 +64,6 @@ const Header = () => {
   };
   return (
     <div>
-      {isModalVisible && <TokenRefreshModal />}
       <HeaderDiv>
         <Btn
           onClick={() => {
@@ -120,6 +117,7 @@ const Header = () => {
                   isSold={postInfo.isSold}
                   postId={postInfo.postId}
                   buyerNickname={roomInfo.createMember}
+                  setIsModalVisible={setIsModalVisible}
                 />
               ) : (
                 <></>
