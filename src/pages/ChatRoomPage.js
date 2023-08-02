@@ -68,9 +68,13 @@ const ChatRoom = () => {
       {isModalVisible && <TokenRefreshModal />}
       <Wrapper>
         <div className="header">
-          <Header />
+          <Header setIsModalVisible={setIsModalVisible} />
         </div>
-        <div className="messagescontainer" ref={messagesContainerRef}>
+        <div
+          className="messagescontainer"
+          setIsModalVisible={setIsModalVisible}
+          ref={messagesContainerRef}
+        >
           <MessagesContainer />
         </div>
         <div className="form" ref={formRef}>
