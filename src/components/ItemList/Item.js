@@ -74,6 +74,9 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border-bottom: 1px solid #d7d7d7;
+  &:hover {
+    cursor: default;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -154,6 +157,9 @@ const Favorites = styled.div`
 const HeartImg = styled.img`
   width: 18px;
   transform: translateY(1px);
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const FavoritesNum = styled.div`

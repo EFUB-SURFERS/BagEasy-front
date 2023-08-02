@@ -133,7 +133,13 @@ const Text = styled.div`
 
 const Button = styled.div`
   margin-left: auto;
-  /* background: white; */
+  &:hover {
+    cursor: pointer;
+  }
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
 `;
 
 const Dots = styled.img`

@@ -28,6 +28,9 @@ const Label = styled.label`
   transition: all 0.1s ease-in-out;
   background: white;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.15);
+  &:hover {
+    cursor: pointer;
+  }
 
   //디폴트 배경
   &::before {

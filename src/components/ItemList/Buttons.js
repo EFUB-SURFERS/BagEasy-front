@@ -32,6 +32,9 @@ const ChatBtn = styled.div`
   width: 28px;
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ChatImg = styled.img`
@@ -44,6 +47,9 @@ const MyPageBtn = styled.div`
   margin: 0 13px;
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const MyPageImg = styled.img`

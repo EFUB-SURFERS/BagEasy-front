@@ -28,6 +28,9 @@ const Wrapper = styled.div`
   border-radius: 100px;
   background: #ffc700;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.img`

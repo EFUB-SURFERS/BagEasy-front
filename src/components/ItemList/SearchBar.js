@@ -68,6 +68,9 @@ const Container = styled.div`
   height: 41px;
   background: #ffc700;
   padding: 0 10px;
+  &:hover {
+    cursor: default;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -115,6 +118,9 @@ const ChangeBtn = styled.div`
   text-decoration: underline;
   text-underline-offset: 2px;
   white-space: nowrap;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default SearchBar;

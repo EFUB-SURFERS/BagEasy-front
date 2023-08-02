@@ -64,4 +64,7 @@ const Text = styled.div`
   & + & {
     border-top: 1px solid #959595;
   }
+  &:hover {
+    cursor: pointer;
+  }
 `;
