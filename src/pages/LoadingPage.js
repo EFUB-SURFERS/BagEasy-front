@@ -9,10 +9,12 @@ const Loading = () => {
 
   const handleHome = () => {
     navigate("/home");
+    window.location.reroad();
   };
 
   const handleNickName = () => {
     navigate("/nickname");
+    window.location.reroad();
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -31,11 +33,12 @@ const Loading = () => {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
         localStorage.setItem("bagtoken", accessToken);
-        const isExistingMember = res.data.isExistingMember;
         // 신규/기존 회원 여부 저장
-        isExistingMember
-          ? window.location.replace("/home")
-          : window.location.replace("/nickname");
+        if (res.data.isExistingMember) {
+          handleHome();
+        } else {
+          handleNickName();
+        }
       }
     } catch (error) {
       console.log(error);
