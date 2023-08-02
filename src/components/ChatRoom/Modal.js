@@ -3,12 +3,20 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import { FinishDeal } from "../../api/posts";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
-const Modal = ({ isOpen, setIsOpen, postId, buyerNickname }) => {
+const Modal = ({
+  setIsUpdate,
+  isUpdate,
+  isOpen,
+  setIsOpen,
+  postId,
+  buyerNickname,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState("false");
   const handleItemClick = () => {
     try {
       //거래 성사 요청 보내기
       FinishDeal(postId, buyerNickname);
+      setIsUpdate(true);
       setIsOpen(false);
     } catch (err) {
       if (err.response && err.response.status === 401) {
@@ -106,8 +114,9 @@ const Container = styled.div`
     line-height: normal;
   }
   .btn {
+    width: 100%;
     display: flex;
-    justify-content: end;
-    margin-right: 8%;
+    flex-direction: row;
+    margin-left: 75%;
   }
 `;

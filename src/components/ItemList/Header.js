@@ -1,7 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
 import logo from "../../assets/common/logo.png";
-import back from "../../assets/common/back.png";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -9,13 +8,6 @@ const Header = () => {
   return (
     <Wrapper>
       <HeaderDiv>
-        <Btn
-          onClick={() => {
-            navigate("/home");
-          }}
-        >
-          <img src={back} alt="뒤로가기" />
-        </Btn>
         <p className="logo">
           <img src={logo} alt="로고" />
         </p>
@@ -26,7 +18,6 @@ const Header = () => {
 
 export default Header;
 const Wrapper = styled.div`
-  z-index: 1;
   position: fixed;
   top: 0;
   left: 0;

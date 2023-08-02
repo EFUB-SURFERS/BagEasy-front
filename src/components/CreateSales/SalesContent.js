@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 import Modal from "../UpdateUni/Modal";
 
@@ -9,9 +10,13 @@ import choiceuni from "../../assets/post/choiceuni.png";
 import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import close from "../../assets/post/close.png";
+import upload from "../../assets/post/upload.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState("false");
+
   const [formData, setFormData] = useState({
     //전송할 데이터
     uni: "",
@@ -30,12 +35,9 @@ const SalesContent = () => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const fileURLList = Array.from(fileArr).map(file =>
-      URL.createObjectURL(file),
-    );
-    const limitedFileURLList = fileURLList.slice(0, 10); // 미리보기 개수 최대 10개로 제한
-    setImgFile(limitedFileURLList); //이미지 미리보기 데이터
-    setFormData(prevData => ({ ...prevData, imgData: fileArr })); //이미지 전송 데이터
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
+    setFormData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
 
   const handleRegisterButtonClick = async () => {
@@ -53,9 +55,9 @@ const SalesContent = () => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgData.length; i++) {
+        for (let i = 0; i < imgFile.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("image", imgData[i]);
+          formData.append("image", imgFile[i]);
         }
         formData.append(
           "dto",
@@ -66,7 +68,11 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.status === 401) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
+        }
       }
     } else {
       alert("내용을 모두 채운 후 다시 등록해 주세요.");
@@ -75,8 +81,11 @@ const SalesContent = () => {
 
   return (
     <>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
-        <Delete onClick={() => navigate(-1)}>X</Delete>
+        <Delete onClick={() => navigate(-1)}>
+          <Close src={close} />
+        </Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
       </Header>
       <Wrapper>
@@ -87,9 +96,9 @@ const SalesContent = () => {
           ) : (
             <Check className="check" src={redspot} />
           )}
-          <AddBtn for="file">
-            <p>+</p>
-          </AddBtn>
+          <UploadBtn for="file">
+            <img src={upload}></img>
+          </UploadBtn>
           <input
             type="file"
             name="file"
@@ -100,7 +109,9 @@ const SalesContent = () => {
             multiple
           />
           {imgFile.length > 0 ? (
-            imgFile.map((fileURL, index) => <img key={index} src={fileURL} />)
+            imgFile.map((file, index) => (
+              <img key={index} src={URL.createObjectURL(file)} />
+            ))
           ) : (
             <img src={emptyimage} />
           )}
@@ -113,7 +124,7 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <UniText>
+          <UniText uni={formData.uni}>
             {formData.uni.length > 0 && !isOpen
               ? formData.uni
               : "학교를 선택해주세요"}
@@ -223,7 +234,7 @@ const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #000;
+  color: #727272;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -233,6 +244,10 @@ const Done = styled.button`
   margin-right: 15px;
   margin-top: 76px;
   margin-bottom: 19px;
+
+  &:hover {
+    color: #000000;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -254,36 +269,16 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.label`
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  border: 6px solid #ffc700;
-  background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    #cecece;
-  margin-left: 34px;
-  margin-top: 24px;
+const UploadBtn = styled.label`
+  margint-left: 40px;
+  img {
+    padding-left: 17px;
+    width: 68px;
+    height: 68px;
 
-  p {
-    display: flex;
-    width: 50px;
-    height: 49px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #828282;
-    text-align: center;
-    font-family: Inter;
-    font-size: 64px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: auto;
-    padding-top: 8px;
+    &:hover {
+      filter: brightness(80%);
+    }
   }
 `;
 
@@ -336,13 +331,17 @@ const Titlesection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -359,13 +358,17 @@ const PriceSection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -383,7 +386,7 @@ const ContentSection = styled.div`
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
@@ -392,6 +395,10 @@ const ContentSection = styled.div`
     outline: none;
     white-space: pre-wrap;
     margin: 18px 30px;
+  }
+
+  textarea::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -414,6 +421,10 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 const Check = styled.img`
@@ -427,7 +438,7 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  color: #b8b8b8;
+  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;
@@ -438,4 +449,15 @@ const UniText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   width: 180px;
+
+  color: ${({ uni }) => (uni.length > 0 ? "black" : "#b8b8b8")};
+`;
+
+const Close = styled.img`
+  width: 25px;
+  height: 25px;
+  padding-left: 5px;
+  &:hover {
+    filter: brightness(30%);
+  }
 `;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
-import title from "../assets/title.png";
+import logo from "../assets/StartPage/logo.png";
+import title from "../assets/StartPage/title.png";
 import { useNavigate } from "react-router-dom";
 
 const Start = () => {
@@ -28,7 +28,6 @@ const StartScreenContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 168px;
-  height: 51px;
 `;
 
 const TitleImg = styled.img`
@@ -41,6 +40,7 @@ const Logo = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 9rem;
   flex: 1;
 `;
 
@@ -55,7 +55,8 @@ const Button = styled.button`
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  margin-bottom: 60px;
+  position: absolute;
+  bottom: 7rem;
 `;
 
 export default Start;
