@@ -243,6 +243,10 @@ const Done = styled.button`
   margin-right: 15px;
   margin-top: 76px;
   margin-bottom: 19px;
+
+  &:hover {
+    color: #727272;
+  }
 `;
 
 const Wrapper = styled.div`
