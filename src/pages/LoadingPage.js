@@ -31,6 +31,7 @@ const Loading = () => {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
         localStorage.setItem("bagtoken", accessToken);
+        console.log(localStorage.getItem("bagtoken", accessToken));
         // 신규/기존 회원 여부 저장
         res.data.isExistingMember ? handleHome() : handleNickName();
       }
@@ -45,7 +46,7 @@ const Loading = () => {
     } else {
       console.log("로그인 재시도하세요.");
     }
-  }, [code, navigate]);
+  }, [code]);
 
   return (
     <LoadingConatiner>
