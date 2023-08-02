@@ -30,7 +30,7 @@ const TokenRefreshModal = () => {
 
         localStorage.setItem("bagtoken", res.data.accessToken);
         localStorage.setItem("isExpired", "false");
-        localStorage.setItem(res.data.accessToken);
+
         handleNavigateHome();
       }
       if (res.status == "401") {

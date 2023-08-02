@@ -5,34 +5,35 @@ import chat_gray from "../../assets/chat_gray.png";
 import heart_gray from "../../assets/heart_gray.png";
 import ListItem from "./ListItem";
 import UserInfo from "./UserInfo";
+import { useNavigate } from "react-router-dom";
 
 const Contents = () => {
+  const navigate = useNavigate();
   const handleHeartClick = () => {
-    window.location.replace("/favorites");
+    navigate("/favorites");
   };
 
   const handleChatClick = () => {
-    window.location.replace("/chats");
+    navigate("/chats");
   };
 
   const handleListClick = () => {
-    window.location.replace("/deal");
+    navigate("/deal");
   };
 
   return (
     <Content>
       <UserInfo />
       <ListContainer>
-        <ListItem icon={heart_gray} text="찜 목록" onClick={handleHeartClick}/>
+        <ListItem icon={heart_gray} text="찜 목록" onClick={handleHeartClick} />
         <Divider />
-        <ListItem icon={chat_gray} text="채팅 목록" onClick={handleChatClick}/>
+        <ListItem icon={chat_gray} text="채팅 목록" onClick={handleChatClick} />
         <Divider />
-        <ListItem icon={list_gray} text="거래 내역" onClick={handleListClick}/>
+        <ListItem icon={list_gray} text="거래 내역" onClick={handleListClick} />
       </ListContainer>
     </Content>
   );
 };
-
 
 const Content = styled.div`
   display: flex;

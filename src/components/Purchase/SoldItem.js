@@ -40,6 +40,7 @@ const SoldItemList = () => {
             subtitle={item.school}
             price={item.price}
             completed={item.isSold}
+            postId={item.postId}
           />
         ))}
     </div>

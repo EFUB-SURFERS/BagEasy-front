@@ -94,35 +94,41 @@ const MessagesContainer = () => {
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Wrapper ref={scrollRef}>
-        <div>
-          {messages &&
-            messages.map(message => {
-              return message.mine ? (
-                <>
-                  <MyMessage
-                    key={message.id || message.sentAt}
-                    contentType={message.contentType}
-                    content={message.content}
-                    sendTime={getSendTime(message.sentAt)}
-                    sendDate={checkIsNewDate(message.sentAt)}
-                    type={message.type}
-                  />
-                </>
-              ) : (
-                <>
-                  <YourMessage
-                    key={message.id || message.sentAt}
-                    yourNickname={yourNickname}
-                    contentType={message.contentType}
-                    content={message.content}
-                    sendTime={getSendTime(message.sentAt)}
-                    sendDate={checkIsNewDate(message.sentAt)}
-                    type={message.type}
-                  />
-                </>
-              );
-            })}
-        </div>
+        {messages ? (
+          <div>
+            {messages &&
+              messages.map(message => {
+                return message.mine ? (
+                  <>
+                    <MyMessage
+                      key={message.id || message.sentAt}
+                      contentType={message.contentType}
+                      content={message.content}
+                      sendTime={getSendTime(message.sentAt)}
+                      sendDate={checkIsNewDate(message.sentAt)}
+                      type={message.type}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <YourMessage
+                      key={message.id || message.sentAt}
+                      yourNickname={yourNickname}
+                      contentType={message.contentType}
+                      content={message.content}
+                      sendTime={getSendTime(message.sentAt)}
+                      sendDate={checkIsNewDate(message.sentAt)}
+                      type={message.type}
+                    />
+                  </>
+                );
+              })}
+          </div>
+        ) : (
+          <div className="empty">
+            대화 기록이 없습니다. <br /> 채팅을 보내 대화를 시작하세요.
+          </div>
+        )}
       </Wrapper>
     </>
   );
@@ -133,4 +139,14 @@ export default MessagesContainer;
 const Wrapper = styled.div`
   height: 100%;
   overflow: auto;
+
+  .empty {
+    margin-top: 30px;
+    font-family: Arial;
+    font-style: regular;
+    font-size: 13px;
+    color: #848484;
+
+    text-align: center;
+  }
 `;

@@ -10,10 +10,16 @@ import {
   CheckButton,
   Price,
 } from "./SharedStyles";
+import { useNavigate } from "react-router-dom";
 
-const Item = ({ image, title, subtitle, price, completed }) => {
+const Item = ({ image, title, subtitle, price, completed, postId }) => {
+  const navigate = useNavigate();
   return (
-    <ListItemContainer>
+    <ListItemContainer
+      onClick={() => {
+        navigate(`/detail/${postId}`);
+      }}
+    >
       <ListImage src={image} alt="item" />
       <Words>
         <TitleContainer>
