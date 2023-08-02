@@ -8,6 +8,7 @@ import choiceuni from "../../assets/post/choiceuni.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
 import close from "../../assets/post/close.png";
+import upload from "../../assets/post/upload.png";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
@@ -109,9 +110,9 @@ const SalesContent = ({ postId, originalData }) => {
           ) : (
             <Check className="check" src={redspot} />
           )}
-          <AddBtn for="file">
-            <p>+</p>
-          </AddBtn>
+          <UploadBtn for="file">
+            <img src={upload}></img>
+          </UploadBtn>
           <input
             type="file"
             name="file"
@@ -305,39 +306,15 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.label`
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  border: 6px solid #ffc700;
-  background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    #cecece;
-  margin-left: 34px;
-  margin-top: 24px;
-
-  p {
-    display: flex;
-    width: 50px;
-    height: 49px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #828282;
-    text-align: center;
-    font-family: Inter;
-    font-size: 64px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: auto;
-    padding-top: 7.6px;
+const UploadBtn = styled.label`
+  margint-left: 40px;
+  img {
+    padding-left: 17px;
+    width: 68px;
+    height: 68px;
 
     &:hover {
-      color: #727272;
+      filter: brightness(80%);
     }
   }
 `;
