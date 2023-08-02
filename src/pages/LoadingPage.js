@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 const Loading = () => {
   const navigate = useNavigate();
-  const accessToken = "";
-  const isExistingMember = false;
+  let accessToken = "";
+  let isExistingMember = false;
 
   const handleHome = () => {
     navigate("/home");
@@ -49,9 +49,11 @@ const Loading = () => {
 
   useEffect(() => {
     localStorage.setItem("bagtoken", accessToken);
-    // 신규/기존 회원 여부 저장
+  }, [accessToken]);
+
+  useEffect(() => {
     isExistingMember ? handleHome() : handleNickName();
-  }, [accessToken, isExistingMember]);
+  }, [isExistingMember]);
 
   return (
     <LoadingConatiner>
