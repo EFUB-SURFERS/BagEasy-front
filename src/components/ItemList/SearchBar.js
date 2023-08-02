@@ -75,9 +75,13 @@ const TextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 70%;
-  padding-left: 7px;
-  padding-right: 50px;
   box-sizing: border-box;
+  padding-left: 7px;
+  padding-right: 40px;
+  @media (min-width: 450px) {
+    margin-left: auto;
+    padding-right: 15px;
+  }
 `;
 
 const LocationIcon = styled.div`
