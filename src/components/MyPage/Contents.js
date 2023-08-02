@@ -46,7 +46,7 @@ const Content = styled.div`
 const Divider = styled.div`
   width: 100%;
   height: 0.5px;
-  background-color: #ffc700;
+  background: #c3c3c3;
 `;
 
 const ListContainer = styled.div`
@@ -54,7 +54,8 @@ const ListContainer = styled.div`
   flex-direction: column;
   width: 349px;
   border-radius: 10px;
-  background-color: #ffee94;
+  background-color: #f5f5f5;
+  overflow: hidden;
 `;
 
 export default Contents;
