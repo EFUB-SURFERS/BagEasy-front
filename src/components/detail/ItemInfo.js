@@ -23,7 +23,7 @@ const ItemInfo = ({ postId }) => {
       userData();
       heartData();
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 400) {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));
@@ -77,7 +77,7 @@ const ItemInfo = ({ postId }) => {
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
-      <CommentList postId={postId} />
+      <CommentList postId={postId} postWriter={post.sellerNickname} />
       <Footer
         isLiked={likes.isLiked}
         setIsLiked={updateLikes}

@@ -9,6 +9,8 @@ const ReplyList = ({
   nickname,
   refresh,
   setRefresh,
+  postWriter,
+  commentWriter,
 }) => {
   const [replies, setReplies] = useState([]);
 
@@ -32,6 +34,8 @@ const ReplyList = ({
             setReplying={setReplying}
             nickname={nickname}
             setRefresh={setRefresh}
+            postWriter={postWriter}
+            commentWriter={commentWriter}
           />
         ))}
     </Root>
