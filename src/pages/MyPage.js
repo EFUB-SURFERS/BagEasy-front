@@ -2,13 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import Header from "../components/Common/Header";
 import Contents from "../components/MyPage/Contents";
+import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import { useState } from "react";
 
 const MyPage = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
-    <MyPageContainer>
-      <Header />
-      <Contents />
-    </MyPageContainer>
+    <>
+      {isModalVisible && <TokenRefreshModal />}
+      <MyPageContainer>
+        <Header />
+        <Contents setIsModalVisible={setIsModalVisible} />
+      </MyPageContainer>
+    </>
   );
 };
 
