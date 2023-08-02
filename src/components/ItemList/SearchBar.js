@@ -58,7 +58,7 @@ const SearchBar = ({
 };
 
 const Container = styled.div`
-  margin-top: 97px;
+  margin-top: 70px;
   position: fixed;
   display: flex;
   justify-content: space-between;

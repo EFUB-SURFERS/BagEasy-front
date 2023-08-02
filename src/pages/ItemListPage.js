@@ -87,7 +87,7 @@ const ItemListPage = () => {
         <List
           posts={posts}
           setRefresh={setRefresh}
-          offset="138px"
+          offset="111px"
           setIsExpired={setIsExpired}
         />
       )}

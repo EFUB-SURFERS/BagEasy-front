@@ -17,21 +17,21 @@ const Buttons = ({ navigate }) => {
 };
 
 const ButtonWrapper = styled.div`
+  box-sizing: border-box;
   position: fixed;
-  //margin-top: -140px;
   right: 0;
-  //z-index: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   flex: 0;
-  /* outline: 1px solid black; */
-  height: 97px;
+  height: 70px;
 `;
 
 const ChatBtn = styled.div`
-  width: 2rem;
-  /* border: 1px solid red; */
+  margin-top: 2px;
+  width: 28px;
+  display: flex;
+  align-items: center;
 `;
 
 const ChatImg = styled.img`
@@ -40,9 +40,10 @@ const ChatImg = styled.img`
 `;
 
 const MyPageBtn = styled.div`
-  width: 2rem;
-  margin: 0rem 1rem;
-  /* border: 1px solid red; */
+  width: 28px;
+  margin: 0 13px;
+  display: flex;
+  align-items: center;
 `;
 
 const MyPageImg = styled.img`
