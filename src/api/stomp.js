@@ -17,7 +17,6 @@ const onMessage = (data, onNewMessage) => {
     if (newMessage.contentType === "talk") {
       //받은 메세지가 talk 타입이면 post 요청 주체(본인)닉네임 추가해서 post 요청
       newMessage.callbackNickname = myNickname;
-      saveMessage(newMessage);
 
       //mine 프로퍼티 추가해서 리덕스 저장
       newMessage.mine = true;
