@@ -54,12 +54,13 @@ const Nickname = () => {
         );
 
         console.log(res);
+        console.log(res.status == "400");
+        console.log(res.data.code === "EXPIRED_TOKEN");
 
         if (res.status == "400") {
           if (res.data.code === "EXPIRED_TOKEN") {
             // 토큰 만료
             setExpired(true);
-            console.log(expired, res.data.code);
           }
           if (res.data.code === "DUPLICATE_NICKNAME") {
             // 닉네임 중복
