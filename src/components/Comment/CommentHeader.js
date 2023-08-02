@@ -13,7 +13,7 @@ const CommentHeader = ({ comments }) => {
 export default CommentHeader;
 
 const Header = styled.div`
-  height: 20px;
+  height: 30px;
   display: flex;
   align-items: center;
   padding: 4px 13px;
