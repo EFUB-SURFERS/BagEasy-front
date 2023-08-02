@@ -11,6 +11,7 @@ import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
 import close from "../../assets/post/close.png";
+import upload from "../../assets/post/upload.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
@@ -95,9 +96,9 @@ const SalesContent = () => {
           ) : (
             <Check className="check" src={redspot} />
           )}
-          <AddBtn for="file">
-            <p>+</p>
-          </AddBtn>
+          <UploadBtn for="file">
+            <img src={upload}></img>
+          </UploadBtn>
           <input
             type="file"
             name="file"
@@ -271,7 +272,6 @@ const SubLine = styled.div`
 const AddBtn = styled.label`
   width: 80px;
   height: 80px;
-  flex-shrink: 0;
   border: 6px solid #ffc700;
   background: linear-gradient(
       180deg,
@@ -301,6 +301,19 @@ const AddBtn = styled.label`
 
     &:hover {
       color: #727272;
+    }
+  }
+`;
+
+const UploadBtn = styled.label`
+  margint-left: 40px;
+  img {
+    padding-left: 17px;
+    width: 68px;
+    height: 68px;
+
+    &:hover {
+      filter: brightness(80%);
     }
   }
 `;
