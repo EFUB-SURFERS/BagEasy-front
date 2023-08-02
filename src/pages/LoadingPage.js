@@ -33,9 +33,9 @@ const Loading = () => {
         localStorage.setItem("bagtoken", accessToken);
         localStorage.setItem("myNickname", res.data.nickname);
         // 신규/기존 회원 여부 저장
-        res.data.isExistingMember ? handleHome() : handleNickName();
         const t = localStorage.getItem("bagtoken");
         console.log("Received access token:", t);
+        res.data.isExistingMember ? handleHome() : handleNickName();
       }
     } catch (error) {
       console.log(error);
