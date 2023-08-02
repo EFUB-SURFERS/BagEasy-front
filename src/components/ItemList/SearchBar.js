@@ -20,7 +20,7 @@ const SearchBar = ({
   useEffect(() => {
     async function fetchData() {
       const data = getMyProfile();
-      setUniDisplay(data.school);
+      !uniDisplay && setUniDisplay(data.school);
     }
     fetchData();
   }, []);
@@ -29,6 +29,7 @@ const SearchBar = ({
   useEffect(() => {
     if (!isOpen && update) {
       setUniDisplay(uni);
+      localStorage.setItem("university", uni);
       setRefresh(prev => prev + 1);
     }
   }, [isOpen]);

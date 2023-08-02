@@ -19,10 +19,12 @@ const ItemListPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
-  const [uniDisplay, setUniDisplay] = useState("");
+  const [uniDisplay, setUniDisplay] = useState(
+    localStorage.getItem("university"),
+  );
   const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
-
   const navigate = useNavigate();
+
   const onToggle = () => {
     setOnSales(prev => !prev);
   };
