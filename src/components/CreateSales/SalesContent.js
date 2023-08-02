@@ -227,6 +227,10 @@ const Delete = styled.div`
   padding-left: 11px;
   padding-top: 76px;
   padding-bottom: 18px;
+
+  &:hover {
+    color: #727272;
+  }
 `;
 
 const Done = styled.button`
@@ -298,6 +302,10 @@ const AddBtn = styled.label`
     line-height: normal;
     margin: auto;
     padding-top: 8px;
+
+    &:hover {
+      color: #727272;
+    }
   }
 `;
 
