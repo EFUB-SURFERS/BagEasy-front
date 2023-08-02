@@ -56,11 +56,11 @@ const Nickname = () => {
         console.log(res);
 
         if (res.status == "400") {
-          if (res.code === "EXPIRED_TOKEN") {
+          if (res.data.code === "EXPIRED_TOKEN") {
             // 토큰 만료
             setExpired(true);
           }
-          if (res.code === "DUPLICATE_NICKNAME") {
+          if (res.data.code === "DUPLICATE_NICKNAME") {
             // 닉네임 중복
             setIsOverlap(true);
             setIsFocused(true);
