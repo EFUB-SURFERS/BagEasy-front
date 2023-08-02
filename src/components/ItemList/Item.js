@@ -51,7 +51,7 @@ const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
       </ImageWrapper>
 
       <Info>
-        <Name>{post.postTitle}</Name>
+        <Title>{post.postTitle}</Title>
         <Price>{`${post.price}원`}</Price>
         {liked && <School>{post.school}</School>}
         <Footer>
@@ -102,16 +102,18 @@ const Info = styled.div`
   box-sizing: border-box;
 `;
 
-const Name = styled.div`
+const Title = styled.div`
   font-weight: bold;
   font-size: 20px;
   flex: none;
+  padding-bottom: 3px;
 `;
 
 const Price = styled.div`
   flex: none;
   font-size: 16px;
   color: grey;
+  padding-bottom: 4px;
 `;
 
 const School = styled.div`
