@@ -52,7 +52,7 @@ const MessagesContainer = () => {
     try {
       getTotalMessage();
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 400) {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));
