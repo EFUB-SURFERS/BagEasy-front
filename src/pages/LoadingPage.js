@@ -31,15 +31,8 @@ const Loading = () => {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
         localStorage.setItem("bagtoken", accessToken);
-        localStorage.setItem("myNickname", res.data.nickname);
         // 신규/기존 회원 여부 저장
-        setTimeout(() => {
-          if (res.data.isExistingMember) {
-            handleHome();
-          } else {
-            handleNickName();
-          }
-        }, 100); // Adjust the delay as needed
+        res.data.isExistingMember ? handleHome() : handleNickName();
       }
     } catch (error) {
       console.log(error);
