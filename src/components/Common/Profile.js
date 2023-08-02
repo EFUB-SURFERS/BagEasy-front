@@ -16,10 +16,8 @@ const Profile = ({ nickname, width, height }) => {
     return color_list[index];
   }
 
-  const hash = hashCode(nickname);
+  const hash = nickname && hashCode(nickname);
   const color = getRandomColorFromHash(hash);
-
-  console.log(color);
 
   return (
     <>
