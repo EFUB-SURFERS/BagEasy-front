@@ -83,23 +83,17 @@ const Footer = ({
       const roomId = await createRoom(postId, myNickname);
 
       return roomId;
-    } catch (error) {
-      console.log("에러 발생", error);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
     }
   };
 
   const handleChatClick = async () => {
-    try {
-      const roomId = await getRoomId();
-
-      roomId && navigate(`/chats/${roomId}`);
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    const roomId = await getRoomId();
+    roomId && navigate(`/chats/${roomId}`);
   };
 
   return (
