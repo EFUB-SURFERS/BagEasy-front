@@ -4,7 +4,13 @@ import { styled } from "styled-components";
 import ReplyList from "./ReplyList";
 import ReplyInput from "./ReplyInput";
 
-const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
+const CommentReplies = ({
+  comment,
+  nickname,
+  refresh,
+  setRefresh,
+  postWriter,
+}) => {
   const [replying, setReplying] = useState(false);
 
   return (
@@ -14,6 +20,8 @@ const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
         setReplying={setReplying}
         nickname={nickname}
         setRefresh={setRefresh}
+        postWriter={postWriter}
+        commentWriter={comment.writer}
       />
       <ReplyList
         commentId={comment.commentId}
@@ -21,6 +29,8 @@ const CommentReplies = ({ comment, nickname, refresh, setRefresh }) => {
         nickname={nickname}
         refresh={refresh}
         setRefresh={setRefresh}
+        postWriter={postWriter}
+        commentWriter={comment.writer}
       />
       {replying && (
         <ReplyInput

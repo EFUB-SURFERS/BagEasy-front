@@ -7,7 +7,7 @@ import CommentHeader from "./CommentHeader";
 import { getMyProfile } from "../../api/member";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-const CommentList = ({ postId = 1 }) => {
+const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
   const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [refresh, setRefresh] = useState(0);
@@ -58,6 +58,7 @@ const CommentList = ({ postId = 1 }) => {
             nickname={nickname}
             refresh={refresh}
             setRefresh={setRefresh}
+            postWriter={postWriter}
           />
         ))}
       </YellowWrapper>
