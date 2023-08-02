@@ -67,7 +67,7 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        if (err.response && err.response.status === 401) {
+        if (err.response && err.response.status === 400) {
           //토큰 만료시 모달 띄우기
           localStorage.setItem("isExpired", true);
           setIsModalVisible(localStorage.getItem("isExpired"));
