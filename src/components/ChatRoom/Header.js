@@ -13,7 +13,7 @@ const Header = () => {
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const Header = () => {
   };
   return (
     <div>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <HeaderDiv>
         <Btn
           onClick={() => {

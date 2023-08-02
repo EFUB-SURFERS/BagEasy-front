@@ -11,7 +11,7 @@ const Modal = ({
   postId,
   buyerNickname,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const handleItemClick = () => {
     try {
       //거래 성사 요청 보내기
@@ -28,7 +28,7 @@ const Modal = ({
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <Layer
         onClick={() => {
           setIsOpen(!isOpen);
