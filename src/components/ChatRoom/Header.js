@@ -21,15 +21,31 @@ const Header = () => {
   const { roomId } = useParams();
 
   const getHeaderData = async () => {
-    const res = await getChatRoom(roomId);
-    const mydata = await getMyProfile();
-    setRoomInfo(res);
-    getPostData(res);
-    checkIsSeller(res, mydata);
+    try {
+      const res = await getChatRoom(roomId);
+      const mydata = await getMyProfile();
+      setRoomInfo(res);
+      getPostData(res);
+      checkIsSeller(res, mydata);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   };
   const getPostData = async room => {
-    const res = await getDetail(room.postId);
-    setPostInfo(res);
+    try {
+      const res = await getDetail(room.postId);
+      setPostInfo(res);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   };
 
   const checkIsSeller = async (room, mydata) => {
@@ -44,15 +60,7 @@ const Header = () => {
   useEffect(() => {
     //헤더에 보이는 정보 get
     //채팅방 개별 정보 조회로 룸아이디를 얻어 판매글 상세 정보 조회, 판매자인지 확인
-    try {
-      getHeaderData();
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    getHeaderData();
   }, [isUpdate]);
 
   const openModal = () => {

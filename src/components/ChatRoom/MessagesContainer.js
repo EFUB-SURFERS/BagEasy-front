@@ -42,22 +42,22 @@ const MessagesContainer = () => {
 
   const getTotalMessage = async () => {
     //db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
-    const res = await getMessages(roomId);
-    res && setMessages(res.chatList);
-    setYourNickname(res.nickname);
-  };
-
-  useEffect(() => {
-    //접속시 db에 있던 채팅 기록 가져오기
     try {
-      getTotalMessage();
+      const res = await getMessages(roomId);
+      res && setMessages(res.chatList);
+      setYourNickname(res.nickname);
     } catch (err) {
-      if (err.response && err.response.status === 400) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));
       }
     }
+  };
+
+  useEffect(() => {
+    //접속시 db에 있던 채팅 기록 가져오기
+    getTotalMessage();
   }, []);
 
   useEffect(() => {

@@ -19,7 +19,7 @@ const Modal = ({
       setIsUpdate(true);
       setIsOpen(false);
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));

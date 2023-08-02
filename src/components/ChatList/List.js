@@ -10,26 +10,36 @@ const List = () => {
   let yourNickname = "";
 
   const [isModalVisible, setIsModalVisible] = useState("false");
+
   const getMynickname = async () => {
-    const data = await getMyProfile();
-    setMyNickname(data.nickname);
-  };
-  useEffect(() => {
     try {
-      getChatRoomsData();
-      getMynickname();
+      const data = await getMyProfile();
+      setMyNickname(data.nickname);
     } catch (err) {
-      if (err.response && err.response.status === 400) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));
       }
     }
+  };
+  useEffect(() => {
+    getChatRoomsData();
+    getMynickname();
   }, []);
 
   const getChatRoomsData = async () => {
-    const res = await getChatRooms();
-    setChatRooms(res);
+    try {
+      const res = await getChatRooms();
+
+      setChatRooms(res);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   };
 
   return (
