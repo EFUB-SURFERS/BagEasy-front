@@ -1,45 +1,25 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import myPageImg from "../../assets/myPageImg.png";
 import setting from "../../assets/setting.png";
 import Modal from "../UpdateUni/Modal";
 import { getMyProfile, putSchool } from "../../api/member";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 import Profile from "../Common/Profile";
 
-const UserInfo = () => {
+const UserInfo = ({ setIsModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [myProfile, setMyProfile] = useState({});
   const [uni, setUni] = useState("");
   const [uniToShow, setUniToShow] = useState("");
   const [update, setUpdate] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    try {
-      getMyprofileData();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    getMyprofileData();
   }, []);
 
   useEffect(() => {
     if (update) {
       setUniToShow(uni);
-      try {
-        updateSchool(uni);
-      } catch (err) {
-        if (err.response && err.response.status === 401) {
-          //토큰 만료시 모달 띄우기
-          localStorage.setItem("isExpired", true);
-          setIsModalVisible(localStorage.getItem("isExpired"));
-        }
-      }
-      console.log("몇번");
+      updateSchool(uni);
     }
   }, [update]);
 
@@ -47,7 +27,10 @@ const UserInfo = () => {
     try {
       const res = await putSchool(uni);
     } catch (err) {
-      console.log("error", err);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
     }
   };
 
@@ -57,13 +40,15 @@ const UserInfo = () => {
       setMyProfile(res);
       res.school ? setUniToShow(res.school) : setUniToShow("");
     } catch (err) {
-      console.log("error", err);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
     }
   };
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <AvatarContainer>
         {myProfile.nickname && (
           <Profile
