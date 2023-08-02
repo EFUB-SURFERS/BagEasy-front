@@ -59,7 +59,7 @@ const Nickname = () => {
           if (res.data.code === "EXPIRED_TOKEN") {
             // 토큰 만료
             setExpired(true);
-            console.log(expired);
+            console.log(expired, res.data.code);
           }
           if (res.data.code === "DUPLICATE_NICKNAME") {
             // 닉네임 중복
