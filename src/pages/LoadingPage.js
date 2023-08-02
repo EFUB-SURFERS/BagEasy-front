@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 const Loading = () => {
   const navigate = useNavigate();
-  const [isExistingMember, setIsExistingMember] = useState(false);
 
   const handleHome = () => {
     navigate("/home");
@@ -34,9 +33,8 @@ const Loading = () => {
 
         console.log(res);
         localStorage.setItem("bagtoken", accessToken);
-
         // 신규/기존 회원 여부 저장
-        setIsExistingMember(res.data.isExistingMember);
+        res.data.isExistingMember ? handleHome() : handleNickName();
       }
     } catch (error) {
       console.log(error);
@@ -45,10 +43,7 @@ const Loading = () => {
 
   useEffect(() => {
     if (code) {
-      handleLoginPost(code).then(() =>
-        isExistingMember ? handleHome() : handleNickName(),
-      );
-      console.log(isExistingMember);
+      handleLoginPost(code);
     } else {
       console.log("로그인 재시도하세요.");
     }
