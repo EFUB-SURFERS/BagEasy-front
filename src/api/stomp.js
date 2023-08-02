@@ -11,7 +11,7 @@ const onMessage = (data, onNewMessage) => {
   if (data.body) {
     const newMessage = JSON.parse(data.body);
 
-    const myNickname = localStorage.getItem("myNickname");
+    const myNickname = localStorage.getItem("myNicknameForChat");
 
     //db 조회 없이 화면에 보여줄 수 있도록 실시간 메세지 추가.
     if (newMessage.contentType === "talk") {

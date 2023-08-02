@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ListItemContainer = styled.div`
   display: flex;
@@ -22,11 +22,15 @@ export const TitleContainer = styled.div`
 export const Title = styled.div`
   font-size: 16px;
   margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  width: 200px;
 `;
 
 export const TrashImage = styled.img`
   width: 30px;
-  height: 38px;
 `;
 
 export const Words = styled.div`
@@ -50,7 +54,7 @@ export const Check = styled.div`
 `;
 
 export const CheckButton = styled.button`
-  background-color: ${({ completed }) => (completed ? '#262424' : '#cbcbcb')};
+  background-color: ${props => (props.$completed ? "#262424" : "#cbcbcb")};
   border: none;
   border-radius: 8px;
   width: 66px;

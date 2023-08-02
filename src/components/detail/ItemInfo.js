@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getDetail } from "../../api/posts";
 import { getMyProfile } from "../../api/member";
 import { getLikes } from "../../api/likes";
+import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 import CommentList from "../Comment/CommentList";
 import ItemContent from "./ItemContent";
@@ -14,11 +15,20 @@ const ItemInfo = ({ postId }) => {
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
   const [count, setCount] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    fetchPostData();
-    userData();
-    heartData();
+    try {
+      fetchPostData();
+      userData();
+      heartData();
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const fetchPostData = async () => {
@@ -59,6 +69,7 @@ const ItemInfo = ({ postId }) => {
 
   return (
     <Div>
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <ItemContent
         sellerNickname={post.sellerNickname}
         school={post.school}
@@ -66,7 +77,7 @@ const ItemInfo = ({ postId }) => {
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
-      <CommentList postId={postId} />
+      <CommentList postId={postId} postWriter={post.sellerNickname} />
       <Footer
         isLiked={likes.isLiked}
         setIsLiked={updateLikes}
@@ -90,5 +101,5 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 68px;
+  padding-top: 97px;
 `;

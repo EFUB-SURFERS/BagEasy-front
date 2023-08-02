@@ -90,10 +90,10 @@ const NextBtn = styled.div`
   position: absolute;
   right: 0;
   img {
-    width: 14px;
+    width: 22px;
     height: 83px;
     padding-top: 153px;
-    padding-right: 22px;
+    padding-right: 20px;
   }
 `;
 
@@ -101,10 +101,10 @@ const BeforeBtn = styled.div`
   position: absolute;
   left: 0;
   img {
-    width: 14px;
+    width: 22px;
     height: 83px;
     padding-top: 153px;
-    padding-left: 22px;
+    padding-left: 20px;
   }
 `;
 
@@ -166,10 +166,11 @@ const Item = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: 200px;
+  height: 100%;
 
   border-bottom: 0.5px solid #cecece;
 `;
+
 const ItemTitle = styled.div`
   display: flex;
   height: 48px;
@@ -184,20 +185,17 @@ const ItemTitle = styled.div`
   line-height: normal;
 
   padding: 5px 20px;
-  flex-shrink: 0;
 `;
+
 const ItemDescription = styled.div`
   display: flex;
-  height: 202px;
   flex-direction: column;
-  flex-shrink: 0;
   color: #000;
   font-family: Noto Sans KR;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  white-space: pre;
-
-  padding: 0px 20px;
+  /* white-space: pre-wrap; */
+  padding: 0px 20px 30px;
 `;

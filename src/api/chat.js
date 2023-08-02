@@ -30,8 +30,14 @@ export const createRoom = async (postId, myNickname) => {
       createMember: myNickname,
     });
 
-    return res.data;
+    return res.data.roomId;
   } catch (err) {
+    if (err.response.status === 400) {
+      const message = err.response.data.message;
+      const existRoomId = message.substr(22, 2);
+      console.log(existRoomId);
+      return existRoomId;
+    }
     console.log("에러 발생", err);
   }
 };

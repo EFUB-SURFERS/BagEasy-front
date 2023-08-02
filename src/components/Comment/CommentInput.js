@@ -88,12 +88,18 @@ const Lock = styled.img`
   position: absolute;
   width: 12px;
   right: 77px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendBtn = styled.div`
   width: 1.8rem;
   margin-right: 20px;
   flex: none;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendImg = styled.img`

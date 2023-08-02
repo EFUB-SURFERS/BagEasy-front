@@ -1,29 +1,28 @@
 import styled from "styled-components";
-import { useState } from "react";
 
 const Profile = ({ nickname, width, height }) => {
   // 5가지 컬러 중에 배경 랜덤 생성
-  const color_list = ["#F7C843", "#F76343", "#43CCF7", "#F74399", "#B343F7"];
-
-  // 새로고침했을 때 배경 바뀌지 않게 로컬스토리지에 저장
-  const getRandomChoice = () => {
-    const storedChoice = localStorage.getItem(nickname);
-    if (storedChoice && color_list.includes(storedChoice)) {
-      return storedChoice;
-    } else {
-      const random_num = Math.floor(Math.random() * 5);
-      const randomChoice = color_list[random_num];
-      localStorage.setItem(nickname, randomChoice);
-      return randomChoice;
+  function hashCode(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-  };
+    return hash;
+  }
 
-  const [random_choice, setRandomChoice] = useState(getRandomChoice);
+  function getRandomColorFromHash(hash) {
+    const color_list = ["#F7C843", "#F76343", "#43CCF7", "#F74399", "#B343F7"];
+    const index = Math.abs(hash) % color_list.length;
+    return color_list[index];
+  }
+
+  const hash = nickname && hashCode(nickname);
+  const color = getRandomColorFromHash(hash);
 
   return (
     <>
-      <ProfileIcon color={random_choice} width={width} height={height}>
-        {nickname[0]}
+      <ProfileIcon color={color} width={width} height={height}>
+        {nickname ? nickname[0] : null}
       </ProfileIcon>
     </>
   );
@@ -37,7 +36,7 @@ const ProfileIcon = styled.div`
   justify-content: center;
   border-radius: 50%;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: ${props => `${parseInt(props.width) / 2.5}px`};
   color: white;
   background-color: ${props => props.color};
 `;
