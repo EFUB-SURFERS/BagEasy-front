@@ -7,6 +7,7 @@ import Modal from "../UpdateUni/Modal";
 import choiceuni from "../../assets/post/choiceuni.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import close from "../../assets/post/close.png";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
@@ -95,7 +96,9 @@ const SalesContent = ({ postId, originalData }) => {
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
-        <Delete onClick={() => navigate(-1)}>X</Delete>
+        <Delete onClick={() => navigate(-1)}>
+          <Close src={close} />
+        </Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
       </Header>
       <Wrapper>
@@ -142,7 +145,7 @@ const SalesContent = ({ postId, originalData }) => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <UniText>
+          <UniText uni={modifiedData.uni}>
             {modifiedData.uni && !isOpen
               ? modifiedData.uni
               : "학교를 선택해주세요"}
@@ -258,7 +261,7 @@ const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #000;
+  color: #727272;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -268,6 +271,19 @@ const Done = styled.button`
   margin-right: 15px;
   margin-top: 76px;
   margin-bottom: 19px;
+
+  &:hover {
+    color: #000000;
+  }
+`;
+
+const Close = styled.img`
+  width: 25px;
+  height: 25px;
+  padding-left: 5px;
+  &:hover {
+    filter: brightness(30%);
+  }
 `;
 
 const Wrapper = styled.div`
@@ -318,7 +334,11 @@ const AddBtn = styled.label`
     font-weight: 400;
     line-height: normal;
     margin: auto;
-    padding-top: 8px;
+    padding-top: 7.6px;
+
+    &:hover {
+      color: #727272;
+    }
   }
 `;
 
@@ -371,13 +391,17 @@ const Titlesection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -394,13 +418,17 @@ const PriceSection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -418,7 +446,7 @@ const ContentSection = styled.div`
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
@@ -427,6 +455,10 @@ const ContentSection = styled.div`
     outline: none;
     white-space: pre-wrap;
     margin: 18px 30px;
+  }
+
+  textarea::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -449,6 +481,10 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 const Check = styled.img`
@@ -462,7 +498,7 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  color: #b8b8b8;
+  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;
@@ -473,4 +509,6 @@ const UniText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   width: 180px;
+
+  color: ${({ uni }) => (uni.length > 0 ? "black" : "#b8b8b8")};
 `;

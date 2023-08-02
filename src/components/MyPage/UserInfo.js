@@ -65,11 +65,13 @@ const UserInfo = () => {
     <>
       {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <AvatarContainer>
-        <Profile
-          nickname={myProfile.nickname}
-          width={"100px"}
-          height={"100px"}
-        />
+        {myProfile.nickname && (
+          <Profile
+            nickname={myProfile.nickname}
+            width={"100px"}
+            height={"100px"}
+          />
+        )}
       </AvatarContainer>
 
       <UserInfoContainer>

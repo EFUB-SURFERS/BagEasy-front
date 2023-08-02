@@ -2,17 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 const ListItem = ({ icon, text, onClick }) => (
-  <ListItemContainer onClick = {onClick}>
+  <ListItemContainer onClick={onClick}>
     <Icon src={icon} alt={text} />
     <ListItemText>{text}</ListItemText>
   </ListItemContainer>
 );
 
 const ListItemContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
-  padding-left: 10px;
   cursor: pointer;
+
+  &:hover {
+    background: #ffee94;
+  }
 `;
 
 const Icon = styled.img`
