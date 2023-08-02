@@ -481,8 +481,6 @@ const Close = styled.img`
   height: 25px;
   padding-left: 5px;
   &:hover {
-    /* transform: scale(1.5); */
-    /* transition: transform 1s; */
     filter: brightness(30%);
   }
 `;
