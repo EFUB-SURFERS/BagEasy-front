@@ -82,7 +82,7 @@ const TextWrapper = styled.div`
 const LocationIcon = styled.div`
   width: 15px;
   height: 15px;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 `;
 
 const Icon = styled.img`
@@ -95,7 +95,6 @@ const Text = styled.div`
   font-size: 16px;
   line-height: 21px;
   margin-left: 10px;
-  padding-bottom: 3px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
