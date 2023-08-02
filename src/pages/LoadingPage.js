@@ -9,12 +9,12 @@ const Loading = () => {
 
   const handleHome = () => {
     navigate("/home");
-    window.location.reroad();
+    window.location.reload();
   };
 
   const handleNickName = () => {
     navigate("/nickname");
-    window.location.reroad();
+    window.location.reload();
   };
 
   const params = new URLSearchParams(window.location.search);
@@ -34,11 +34,7 @@ const Loading = () => {
         const accessToken = res.data.accessToken;
         localStorage.setItem("bagtoken", accessToken);
         // 신규/기존 회원 여부 저장
-        if (res.data.isExistingMember) {
-          handleHome();
-        } else {
-          handleNickName();
-        }
+        res.data.isExistingMember ? handleHome() : handleNickName();
       }
     } catch (error) {
       console.log(error);
