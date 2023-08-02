@@ -53,9 +53,9 @@ const Nickname = () => {
           },
         );
 
-        console.log(res);
+        console.log(res.data);
 
-        if (res.data.code === "EXPIRED_TOKEN") {
+        if (res.data.response.data.code === "EXPIRED_TOKEN") {
           // 토큰 만료
           localStorage.setItem("isExpired", "true");
           setIsExpired(localStorage.getItem("isExpired"));
