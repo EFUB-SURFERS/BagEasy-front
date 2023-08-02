@@ -15,7 +15,9 @@ import {
 } from "../api/posts";
 
 const ItemListPage = () => {
-  const [onSales, setOnSales] = useState(true);
+  const [onSales, setOnSales] = useState(
+    JSON.parse(localStorage.getItem("toggle")),
+  );
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
@@ -26,8 +28,21 @@ const ItemListPage = () => {
   const navigate = useNavigate();
 
   const onToggle = () => {
-    setOnSales(prev => !prev);
+    setOnSales(prev => {
+      localStorage.setItem("toggle", JSON.stringify(!prev));
+      return !prev;
+    });
   };
+
+  //토글 기본 설정
+  useEffect(() => {
+    if (onSales === null) {
+      setOnSales(false);
+      localStorage.setItem("toggle", false);
+    }
+  }, []);
+
+  console.log(onSales);
 
   //양도글 리스트 조회
   useEffect(() => {
