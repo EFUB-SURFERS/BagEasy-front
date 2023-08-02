@@ -28,11 +28,11 @@ const Loading = () => {
         data,
       );
       if (res.status == "200") {
+        console.log(res);
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
-
-        console.log(res);
         localStorage.setItem("bagtoken", accessToken);
+        localStorage.setItem("myNickname", res.data.nickname);
         // 신규/기존 회원 여부 저장
         res.data.isExistingMember ? handleHome() : handleNickName();
       }
