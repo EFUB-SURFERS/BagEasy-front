@@ -27,7 +27,6 @@ const TokenRefreshModal = () => {
 
       if (res.status == "200") {
         // 토큰이 성공적으로 발급된 경우
-
         localStorage.setItem("bagtoken", res.data.accessToken);
         localStorage.setItem("isExpired", "false");
 
