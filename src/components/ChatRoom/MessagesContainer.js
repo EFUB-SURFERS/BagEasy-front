@@ -32,7 +32,7 @@ const MessagesContainer = () => {
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
   const scrollRef = useRef(null);
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
@@ -91,7 +91,7 @@ const MessagesContainer = () => {
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <Wrapper ref={scrollRef}>
         {messages ? (
           <div>
