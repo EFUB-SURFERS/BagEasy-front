@@ -123,7 +123,7 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <UniText>
+          <UniText uni={formData.uni}>
             {formData.uni.length > 0 && !isOpen
               ? formData.uni
               : "학교를 선택해주세요"}
@@ -354,13 +354,17 @@ const Titlesection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -377,13 +381,17 @@ const PriceSection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -401,7 +409,7 @@ const ContentSection = styled.div`
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
@@ -410,6 +418,10 @@ const ContentSection = styled.div`
     outline: none;
     white-space: pre-wrap;
     margin: 18px 30px;
+  }
+
+  textarea::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -449,7 +461,7 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  color: #b8b8b8;
+  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;
@@ -460,6 +472,8 @@ const UniText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   width: 180px;
+
+  color: ${({ uni }) => (uni.length > 0 ? "black" : "#b8b8b8")};
 `;
 
 const Close = styled.img`
