@@ -31,8 +31,11 @@ const Loading = () => {
         // 토큰 localstorage에 저장
         const accessToken = res.data.accessToken;
         localStorage.setItem("bagtoken", accessToken);
+        const isExistingMember = res.data.isExistingMember;
         // 신규/기존 회원 여부 저장
-        res.data.isExistingMember ? handleHome() : handleNickName();
+        isExistingMember
+          ? window.location.replace("/home")
+          : window.location.replace("/nickname");
       }
     } catch (error) {
       console.log(error);
