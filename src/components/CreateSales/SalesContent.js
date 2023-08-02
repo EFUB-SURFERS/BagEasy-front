@@ -227,17 +227,13 @@ const Delete = styled.div`
   padding-left: 11px;
   padding-top: 76px;
   padding-bottom: 18px;
-
-  &:hover {
-    color: #727272;
-  }
 `;
 
 const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #000;
+  color: #727272;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -249,7 +245,7 @@ const Done = styled.button`
   margin-bottom: 19px;
 
   &:hover {
-    color: #727272;
+    color: #000000;
   }
 `;
 
@@ -301,7 +297,7 @@ const AddBtn = styled.label`
     font-weight: 400;
     line-height: normal;
     margin: auto;
-    padding-top: 8px;
+    padding-top: 7.6px;
 
     &:hover {
       color: #727272;
@@ -436,6 +432,10 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 const Check = styled.img`
@@ -463,7 +463,12 @@ const UniText = styled.div`
 `;
 
 const Close = styled.img`
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   padding-left: 5px;
+  &:hover {
+    /* transform: scale(1.5); */
+    /* transition: transform 1s; */
+    filter: brightness(30%);
+  }
 `;
