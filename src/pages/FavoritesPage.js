@@ -4,12 +4,14 @@ import styled from "styled-components";
 import Header from "./../components/Common/Header";
 import { getLikedPosts } from "../api/likes";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
+  const navigate = useNavigate();
 
   //찜한 양도글 리스트 조회
   useEffect(() => {
@@ -32,7 +34,9 @@ const FavoritesPage = () => {
   return (
     <Wrapper>
       {isExpired === "true" && <TokenRefreshModal />}
-      <Header />
+      <button onClick={() => navigate("/home")}>
+        <Header />
+      </button>
       <List posts={posts} setRefresh={setRefresh} liked={true} />
     </Wrapper>
   );
