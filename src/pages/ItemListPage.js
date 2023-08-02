@@ -42,8 +42,6 @@ const ItemListPage = () => {
     }
   }, []);
 
-  console.log(onSales);
-
   //양도글 리스트 조회
   useEffect(() => {
     let data = null;

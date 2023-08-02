@@ -1,20 +1,11 @@
 import React from "react";
-import openArrow from "../../assets/itemListPage/openArrow.png";
-import closeArrow from "../../assets/itemListPage/closeArrow.png";
 import { styled } from "styled-components";
 
-const CommentHeader = ({ comments, open, setOpen }) => {
+const CommentHeader = ({ comments }) => {
   return (
     <Header>
       <Text>댓글</Text>
       <Count>{`${comments.length}개`}</Count>
-      <ArrowWrapper
-        onClick={() => {
-          setOpen(prev => !prev);
-        }}
-      >
-        <Arrow src={open ? closeArrow : openArrow} />
-      </ArrowWrapper>
     </Header>
   );
 };
@@ -35,17 +26,4 @@ const Text = styled.div`
 const Count = styled.div`
   color: #848484;
   font-size: 12px;
-`;
-
-const ArrowWrapper = styled.div`
-  margin-left: auto;
-  margin-top: 2px;
-  width: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Arrow = styled.img`
-  width: 100%;
 `;
