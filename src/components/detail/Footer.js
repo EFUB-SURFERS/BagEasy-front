@@ -32,7 +32,11 @@ const Footer = ({
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
-    navigate("/modify/" + postId);
+    if (isSold) {
+      alert("이미 판매가 완료된 글은 수정이 불가합니다.");
+      return;
+    } else navigate("/modify/" + postId);
+    // navigate("/modify/" + postId);
   };
 
   useEffect(() => {
