@@ -28,7 +28,7 @@ export const deleteDetail = async postId => {
     const res = await client.delete(`posts/${postId}`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -42,7 +42,7 @@ export const createPost = async formData => {
     });
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -66,8 +66,7 @@ export const getAllPosts = async () => {
     const res = await client.get(`posts`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -77,8 +76,7 @@ export const getPostonSales = async schoolName => {
     const res = await client.get(`posts/sales`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -96,8 +94,7 @@ export const getPostBySchool = async schoolName => {
     );
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -115,7 +112,6 @@ export const getpostsBySchoolOnSales = async schoolName => {
     );
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };

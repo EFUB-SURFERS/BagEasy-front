@@ -24,7 +24,7 @@ const ItemListPage = () => {
   const [uniDisplay, setUniDisplay] = useState(
     localStorage.getItem("university"),
   );
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
+  const [isExpired, setIsExpired] = useState(false);
   const navigate = useNavigate();
 
   const onToggle = () => {
@@ -46,53 +46,54 @@ const ItemListPage = () => {
   useEffect(() => {
     let data = null;
     async function fetchData() {
-      if (onSales) {
-        data = uniDisplay
-          ? await getpostsBySchoolOnSales(uniDisplay)
-          : await getPostonSales();
-      } else {
-        data = uniDisplay
-          ? await getPostBySchool(uniDisplay)
-          : await getAllPosts();
-      }
-
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
+      try {
+        if (onSales) {
+          data = uniDisplay
+            ? await getpostsBySchoolOnSales(uniDisplay)
+            : await getPostonSales();
+        } else {
+          data = uniDisplay
+            ? await getPostBySchool(uniDisplay)
+            : await getAllPosts();
+        }
         setPosts(data);
         setLoading(false);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsExpired(true);
+        }
       }
     }
-
     fetchData();
   }, [refresh, onSales]);
 
   return (
-    <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
-      <Header />
-      <Buttons navigate={navigate} />
-      <SearchBar
-        onToggle={onToggle}
-        onSales={onSales}
-        uniDisplay={uniDisplay}
-        setUniDisplay={setUniDisplay}
-        setRefresh={setRefresh}
-      />
-      {loading ? (
-        <Loader>loading...</Loader>
-      ) : (
-        <List
-          posts={posts}
+    <>
+      {isExpired && <TokenRefreshModal />}
+      <Wrapper>
+        <Header />
+        <Buttons navigate={navigate} />
+        <SearchBar
+          onToggle={onToggle}
+          onSales={onSales}
+          uniDisplay={uniDisplay}
+          setUniDisplay={setUniDisplay}
           setRefresh={setRefresh}
-          offset="111px"
           setIsExpired={setIsExpired}
         />
-      )}
-      <WriteBtn />
-    </Wrapper>
+        {loading ? (
+          <Loader>loading...</Loader>
+        ) : (
+          <List
+            posts={posts}
+            setRefresh={setRefresh}
+            offset="111px"
+            setIsExpired={setIsExpired}
+          />
+        )}
+        <WriteBtn />
+      </Wrapper>
+    </>
   );
 };
 

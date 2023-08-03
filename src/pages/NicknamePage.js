@@ -14,7 +14,6 @@ const Nickname = () => {
   const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
   const token = localStorage.getItem("bagtoken");
-  console.log("닉네임 토큰", token);
 
   const handleNavigateBack = () => {
     navigate(-1);

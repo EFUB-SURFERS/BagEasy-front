@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const TokenRefreshModal = () => {
   const navigate = useNavigate();
+
   const token = localStorage.getItem("bagtoken");
-  console.log("재발급 전 토큰", token);
 
   const handleNavigateHome = () => {
     navigate("/home");
@@ -18,23 +18,29 @@ const TokenRefreshModal = () => {
 
   // 토큰 재발급
   const RefreshToken = async () => {
-    console.log("토큰 테스트", token);
     try {
-      const res = await axios.post("https://server.bageasy.net/auth/reissue", {
-        headers: {
-          Authorization: token,
+      const res = await axios.post(
+        "https://server.bageasy.net/auth/reissue",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       console.log(res);
 
-      if (res.status === 200) {
+      if (res.status == 200) {
         // 토큰이 성공적으로 발급된 경우
         localStorage.setItem("bagtoken", res.data.accessToken);
         handleNavigateHome();
+        window.location.reload();
       }
-      if (res.status === 401) {
+      if (res.status == 401) {
         // refresh token도 만료된 경우 -> 다시 로그인 하도록
+        localStorage.clear();
         handleNavigateLogin();
+        window.alert("토큰이 만료되어 자동으로 로그아웃 되었습니다.");
       }
     } catch (err) {
       console.log(err.response);
