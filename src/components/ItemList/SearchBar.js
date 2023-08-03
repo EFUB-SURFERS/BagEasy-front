@@ -21,7 +21,7 @@ const SearchBar = ({
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = getMyProfile();
+        const data = await getMyProfile();
         !uniDisplay && setUniDisplay(data.school);
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
