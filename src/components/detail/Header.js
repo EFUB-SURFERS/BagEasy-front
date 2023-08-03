@@ -17,7 +17,11 @@ const Header = () => {
         >
           <img src={revert} alt="뒤로가기" />
         </Btn>
-        <Logo>
+        <Logo
+          onClick={() => {
+            navigate("/home");
+          }}
+        >
           <img src={logo} alt="로고" />
         </Logo>
       </HeaderDiv>
