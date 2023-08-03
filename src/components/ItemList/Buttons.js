@@ -6,6 +6,7 @@ import Profile from "../Common/Profile";
 
 const Buttons = ({ navigate, setIsModalVisible }) => {
   const [nickname, setNickname] = useState();
+
   useEffect(() => {
     async function getNickname() {
       try {
