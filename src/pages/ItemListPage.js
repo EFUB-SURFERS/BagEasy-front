@@ -71,7 +71,7 @@ const ItemListPage = () => {
     <Wrapper>
       {isModalVisible && <TokenRefreshModal />}
       <Header />
-      <Buttons navigate={navigate} />
+      <Buttons navigate={navigate} setIsModalVisible={setIsModalVisible} />
       <SearchBar
         onToggle={onToggle}
         onSales={onSales}
