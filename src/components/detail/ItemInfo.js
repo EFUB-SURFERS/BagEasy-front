@@ -15,20 +15,12 @@ const ItemInfo = ({ postId }) => {
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
   const [count, setCount] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
-    try {
-      fetchPostData();
-      userData();
-      heartData();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    fetchPostData();
+    userData();
+    heartData();
   }, []);
 
   const fetchPostData = async () => {
@@ -36,7 +28,9 @@ const ItemInfo = ({ postId }) => {
       const getData = await getDetail(postId);
       setPost(getData);
     } catch (err) {
-      console.log("error", err);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
   };
 
@@ -45,7 +39,9 @@ const ItemInfo = ({ postId }) => {
       const getData = await getMyProfile();
       setMyId(getData);
     } catch (err) {
-      console.log("error", err);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
   };
 
@@ -54,13 +50,21 @@ const ItemInfo = ({ postId }) => {
       const heartData = await getLikes(postId);
       setLikes(heartData);
     } catch (err) {
-      console.log("error", err);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
   };
 
   const updateLikes = newLikes => {
-    setLikes(newLikes);
-    fetchPostData();
+    try {
+      setLikes(newLikes);
+      fetchPostData();
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
+    }
   };
 
   if (!post) {
@@ -69,7 +73,7 @@ const ItemInfo = ({ postId }) => {
 
   return (
     <Div>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <ItemContent
         sellerNickname={post.sellerNickname}
         school={post.school}
@@ -77,7 +81,7 @@ const ItemInfo = ({ postId }) => {
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
       />
-      <CommentList postId={postId} />
+      <CommentList postId={postId} postWriter={post.sellerNickname} />
       <Footer
         isLiked={likes.isLiked}
         setIsLiked={updateLikes}
@@ -88,6 +92,7 @@ const ItemInfo = ({ postId }) => {
         price={post.price}
         isSold={post.isSold}
         myNickname={myId.nickname}
+        setIsModalVisible={setIsModalVisible}
       />
     </Div>
   );
@@ -101,5 +106,5 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 68px;
+  padding-top: 97px;
 `;

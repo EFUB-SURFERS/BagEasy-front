@@ -13,7 +13,7 @@ const CommentInput = ({ postId, setRefresh }) => {
   //댓글 작성
   const postComment = () => {
     async function postData() {
-      await createComment(
+      const data = await createComment(
         postId,
         {
           commentContent: comment,
@@ -22,9 +22,14 @@ const CommentInput = ({ postId, setRefresh }) => {
         { headers: { "Content-Type": "application/json" } },
       );
 
-      setRefresh(prev => prev + 1);
-      setComment("");
-      setIsSecret(false);
+      //토큰 만료시
+      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
+        localStorage.setItem("isExpired", true);
+      } else {
+        setRefresh(prev => prev + 1);
+        setComment("");
+        setIsSecret(false);
+      }
     }
     comment && postData();
   };
@@ -83,12 +88,18 @@ const Lock = styled.img`
   position: absolute;
   width: 12px;
   right: 77px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendBtn = styled.div`
   width: 1.8rem;
   margin-right: 20px;
   flex: none;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const SendImg = styled.img`

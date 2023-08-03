@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 //components
 import Header from "../components/detail/Header";
-
 import styled from "styled-components";
 import ItemInfo from "../components/detail/ItemInfo";
 

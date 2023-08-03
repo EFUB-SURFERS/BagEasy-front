@@ -7,8 +7,7 @@ import CommentHeader from "./CommentHeader";
 import { getMyProfile } from "../../api/member";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-const CommentList = ({ postId = 1 }) => {
-  const [open, setOpen] = useState(false);
+const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
   const [comments, setComments] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [nickname, setNickname] = useState("nickname");
@@ -49,8 +48,8 @@ const CommentList = ({ postId = 1 }) => {
   return (
     <Wrapper>
       {isExpired === "true" && <TokenRefreshModal />}
-      <YellowWrapper open={open}>
-        <CommentHeader comments={comments} open={open} setOpen={setOpen} />
+      <YellowWrapper>
+        <CommentHeader comments={comments} />
         {comments.map((comment, key) => (
           <CommentReplies
             comment={comment}
@@ -58,6 +57,7 @@ const CommentList = ({ postId = 1 }) => {
             nickname={nickname}
             refresh={refresh}
             setRefresh={setRefresh}
+            postWriter={postWriter}
           />
         ))}
       </YellowWrapper>
@@ -85,9 +85,6 @@ const YellowWrapper = styled.div`
   margin: 46px 23px 48px 23px;
   overflow: hidden;
   background: #ffee94;
-  height: ${props => (!props.open ? "90px" : "auto")};
 `;
-
-const List = styled.div``;
 
 export default CommentList;

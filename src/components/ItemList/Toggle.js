@@ -5,7 +5,7 @@ const Toggle = ({ onToggle, onSales }) => {
   return (
     <Wrapper>
       <CheckBox type="checkbox" id="toggle" onChange={onToggle} />
-      <Label htmlFor="toggle" checked={!onSales} />
+      <Label htmlFor="toggle" $checked={!onSales} />
     </Wrapper>
   );
 };
@@ -28,6 +28,9 @@ const Label = styled.label`
   transition: all 0.1s ease-in-out;
   background: white;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.15);
+  &:hover {
+    cursor: pointer;
+  }
 
   //디폴트 배경
   &::before {
@@ -49,7 +52,7 @@ const Label = styled.label`
     text-align: center;
     width: 38px;
     height: 19px;
-    padding-top: 3px;
+    padding-top: 4px;
     padding-left: 1px;
     left: 38px;
     border-radius: 20px;
@@ -61,7 +64,7 @@ const Label = styled.label`
   }
 
   ${props =>
-    props.checked &&
+    props.$checked &&
     `
     //선택시 배경
     /* 배경색 변경 트랜지션 */
@@ -86,7 +89,7 @@ const Label = styled.label`
       text-align: center;
       width: 38px;
       height: 19px;
-      padding-top: 3px;
+      padding-top: 4px;
       padding-left: 1px;
       left: 4px;
       border-radius: 20px;

@@ -10,7 +10,7 @@ const List = ({
   setIsExpired,
 }) => {
   return (
-    <Wrapper offset={offset}>
+    <Wrapper $offset={offset}>
       {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
@@ -35,8 +35,8 @@ const Wrapper = styled.div`
   z-index: -1;
   display: flex;
   flex-direction: column;
-  margin-top: ${props => props.offset};
-  padding-bottom: ${props => props.offset};
+  margin-top: ${props => props.$offset};
+  padding-bottom: ${props => `calc(${props.$offset} + 70px)`};
   box-sizing: border-box;
   overflow: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */

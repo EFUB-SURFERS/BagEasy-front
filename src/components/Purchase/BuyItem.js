@@ -13,7 +13,7 @@ const BuyItem = () => {
     try {
       getBuyListData();
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.status === 400) {
         //토큰 만료시 모달 띄우기
         localStorage.setItem("isExpired", true);
         setIsModalVisible(localStorage.getItem("isExpired"));
@@ -42,6 +42,7 @@ const BuyItem = () => {
             title={"테스트 제목 길이 테스트 제목 길이 테스트 제목 길이 테스타"}
             subtitle={item.school}
             price={item.price}
+            postId={item.postId}
           />
         ))}
     </>

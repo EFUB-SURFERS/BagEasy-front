@@ -10,10 +10,12 @@ import choiceuni from "../../assets/post/choiceuni.png";
 import emptyimage from "../../assets/post/emptyimage.png";
 import redspot from "../../assets/post/redspot.png";
 import greenspot from "../../assets/post/greenspot.png";
+import close from "../../assets/post/close.png";
+import upload from "../../assets/post/upload.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [formData, setFormData] = useState({
     //전송할 데이터
@@ -66,10 +68,8 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        if (err.response && err.response.status === 401) {
-          //토큰 만료시 모달 띄우기
-          localStorage.setItem("isExpired", true);
-          setIsModalVisible(localStorage.getItem("isExpired"));
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
         }
       }
     } else {
@@ -79,9 +79,11 @@ const SalesContent = () => {
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}{" "}
       <Header>
-        <Delete onClick={() => navigate(-1)}>X</Delete>
+        <Delete onClick={() => navigate(-1)}>
+          <Close src={close} />
+        </Delete>
         <Done onClick={handleRegisterButtonClick}>완료</Done>
       </Header>
       <Wrapper>
@@ -92,9 +94,9 @@ const SalesContent = () => {
           ) : (
             <Check className="check" src={redspot} />
           )}
-          <AddBtn for="file">
-            <p>+</p>
-          </AddBtn>
+          <UploadBtn for="file">
+            <img src={upload}></img>
+          </UploadBtn>
           <input
             type="file"
             name="file"
@@ -120,7 +122,7 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>학교</Title>
-          <UniText>
+          <UniText uni={formData.uni}>
             {formData.uni.length > 0 && !isOpen
               ? formData.uni
               : "학교를 선택해주세요"}
@@ -230,7 +232,7 @@ const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #000;
+  color: #727272;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -240,6 +242,10 @@ const Done = styled.button`
   margin-right: 15px;
   margin-top: 76px;
   margin-bottom: 19px;
+
+  &:hover {
+    color: #000000;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -261,36 +267,16 @@ const SubLine = styled.div`
   background: #d3d3d3;
 `;
 
-const AddBtn = styled.label`
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  border: 6px solid #ffc700;
-  background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    #cecece;
-  margin-left: 34px;
-  margin-top: 24px;
+const UploadBtn = styled.label`
+  margint-left: 40px;
+  img {
+    padding-left: 17px;
+    width: 68px;
+    height: 68px;
 
-  p {
-    display: flex;
-    width: 50px;
-    height: 49px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #828282;
-    text-align: center;
-    font-family: Inter;
-    font-size: 64px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin: auto;
-    padding-top: 8px;
+    &:hover {
+      filter: brightness(80%);
+    }
   }
 `;
 
@@ -343,13 +329,17 @@ const Titlesection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -366,13 +356,17 @@ const PriceSection = styled.div`
     width: 250px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     outline: none;
+  }
+
+  input::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -390,7 +384,7 @@ const ContentSection = styled.div`
     height: 157px;
     flex-direction: column;
     flex-shrink: 0;
-    color: #b8b8b8;
+    color: black;
     font-family: Inter;
     font-size: 13px;
     font-style: normal;
@@ -399,6 +393,10 @@ const ContentSection = styled.div`
     outline: none;
     white-space: pre-wrap;
     margin: 18px 30px;
+  }
+
+  textarea::placeholder {
+    color: #b8b8b8;
   }
 `;
 
@@ -421,6 +419,10 @@ const ChoiceBtn = styled.div`
     width: 85.359px;
     height: 31px;
   }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
 
 const Check = styled.img`
@@ -434,7 +436,7 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  color: #b8b8b8;
+  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;
@@ -445,4 +447,15 @@ const UniText = styled.div`
   overflow: hidden;
   white-space: nowrap;
   width: 180px;
+
+  color: ${({ uni }) => (uni.length > 0 ? "black" : "#b8b8b8")};
+`;
+
+const Close = styled.img`
+  width: 25px;
+  height: 25px;
+  padding-left: 5px;
+  &:hover {
+    filter: brightness(30%);
+  }
 `;

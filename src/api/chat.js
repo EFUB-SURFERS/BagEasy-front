@@ -7,7 +7,7 @@ export const getChatRooms = async () => {
 
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -18,7 +18,7 @@ export const getMessages = async roomId => {
 
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -38,7 +38,7 @@ export const createRoom = async (postId, myNickname) => {
       console.log(existRoomId);
       return existRoomId;
     }
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -49,7 +49,7 @@ export const getChatRoom = async roomId => {
 
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -58,6 +58,6 @@ export const saveMessage = async newMessage => {
   try {
     await client.post(`chatrooms/callback`, newMessage);
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };

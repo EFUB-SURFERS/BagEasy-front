@@ -20,7 +20,7 @@ const SearchBar = ({
   useEffect(() => {
     async function fetchData() {
       const data = getMyProfile();
-      setUniDisplay(data.school);
+      !uniDisplay && setUniDisplay(data.school);
     }
     fetchData();
   }, []);
@@ -29,6 +29,7 @@ const SearchBar = ({
   useEffect(() => {
     if (!isOpen && update) {
       setUniDisplay(uni);
+      localStorage.setItem("university", uni);
       setRefresh(prev => prev + 1);
     }
   }, [isOpen]);
@@ -57,7 +58,7 @@ const SearchBar = ({
 };
 
 const Container = styled.div`
-  margin-top: 97px;
+  margin-top: 70px;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -67,6 +68,9 @@ const Container = styled.div`
   height: 41px;
   background: #ffc700;
   padding: 0 10px;
+  &:hover {
+    cursor: default;
+  }
 `;
 
 const TextWrapper = styled.div`
@@ -74,15 +78,19 @@ const TextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 70%;
-  padding-left: 7px;
-  padding-right: 50px;
   box-sizing: border-box;
+  padding-left: 7px;
+  padding-right: 40px;
+  @media (min-width: 450px) {
+    margin-left: auto;
+    padding-right: 15px;
+  }
 `;
 
 const LocationIcon = styled.div`
   width: 15px;
   height: 15px;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 `;
 
 const Icon = styled.img`
@@ -95,7 +103,6 @@ const Text = styled.div`
   font-size: 16px;
   line-height: 21px;
   margin-left: 10px;
-  padding-bottom: 3px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -111,6 +118,9 @@ const ChangeBtn = styled.div`
   text-decoration: underline;
   text-underline-offset: 2px;
   white-space: nowrap;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default SearchBar;
