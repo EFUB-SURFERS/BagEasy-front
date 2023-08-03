@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import ModalBg from "../../assets/modal/modal_bg.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const TokenRefreshModal = () => {
   const navigate = useNavigate();
@@ -48,44 +47,21 @@ const TokenRefreshModal = () => {
     }
   };
 
-  useEffect(() => {
-    // 컴포넌트가 마운트되면 스크롤 막음
-    document.body.style.overflow = "hidden";
-
-    // 컴포넌트가 언마운트되면 스크롤 허용
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
   return (
-    <>
-      <Container>
-        <P>인증 토큰이 만료되었습니다. 다시 발급해주세요.</P>
-        <Btn onClick={RefreshToken}>재발급</Btn>
-        <Modal src={ModalBg} />
-      </Container>
-      <Bg />
-    </>
+    <Container>
+      <P>인증 토큰이 만료되었습니다. 다시 발급해주세요.</P>
+      <Btn onClick={RefreshToken}>재발급</Btn>
+      <Modal src={ModalBg} />
+    </Container>
   );
 };
-
-const Bg = styled.div`
-  position: fixed;
-  z-index: 2;
-  top: 0;
-  width: 100vw;
-  height: 100%;
-  background-color: gray;
-  opacity: 0.7;
-`;
 
 const Container = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  z-index: 1;
 `;
 
 const P = styled.p`
