@@ -1,15 +1,15 @@
 import React from "react";
 import { styled } from "styled-components";
-//import logo from "../../assets/common/logo.png";
+import logo from "../../assets/common/logo.png";
 import { useNavigate } from "react-router-dom";
-//에러나서 이미지 태그에 로고 뺴뒀어요 피그마보고 수정 부탁드려요
+
 const Header = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
       <HeaderDiv>
         <p className="logo">
-          <img src={""} alt="로고" />
+          <img src={logo} alt="로고" />
         </p>
       </HeaderDiv>
     </Wrapper>

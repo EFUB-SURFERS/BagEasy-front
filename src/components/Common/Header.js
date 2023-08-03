@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
-import newLogo from "../../assets/common/newLogo.png";
+import logo from "../../assets/common/logo.png";
 import back from "../../assets/common/back.png";
 import { useNavigate } from "react-router-dom";
 //사용방법
@@ -18,13 +18,8 @@ const Header = () => {
         >
           <img src={back} alt="뒤로가기" />
         </Btn>
-        <p
-          className="logo"
-          onClick={() => {
-            navigate("/home");
-          }}
-        >
-          <img src={newLogo} alt="로고" />
+        <p className="logo">
+          <img src={logo} alt="로고" />
         </p>
       </HeaderDiv>
     </Wrapper>
@@ -52,8 +47,8 @@ const HeaderDiv = styled.div`
     left: 50%;
     padding-top: 24px;
     img {
-      width: 25px;
-      height: 28px;
+      width: 58px;
+      height: 22px;
       transform: translate(-50%, 0%);
     }
   }
