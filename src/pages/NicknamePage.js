@@ -50,6 +50,7 @@ const Nickname = () => {
       );
       return res.data;
     } catch (err) {
+      console.log(err);
       throw err;
     }
   };
@@ -83,7 +84,7 @@ const Nickname = () => {
 
   return (
     <>
-      {isExpired === "true" && <TokenRefreshModal />}
+      {isExpired && <TokenRefreshModal />}
       <NickNameContainer>
         <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
         <Copy>닉네임을 입력해주세요!</Copy>
