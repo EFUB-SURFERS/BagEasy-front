@@ -50,7 +50,6 @@ const Loading = () => {
   return (
     <LoadingConatiner>
       <LoadingIcon src={loading} />
-      <H2>로그인중입니다...</H2>
     </LoadingConatiner>
   );
 };
@@ -61,12 +60,6 @@ const LoadingConatiner = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-top: 15rem;
-`;
-
-const H2 = styled.h2`
-  font-weight: 500;
-  margin-top: 0;
-  font-size: 1.2rem;
 `;
 
 const LoadingIcon = styled.img``;
