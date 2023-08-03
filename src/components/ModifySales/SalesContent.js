@@ -13,7 +13,7 @@ import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState("false");
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
 
@@ -82,8 +82,10 @@ const SalesContent = ({ postId, originalData }) => {
         alert("게시글이 수정되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-          setIsModalVisible(true);
+        if (err.response && err.response.status === 400) {
+          //토큰 만료시 모달 띄우기
+          localStorage.setItem("isExpired", true);
+          setIsModalVisible(localStorage.getItem("isExpired"));
         }
       }
     } else {
@@ -93,7 +95,7 @@ const SalesContent = ({ postId, originalData }) => {
 
   return (
     <>
-      {isModalVisible && <TokenRefreshModal />}
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Header>
         <Delete onClick={() => navigate(-1)}>
           <Close src={close} />

@@ -15,12 +15,20 @@ const ItemInfo = ({ postId }) => {
   const [myId, setMyId] = useState("");
   const [likes, setLikes] = useState("");
   const [count, setCount] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    fetchPostData();
-    userData();
-    heartData();
+    try {
+      fetchPostData();
+      userData();
+      heartData();
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        //토큰 만료시 모달 띄우기
+        localStorage.setItem("isExpired", true);
+        setIsModalVisible(localStorage.getItem("isExpired"));
+      }
+    }
   }, []);
 
   const fetchPostData = async () => {
@@ -28,9 +36,7 @@ const ItemInfo = ({ postId }) => {
       const getData = await getDetail(postId);
       setPost(getData);
     } catch (err) {
-      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-        setIsModalVisible(true);
-      }
+      console.log("error", err);
     }
   };
 
@@ -39,9 +45,7 @@ const ItemInfo = ({ postId }) => {
       const getData = await getMyProfile();
       setMyId(getData);
     } catch (err) {
-      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-        setIsModalVisible(true);
-      }
+      console.log("error", err);
     }
   };
 
@@ -50,21 +54,13 @@ const ItemInfo = ({ postId }) => {
       const heartData = await getLikes(postId);
       setLikes(heartData);
     } catch (err) {
-      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-        setIsModalVisible(true);
-      }
+      console.log("error", err);
     }
   };
 
   const updateLikes = newLikes => {
-    try {
-      setLikes(newLikes);
-      fetchPostData();
-    } catch (err) {
-      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-        setIsModalVisible(true);
-      }
-    }
+    setLikes(newLikes);
+    fetchPostData();
   };
 
   if (!post) {
@@ -73,7 +69,7 @@ const ItemInfo = ({ postId }) => {
 
   return (
     <Div>
-      {isModalVisible && <TokenRefreshModal />}
+      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <ItemContent
         sellerNickname={post.sellerNickname}
         school={post.school}
@@ -92,7 +88,6 @@ const ItemInfo = ({ postId }) => {
         price={post.price}
         isSold={post.isSold}
         myNickname={myId.nickname}
-        setIsModalVisible={setIsModalVisible}
       />
     </Div>
   );
