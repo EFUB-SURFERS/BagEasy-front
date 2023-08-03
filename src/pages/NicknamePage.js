@@ -10,7 +10,7 @@ const Nickname = () => {
   const [isOverlap, setIsOverlap] = useState(false); // 닉네임 중복 체크
   const [isFocused, setIsFocused] = useState(false); // focus 여부
   const [temp, setTemp] = useState(""); // 현재 입력값이 중복되는지 체크
-  const [isExpired, setIsExpired] = useState("");
+  const [isExpired, setIsExpired] = useState(false);
   const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
 
@@ -52,34 +52,29 @@ const Nickname = () => {
             },
           },
         );
-
         console.log(res.data);
 
-        if (res.data.response.data.code === "EXPIRED_TOKEN") {
+        setIsOverlap(false);
+        setIsFocused(false);
+        setTemp("");
+        navigate("/home");
+      } catch (error) {
+        if (error.response && error.response.data.code === "EXPIRED_TOKEN") {
           // 토큰 만료
-          localStorage.setItem("isExpired", "true");
-          setIsExpired(localStorage.getItem("isExpired"));
-        } else if (res.data.code === "DUPLICATE_NICKNAME") {
+          setIsExpired(true);
+        } else if (error.response.data.code === "DUPLICATE_NICKNAME") {
           // 닉네임 중복
           setIsOverlap(true);
           setIsFocused(true);
           setTemp(nickname);
         }
-
-        if (res.status === 200) {
-          setIsOverlap(false);
-          setIsFocused(false);
-          setTemp("");
-          navigate("/home");
-        }
-      } catch (error) {
-        console.log(error);
       }
     }
   };
 
   return (
     <NickNameContainer>
+      {isExpired && <TokenRefreshModal />}
       <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
       <Copy>닉네임을 입력해주세요!</Copy>
       <Copy2>이후 닉네임 변경이 불가하니 신중하게 결정해주세요.</Copy2>
@@ -102,7 +97,6 @@ const Nickname = () => {
           <Copy3>- 중복되는 닉네임입니다.</Copy3>
         )}
       </Container>
-      {isExpired === "true" && <TokenRefreshModal />}
       <Btn onClick={putNickName}>확인</Btn>
     </NickNameContainer>
   );
