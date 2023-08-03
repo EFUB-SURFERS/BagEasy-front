@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import List from "./../components/ItemList/List";
 import styled from "styled-components";
-import Header from "./../components/Common/Header";
+import SimpleHeader from "../components/ItemList/SimpleHeader";
 import { getLikedPosts } from "../api/likes";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ const FavoritesPage = () => {
     <Wrapper>
       {isModalVisible && <TokenRefreshModal />}
       <button onClick={() => navigate("/home")}>
-        <Header />
+        <SimpleHeader />
       </button>
       <List
         posts={posts}

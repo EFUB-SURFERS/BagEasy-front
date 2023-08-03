@@ -7,7 +7,11 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      <Logo>
+      <Logo
+        onClick={() => {
+          navigate("/home");
+        }}
+      >
         <Img src={logo} alt="로고" />
       </Logo>
     </Wrapper>
@@ -31,6 +35,9 @@ const Logo = styled.div`
   width: 124px;
   margin-left: 21px;
   padding-top: 24px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Img = styled.img`
