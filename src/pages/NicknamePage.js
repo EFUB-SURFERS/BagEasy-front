@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Arrow from "../assets/arrow.png";
+import Arrow from "../assets/GoogleLogin/arrow.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
