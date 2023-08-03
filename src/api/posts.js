@@ -56,7 +56,7 @@ export const modifyPost = async (postId, formData) => {
     });
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
