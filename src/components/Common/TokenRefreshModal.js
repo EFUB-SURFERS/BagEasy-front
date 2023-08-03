@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const TokenRefreshModal = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("bagtoken");
+  console.log("재발급 전 토큰", token);
 
   const handleNavigateHome = () => {
     navigate("/home");
@@ -16,8 +18,6 @@ const TokenRefreshModal = () => {
 
   // 토큰 재발급
   const RefreshToken = async () => {
-    const token = localStorage.getItem("bagtoken");
-    console.log("재발급 전 토큰", token);
     try {
       const res = await axios.post("https://server.bageasy.net/auth/reissue", {
         headers: {
