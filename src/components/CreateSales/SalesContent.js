@@ -162,6 +162,7 @@ const SalesContent = () => {
               setFormData(prevData => ({ ...prevData, price: e.target.value }));
             }}
           />
+          <p>원</p>
         </PriceSection>
         <SubLine />
         <ContentSection>
@@ -346,6 +347,7 @@ const Titlesection = styled.div`
 const PriceSection = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   margin-top: 18px;
   margin-bottom: 19px;
@@ -367,6 +369,11 @@ const PriceSection = styled.div`
 
   input::placeholder {
     color: #b8b8b8;
+  }
+
+  p {
+    margin: 0;
+    font-family: Inter;
   }
 `;
 
