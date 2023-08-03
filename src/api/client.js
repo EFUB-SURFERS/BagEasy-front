@@ -14,5 +14,4 @@ console.log(
   "현재 설정된 토큰",
   client.defaults.headers.common["Authorization"],
 );
-
 export default client;
