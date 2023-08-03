@@ -5,7 +5,7 @@ export const addLikes = async postId => {
   try {
     await client.post(`posts/${postId}/likes`);
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -14,7 +14,7 @@ export const cancelLikes = async postId => {
   try {
     const res = await client.delete(`posts/${postId}/likes`);
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -24,8 +24,7 @@ export const getLikes = async postId => {
     const res = await client.get(`posts/${postId}/likes`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
