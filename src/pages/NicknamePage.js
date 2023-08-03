@@ -35,26 +35,31 @@ const Nickname = () => {
   }, []);
 
   const putNickName = async () => {
+    const token = localStorage.getItem("bagtoken");
+    try {
+      const res = await axios.put(
+        "https://server.bageasy.net/members/nickname",
+        {
+          nickname: nickname,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
+      return res.data;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const PutNickName = async () => {
     if (nickname.length < 2) {
       setIsFocused(true);
     } else {
-      const token = localStorage.getItem("bagtoken");
-
       try {
-        const res = await axios.put(
-          "https://server.bageasy.net/members/nickname",
-          {
-            nickname: nickname,
-          },
-          {
-            headers: {
-              Authorization: token,
-            },
-          },
-        );
-
-        console.log(res.data);
-
+        const data = await putNickName();
         setIsOverlap(false);
         setIsFocused(false);
         setTemp("");
@@ -102,7 +107,7 @@ const Nickname = () => {
             <Copy3>- 중복되는 닉네임입니다.</Copy3>
           )}
         </Container>
-        <Btn onClick={putNickName}>확인</Btn>
+        <Btn onClick={PutNickName}>확인</Btn>
       </NickNameContainer>
     </>
   );
