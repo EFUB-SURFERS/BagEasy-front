@@ -56,7 +56,6 @@ const ItemListPage = () => {
             ? await getPostBySchool(uniDisplay)
             : await getAllPosts();
         }
-
         setPosts(data);
         setLoading(false);
       } catch (err) {
@@ -65,7 +64,6 @@ const ItemListPage = () => {
         }
       }
     }
-
     fetchData();
   }, [refresh, onSales]);
 
