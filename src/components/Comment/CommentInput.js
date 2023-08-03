@@ -6,29 +6,30 @@ import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
 import lockGreen from "../../assets/itemListPage/lockGreen.png";
 import { styled } from "styled-components";
 
-const CommentInput = ({ postId, setRefresh }) => {
+const CommentInput = ({ postId, setRefresh, setIsModalVisible }) => {
   const [comment, setComment] = useState("");
   const [isSecret, setIsSecret] = useState(false);
 
   //댓글 작성
-  const postComment = () => {
+  const postComment = async () => {
     async function postData() {
-      const data = await createComment(
-        postId,
-        {
-          commentContent: comment,
-          isSecret: isSecret,
-        },
-        { headers: { "Content-Type": "application/json" } },
-      );
+      try {
+        const data = await createComment(
+          postId,
+          {
+            commentContent: comment,
+            isSecret: isSecret,
+          },
+          { headers: { "Content-Type": "application/json" } },
+        );
 
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-      } else {
         setRefresh(prev => prev + 1);
         setComment("");
         setIsSecret(false);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
     comment && postData();

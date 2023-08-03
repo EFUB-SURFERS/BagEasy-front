@@ -24,7 +24,7 @@ const ItemListPage = () => {
   const [uniDisplay, setUniDisplay] = useState(
     localStorage.getItem("university"),
   );
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   const onToggle = () => {
@@ -46,23 +46,23 @@ const ItemListPage = () => {
   useEffect(() => {
     let data = null;
     async function fetchData() {
-      if (onSales) {
-        data = uniDisplay
-          ? await getpostsBySchoolOnSales(uniDisplay)
-          : await getPostonSales();
-      } else {
-        data = uniDisplay
-          ? await getPostBySchool(uniDisplay)
-          : await getAllPosts();
-      }
+      try {
+        if (onSales) {
+          data = uniDisplay
+            ? await getpostsBySchoolOnSales(uniDisplay)
+            : await getPostonSales();
+        } else {
+          data = uniDisplay
+            ? await getPostBySchool(uniDisplay)
+            : await getAllPosts();
+        }
 
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
         setPosts(data);
         setLoading(false);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
 
@@ -71,7 +71,7 @@ const ItemListPage = () => {
 
   return (
     <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
+      {isModalVisible && <TokenRefreshModal />}
       <Header />
       <Buttons navigate={navigate} />
       <SearchBar
@@ -80,6 +80,7 @@ const ItemListPage = () => {
         uniDisplay={uniDisplay}
         setUniDisplay={setUniDisplay}
         setRefresh={setRefresh}
+        setIsModalVisible={setIsModalVisible}
       />
       {loading ? (
         <Loader>loading...</Loader>
@@ -88,7 +89,7 @@ const ItemListPage = () => {
           posts={posts}
           setRefresh={setRefresh}
           offset="111px"
-          setIsExpired={setIsExpired}
+          setIsModalVisible={setIsModalVisible}
         />
       )}
       <WriteBtn />

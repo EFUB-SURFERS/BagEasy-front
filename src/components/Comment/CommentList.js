@@ -5,25 +5,26 @@ import CommentReplies from "./CommentReplies";
 import CommentInput from "./CommentInput";
 import CommentHeader from "./CommentHeader";
 import { getMyProfile } from "../../api/member";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
+const CommentList = ({
+  postId = 1,
+  postWriter = "nickname",
+  setIsModalVisible,
+}) => {
   const [comments, setComments] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [nickname, setNickname] = useState("nickname");
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
 
   //댓글 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getComments(postId);
-
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
+      try {
+        const data = await getComments(postId);
         setComments(data);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
     fetchData();
@@ -32,14 +33,13 @@ const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
   //닉네임 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getMyProfile();
-
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
+      try {
+        const data = await getMyProfile();
         data && setNickname(data.nickname);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
     fetchData();
@@ -47,7 +47,6 @@ const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
 
   return (
     <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
       <YellowWrapper>
         <CommentHeader comments={comments} />
         {comments.map((comment, key) => (
@@ -58,10 +57,15 @@ const CommentList = ({ postId = 1, postWriter = "nickname" }) => {
             refresh={refresh}
             setRefresh={setRefresh}
             postWriter={postWriter}
+            setIsModalVisible={setIsModalVisible}
           />
         ))}
       </YellowWrapper>
-      <CommentInput postId={postId} setRefresh={setRefresh} />
+      <CommentInput
+        postId={postId}
+        setRefresh={setRefresh}
+        setIsModalVisible={setIsModalVisible}
+      />
     </Wrapper>
   );
 };

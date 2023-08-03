@@ -6,6 +6,7 @@ export const addLikes = async postId => {
     await client.post(`posts/${postId}/likes`);
   } catch (err) {
     console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -15,6 +16,7 @@ export const cancelLikes = async postId => {
     const res = await client.delete(`posts/${postId}/likes`);
   } catch (err) {
     console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -25,16 +27,17 @@ export const getLikes = async postId => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
+//찜한 게시글 목록 조회
 export const getLikedPosts = async () => {
   try {
     const res = await client.get(`posts/likes`);
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };

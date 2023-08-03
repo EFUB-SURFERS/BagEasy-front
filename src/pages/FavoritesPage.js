@@ -10,21 +10,21 @@ const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [refresh, setRefresh] = useState(0);
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   //찜한 양도글 리스트 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getLikedPosts();
+      try {
+        const data = await getLikedPosts();
 
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
         setLoading(false);
         setPosts(data);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
 
@@ -33,11 +33,16 @@ const FavoritesPage = () => {
 
   return (
     <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
+      {isModalVisible && <TokenRefreshModal />}
       <button onClick={() => navigate("/home")}>
         <Header />
       </button>
-      <List posts={posts} setRefresh={setRefresh} liked={true} />
+      <List
+        posts={posts}
+        setRefresh={setRefresh}
+        liked={true}
+        setIsModalVisible={setIsModalVisible}
+      />
     </Wrapper>
   );
 };
