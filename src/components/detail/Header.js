@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import logo from "../../assets/post/logo.png";
+import logo from "../../assets/post/mainlogo.png";
 import revert from "../../assets/post/revert.png";
 
 import { useNavigate } from "react-router-dom";
@@ -51,8 +51,8 @@ const Logo = styled.div`
   padding-top: 24px;
   padding-bottom: 22px;
   img {
-    width: 58px;
-    height: 22px;
+    width: 25px;
+    height: 28px;
     transform: translate(-50%, 0%);
   }
 `;
