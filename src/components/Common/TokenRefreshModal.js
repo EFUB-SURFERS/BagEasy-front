@@ -18,6 +18,7 @@ const TokenRefreshModal = () => {
 
   // 토큰 재발급
   const RefreshToken = async () => {
+    console.log("토큰 테스트", token);
     try {
       const res = await axios.post("https://server.bageasy.net/auth/reissue", {
         headers: {
