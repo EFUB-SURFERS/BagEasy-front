@@ -28,7 +28,7 @@ export const deleteDetail = async postId => {
     const res = await client.delete(`posts/${postId}`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -42,7 +42,7 @@ export const createPost = async formData => {
     });
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -56,7 +56,7 @@ export const modifyPost = async (postId, formData) => {
     });
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;;
   }
 };
 
