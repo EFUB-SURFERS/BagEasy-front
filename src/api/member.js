@@ -8,7 +8,7 @@ export const getProfile = async memberId => {
     console.log(res.data);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
