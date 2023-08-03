@@ -1,7 +1,8 @@
-import React from "react";
-import { styled } from "styled-components";
-import logo from "../../assets/common/logo.png";
-import back from "../../assets/common/back.png";
+import styled from "styled-components";
+
+import logo from "../../assets/post/logo.png";
+import revert from "../../assets/post/revert.png";
+
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
@@ -11,20 +12,20 @@ const Header = () => {
       <HeaderDiv>
         <Btn
           onClick={() => {
-            navigate("/home");
+            navigate(-1);
           }}
         >
-          <img src={back} alt="뒤로가기" />
+          <img src={revert} alt="뒤로가기" />
         </Btn>
-        <p className="logo">
+        <Logo>
           <img src={logo} alt="로고" />
-        </p>
+        </Logo>
       </HeaderDiv>
     </Wrapper>
   );
 };
-
 export default Header;
+
 const Wrapper = styled.div`
   z-index: 1;
   position: fixed;
@@ -34,28 +35,35 @@ const Wrapper = styled.div`
 `;
 
 const HeaderDiv = styled.div`
+  height: 68px;
   width: 100%;
-  height: 97px;
-  background: #f9f9f9;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
   position: relative;
+`;
 
-  .logo {
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    padding-top: 24px;
-    img {
-      width: 58px;
-      height: 22px;
-      transform: translate(-50%, 0%);
-    }
+const Logo = styled.div`
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  padding-top: 24px;
+  padding-bottom: 22px;
+  img {
+    width: 58px;
+    height: 22px;
+    transform: translate(-50%, 0%);
   }
 `;
+
 const Btn = styled.div`
-  padding-top: 25px;
-  padding-left: 13px;
-  width: 16px;
-  height: 24px;
-  display: flex;
+  padding-top: 19px;
+  padding-left: 14px;
+  padding-bottom: 14px;
+
+  img {
+    width: 16px;
+    height: 24px;
+  }
 `;
