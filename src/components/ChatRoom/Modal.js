@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { styled } from "styled-components";
 import { FinishDeal } from "../../api/posts";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 const Modal = ({
   setIsUpdate,
   isUpdate,
@@ -10,8 +9,8 @@ const Modal = ({
   setIsOpen,
   postId,
   buyerNickname,
+  setIsModalVisible,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState("false");
   const handleItemClick = () => {
     try {
       //거래 성사 요청 보내기
@@ -21,15 +20,13 @@ const Modal = ({
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Layer
         onClick={() => {
           setIsOpen(!isOpen);

@@ -6,14 +6,12 @@ import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getChatRoom } from "../../api/chat";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 import { getMyProfile } from "../../api/member";
-const Header = () => {
+const Header = ({ setIsModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState("false");
   const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
 
@@ -30,8 +28,7 @@ const Header = () => {
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
@@ -42,8 +39,7 @@ const Header = () => {
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
@@ -68,7 +64,6 @@ const Header = () => {
   };
   return (
     <div>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <HeaderDiv>
         <Btn
           onClick={() => {
@@ -122,6 +117,7 @@ const Header = () => {
                   isSold={postInfo.isSold}
                   postId={postInfo.postId}
                   buyerNickname={roomInfo.createMember}
+                  setIsModalVisible={setIsModalVisible}
                 />
               ) : (
                 <></>

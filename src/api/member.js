@@ -16,9 +16,6 @@ export const getProfile = async memberId => {
 export const getMyProfile = async () => {
   try {
     const res = await client.get(`members/me`);
-    if (res.response && res.response.data.code === "EXPIRED_TOKEN") {
-      localStorage.setItem("isExpired", "true");
-    }
     return res.data;
   } catch (err) {
     throw err;
@@ -34,6 +31,6 @@ export const putSchool = async school => {
 
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };

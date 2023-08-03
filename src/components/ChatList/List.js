@@ -9,7 +9,7 @@ const List = () => {
   const [myNickname, setMyNickname] = useState("");
   let yourNickname = "";
 
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const getMynickname = async () => {
     try {
@@ -18,8 +18,7 @@ const List = () => {
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
@@ -31,20 +30,18 @@ const List = () => {
   const getChatRoomsData = async () => {
     try {
       const res = await getChatRooms();
-
       setChatRooms(res);
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <ChatList>
         {chatRooms ? (
           <>

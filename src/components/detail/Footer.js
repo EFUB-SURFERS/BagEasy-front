@@ -29,6 +29,8 @@ const Footer = ({
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
@@ -88,6 +90,7 @@ const Footer = ({
     try {
       const roomId = await createRoom(postId, myNickname);
       return roomId;
+
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         setIsModalVisible(true);
@@ -98,7 +101,6 @@ const Footer = ({
   const handleChatClick = async () => {
     try {
       const roomId = await getRoomId();
-
       roomId && navigate(`/chats/${roomId}`);
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
@@ -109,6 +111,7 @@ const Footer = ({
 
   return (
     <>
+      {isModalVisible && <TokenRefreshModal />}
       <Wrapper>
         <Heart>
           <HeartBtn
