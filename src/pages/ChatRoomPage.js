@@ -17,10 +17,17 @@ const ChatRoom = () => {
 
   const dispatch = useDispatch();
   const onNewMessage = newMessage => dispatch(addNewMessage(newMessage));
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const getMynickname = async () => {
-    const res = await getMyProfile();
-    localStorage.setItem("myNicknameForChat", res.nickname);
+    try {
+      const res = await getMyProfile();
+      localStorage.setItem("myNicknameForChat", res.nickname);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
+    }
   };
 
   function handleVisibilityChange() {
@@ -32,16 +39,10 @@ const ChatRoom = () => {
 
   useEffect(() => {
     //클라이언트 생성 및 연결
-    try {
-      connectClient(roomId, onNewMessage);
-      getMynickname();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+
+    connectClient(roomId, onNewMessage);
+    getMynickname();
+
     //form 높이에 따른 messagesContainer 사이즈 조정
     const resizeObserver = new ResizeObserver(entries => {
       const formHeight = entries[0].contentRect.height;
@@ -64,12 +65,16 @@ const ChatRoom = () => {
   }, []);
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <Wrapper>
         <div className="header">
-          <Header />
+          <Header setIsModalVisible={setIsModalVisible} />
         </div>
-        <div className="messagescontainer" ref={messagesContainerRef}>
+        <div
+          className="messagescontainer"
+          setIsModalVisible={setIsModalVisible}
+          ref={messagesContainerRef}
+        >
           <MessagesContainer />
         </div>
         <div className="form" ref={formRef}>

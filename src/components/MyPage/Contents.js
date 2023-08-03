@@ -7,7 +7,7 @@ import ListItem from "./ListItem";
 import UserInfo from "./UserInfo";
 import { useNavigate } from "react-router-dom";
 
-const Contents = () => {
+const Contents = ({ setIsModalVisible }) => {
   const navigate = useNavigate();
   const handleHeartClick = () => {
     navigate("/favorites");
@@ -23,7 +23,7 @@ const Contents = () => {
 
   return (
     <Content>
-      <UserInfo />
+      <UserInfo setIsModalVisible={setIsModalVisible} />
       <ListContainer>
         <ListItem icon={heart_gray} text="찜 목록" onClick={handleHeartClick} />
         <Divider />

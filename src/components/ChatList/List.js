@@ -9,32 +9,39 @@ const List = () => {
   const [myNickname, setMyNickname] = useState("");
   let yourNickname = "";
 
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const getMynickname = async () => {
-    const data = await getMyProfile();
-    setMyNickname(data.nickname);
-  };
-  useEffect(() => {
     try {
-      getChatRoomsData();
-      getMynickname();
+      const data = await getMyProfile();
+      setMyNickname(data.nickname);
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
+  };
+  useEffect(() => {
+    getChatRoomsData();
+    getMynickname();
   }, []);
 
   const getChatRoomsData = async () => {
-    const res = await getChatRooms();
-    setChatRooms(res);
+    try {
+      const res = await getChatRooms();
+      setChatRooms(res);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
+    }
   };
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <ChatList>
         {chatRooms ? (
           <>

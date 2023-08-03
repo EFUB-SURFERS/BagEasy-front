@@ -6,7 +6,7 @@ const getSellList = async () => {
     const res = await client.get(`members/posts`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 export default getSellList;

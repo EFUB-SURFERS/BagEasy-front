@@ -6,7 +6,6 @@ import { useRef, useEffect, useState } from "react";
 import { getMessages } from "../../api/chat";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 //sentAt 밀리세컨드를 "PM/AM 시간:분" 으로 변환하는 함수
 const getSendTime = sentAt => {
@@ -28,11 +27,10 @@ const getSendTime = sentAt => {
   }
 };
 
-const MessagesContainer = () => {
+const MessagesContainer = ({ setIsModalVisible }) => {
   const [messages, setMessages] = useState([]);
   const [yourNickname, setYourNickname] = useState("");
   const scrollRef = useRef(null);
-  const [isModalVisible, setIsModalVisible] = useState("false");
 
   //경로에서 roomId 받아오기
   const { roomId } = useParams();
@@ -42,22 +40,21 @@ const MessagesContainer = () => {
 
   const getTotalMessage = async () => {
     //db에 있던 채팅기록 + 접속 중이지 않을때 받은 채팅 기록 가져오기
-    const res = await getMessages(roomId);
-    res && setMessages(res.chatList);
-    setYourNickname(res.nickname);
+    try {
+      const res = await getMessages(roomId);
+      res && setMessages(res.chatList);
+      setYourNickname(res.nickname);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
+    }
   };
 
   useEffect(() => {
     //접속시 db에 있던 채팅 기록 가져오기
-    try {
-      getTotalMessage();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    getTotalMessage();
   }, []);
 
   useEffect(() => {
@@ -92,7 +89,6 @@ const MessagesContainer = () => {
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <Wrapper ref={scrollRef}>
         {messages ? (
           <div>

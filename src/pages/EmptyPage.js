@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Duck from "../assets/GoogleLogin/duck.png";
-import Arrow from "../assets/arrow.png";
+import Arrow from "../assets/GoogleLogin/arrow.png";
 import { useNavigate } from "react-router-dom";
 
 const Empty = () => {

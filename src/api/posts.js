@@ -8,7 +8,7 @@ export const FinishDeal = async (postId, buyerNickname) => {
       buyerNickName: buyerNickname,
     });
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -18,7 +18,7 @@ export const getDetail = async postId => {
     const res = await client.get(`posts/${postId}`);
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -56,7 +56,7 @@ export const modifyPost = async (postId, formData) => {
     });
     return res.data;
   } catch (err) {
-    console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -67,7 +67,7 @@ export const getAllPosts = async () => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -78,7 +78,7 @@ export const getPostonSales = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -97,7 +97,7 @@ export const getPostBySchool = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };
 
@@ -116,6 +116,6 @@ export const getpostsBySchoolOnSales = async schoolName => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
-    return err;
+    throw err;
   }
 };

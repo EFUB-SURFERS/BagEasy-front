@@ -11,6 +11,7 @@ const SearchBar = ({
   uniDisplay,
   setUniDisplay,
   setRefresh,
+  setIsModalVisible,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [uni, setUni] = useState("");
@@ -19,8 +20,14 @@ const SearchBar = ({
   //유저의 학교명 가져오기
   useEffect(() => {
     async function fetchData() {
-      const data = getMyProfile();
-      !uniDisplay && setUniDisplay(data.school);
+      try {
+        const data = getMyProfile();
+        !uniDisplay && setUniDisplay(data.school);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
     }
     fetchData();
   }, []);

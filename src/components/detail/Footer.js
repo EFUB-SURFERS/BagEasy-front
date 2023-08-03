@@ -28,7 +28,7 @@ const Footer = ({
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
@@ -83,28 +83,22 @@ const Footer = ({
       const roomId = await createRoom(postId, myNickname);
 
       return roomId;
-    } catch (error) {
-      console.log("에러 발생", error);
-    }
-  };
-
-  const handleChatClick = async () => {
-    try {
-      const roomId = await getRoomId();
-
-      roomId && navigate(`/chats/${roomId}`);
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
+        setIsModalVisible(true);
       }
     }
   };
 
+  const handleChatClick = async () => {
+    const roomId = await getRoomId();
+    roomId && navigate(`/chats/${roomId}`);
+  };
+
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <Wrapper>
         <Heart>
           <HeartBtn

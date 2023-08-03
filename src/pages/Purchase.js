@@ -1,43 +1,43 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../components/Common/Header";
-import book from "../assets/book.png";
-import sofa from "../assets/sofa.png";
-import soccer from "../assets/soccer.png";
-import clock from "../assets/clock.png";
 import Bar from "../components/Purchase/Bar";
 import BuyItem from "../components/Purchase/BuyItem";
-import SoldItem from "../components/Purchase/SoldItem"; 
+import SoldItem from "../components/Purchase/SoldItem";
+import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 
 const Purchase = () => {
   const [activeTab, setActiveTab] = useState("구매내역");
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const handleTabClick = tab => {
     setActiveTab(tab);
   };
 
   return (
-    <Container>
-      <Header />
-      <Content>
-        <Bar activeTab={activeTab} onTabClick={handleTabClick} />
-        <ListContainer>
-          {activeTab === "구매내역" && (
-            <>
-              <BuyItem />
-              <Divider />
-            </>
-          )}
+    <>
+      {isModalVisible && <TokenRefreshModal />}
+      <Container>
+        <Header />
+        <Content>
+          <Bar activeTab={activeTab} onTabClick={handleTabClick} />
+          <ListContainer>
+            {activeTab === "구매내역" && (
+              <>
+                <BuyItem setIsModalVisible={setIsModalVisible} />
+                <Divider />
+              </>
+            )}
 
-          {activeTab === "판매내역" && (
-            <>
-              <SoldItem/>
-              <Divider />
-            </>
-          )}
-        </ListContainer>
-      </Content>
-    </Container>
+            {activeTab === "판매내역" && (
+              <>
+                <SoldItem setIsModalVisible={setIsModalVisible} />
+                <Divider />
+              </>
+            )}
+          </ListContainer>
+        </Content>
+      </Container>
+    </>
   );
 };
 

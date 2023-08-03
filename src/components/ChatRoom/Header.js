@@ -6,14 +6,12 @@ import Modal from "./Modal";
 import { useParams } from "react-router-dom";
 import { getDetail } from "../../api/posts";
 import { getChatRoom } from "../../api/chat";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 import { getMyProfile } from "../../api/member";
-const Header = () => {
+const Header = ({ setIsModalVisible }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [roomInfo, setRoomInfo] = useState({});
   const [postInfo, setPostInfo] = useState({});
   const [isSeller, setIsSeller] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState("false");
   const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
 
@@ -21,15 +19,29 @@ const Header = () => {
   const { roomId } = useParams();
 
   const getHeaderData = async () => {
-    const res = await getChatRoom(roomId);
-    const mydata = await getMyProfile();
-    setRoomInfo(res);
-    getPostData(res);
-    checkIsSeller(res, mydata);
+    try {
+      const res = await getChatRoom(roomId);
+      const mydata = await getMyProfile();
+      setRoomInfo(res);
+      getPostData(res);
+      checkIsSeller(res, mydata);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
+    }
   };
   const getPostData = async room => {
-    const res = await getDetail(room.postId);
-    setPostInfo(res);
+    try {
+      const res = await getDetail(room.postId);
+      setPostInfo(res);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
+    }
   };
 
   const checkIsSeller = async (room, mydata) => {
@@ -44,15 +56,7 @@ const Header = () => {
   useEffect(() => {
     //헤더에 보이는 정보 get
     //채팅방 개별 정보 조회로 룸아이디를 얻어 판매글 상세 정보 조회, 판매자인지 확인
-    try {
-      getHeaderData();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    getHeaderData();
   }, [isUpdate]);
 
   const openModal = () => {
@@ -60,7 +64,6 @@ const Header = () => {
   };
   return (
     <div>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       <HeaderDiv>
         <Btn
           onClick={() => {
@@ -114,6 +117,7 @@ const Header = () => {
                   isSold={postInfo.isSold}
                   postId={postInfo.postId}
                   buyerNickname={roomInfo.createMember}
+                  setIsModalVisible={setIsModalVisible}
                 />
               ) : (
                 <></>

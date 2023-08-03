@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import getSellList from "../../api/sell.js";
-import TokenRefreshModal from "../Common/TokenRefreshModal";
 import Item from "./Sold";
 
-const SoldItemList = () => {
+const SoldItemList = ({ setIsModalVisible }) => {
   const [sellList, setSellList] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState("false");
 
   useEffect(() => {
-    try {
-      getSellListData();
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        //토큰 만료시 모달 띄우기
-        localStorage.setItem("isExpired", true);
-        setIsModalVisible(localStorage.getItem("isExpired"));
-      }
-    }
+    getSellListData();
   }, []);
 
   const getSellListData = async () => {
@@ -24,13 +14,15 @@ const SoldItemList = () => {
       const res = await getSellList();
       setSellList(res);
     } catch (err) {
-      console.log("error", err.res);
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        //토큰 만료시 모달 띄우기
+        setIsModalVisible(true);
+      }
     }
   };
 
   return (
     <div>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
       {sellList &&
         sellList.map(item => (
           <Item
