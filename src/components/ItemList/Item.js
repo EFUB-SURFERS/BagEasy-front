@@ -6,7 +6,7 @@ import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
 
-const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
+const Item = ({ post, setRefresh, liked = false, setIsModalVisible }) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
@@ -17,14 +17,13 @@ const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
   //찜 여부 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getLikes(post.postId);
-
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
+      try {
+        const data = await getLikes(post.postId);
         setIsLiked(data.isLiked);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
     fetchData();
@@ -32,16 +31,21 @@ const Item = ({ post, setRefresh, liked = false, setIsExpired }) => {
 
   const like = async e => {
     e.stopPropagation();
+    try {
+      if (isLiked) {
+        await cancelLikes(post.postId);
+        setIsLiked(false);
+      } else {
+        await addLikes(post.postId);
+        setIsLiked(true);
+      }
 
-    if (isLiked) {
-      await cancelLikes(post.postId);
-      setIsLiked(false);
-    } else {
-      await addLikes(post.postId);
-      setIsLiked(true);
+      setRefresh(prev => prev + 1);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
-
-    setRefresh(prev => prev + 1);
   };
 
   return (

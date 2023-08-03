@@ -7,7 +7,7 @@ const List = ({
   setRefresh,
   offset = "97px",
   liked = false,
-  setIsExpired,
+  setIsModalVisible,
 }) => {
   return (
     <Wrapper $offset={offset}>
@@ -20,7 +20,7 @@ const List = ({
             setRefresh={setRefresh}
             liked={liked}
             key={key}
-            setIsExpired={setIsExpired}
+            setIsModalVisible={setIsModalVisible}
           />
         ))
       )}

@@ -24,7 +24,7 @@ const ItemListPage = () => {
   const [uniDisplay, setUniDisplay] = useState(
     localStorage.getItem("university"),
   );
-  const [isExpired, setIsExpired] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   const onToggle = () => {
@@ -60,7 +60,7 @@ const ItemListPage = () => {
         setLoading(false);
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-          setIsExpired(true);
+          setIsModalVisible(true);
         }
       }
     }
@@ -68,32 +68,30 @@ const ItemListPage = () => {
   }, [refresh, onSales]);
 
   return (
-    <>
-      {isExpired && <TokenRefreshModal />}
-      <Wrapper>
-        <Header />
-        <Buttons navigate={navigate} />
-        <SearchBar
-          onToggle={onToggle}
-          onSales={onSales}
-          uniDisplay={uniDisplay}
-          setUniDisplay={setUniDisplay}
+    <Wrapper>
+      {isModalVisible && <TokenRefreshModal />}
+      <Header />
+      <Buttons navigate={navigate} />
+      <SearchBar
+        onToggle={onToggle}
+        onSales={onSales}
+        uniDisplay={uniDisplay}
+        setUniDisplay={setUniDisplay}
+        setRefresh={setRefresh}
+        setIsModalVisible={setIsModalVisible}
+      />
+      {loading ? (
+        <Loader>loading...</Loader>
+      ) : (
+        <List
+          posts={posts}
           setRefresh={setRefresh}
-          setIsExpired={setIsExpired}
+          offset="111px"
+          setIsModalVisible={setIsModalVisible}
         />
-        {loading ? (
-          <Loader>loading...</Loader>
-        ) : (
-          <List
-            posts={posts}
-            setRefresh={setRefresh}
-            offset="111px"
-            setIsExpired={setIsExpired}
-          />
-        )}
-        <WriteBtn />
-      </Wrapper>
-    </>
+      )}
+      <WriteBtn />
+    </Wrapper>
   );
 };
 

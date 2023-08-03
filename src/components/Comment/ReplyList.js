@@ -11,14 +11,21 @@ const ReplyList = ({
   setRefresh,
   postWriter,
   commentWriter,
+  setIsModalVisible,
 }) => {
   const [replies, setReplies] = useState([]);
 
   //대댓글 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getReplies(commentId);
-      setReplies(data);
+      try {
+        const data = await getReplies(commentId);
+        setReplies(data);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
     }
     fetchData();
   }, [refresh]);
@@ -36,6 +43,7 @@ const ReplyList = ({
             setRefresh={setRefresh}
             postWriter={postWriter}
             commentWriter={commentWriter}
+            setIsModalVisible={setIsModalVisible}
           />
         ))}
     </Root>
