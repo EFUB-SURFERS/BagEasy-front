@@ -32,6 +32,7 @@ const ItemListPage = () => {
   const onToggle = () => {
     setOnSales(prev => {
       localStorage.setItem("toggle", JSON.stringify(!prev));
+      window.location.reload();
       return !prev;
     });
   };
