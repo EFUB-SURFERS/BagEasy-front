@@ -26,6 +26,7 @@ const UserInfo = ({ setIsModalVisible }) => {
   const updateSchool = async uni => {
     try {
       const res = await putSchool(uni);
+      localStorage.setItem("university", uni);
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
         //토큰 만료시 모달 띄우기
