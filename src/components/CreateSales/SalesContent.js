@@ -15,7 +15,7 @@ import upload from "../../assets/post/upload.png";
 
 const SalesContent = () => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [formData, setFormData] = useState({
     //전송할 데이터
@@ -68,10 +68,8 @@ const SalesContent = () => {
         alert("게시글이 등록되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        if (err.response && err.response.status === 400) {
-          //토큰 만료시 모달 띄우기
-          localStorage.setItem("isExpired", true);
-          setIsModalVisible(localStorage.getItem("isExpired"));
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
         }
       }
     } else {
@@ -81,7 +79,7 @@ const SalesContent = () => {
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}{" "}
       <Header>
         <Delete onClick={() => navigate(-1)}>
           <Close src={close} />
@@ -157,13 +155,15 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>가격</Title>
+          {formData.price.length > 0 ? <p>\</p> : ""}
           <input
-            placeholder="어느 정도의 가격에 판매하실 예정인가요?"
+            type="number"
+            placeholder="\ 가격을 입력해주세요"
             value={formData.price}
             onChange={e => {
               setFormData(prevData => ({ ...prevData, price: e.target.value }));
             }}
-          />
+          />{" "}
         </PriceSection>
         <SubLine />
         <ContentSection>
@@ -348,6 +348,7 @@ const Titlesection = styled.div`
 const PriceSection = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   margin-top: 18px;
   margin-bottom: 19px;
@@ -369,6 +370,11 @@ const PriceSection = styled.div`
 
   input::placeholder {
     color: #b8b8b8;
+  }
+
+  p {
+    margin: 0;
+    font-family: Inter;
   }
 `;
 

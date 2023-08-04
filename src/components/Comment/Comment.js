@@ -15,6 +15,7 @@ const Comment = ({
   setRefresh,
   postWriter,
   commentWriter,
+  setIsModalVisible,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
@@ -30,14 +31,16 @@ const Comment = ({
 
   //댓글,대댓글 삭제
   const onDelete = async () => {
-    async function deleteData() {
+    try {
       isReply
         ? await deleteReply(comment.replyId)
         : await deleteComment(comment.commentId);
       setRefresh(prev => prev + 1);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
-    deleteData();
-    //window.location.reload();
   };
 
   return (

@@ -13,7 +13,7 @@ import TokenRefreshModal from "../Common/TokenRefreshModal";
 
 const SalesContent = ({ postId, originalData }) => {
   const navigate = useNavigate();
-  const [isModalVisible, setIsModalVisible] = useState("false");
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [modifiedData, setModifiedData] = useState({});
 
@@ -82,10 +82,8 @@ const SalesContent = ({ postId, originalData }) => {
         alert("게시글이 수정되었습니다.");
         navigate(`/detail/` + postId); //등록 완료 후 해당글 상세페이지로 이동
       } catch (err) {
-        if (err.response && err.response.status === 400) {
-          //토큰 만료시 모달 띄우기
-          localStorage.setItem("isExpired", true);
-          setIsModalVisible(localStorage.getItem("isExpired"));
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
         }
       }
     } else {
@@ -95,7 +93,7 @@ const SalesContent = ({ postId, originalData }) => {
 
   return (
     <>
-      {isModalVisible === "true" ? <TokenRefreshModal /> : null}
+      {isModalVisible && <TokenRefreshModal />}
       <Header>
         <Delete onClick={() => navigate(-1)}>
           <Close src={close} />
@@ -182,8 +180,10 @@ const SalesContent = ({ postId, originalData }) => {
             <Check src={redspot} />
           )}
           <Title>가격</Title>
+          {modifiedData.price ? <p>\</p> : ""}
           <input
-            placeholder="어느 정도의 가격에 판매하실 예정인가요?"
+            type="number"
+            placeholder="\ 가격을 입력해주세요"
             value={modifiedData.price}
             onChange={e => {
               setModifiedData(prevData => ({
@@ -385,6 +385,7 @@ const Titlesection = styled.div`
 const PriceSection = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   margin-top: 18px;
   margin-bottom: 19px;
@@ -406,6 +407,10 @@ const PriceSection = styled.div`
 
   input::placeholder {
     color: #b8b8b8;
+  }
+  p {
+    margin: 0;
+    font-family: Inter;
   }
 `;
 

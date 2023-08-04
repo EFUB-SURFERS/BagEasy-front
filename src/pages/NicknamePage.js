@@ -13,6 +13,7 @@ const Nickname = () => {
   const [isExpired, setIsExpired] = useState(false);
   const inputRef = useRef(null); // focus 감지
   const navigate = useNavigate();
+  const token = localStorage.getItem("bagtoken");
 
   const handleNavigateBack = () => {
     navigate(-1);
@@ -35,7 +36,6 @@ const Nickname = () => {
   }, []);
 
   const putNickName = async () => {
-    const token = localStorage.getItem("bagtoken");
     try {
       const res = await axios.put(
         "https://server.bageasy.net/members/nickname",

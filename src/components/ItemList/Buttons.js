@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { getMyProfile } from "../../api/member";
 import chatImg from "../../assets/itemListPage/chatImg.png";
-import myPageImg from "../../assets/itemListPage/myPageImg.png";
+import Profile from "../Common/Profile";
 
-const Buttons = ({ navigate }) => {
+const Buttons = ({ navigate, setIsModalVisible }) => {
+  const [nickname, setNickname] = useState();
+
+  useEffect(() => {
+    async function getNickname() {
+      try {
+        const data = await getMyProfile();
+        setNickname(data.nickname);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
+    }
+    getNickname();
+  }, []);
+
   return (
     <ButtonWrapper>
       <ChatBtn onClick={() => navigate("/chats")}>
         <ChatImg src={chatImg} />
       </ChatBtn>
       <MyPageBtn onClick={() => navigate("/mypage")}>
-        <MyPageImg src={myPageImg} />
+        <Profile nickname={nickname} width="27px" height="27px" />
       </MyPageBtn>
     </ButtonWrapper>
   );
@@ -43,18 +60,13 @@ const ChatImg = styled.img`
 `;
 
 const MyPageBtn = styled.div`
-  width: 28px;
+  width: 27px;
   margin: 0 13px;
   display: flex;
   align-items: center;
   &:hover {
     cursor: pointer;
   }
-`;
-
-const MyPageImg = styled.img`
-  max-width: 100%;
-  height: auto;
 `;
 
 export default Buttons;

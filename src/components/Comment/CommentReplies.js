@@ -10,6 +10,7 @@ const CommentReplies = ({
   refresh,
   setRefresh,
   postWriter,
+  setIsModalVisible,
 }) => {
   const [replying, setReplying] = useState(false);
 
@@ -22,6 +23,7 @@ const CommentReplies = ({
         setRefresh={setRefresh}
         postWriter={postWriter}
         commentWriter={comment.writer}
+        setIsModalVisible={setIsModalVisible}
       />
       <ReplyList
         commentId={comment.commentId}
@@ -31,12 +33,14 @@ const CommentReplies = ({
         setRefresh={setRefresh}
         postWriter={postWriter}
         commentWriter={comment.writer}
+        setIsModalVisible={setIsModalVisible}
       />
       {replying && (
         <ReplyInput
           comment={comment}
           setRefresh={setRefresh}
           setReplying={setReplying}
+          setIsModalVisible={setIsModalVisible}
         />
       )}
     </Root>
