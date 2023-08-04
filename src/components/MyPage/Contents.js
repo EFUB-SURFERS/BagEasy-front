@@ -7,7 +7,7 @@ import ListItem from "./ListItem";
 import UserInfo from "./UserInfo";
 import { useNavigate } from "react-router-dom";
 
-const Contents = ({ setIsModalVisible }) => {
+const Contents = ({ setIsModalVisible  }) => {
   const navigate = useNavigate();
   const handleHeartClick = () => {
     navigate("/favorites");
