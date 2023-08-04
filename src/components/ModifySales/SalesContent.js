@@ -180,7 +180,6 @@ const SalesContent = ({ postId, originalData }) => {
             <Check src={redspot} />
           )}
           <Title>가격</Title>
-          {modifiedData.price ? <p>\</p> : ""}
           <input
             type="number"
             placeholder="\ 가격을 입력해주세요"

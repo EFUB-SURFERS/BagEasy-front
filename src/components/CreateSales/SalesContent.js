@@ -155,7 +155,7 @@ const SalesContent = () => {
             <Check src={redspot} />
           )}
           <Title>가격</Title>
-          {formData.price.length > 0 ? <p>\</p> : ""}
+          {formData.price.length > 0 ? <p>₩</p> : ""}
           <input
             type="number"
             placeholder="\ 가격을 입력해주세요"
