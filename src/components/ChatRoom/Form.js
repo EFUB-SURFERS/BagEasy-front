@@ -51,7 +51,7 @@ const Form = ({ setIsModalVisible }) => {
     };
     try {
       const compressedFile = await imageCompression(imgFile, options);
-      console.log(previewImg);
+
       const compressedreader = new FileReader();
       compressedreader.readAsDataURL(compressedFile);
       compressedreader.onloadend = () => {
