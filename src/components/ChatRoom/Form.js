@@ -6,7 +6,7 @@ import { useState, useRef } from "react";
 import { publishMessage } from "../../api/stomp";
 import { useParams } from "react-router-dom";
 import imageCompression from "browser-image-compression";
-const Form = () => {
+const Form = ({ setIsModalVisible }) => {
   const [text, setText] = useState("");
   const [imgFile, setImgFile] = useState();
   const [previewImg, setPreviewImg] = useState(null);
