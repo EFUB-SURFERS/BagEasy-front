@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/StartPage/logo.png";
 import title from "../assets/StartPage/title.png";
+import newLogo from "../assets/common/newLogo.png";
 import { useNavigate } from "react-router-dom";
 
 const Start = () => {
@@ -10,6 +11,7 @@ const Start = () => {
   return (
     <StartScreenContainer>
       <Logo>
+        <NewLogoImg src={newLogo} alt="newLogo" />
         <LogoImg src={logo} alt="logo" />
         <TitleImg src={title} alt="title" />
       </Logo>
@@ -26,13 +28,18 @@ const StartScreenContainer = styled.div`
   height: 100vh;
 `;
 
+const NewLogoImg = styled.img`
+  width: 50px;
+  margin-bottom: 30px;
+`;
+
 const LogoImg = styled.img`
-  width: 168px;
+  width: 60%;
+  margin-bottom: 75px;
 `;
 
 const TitleImg = styled.img`
-  width: 164px;
-  height: 46px;
+  width: 50%;
 `;
 
 const Logo = styled.div`

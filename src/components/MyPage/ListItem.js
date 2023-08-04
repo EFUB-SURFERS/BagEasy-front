@@ -13,7 +13,6 @@ const ListItemContainer = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-
   &:hover {
     background: #ffee94;
   }

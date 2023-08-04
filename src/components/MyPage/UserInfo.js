@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import setting from "../../assets/setting.png";
+import setting from "../../assets/MyPage/setting.png";
 import Modal from "../UpdateUni/Modal";
 import { getMyProfile, putSchool } from "../../api/member";
 import Profile from "../Common/Profile";
@@ -83,7 +83,6 @@ const UserInfo = ({ setIsModalVisible }) => {
           />
         ) : null}
       </UserInfoContainer>
-      <Line />
     </>
   );
 };
@@ -125,11 +124,5 @@ const Icon2 = styled.img`
   cursor: pointer; /* Add this to indicate the icon is clickable */
 `;
 
-const Line = styled.div`
-  width: 400px;
-  height: 0.5px;
-  background-color: #d9d9d9;
-  margin-bottom: 10px;
-`;
 
 export default UserInfo;
