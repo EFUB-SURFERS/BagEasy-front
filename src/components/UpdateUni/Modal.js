@@ -50,14 +50,19 @@ const Modal = ({ isOpen, setIsOpen, uni, setUni, setUpdate }) => {
         </div>
 
         <List>
-          {uniList &&
+          {uniList.length ? (
             uniList.map((uni, index) => {
               return (
                 <Item onClick={() => handleItemClick(uni.name)} key={index}>
                   {uni.name}
                 </Item>
               );
-            })}
+            })
+          ) : (
+            <div className="null">
+              검색 결과가 없습니다. <br /> 영문으로 검색하셨나요?
+            </div>
+          )}
         </List>
       </Container>
     </>
@@ -101,10 +106,21 @@ const Layer = styled.div`
 `;
 const List = styled.div`
   margin-top: 16px;
-  margin-left: 28px;
   overflow: auto;
+
+  .null {
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 16px;
+    color: #b7b7b7;
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+  }
 `;
 const Item = styled.div`
+  margin-left: 28px;
   margin-bottom: 16px;
   width: 90%;
   color: #000;

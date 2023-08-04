@@ -78,7 +78,7 @@ const ChatRoom = () => {
           <MessagesContainer />
         </div>
         <div className="form" ref={formRef}>
-          <Form />
+          <Form setIsModalVisible={setIsModalVisible} />
         </div>
       </Wrapper>
     </>
