@@ -5,40 +5,28 @@ import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heartImg from "../../assets/itemListPage/heartImg.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
 
-const Item = ({ post, setRefresh, liked = false, setIsModalVisible }) => {
-  const [isLiked, setIsLiked] = useState(false);
+const Item = ({
+  post,
+  setRefresh,
+  showUni = false,
+  setIsModalVisible,
+  isLiked,
+}) => {
   const navigate = useNavigate();
 
   const goToDetailPage = () => {
     navigate(`/detail/${post.postId}`);
   };
 
-  //찜 여부 조회
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getLikes(post.postId);
-        setIsLiked(data.isLiked);
-      } catch (err) {
-        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-          setIsModalVisible(true);
-        }
-      }
-    }
-    fetchData();
+    setRefresh(prev => prev + 1);
   }, []);
 
+  //찜하기,찜취소
   const like = async e => {
     e.stopPropagation();
     try {
-      if (isLiked) {
-        await cancelLikes(post.postId);
-        setIsLiked(false);
-      } else {
-        await addLikes(post.postId);
-        setIsLiked(true);
-      }
-
+      isLiked ? await cancelLikes(post.postId) : await addLikes(post.postId);
       setRefresh(prev => prev + 1);
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
@@ -56,7 +44,7 @@ const Item = ({ post, setRefresh, liked = false, setIsModalVisible }) => {
       <Info>
         <Title>{post.postTitle}</Title>
         <Price>{`${post.price}원`}</Price>
-        {liked && <School>{post.school}</School>}
+        {showUni && <School>{post.school}</School>}
         <Footer>
           <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
           <Favorites>

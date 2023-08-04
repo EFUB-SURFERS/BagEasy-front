@@ -6,21 +6,23 @@ const List = ({
   posts,
   setRefresh,
   offset = "97px",
-  liked = false,
+  showUni = false,
   setIsModalVisible,
+  likes,
 }) => {
   return (
     <Wrapper $offset={offset}>
       {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
-        posts.map((post, key) => (
+        posts.map((post, index) => (
           <Item
             post={post}
             setRefresh={setRefresh}
-            liked={liked}
-            key={key}
+            showUni={showUni}
+            key={index}
             setIsModalVisible={setIsModalVisible}
+            isLiked={likes[index]}
           />
         ))
       )}
