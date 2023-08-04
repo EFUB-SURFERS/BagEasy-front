@@ -7,6 +7,7 @@ import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import { getLikes } from "../api/likes";
 import {
   getAllPosts,
   getPostBySchool,
@@ -19,6 +20,7 @@ const ItemListPage = () => {
     JSON.parse(localStorage.getItem("toggle")),
   );
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
   const [uniDisplay, setUniDisplay] = useState(
@@ -30,6 +32,7 @@ const ItemListPage = () => {
   const onToggle = () => {
     setOnSales(prev => {
       localStorage.setItem("toggle", JSON.stringify(!prev));
+      window.location.reload();
       return !prev;
     });
   };
@@ -44,9 +47,9 @@ const ItemListPage = () => {
 
   //양도글 리스트 조회
   useEffect(() => {
-    let data = null;
     async function fetchData() {
       try {
+        let data = null;
         if (onSales) {
           data = uniDisplay
             ? await getpostsBySchoolOnSales(uniDisplay)
@@ -66,6 +69,25 @@ const ItemListPage = () => {
     }
     fetchData();
   }, [refresh, onSales]);
+
+  //찜여부 리스트 조회
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        posts.forEach(async (post, index) => {
+          let newLikes = likes;
+          const likedData = await getLikes(post.postId);
+          newLikes[index] = likedData.isLiked;
+          setLikes(newLikes);
+        });
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
+    }
+    fetchData();
+  }, [refresh, onSales, posts]);
 
   return (
     <Wrapper>
@@ -88,6 +110,7 @@ const ItemListPage = () => {
           setRefresh={setRefresh}
           offset="111px"
           setIsModalVisible={setIsModalVisible}
+          likes={likes}
         />
       )}
       <WriteBtn />
