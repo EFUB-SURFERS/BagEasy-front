@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import List from "./../components/ItemList/List";
 import styled from "styled-components";
 import SimpleHeader from "../components/ItemList/SimpleHeader";
-import { getLikedPosts } from "../api/likes";
+import { getLikedPosts, getLikes } from "../api/likes";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
@@ -21,6 +22,14 @@ const FavoritesPage = () => {
 
         setLoading(false);
         setPosts(data);
+
+        //찜여부 리스트 조회
+        data.forEach(async (post, index) => {
+          let newLikes = likes;
+          const likedData = await getLikes(post.postId);
+          newLikes[index] = likedData.isLiked;
+          setLikes(newLikes);
+        });
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
           setIsModalVisible(true);
@@ -40,8 +49,9 @@ const FavoritesPage = () => {
       <List
         posts={posts}
         setRefresh={setRefresh}
-        liked={true}
+        showUni={true}
         setIsModalVisible={setIsModalVisible}
+        likes={likes}
       />
     </Wrapper>
   );
