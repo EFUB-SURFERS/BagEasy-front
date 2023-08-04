@@ -61,14 +61,7 @@ export const disconnectClient = () => {
   //unsubscibe는 연결전에 방을 나가면 오류나서 제외.
 };
 
-export const onDisconnect = () => {
-  stompClient.disconnect(() => {
-    alert("토큰 만료!");
-  });
-  //연결이 끊겼을때 수행
-};
-
-export const publishMessage = (roomId, isImage, message, setIsModalVisible) => {
+export const publishMessage = (roomId, isImage, message) => {
   if (!stompClient.connected) {
     return;
   }
@@ -78,17 +71,11 @@ export const publishMessage = (roomId, isImage, message, setIsModalVisible) => {
     {
       Authorization: `${token}`,
     },
-    JSON.stringify(
-      {
-        roomId: roomId,
-        contentType: "talk",
-        type: isImage,
-        content: message,
-      },
-      function (error) {
-        console.log(error);
-        setIsModalVisible(true);
-      },
-    ),
+    JSON.stringify({
+      roomId: roomId,
+      contentType: "talk",
+      type: isImage,
+      content: message,
+    }),
   );
 };
