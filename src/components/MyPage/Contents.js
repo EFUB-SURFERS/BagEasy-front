@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import list_gray from "../../assets/MyPage/list_gray.png";
 import chat_gray from "../../assets/MyPage/chat_gray.png";
-import heart_gray from "../../assets/MyPage/chat_gray.png";
+import heart_gray from "../../assets/MyPage/heart_gray.png";
 import ListItem from "./ListItem";
 import UserInfo from "./UserInfo";
 import { useNavigate } from "react-router-dom";
