@@ -24,15 +24,19 @@ const Footer = ({
   price,
   isSold,
   myNickname,
+  setIsModalVisible,
 }) => {
   const [isWirter, setIsWirter] = useState(true);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleEditClick = ({}) => {
-    navigate("/modify/" + postId);
+    if (isSold) {
+      alert("이미 판매가 완료된 글은 수정이 불가합니다.");
+      return;
+    } else navigate("/modify/" + postId);
+    // navigate("/modify/" + postId);
   };
 
   useEffect(() => {
@@ -52,7 +56,9 @@ const Footer = ({
         alert("게시글이 삭제되었습니다.");
         navigate("/home");
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
   };
@@ -66,13 +72,17 @@ const Footer = ({
       try {
         await cancelLikes(postId);
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     } else {
       try {
         await addLikes(postId);
       } catch (err) {
-        console.log("error", err);
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
     setIsLiked(prevLikes => ({ ...prevLikes, isLiked: !prevLikes.isLiked }));
@@ -81,24 +91,28 @@ const Footer = ({
   const getRoomId = async () => {
     try {
       const roomId = await createRoom(postId, myNickname);
-
       return roomId;
     } catch (err) {
       if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
-        //토큰 만료시 모달 띄우기
         setIsModalVisible(true);
       }
     }
   };
 
   const handleChatClick = async () => {
-    const roomId = await getRoomId();
-    roomId && navigate(`/chats/${roomId}`);
+    try {
+      const roomId = await getRoomId();
+
+      roomId && navigate(`/chats/${roomId}`);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
+    }
   };
 
   return (
     <>
-      {isModalVisible && <TokenRefreshModal />}
       <Wrapper>
         <Heart>
           <HeartBtn
