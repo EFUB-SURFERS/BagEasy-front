@@ -2,7 +2,8 @@
 
 ## 🧳 BagEasy 서비스 설명
 
-<img width="480" alt="스크린샷 2023-07-25 오전 12 53 55" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/6861a20e-9762-4b24-99b6-fbb6c598bdbd">
+<img width="480" alt="스크린샷 2023-07-25 오전 12 53 55" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/49335d6b-b859-48bd-aa0f-46349ebc773d">
+
 
 - [x] `BagEasy`는 교환학생을 위한 짐 양도 서비스입니다.
 - [x] 기존의 짐 양도 플랫폼들은 여러 곳으로 분산되어 있어 사용자로 하여금 불편함을 초래하는 문제점이 있었습니다.
@@ -52,6 +53,8 @@ https://bageasy.vercel.app/
 
 - 구글 계정을 사용하여 간편하게 로그인
 - 처음 가입시 닉네임 설정(유효성 검사, 중복 검사)
+- 닉네임 바탕으로 랜덤 프로필 생성
+- 토큰 만료시 재발급
 
 ### 🔍 양도글 검색
 
