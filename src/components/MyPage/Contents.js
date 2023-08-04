@@ -20,6 +20,7 @@ const Contents = ({ setIsModalVisible  }) => {
   const handleListClick = () => {
     navigate("/deal");
   };
+  
 
   return (
     <Content>
