@@ -151,7 +151,8 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 75px;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   background: #ffffff;
   border-top: 0.5px solid #808080;
 `;
@@ -201,20 +202,18 @@ const Price = styled.div`
   font-family: Noto Sans KR;
   font-size: 20px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   line-height: normal;
 
-  padding-top: 24px;
   margin-left: 18px;
 `;
 
 const Button = styled.img`
   width: 103px;
-  height: 46px;
+  height: 36px;
 
   margin-left: auto;
   margin-right: 15px;
-  margin-top: 16px;
   flex-shrink: 0;
 `;
 

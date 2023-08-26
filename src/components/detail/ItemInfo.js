@@ -80,6 +80,7 @@ const ItemInfo = ({ postId }) => {
         postTitle={post.postTitle}
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
+        modifeddate={post.modifiedAt}
       />
       <CommentList postId={postId} postWriter={post.sellerNickname} />
       <Footer
