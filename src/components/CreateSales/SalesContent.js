@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/posts";
 import TokenRefreshModal from "../Common/TokenRefreshModal";
-
+import imageCompression from "browser-image-compression";
 import Modal from "../UpdateUni/Modal";
 
 import choiceuni from "../../assets/post/choiceuni.png";
@@ -33,20 +33,46 @@ const SalesContent = () => {
     setIsOpen(!isOpen);
   };
 
-  const saveImgFile = e => {
+  const saveImgFile = async () => {
+    const options = {
+      maxSizeMB: 1,
+      useWebWorker: true,
+    };
     const fileArr = imgRef.current.files;
-    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    const limitedFileArr = Array.from(fileArr).slice(0, 10);
     setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
-    setFormData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
+
+    try {
+      const compressedImages = [];
+      for (let i = 0; i < limitedFileArr.length; i++) {
+        const compressedFile = await imageCompression(
+          limitedFileArr[i],
+          options,
+        );
+        compressedImages.push(compressedFile);
+      }
+
+      const readerPromises = compressedImages.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+        });
+      });
+
+      const compressedImageUrls = await Promise.all(readerPromises);
+      setFormData(prevData => ({ ...prevData, imgData: compressedImageUrls }));
+      console.log(formData.imgData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRegisterButtonClick = async () => {
     const { uni, title, price, content, imgData } = formData;
-    if (isNaN(price)) {
-      alert("가격에는 숫자만 입력해 주세요.");
-      return;
-    }
-    if (imgFile.length > 0 && uni && title && price && content) {
+
+    if (imgData.length > 0 && uni && title && price && content) {
       try {
         let data = {
           postTitle: title,
@@ -55,9 +81,9 @@ const SalesContent = () => {
           school: uni,
         };
         const formData = new FormData();
-        for (let i = 0; i < imgFile.length; i++) {
+        for (let i = 0; i < imgData.length; i++) {
           //순환문을 이용해서 이미지 배열 담기
-          formData.append("image", imgFile[i]);
+          formData.append("image", dataURItoBlob(imgData[i]));
         }
         formData.append(
           "dto",
@@ -75,6 +101,17 @@ const SalesContent = () => {
     } else {
       alert("내용을 모두 채운 후 다시 등록해 주세요.");
     }
+  };
+
+  const dataURItoBlob = dataURI => {
+    const byteString = atob(dataURI.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ab], { type: "image/png" });
+    return blob;
   };
 
   return (
