@@ -6,6 +6,8 @@ import Profile from "../Common/Profile";
 import next from "../../assets/post/next.png";
 import before from "../../assets/post/before.png";
 import spot from "../../assets/post/spot.png";
+import left from "../../assets/post/arrow-left.png";
+import right from "../../assets/post/arrow-right.png";
 
 const ItemContent = ({
   sellerNickname,
@@ -108,7 +110,29 @@ const StyledCarousel = styled(Carousel)`
       width: 100%;
     }
   }
+  .carousel .control-prev.control-arrow:before {
+    content: "‹";
+    stroke-width: 2px;
+    stroke: #fff;
+    width: 9.464px;
+    height: 21.167px;
+  }
 
+  .carousel .control-next.control-arrow:before {
+    content: "›";
+    background-image: url(${right});
+    display: flex;
+    width: 9.464px;
+    height: 21.167px;
+    justify-content: center;
+    align-items: center;
+  }
+  .carousel .control-prev.control-arrow:before {
+    border: 0;
+  }
+  .carousel .control-next.control-arrow:before {
+    border: 0;
+  }
   .imageContainer {
     width: 100%;
     height: 100%;
@@ -117,6 +141,24 @@ const StyledCarousel = styled(Carousel)`
       rgba(255, 255, 255, 0) 80.21%,
       #fff 100%
     );
+  }
+
+  .carousel .control-dots .dot.selected,
+  .carousel .control-dots .dot:hover {
+    border-radius: 6.781px;
+    background: #fff;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
+    width: 6.781px;
+    height: 6.781px;
+  }
+
+  .carousel .control-dots .dot {
+    width: 6.781px;
+    height: 6.781px;
+    flex-shrink: 0;
+    border-radius: 6.781px;
+    background: #383200;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
   }
   /* display: flex;
   width: 100%;
