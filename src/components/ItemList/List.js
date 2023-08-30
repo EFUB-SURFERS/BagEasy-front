@@ -38,7 +38,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: ${props => props.$offset};
-  padding-bottom: ${props => `calc(${props.$offset} + 70px)`};
+  padding-bottom: ${props => `calc(${props.$offset} + 75px)`};
   box-sizing: border-box;
   overflow: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
