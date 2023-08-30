@@ -91,6 +91,12 @@ const SalesContent = ({ postId, originalData }) => {
     }
   };
 
+  const handleDeleteImage = index => {
+    const newImgFile = [...imgFile];
+    newImgFile.splice(index, 1); // 해당 인덱스의 이미지를 삭제
+    setImgFile(newImgFile);
+  };
+
   return (
     <>
       {isModalVisible && <TokenRefreshModal />}
@@ -122,11 +128,10 @@ const SalesContent = ({ postId, originalData }) => {
           />
           {imgFile.length > 0
             ? imgFile.map((file, index) => (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Image ${index}`}
-                />
+                <div key={index} className="image-container">
+                  <img src={URL.createObjectURL(file)} alt={`Image ${index}`} />
+                  <button onClick={() => handleDeleteImage(index)}>X</button>
+                </div>
               ))
             : modifiedData.imgData.map(file => (
                 <img
@@ -316,6 +321,26 @@ const Images = styled.div`
   background: #ffffff;
 
   margin-bottom: 19px;
+
+  .image-container {
+    position: relative;
+  }
+  button {
+    position: absolute;
+    background: none;
+    top: 35px;
+    right: 5px;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
 
   img {
     width: 80px;

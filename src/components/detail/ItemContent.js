@@ -103,12 +103,11 @@ const Wrapper = styled.div`
 const Img = styled.div`
   width: 390px;
   height: 315px;
-  background-size: cover;
   background-position: center;
   position: relative;
 
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80.21%, #fff 100%),
-    url(${props => props.imageUrl});
+    url(${props => props.imageUrl}) no-repeat center;
 `;
 
 const ImgaeBox = styled.div`
