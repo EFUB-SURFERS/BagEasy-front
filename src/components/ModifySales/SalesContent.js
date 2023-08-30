@@ -228,7 +228,7 @@ const SalesContent = ({ postId, originalData }) => {
 export default SalesContent;
 
 const Header = styled.div`
-  height: 117px;
+  height: 70px;
   width: 100%;
 
   display: flex;
@@ -239,30 +239,29 @@ const Header = styled.div`
 
 const Delete = styled.div`
   display: flex;
-  width: 36px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
 
-  color: #000;
-  text-align: center;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  margin-left: 11px;
+`;
 
-  padding-left: 11px;
-  padding-top: 76px;
-  padding-bottom: 18px;
+const Close = styled.img`
+  width: 20px;
+  height: 20px;
+  padding-left: 15px;
+  &:hover {
+    filter: brightness(30%);
+  }
 `;
 
 const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #727272;
+  color: #000;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -270,20 +269,9 @@ const Done = styled.button`
   line-height: normal;
 
   margin-right: 15px;
-  margin-top: 76px;
-  margin-bottom: 19px;
 
   &:hover {
-    color: #000000;
-  }
-`;
-
-const Close = styled.img`
-  width: 25px;
-  height: 25px;
-  padding-left: 5px;
-  &:hover {
-    filter: brightness(30%);
+    color: #727272;
   }
 `;
 
@@ -334,6 +322,7 @@ const Images = styled.div`
     height: 80px;
     margin-left: 17px;
     margin-top: 30px;
+    border-radius: 13px;
   }
 
   #file {
