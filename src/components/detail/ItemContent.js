@@ -2,12 +2,26 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 import Profile from "../Common/Profile";
 import next from "../../assets/post/next.png";
 import before from "../../assets/post/before.png";
 import spot from "../../assets/post/spot.png";
 import left from "../../assets/post/arrow-left.png";
 import right from "../../assets/post/arrow-right.png";
+
+const responsive = {
+  0: {
+    items: 1,
+  },
+  600: {
+    items: 1,
+  },
+  1024: {
+    items: 1,
+  },
+};
 
 const ItemContent = ({
   sellerNickname,
@@ -20,59 +34,42 @@ const ItemContent = ({
   const images = imageResponseDtos
     ? imageResponseDtos.map(item => item.imageUrl)
     : [];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const handlePreviousImage = event => {
-    event.stopPropagation();
-    setCurrentImageIndex(prevIndex => (prevIndex === 0 ? 0 : prevIndex - 1));
-  };
-
-  const handleNextImage = event => {
-    event.stopPropagation();
-    setCurrentImageIndex(prevIndex =>
-      prevIndex === images.length - 1 ? prevIndex : prevIndex + 1,
-    );
-  };
-  const isFirstImage = currentImageIndex === 0;
-  const isLastImage = currentImageIndex === images.length - 1;
 
   const date = modifeddate.slice(0, 10).replaceAll("-", ".");
+  const renderPrevButton = ({ isDisabled }) => {
+    if (isDisabled) {
+      return null;
+    }
+    return <img src={left} className="prev-button" />;
+  };
+
+  const renderNextButton = ({ isDisabled }) => {
+    if (isDisabled) {
+      return null;
+    }
+    return <img src={right} className="next-button" />;
+  };
 
   return (
     <Wrapper>
-      <StyledCarousel
-        showThumbs={false}
-        showStatus={false}
-        showArrows={true}
-        showIndicators={true}
-        // infiniteLoop
-        emulateTouch={true}
-        prevArrow={
-          <button type="button" class="slick-next">
-            df
-          </button>
-        }
-      >
-        {imageResponseDtos.map(image => (
-          <div key={image.imageId} className="imageContainer">
-            <Img src={image.imageUrl} alt={image.imageId} />
-          </div>
-        ))}
-      </StyledCarousel>
-      {/* <ItemImages
-        style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
-      > */}
-      {/* {!isFirstImage && (
-          <BeforeBtn onClick={handlePreviousImage}>
-            <img src={before} alt="뒤로가기" />
-          </BeforeBtn>
-        )}
-        {!isLastImage && (
-          <NextBtn onClick={handleNextImage}>
-            <img src={next} alt="다음가기" />
-          </NextBtn>
-        )} */}
-      {/* </ItemImages> */}
+      <ImgaeBox>
+        <AliceCarousel
+          mouseTracking
+          dotsDisabled={false}
+          responsive={responsive}
+          duration={400}
+          startIndex={1}
+          className="custom-carousel"
+          renderPrevButton={renderPrevButton}
+          renderNextButton={renderNextButton}
+        >
+          {imageResponseDtos.map(image => (
+            <div key={image.imageId} className="imageContainer">
+              <Img imageUrl={image.imageUrl} />
+            </div>
+          ))}
+        </AliceCarousel>
+      </ImgaeBox>
       <Seller>
         <SellerProfile>
           <Profile nickname={sellerNickname} width="50px" height="50px" />
@@ -102,40 +99,62 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const StyledCarousel = styled(Carousel)`
-  .carousel .slider {
-    width: 25rem;
-    height: 22rem;
+
+const Img = styled.div`
+  width: 390px;
+  height: 315px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80.21%, #fff 100%),
+    url(${props => props.imageUrl});
+`;
+
+const ImgaeBox = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 315px;
+
+  .prev-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 145px;
+    left: 39%;
+
     @media (max-width: 800px) {
-      width: 100%;
+      top: 150px;
+      left: 7.6px;
     }
   }
-  .carousel .control-prev.control-arrow:before {
-    content: "‹";
-    stroke-width: 2px;
-    stroke: #fff;
-    width: 9.464px;
-    height: 21.167px;
+
+  .alice-carousel__next-btn,
+  .alice-carousel__prev-btn {
+    padding: 0;
   }
 
-  .carousel .control-next.control-arrow:before {
-    content: "›";
-    background-image: url(${right});
+  .next-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 145px;
+    right: 39%;
+
+    @media (max-width: 800px) {
+      right: 7.6px;
+    }
+  }
+
+  .alice-carousel__stage-item * {
+    line-height: initial;
     display: flex;
-    width: 9.464px;
-    height: 21.167px;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
   }
-  .carousel .control-prev.control-arrow:before {
-    border: 0;
-  }
-  .carousel .control-next.control-arrow:before {
-    border: 0;
-  }
+
   .imageContainer {
-    width: 100%;
-    height: 100%;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 80.21%,
@@ -143,66 +162,23 @@ const StyledCarousel = styled(Carousel)`
     );
   }
 
-  .carousel .control-dots .dot.selected,
-  .carousel .control-dots .dot:hover {
+  .alice-carousel__dots {
+    position: absolute;
+    left: 50%;
+    top: 285px;
+    margin: 0;
+  }
+
+  .alice-carousel__dots-item:not(.__custom).__active {
     border-radius: 6.781px;
     background: #fff;
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-    width: 6.781px;
-    height: 6.781px;
   }
 
-  .carousel .control-dots .dot {
-    width: 6.781px;
-    height: 6.781px;
-    flex-shrink: 0;
+  .alice-carousel__dots-item:not(.__custom) {
     border-radius: 6.781px;
     background: #383200;
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
-  }
-  /* display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column; */
-`;
-const ItemImages = styled.div`
-  width: 390px;
-  height: 390px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-`;
-
-const Img = styled.img`
-  width: 300px;
-  height: 390px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-
-  /* background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80.21%, #fff 100%); */
-`;
-
-const NextBtn = styled.div`
-  position: absolute;
-  right: 0;
-  img {
-    width: 22px;
-    height: 83px;
-    padding-top: 153px;
-    padding-right: 20px;
-  }
-`;
-
-const BeforeBtn = styled.div`
-  position: absolute;
-  left: 0;
-  img {
-    width: 22px;
-    height: 83px;
-    padding-top: 153px;
-    padding-left: 20px;
   }
 `;
 
@@ -308,6 +284,5 @@ const ItemDescription = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  /* white-space: pre-wrap; */
   padding: 0px 20px 30px;
 `;

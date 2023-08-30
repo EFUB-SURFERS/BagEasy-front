@@ -82,7 +82,7 @@ const ItemInfo = ({ postId }) => {
         imageResponseDtos={post.imageResponseDtos}
         modifeddate={post.modifiedAt}
       />
-      <CommentList postId={postId} postWriter={post.sellerNickname} />
+      {/* <CommentList postId={postId} postWriter={post.sellerNickname} /> */}
       <Footer
         isLiked={likes.isLiked}
         setIsLiked={updateLikes}

@@ -36,7 +36,6 @@ const Footer = ({
       alert("이미 판매가 완료된 글은 수정이 불가합니다.");
       return;
     } else navigate("/modify/" + postId);
-    // navigate("/modify/" + postId);
   };
 
   useEffect(() => {
@@ -194,7 +193,6 @@ const Line = styled.div`
   width: 0.5px;
   height: 48px;
   background: #808080;
-  margin-top: 16px;
 `;
 
 const Price = styled.div`
