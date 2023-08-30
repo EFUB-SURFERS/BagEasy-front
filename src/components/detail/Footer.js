@@ -216,10 +216,8 @@ const Button = styled.img`
 `;
 
 const MenuBar = styled.img`
-  width: 38px;
-  height: 38px;
   margin-left: auto;
   margin-right: 15px;
-  margin-top: 16px;
-  flex-shrink: 0;
+  width: 5px;
+  height: 25px;
 `;

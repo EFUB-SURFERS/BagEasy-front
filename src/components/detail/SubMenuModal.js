@@ -16,18 +16,25 @@ const SubMenuModal = ({ onEditClick, onDeleteClick }) => {
 export default SubMenuModal;
 
 const Div = styled.div`
-  width: 105px;
+  width: 80px;
   height: 61px;
   border: 1px solid #d9d9d9;
   background: #fff;
 
   position: fixed;
-  bottom: 70px;
-  right: 27px;
+  bottom: 65px;
+  right: 15px;
 `;
 
 const Menu = styled.div`
-  width: 362px;
+  /* width: 56px; */
+  height: 50%;
+  text-align: center;
+  display: flex;
+  height: 50%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   p {
     color: #000000;
     font-family: Noto Sans KR;
@@ -35,8 +42,6 @@ const Menu = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    padding-left: 35px;
-    padding-top: 6px;
     margin: 0;
 
     &:hover {
