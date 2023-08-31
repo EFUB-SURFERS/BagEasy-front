@@ -103,11 +103,15 @@ const Wrapper = styled.div`
 const Img = styled.div`
   width: 390px;
   height: 315px;
-  background-position: center;
-  position: relative;
-
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 80.21%, #fff 100%),
-    url(${props => props.imageUrl}) no-repeat center;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 80.21%,
+      #fff 100%
+    ),
+    url(${props => props.imageUrl});
 `;
 
 const ImgaeBox = styled.div`
@@ -121,7 +125,7 @@ const ImgaeBox = styled.div`
     width: 40px;
     height: 40px;
     top: 145px;
-    left: 39%;
+    left: 37%;
 
     @media (max-width: 800px) {
       top: 150px;
@@ -139,7 +143,7 @@ const ImgaeBox = styled.div`
     width: 40px;
     height: 40px;
     top: 145px;
-    right: 39%;
+    right: 37%;
 
     @media (max-width: 800px) {
       right: 7.6px;
@@ -154,11 +158,6 @@ const ImgaeBox = styled.div`
   }
 
   .imageContainer {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 80.21%,
-      #fff 100%
-    );
   }
 
   .alice-carousel__dots {
@@ -179,13 +178,24 @@ const ImgaeBox = styled.div`
     background: #383200;
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5);
   }
+
+  .alice-carousel__dots-item {
+    margin: 0px 8px;
+  }
+
+  .alice-carousel__dots-item:not(.__custom):not(:last-child) {
+    margin: auto;
+  }
 `;
 
 const Seller = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
 
   width: 100%;
+  height: 77px;
 
   border-bottom: 0.5px solid #808080;
 `;
@@ -194,9 +204,9 @@ const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
 
-  margin-top: 17px;
+  /* margin-top: 17px; */
   margin-left: 16px;
-  margin-bottom: 18px;
+  /* margin-bottom: 18px; */
 `;
 
 const SellerInfo = styled.div`
@@ -205,31 +215,36 @@ const SellerInfo = styled.div`
 
   flex-direction: column;
 
-  margin-top: 21px;
+  /* margin-top: 21px; */
   margin-left: 13px;
   width: 310px;
   height: 54px;
 `;
 
 const SellerNickname = styled.div`
+  height: 25px;
   color: #000;
   font-family: Arial;
-  font-size: 15px;
+  font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+  margin-top: 5px;
 `;
 
 const SellerUniv = styled.div`
   font-family: Arial;
   font-style: regular;
   font-size: 13px;
+  font-weight: 400;
   color: #848484;
+  height: 21px;
+  margin-top: 7px;
 
   img {
     width: 12px;
     height: 12px;
-    margin-top: 6px;
     margin-right: 5px;
   }
 `;
@@ -253,7 +268,7 @@ const ItemTitle = styled.div`
   font-family: Noto Sans KR;
   font-size: 16px;
   font-style: normal;
-  font-weight: 550;
+  font-weight: 700;
   line-height: normal;
 
   padding: 5px 20px;
