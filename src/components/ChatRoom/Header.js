@@ -97,7 +97,7 @@ const Header = ({ setIsModalVisible }) => {
                 <>
                   {postInfo.isSold ? (
                     <FinishBtn $isFinished={postInfo.isSold}>
-                      거래 확정
+                      거래 확정 완료
                     </FinishBtn>
                   ) : (
                     <FinishBtn
