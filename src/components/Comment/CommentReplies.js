@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import Comment from "./Comment";
 import { styled } from "styled-components";
 import ReplyList from "./ReplyList";
-import ReplyInput from "./ReplyInput";
 
 const CommentReplies = ({
   comment,
   nickname,
+  setReplying,
   refresh,
   setRefresh,
   postWriter,
   setIsModalVisible,
 }) => {
-  const [replying, setReplying] = useState(false);
-
   return (
     <Root>
       <Comment
@@ -26,7 +24,7 @@ const CommentReplies = ({
         setIsModalVisible={setIsModalVisible}
       />
       <ReplyList
-        commentId={comment.commentId}
+        originComment={comment} //원댓글
         setReplying={setReplying}
         nickname={nickname}
         refresh={refresh}
@@ -35,18 +33,12 @@ const CommentReplies = ({
         commentWriter={comment.writer}
         setIsModalVisible={setIsModalVisible}
       />
-      {replying && (
-        <ReplyInput
-          comment={comment}
-          setRefresh={setRefresh}
-          setReplying={setReplying}
-          setIsModalVisible={setIsModalVisible}
-        />
-      )}
     </Root>
   );
 };
 
-const Root = styled.div``;
+const Root = styled.div`
+  width: 100%;
+`;
 
 export default CommentReplies;
