@@ -61,6 +61,7 @@ const List = () => {
                     roomId={room.roomId}
                     postId={room.postId}
                     latestMessage={room.latestMessage}
+                    isRead={true}
                   />
                 );
               })}
@@ -77,7 +78,11 @@ const List = () => {
 
 export default List;
 const ChatList = styled.div`
-  padding-top: 112px;
+  padding-top: 46px;
+  @media (max-width: 768px) {
+    //모바일
+    padding-top: 38px;
+  }
   .empty {
     margin-top: 50px;
     font-family: Arial;

@@ -4,7 +4,7 @@ import List from "../components/ChatList/List.js";
 const ChatListPage = () => {
   return (
     <div>
-      <Header />
+      <Header isMenu={false} />
       <List />
     </div>
   );

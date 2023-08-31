@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import back from "../../assets/chat/back.png";
+import back from "../../assets/common/back.png";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useParams } from "react-router-dom";
@@ -88,8 +88,11 @@ const Header = ({ setIsModalVisible }) => {
               </p>
               <Title $isSold={postInfo.isSold}>{postInfo.postTitle}</Title>
             </div>
-            <div className="wrapper">
-              <p className="price">{postInfo.price}원</p>
+            <div className="wrapper-2nd">
+              <p className="price">
+                {postInfo.price} <p className="won">원</p>
+              </p>
+
               {isSeller ? (
                 <>
                   {postInfo.isSold ? (
@@ -126,16 +129,21 @@ const Header = ({ setIsModalVisible }) => {
           </div>
         </ItemContainer>
       </HeaderDiv>
+      <Line />
     </div>
   );
 };
 
 export default Header;
 const FinishBtn = styled.div`
-  width: 131px;
-  height: 28px;
-  border-radius: 10px;
-  background: ${props => (props.$isFinished ? "#D9D9D9" : "#ffc700")};
+  border-radius: 13px;
+  background: #0e312b;
+  width: 115px;
+  height: 26px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background: ${props => (props.$isFinished ? "#9B9B9B" : "#0e312b")};
+
   color: #fff;
   display: flex;
   text-align: center;
@@ -144,13 +152,19 @@ const FinishBtn = styled.div`
   font-family: Noto Sans KR;
   font-size: 12px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: normal;
-
-  margin-top: 6px;
+  margin-top: 20px;
 `;
 const ItemContainer = styled.div`
   display: flex;
+  height: 100%;
+  @media (min-width: 768px) {
+    //pc
+    align-items: center;
+  }
+
+  margin-left: 13px;
   p {
     margin: 0;
   }
@@ -161,34 +175,59 @@ const ItemContainer = styled.div`
 
   .wrapper {
     width: 100%;
-    display: inline-flex;
+    display: flex;
     flex-direction: row;
+    height: 18px;
+    align-items: center;
+
     .isSold {
-      margin: 28px 0px 0px 11px;
-      color: #f00;
+      color: #eb6060;
       font-family: Noto Sans KR;
       font-size: 12px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
       white-space: nowrap;
+      width: 46px;
     }
   }
 
+  .wrapper-2nd {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 18px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .price {
-    width: 120px;
-    margin-left: 11px;
-    margin-top: 4px;
-    color: #6d6d6d;
+    margin-top: 7px;
+    display: flex;
+    width: 125px;
+    color: #9b9b9b;
     font-family: Noto Sans KR;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
+    line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .won {
+    color: #9b9b9b;
+    font-family: Noto Sans KR;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
     line-height: normal;
   }
 `;
 const ItemImg = styled.div`
-  margin: 20px 0px 0px 19px;
+  margin-right: 16px;
   width: 44px;
   height: 44px;
   border-radius: 35px;
@@ -203,28 +242,39 @@ const ItemImg = styled.div`
 `;
 
 const Title = styled.div`
-  width: 222px;
-  margin: 24px 0px 0px 4px;
+  width: 214px;
+  flex-shrink: 0;
+
   color: ${props => (props.$isSold ? "#848484" : "#000")};
   font-family: Noto Sans KR;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  display: block;
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 const HeaderDiv = styled.div`
-  height: 97px;
-  background: #f9f9f9;
+  height: 60px;
+  width: 100%;
+  @media (min-width: 768px) {
+    //pc
+    height: 72px;
+    align-items: center;
+  }
+  display: flex;
+
+  background: #fff;
   display: flex;
 `;
 const Btn = styled.div`
-  padding-top: 31px;
-  padding-left: 15px;
-  width: 16px;
-  height: 24px;
+  width: 38px;
+  height: 38px;
   display: flex;
+`;
+const Line = styled.div`
+  background: #f4f4f4;
+  height: 1px;
 `;
