@@ -9,6 +9,7 @@ import CreateSalesPage from "./pages/CreateSalesPage";
 import ModifySalesPage from "./pages/ModifySalesPage";
 import ItemListPage from "./pages/ItemListPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import NotificationPage from "./pages/NotificationPage";
 import MyPage from "./pages/MyPage";
 import Start from "./pages/Start";
 import Purchase from "./pages/Purchase";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/home" element={<ItemListPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/chats" element={<ChatListPage />} />
+        <Route path="/notification" element={<NotificationPage />} />
         <Route path="/chats/:roomId" element={<ChatRoomPage />} />
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/create" element={<CreateSalesPage />} />

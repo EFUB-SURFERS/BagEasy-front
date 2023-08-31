@@ -78,7 +78,7 @@ const Header = ({
           <UniversityBtn onClick={() => setIsOpen(true)}>
             <Img src={location} />
           </UniversityBtn>
-          <NotificationBtn>
+          <NotificationBtn onClick={() => navigate("/notification")}>
             <Img src={notification} />
           </NotificationBtn>
           <ChatBtn onClick={() => navigate("/chats")}>
