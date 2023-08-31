@@ -60,6 +60,7 @@ const Wrapper = styled.div`
 const HeaderDiv = styled.div`
   width: 100%;
   height: 46px;
+  background: #fff;
   @media (max-width: 768px) {
     //모바일
     height: 38px;
