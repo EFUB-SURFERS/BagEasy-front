@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 //사용방법
 //헤더가 상단 고정이라 다음에 이어질 컴포넌트가 있다면
 //padding-top: 38px, 46px  넣어주셔야 헤더에 안가려집니다.
-/*  height: 38px;
+/*  padding-top: 46px;
   @media (max-width: 768px) {
     //모바일
-    height: 46px;
+    padding-top: 38px;
   }
 */
 const Header = ({ isMenu = true }) => {
@@ -59,10 +59,10 @@ const Wrapper = styled.div`
 
 const HeaderDiv = styled.div`
   width: 100%;
-  height: 38px;
+  height: 46px;
   @media (max-width: 768px) {
     //모바일
-    height: 46px;
+    height: 38px;
   }
   display: flex;
   justify-content: space-between;
