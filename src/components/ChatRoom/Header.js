@@ -93,7 +93,7 @@ const Header = ({ setIsModalVisible }) => {
                 {postInfo.price} <p className="won">원</p>
               </p>
 
-              {isSeller ? (
+              {true ? (
                 <>
                   {postInfo.isSold ? (
                     <FinishBtn $isFinished={postInfo.isSold}>
@@ -159,10 +159,7 @@ const FinishBtn = styled.div`
 const ItemContainer = styled.div`
   display: flex;
   height: 100%;
-  @media (min-width: 768px) {
-    //pc
-    align-items: center;
-  }
+  align-items: center;
 
   margin-left: 13px;
   p {
@@ -257,13 +254,11 @@ const Title = styled.div`
   text-overflow: ellipsis;
 `;
 const HeaderDiv = styled.div`
-  height: 60px;
   width: 100%;
-  @media (min-width: 768px) {
-    //pc
-    height: 72px;
-    align-items: center;
-  }
+  height: 60px;
+  align-items: center;
+  padding-bottom: 7px;
+
   display: flex;
 
   background: #fff;
