@@ -27,7 +27,6 @@ const Div = styled.div`
 `;
 
 const Menu = styled.div`
-  /* width: 56px; */
   height: 50%;
   text-align: center;
   display: flex;

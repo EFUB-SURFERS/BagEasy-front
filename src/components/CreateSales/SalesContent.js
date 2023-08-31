@@ -35,7 +35,7 @@ const SalesContent = () => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); 
     setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
     setFormData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
@@ -472,7 +472,6 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Profile from "../Common/Profile";
-import next from "../../assets/post/next.png";
-import before from "../../assets/post/before.png";
 import spot from "../../assets/post/spot.png";
 import left from "../../assets/post/arrow-left.png";
 import right from "../../assets/post/arrow-right.png";
@@ -31,9 +28,6 @@ const ItemContent = ({
   school,
   modifeddate,
 }) => {
-  const images = imageResponseDtos
-    ? imageResponseDtos.map(item => item.imageUrl)
-    : [];
 
   const date = modifeddate.slice(0, 10).replaceAll("-", ".");
   const renderPrevButton = ({ isDisabled }) => {
@@ -203,19 +197,14 @@ const Seller = styled.div`
 const SellerProfile = styled.div`
   width: 50px;
   height: 50px;
-
-  /* margin-top: 17px; */
   margin-left: 16px;
-  /* margin-bottom: 18px; */
 `;
 
 const SellerInfo = styled.div`
   position: relative;
   display: flex;
-
   flex-direction: column;
 
-  /* margin-top: 21px; */
   margin-left: 13px;
   width: 310px;
   height: 54px;
