@@ -87,6 +87,7 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
 
   .title {
+    color: #383200;
     width: 65%;
     margin-left: 8%;
     margin-top: 22px;
