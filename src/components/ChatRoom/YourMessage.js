@@ -71,7 +71,6 @@ const Wrapper = styled.div`
 `;
 const Name = styled.div`
   margin-left: 8px;
-  margin-bottom: 5px;
   color: #000;
   font-family: Inter;
   font-size: 12px;
@@ -90,14 +89,14 @@ const Time = styled.div`
 `;
 const Text = styled.div`
   max-width: 192px;
-  border-radius: 15px;
-  background: #e9f6b7;
-  padding: 8.07px 14px 8.07px 14px;
+  border-radius: 0px 25.997px 25.997px 25.997px;
+  background: #f4f4f4;
+  padding: 8.07px 18px 8.07px 18px;
   margin-left: 8px;
   margin-right: 7px;
   color: #000;
   font-family: Noto Sans KR;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

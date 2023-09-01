@@ -58,14 +58,14 @@ const Time = styled.div`
 `;
 const Text = styled.div`
   max-width: 235px;
-  border-radius: 15px;
+  border-radius: 25.997px 0px 25.997px 25.997px;
   background: #ffee94;
-  padding: 8.07px 14px 8.07px 14px;
+  padding: 8.07px 18px 8.07px 18px;
   margin-left: 7px;
   margin-right: 12px;
   color: #000;
   font-family: Noto Sans KR;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

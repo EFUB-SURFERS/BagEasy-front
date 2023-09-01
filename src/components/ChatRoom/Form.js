@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import gallery from "../../assets/chat/gallery.png";
 import deleteBtn from "../../assets/chat/deleteBtn.png";
+import send from "../../assets/chat/send.png";
 import { useState, useRef } from "react";
 import { publishMessage } from "../../api/stomp";
 import { useParams } from "react-router-dom";
@@ -51,7 +52,7 @@ const Form = ({ setIsModalVisible }) => {
     };
     try {
       const compressedFile = await imageCompression(imgFile, options);
-      console.log(previewImg);
+
       const compressedreader = new FileReader();
       compressedreader.readAsDataURL(compressedFile);
       compressedreader.onloadend = () => {
@@ -80,36 +81,36 @@ const Form = ({ setIsModalVisible }) => {
           </PreviewImg>
         </PreviewContainer>
       ) : (
-        <Line />
+        <></>
       )}
+      <Line />
       <Inputs onSubmit={handleSubmit}>
-        <input
-          accept=".jpg, .jpeg, .png"
-          type="file"
-          id="file"
-          multiple
-          onChange={uploadImg}
-          ref={imgRef}
-        />
-        <label htmlFor="file">
-          <ImgBtn>
-            <img src={gallery} alt="사진첨부버튼" />
-          </ImgBtn>
-        </label>
-        {previewImg ? (
-          <div className="empty" />
-        ) : (
-          <Text>
-            <input
-              placeholder="메세지를 입력하세요."
-              value={text}
-              onChange={e => {
-                setText(e.target.value);
-              }}
-            />
-          </Text>
-        )}
-        <SubmitBtn onClick={sendMessage}>전송</SubmitBtn>
+        <Text>
+          <input
+            accept=".jpg, .jpeg, .png"
+            type="file"
+            id="file"
+            multiple
+            onChange={uploadImg}
+            ref={imgRef}
+          />
+          <label htmlFor="file">
+            <ImgBtn>
+              <img src={gallery} alt="사진첨부버튼" />
+            </ImgBtn>
+          </label>
+          <input
+            placeholder="메세지를 입력하세요."
+            value={text}
+            onChange={e => {
+              setText(e.target.value);
+            }}
+          />
+        </Text>
+
+        <SubmitBtn onClick={sendMessage}>
+          <img src={send} alt="전송" />
+        </SubmitBtn>
       </Inputs>
     </Wrapper>
   );
@@ -118,41 +119,41 @@ const Form = ({ setIsModalVisible }) => {
 export default Form;
 const Wrapper = styled.div`
   display: flex;
-  height: ${props => (props.$previewImg ? "256px" : "90px")};
+  height: ${props => (props.$previewImg ? "222px" : "75px")};
 `;
 const DeleteBtn = styled.div`
   position: absolute;
   top: 11px;
-  right: 8px;
+  left: 100px;
 
   .deleteBtn {
-    width: 21px;
-    height: 21px;
+    width: 29px;
+    height: 29px;
   }
 `;
 const PreviewImg = styled.div`
   position: relative;
-  width: 133px;
-  height: 146px;
-  margin-left: 8px;
-
+  margin: auto;
+  width: 270px;
+  height: 130px;
+  flex-shrink: 0;
+  border-radius: 13px;
   img {
-    width: 133px;
-    height: 146px;
+    width: 118px;
+    height: 130px;
+    flex-shrink: 0;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 13px;
   }
 `;
 const PreviewContainer = styled.div`
-  width: 352px;
-  height: 166px;
+  width: 100%;
+  height: 130px;
   position: fixed;
-  bottom: 90px;
-  margin-right: 12px;
-  right: 0;
+  bottom: 80px;
   display: flex;
   border-radius: 15px;
-  background: #ffee94;
+  background: #fff;
   align-items: center;
 `;
 const Inputs = styled.form`
@@ -163,39 +164,36 @@ const Inputs = styled.form`
 
   display: flex;
   width: 100%;
-  height: 90px;
+  height: 74px;
   justify-content: center;
   background: #ffffff;
   #file {
     display: none;
   }
-  .empty {
-    margin: 25px 0px 0px 7px;
-    width: 280px;
-    height: 42px;
-  }
 `;
 const Line = styled.div`
   position: fixed;
-  bottom: 90px;
+  bottom: 75px;
   width: 100%;
   height: 1px;
-  background: #c9c9c9;
+  background: #f4f4f4;
 `;
 const Text = styled.div`
-  margin: 25px 0px 0px 7px;
-  width: 280px;
-  height: 42px;
+  margin: 8px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  width: 322px;
+  height: 45px;
   border-radius: 100px;
   background: #efefef;
   display: flex;
   input {
+    margin-left: 12px;
     outline: none;
-    margin: 11.5px 12px 11.5px 12px;
-    width: 100%;
+    width: 240px;
     border: none;
     background: #efefef;
-    height: 19px;
+    height: 20px;
     color: #656565;
     font-family: Inter;
     font-size: 16px;
@@ -205,11 +203,11 @@ const Text = styled.div`
   }
 `;
 const ImgBtn = styled.div`
-  width: 32px;
-  height: 32px;
-  margin: 30px 0px 0px 8px;
+  width: 30px;
+  height: 27px;
   border: none;
-  background: #ffffff;
+  margin-left: 12px;
+  margin-top: -5px;
   padding: 0;
   img {
     width: 32px;
@@ -217,18 +215,10 @@ const ImgBtn = styled.div`
   }
 `;
 const SubmitBtn = styled.div`
-  margin: 25px 9px 0px 9px;
-  width: 42px;
-  height: 42px;
-  background: #ffc701;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Noto Sans KR;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  border: none;
+  margin: 13px 0px 0px 7px;
+
+  img {
+    width: 23.078px;
+    height: 32.296px;
+  }
 `;
