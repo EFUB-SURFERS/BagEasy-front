@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Profile from "../../components/Common/Profile";
-const Item = ({ roomId, latestMessage, yourNickname, isRead = true }) => {
+const Item = ({ roomId, latestMessage, yourNickname, isRead = false }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
@@ -43,10 +43,10 @@ const Item = ({ roomId, latestMessage, yourNickname, isRead = true }) => {
         <div className="img">
           <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
         </div>
-        <div className="mainContainer" $isRead={isRead}>
+        <MainContainer $isRead={isRead}>
           <p className="name">{yourNickname}</p>
           {latestMessage && <p className="text">{latestMessage.content}</p>}
-        </div>
+        </MainContainer>
         <div className="subContainer">
           {latestMessage && (
             <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
@@ -131,14 +131,6 @@ const ChatItem = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-  .mainContainer {
-    color: ${props => (props.$isRead ? "#C2C2C2" : "#000")};
-    width: 210px;
-    padding-left: 19px;
-    padding-top: 18px;
-    height: 100%;
-    box-sizing: border-box;
-  }
   .subContainer {
     padding-top: 20px;
     padding-bottom: 22px;
@@ -160,4 +152,12 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+`;
+const MainContainer = styled.div`
+  color: ${props => (props.$isRead ? "#C2C2C2" : "#000")};
+  width: 210px;
+  padding-left: 19px;
+  padding-top: 18px;
+  height: 100%;
+  box-sizing: border-box;
 `;
