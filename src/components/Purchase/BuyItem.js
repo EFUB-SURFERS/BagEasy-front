@@ -29,7 +29,7 @@ const BuyItem = ({ setIsModalVisible }) => {
           <Buys
             key={item.postId}
             image={item.imageResponseDtos[0].imageUrl}
-            title={"테스트 제목 길이 테스트 제목 길이 테스트 제목 길이 테스타"}
+            title={item.postTitle}
             subtitle={item.school}
             price={item.price}
             postId={item.postId}
