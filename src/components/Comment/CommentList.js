@@ -5,6 +5,7 @@ import CommentReplies from "./CommentReplies";
 import CommentInput from "./CommentInput";
 import CommentHeader from "./CommentHeader";
 import { getMyProfile } from "../../api/member";
+import Character from "./Character";
 
 const CommentList = ({
   postId = 1,
@@ -14,6 +15,7 @@ const CommentList = ({
   const [comments, setComments] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [nickname, setNickname] = useState("nickname");
+  const [replying, setReplying] = useState(); //대댓글 작성시 필요한 정보{OriginComment, RepliedComment}
 
   //댓글 조회
   useEffect(() => {
@@ -46,37 +48,43 @@ const CommentList = ({
   }, []);
 
   return (
-    <Wrapper>
-      <YellowWrapper>
-        <CommentHeader comments={comments} />
+    <Root>
+      <CommentHeader comments={comments} />
+      <Wrapper $replying={!!replying}>
         {comments.map((comment, key) => (
           <CommentReplies
             comment={comment}
             key={key}
             nickname={nickname}
+            setReplying={setReplying}
             refresh={refresh}
             setRefresh={setRefresh}
             postWriter={postWriter}
             setIsModalVisible={setIsModalVisible}
           />
         ))}
-      </YellowWrapper>
+        {comments.length === 0 && <Character />}
+      </Wrapper>
       <CommentInput
         postId={postId}
+        replying={replying}
+        setReplying={setReplying}
         setRefresh={setRefresh}
         setIsModalVisible={setIsModalVisible}
       />
-    </Wrapper>
+    </Root>
   );
 };
 
-const Wrapper = styled.div`
+const Root = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-family: "Noto Sans KR";
+`;
+
+const Wrapper = styled.div`
+  margin-bottom: ${props => (props.$replying ? "175px" : "130px")};
 `;
 
 const YellowWrapper = styled.div`

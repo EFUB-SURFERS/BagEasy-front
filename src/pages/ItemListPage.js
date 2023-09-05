@@ -23,11 +23,10 @@ const ItemListPage = () => {
   const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
-  const [uniDisplay, setUniDisplay] = useState(
+  const [uniSearch, setUniSearch] = useState(
     localStorage.getItem("university"),
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const navigate = useNavigate();
 
   const onToggle = () => {
     setOnSales(prev => {
@@ -51,12 +50,12 @@ const ItemListPage = () => {
       try {
         let data = null;
         if (onSales) {
-          data = uniDisplay
-            ? await getpostsBySchoolOnSales(uniDisplay)
+          data = uniSearch
+            ? await getpostsBySchoolOnSales(uniSearch)
             : await getPostonSales();
         } else {
-          data = uniDisplay
-            ? await getPostBySchool(uniDisplay)
+          data = uniSearch
+            ? await getPostBySchool(uniSearch)
             : await getAllPosts();
         }
         setPosts(data);
@@ -92,13 +91,11 @@ const ItemListPage = () => {
   return (
     <Wrapper>
       {isModalVisible && <TokenRefreshModal />}
-      <Header />
-      <Buttons navigate={navigate} setIsModalVisible={setIsModalVisible} />
-      <SearchBar
+      <Header
+        uniSearch={uniSearch}
+        setUniSearch={setUniSearch}
         onToggle={onToggle}
         onSales={onSales}
-        uniDisplay={uniDisplay}
-        setUniDisplay={setUniDisplay}
         setRefresh={setRefresh}
         setIsModalVisible={setIsModalVisible}
       />
@@ -108,7 +105,7 @@ const ItemListPage = () => {
         <List
           posts={posts}
           setRefresh={setRefresh}
-          offset="111px"
+          offset="90px"
           setIsModalVisible={setIsModalVisible}
           likes={likes}
         />

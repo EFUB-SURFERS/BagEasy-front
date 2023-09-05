@@ -4,7 +4,7 @@ import { getReplies } from "../../api/replies";
 import Comment from "./Comment";
 
 const ReplyList = ({
-  commentId,
+  originComment, //원댓글
   setReplying,
   nickname,
   refresh,
@@ -19,7 +19,7 @@ const ReplyList = ({
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getReplies(commentId);
+        const data = await getReplies(originComment.commentId);
         setReplies(data);
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
@@ -37,6 +37,7 @@ const ReplyList = ({
           <Comment
             comment={reply}
             isReply={true}
+            originComment={originComment}
             key={key}
             setReplying={setReplying}
             nickname={nickname}

@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createComment } from "../../api/comments";
 import { getMyProfile } from "../../api/member";
 import sendBtn from "../../assets/itemListPage/sendBtn.png";
-import lockLightgrey from "../../assets/itemListPage/lockLightgrey.png";
-import lockGreen from "../../assets/itemListPage/lockGreen.png";
+import lockDark from "../../assets/itemListPage/lockDark.png";
+import lockLight from "../../assets/itemListPage/lockLight.png";
+import close from "../../assets/itemListPage/close.png";
 import { styled } from "styled-components";
+import Profile from "../Common/Profile";
+import { createReply } from "../../api/replies";
 
-const CommentInput = ({ postId, setRefresh, setIsModalVisible }) => {
-  const [comment, setComment] = useState("");
+const CommentInput = ({
+  postId,
+  replying,
+  setReplying,
+  setRefresh,
+  setIsModalVisible,
+}) => {
+  const [content, setContent] = useState("");
   const [isSecret, setIsSecret] = useState(false);
+  const [nickname, setNickname] = useState();
+
+  //유저의 닉네임 조회
+  useEffect(() => {
+    async function getNickname() {
+      try {
+        const data = await getMyProfile();
+        setNickname(data.nickname);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
+    }
+    getNickname();
+  }, []);
 
   //댓글 작성
   const postComment = async () => {
@@ -17,14 +42,14 @@ const CommentInput = ({ postId, setRefresh, setIsModalVisible }) => {
         const data = await createComment(
           postId,
           {
-            commentContent: comment,
+            commentContent: content,
             isSecret: isSecret,
           },
           { headers: { "Content-Type": "application/json" } },
         );
 
         setRefresh(prev => prev + 1);
-        setComment("");
+        setContent("");
         setIsSecret(false);
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
@@ -32,50 +57,117 @@ const CommentInput = ({ postId, setRefresh, setIsModalVisible }) => {
         }
       }
     }
-    comment && postData();
+    content && postData();
+  };
+
+  //대댓글 작성
+  const postReply = async () => {
+    async function postData() {
+      try {
+        const data = await createReply(
+          replying.originComment.postId,
+          replying.originComment.commentId,
+          {
+            replyContent: "@" + replying.repliedComment.writer + " " + content,
+            isSecret: isSecret,
+          },
+        );
+
+        setRefresh(prev => prev + 1);
+        setContent("");
+        setReplying();
+        setIsSecret(false);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
+    }
+    content && postData();
   };
 
   return (
-    <Wrapper>
-      <Input
-        placeholder="댓글 쓰기..."
-        value={comment}
-        onChange={e => {
-          setComment(e.target.value);
-        }}
-      />
-      <Lock
-        src={isSecret ? lockGreen : lockLightgrey}
-        onClick={() => setIsSecret(prev => !prev)}
-      />
-      <SendBtn onClick={postComment}>
-        <SendImg src={sendBtn} />
-      </SendBtn>
-    </Wrapper>
+    <Root>
+      {replying && (
+        <ReplyBar>
+          <Profile
+            nickname={replying.repliedComment.writer}
+            width="30px"
+            height="30px"
+          />
+          <ReplyText>{`@${replying.repliedComment.writer}님에게 답글 남기는 중`}</ReplyText>
+          <CloseBtn src={close} onClick={() => setReplying()} />
+        </ReplyBar>
+      )}
+      <Wrapper>
+        <Profile nickname={nickname} width="30px" height="30px" />
+        <Input
+          placeholder="댓글 쓰기..."
+          value={content}
+          onChange={e => {
+            setContent(e.target.value);
+          }}
+        />
+        <Lock
+          src={isSecret ? lockDark : lockLight}
+          onClick={() => setIsSecret(prev => !prev)}
+        />
+        <SendBtn onClick={replying ? postReply : postComment}>
+          <SendImg src={sendBtn} />
+        </SendBtn>
+      </Wrapper>
+    </Root>
   );
 };
 
 export default CommentInput;
 
-const Wrapper = styled.div`
+const Root = styled.div`
   width: 100%;
+  position: fixed;
+  bottom: 76px;
+`;
+
+const ReplyBar = styled.div`
+  width: 100%;
+  height: 45px;
+  background: #f4f4f4;
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-top: 1px solid #cecece;
-  padding-top: 15px;
-  padding-bottom: 92px;
-  position: relative;
+  padding: 0px 14px;
+  box-sizing: border-box;
+`;
+
+const ReplyText = styled.div`
+  margin-left: 12px;
+  font-size: 14px;
+  color: #9b9b9b;
+`;
+
+const CloseBtn = styled.img`
+  margin-left: auto;
+  width: 14px;
+  &:focus {
+    cursor: pointer;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: 54px;
+  width: 100%;
+  padding: 0px 14px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid #cecece;
+  background: white;
 `;
 
 const Input = styled.input`
-  flex: auto;
-  background: #efefef;
-  height: 39px;
-  padding: 0 10.99px;
-  margin: 0 15px 0 20px;
-  border-radius: 1rem;
-  font-size: 14px;
+  margin-left: 14px;
+  flex: 1;
+  height: 90%;
+  font-size: 16px;
   border: none;
   &:focus {
     outline: none;
@@ -86,17 +178,16 @@ const Input = styled.input`
 `;
 
 const Lock = styled.img`
-  position: absolute;
-  width: 12px;
-  right: 77px;
+  margin-left: 14px;
+  width: 18px;
   &:hover {
     cursor: pointer;
   }
 `;
 
 const SendBtn = styled.div`
-  width: 1.8rem;
-  margin-right: 20px;
+  margin-left: 14px;
+  width: 28px;
   flex: none;
   &:hover {
     cursor: pointer;
