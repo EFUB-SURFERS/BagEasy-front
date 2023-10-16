@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import postImg from "../../assets/itemListPage/postImg.png";
+import plus from "../../assets/itemListPage/plus.png";
 import { useNavigate } from "react-router-dom";
 
 const WriteBtn = () => {
@@ -10,8 +10,7 @@ const WriteBtn = () => {
   };
   return (
     <Wrapper onClick={goToCreateSalesPage}>
-      <Img src={postImg} />
-      <Text>글쓰기</Text>
+      <Img src={plus} />
     </Wrapper>
   );
 };
@@ -21,13 +20,13 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
-  right: 15px;
-  bottom: 15px;
-  width: 100px;
-  height: 40px;
+  right: 20px;
+  bottom: 20px;
+  width: 60px;
+  height: 60px;
   border-radius: 100px;
-  background: #ffc700;
-  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.16);
+  background: #0e312b;
+  box-shadow: 0px 9px 15px rgba(0, 0, 0, 0.25);
   &:hover {
     cursor: pointer;
   }
@@ -35,12 +34,6 @@ const Wrapper = styled.div`
 
 const Img = styled.img`
   width: 20px;
-`;
-
-const Text = styled.div`
-  color: white;
-  font-weight: bold;
-  margin-left: 7px;
 `;
 
 export default WriteBtn;

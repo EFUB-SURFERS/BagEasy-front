@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Profile from "../../components/Common/Profile";
-const Item = ({ roomId, latestMessage, yourNickname }) => {
+const Item = ({ roomId, latestMessage, yourNickname, isRead = false }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
@@ -42,17 +42,16 @@ const Item = ({ roomId, latestMessage, yourNickname }) => {
       >
         <div className="img">
           <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
-          <img src={""} alt="" />
         </div>
-        <div className="mainContainer">
+        <MainContainer $isRead={isRead}>
           <p className="name">{yourNickname}</p>
           {latestMessage && <p className="text">{latestMessage.content}</p>}
-        </div>
+        </MainContainer>
         <div className="subContainer">
           {latestMessage && (
             <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
           )}
-          {false && <p className="count">3</p>}
+          {!isRead && <p className="count">3</p>}
         </div>
       </ChatItem>
       <Line />
@@ -64,14 +63,15 @@ export default Item;
 
 const ChatItem = styled.div`
   width: 100%;
-  height: 100px;
+  height: 93px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 0 19px;
   p {
     margin: 0;
   }
   .img {
-    margin: 15px 0px 35px 0px;
     width: 67px;
     height: 67px;
     display: flex;
@@ -79,22 +79,17 @@ const ChatItem = styled.div`
     background: #a1a1a1;
   }
   .name {
-    margin: 27px 0px 0px 44px;
-    width: 138px;
+    width: 100%;
     height: 23px;
-    color: #000;
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
   }
   .time {
-    margin: 32px 0px 0px 0px;
     width: 48px;
     color: #979797;
     text-align: right;
@@ -105,14 +100,14 @@ const ChatItem = styled.div`
     line-height: normal;
   }
   .text {
-    margin-left: 42px;
+    margin-top: 5px;
     width: 176px;
     height: 40px;
-    color: #979797;
+
     font-family: Inter;
     font-size: 10px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
 
     overflow: hidden;
@@ -120,11 +115,11 @@ const ChatItem = styled.div`
     white-space: nowrap;
   }
   .count {
-    margin-top: 5px;
     width: 17px;
     height: 17px;
     border-radius: 10px;
-    background: #3deb63;
+    background: #b476e5;
+
     color: #fff;
     text-align: center;
     font-family: Inter;
@@ -136,23 +131,33 @@ const ChatItem = styled.div`
     flex-direction: column;
     justify-content: center;
   }
-  .mainContianer {
-    width: 176px;
-  }
   .subContainer {
+    padding-top: 20px;
+    padding-bottom: 22px;
+    height: 100%;
+    box-sizing: border-box;
     width: 48px;
     display: flex;
     flex-direction: column;
     align-items: end;
+    justify-content: space-between;
   }
 `;
 const Line = styled.div`
-  width: 380px;
+  width: 100%;
   height: 0.5px;
   background: #d9d9d9;
 `;
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+`;
+const MainContainer = styled.div`
+  color: ${props => (props.$isRead ? "#C2C2C2" : "#000")};
+  width: 210px;
+  padding-left: 19px;
+  padding-top: 18px;
+  height: 100%;
+  box-sizing: border-box;
 `;

@@ -100,7 +100,11 @@ const Wrapper = styled.div`
   }
   .messagescontainer {
     position: fixed;
-    top: 97px;
+    top: 60px;
+    @media (min-width: 768px) {
+      //pc
+      top: 72px;
+    }
     left: 0;
     right: 0;
     z-index: -1;

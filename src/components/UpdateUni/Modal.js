@@ -80,7 +80,7 @@ const SearchBtn = styled.div`
   width: 50.07px;
   height: 31px;
   border-radius: 100px;
-  background: #ffc701;
+  background: #0e312b;
   display: flex;
   margin-top: 19px;
   margin-left: 6.5px;
@@ -135,6 +135,7 @@ const Item = styled.div`
 `;
 const Container = styled.div`
   width: 80%;
+  min-width: 314px;
   height: 248px;
   border-radius: 9px;
   background: #fff;
@@ -148,8 +149,8 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
 
   p {
-    margin: 30px 0px 0px 32px;
-    color: #eeba00;
+    margin: 27px 0px 0px 19px;
+    color: #0e312b;
     font-family: Inter;
     font-size: 15px;
     font-style: normal;
