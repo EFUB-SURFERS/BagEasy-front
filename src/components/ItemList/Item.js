@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heart from "../../assets/itemListPage/heart.png";
-import emptyHeart from "../../assets/itemListPage/emptyHeart.png";
+import emptyheart from "../../assets/itemListPage/emptyheart.png";
 
 const Item = ({
   post,
@@ -53,7 +53,7 @@ const Item = ({
 
       <IconWrapper>
         <Favorites>
-          <Heart src={isLiked ? heart : emptyHeart} onClick={like} />
+          <Heart src={isLiked ? heart : emptyheart} onClick={like} />
           <FavoritesNum>{post.heartCount}</FavoritesNum>
         </Favorites>
         <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
