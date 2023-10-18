@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Profile from "../../components/Common/Profile";
-const Item = ({ roomId, latestMessage, yourNickname, isRead = false }) => {
+const Item = ({ roomId, latestMessage, yourNickname }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
@@ -43,7 +43,7 @@ const Item = ({ roomId, latestMessage, yourNickname, isRead = false }) => {
         <div className="img">
           <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
         </div>
-        <MainContainer $isRead={isRead}>
+        <MainContainer $isRead={latestMessage.isRead || latestMessage.isMine}>
           <p className="name">{yourNickname}</p>
           {latestMessage && <p className="text">{latestMessage.content}</p>}
         </MainContainer>
@@ -51,7 +51,9 @@ const Item = ({ roomId, latestMessage, yourNickname, isRead = false }) => {
           {latestMessage && (
             <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
           )}
-          {!isRead && <p className="count">3</p>}
+          {false && !latestMessage.isRead && !latestMessage.isMine && (
+            <p className="count">3</p>
+          )}
         </div>
       </ChatItem>
       <Line />
@@ -102,7 +104,7 @@ const ChatItem = styled.div`
   .text {
     margin-top: 5px;
     width: 176px;
-    height: 40px;
+    height: 23px;
 
     font-family: Inter;
     font-size: 10px;
@@ -110,9 +112,13 @@ const ChatItem = styled.div`
     font-weight: 700;
     line-height: normal;
 
-    overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   .count {
     width: 17px;
