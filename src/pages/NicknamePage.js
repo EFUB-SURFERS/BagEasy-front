@@ -68,9 +68,11 @@ const Nickname = () => {
       } catch (err) {
         if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
           // 토큰 만료
-          localStorage.setItem("isExpired", "true");
-          setIsExpired(localStorage.getItem("isExpired"));
-        } else if (res.data.code === "DUPLICATE_NICKNAME") {
+          setIsExpired(true);
+        } else if (
+          err.response &&
+          err.response.data.code === "DUPLICATE_NICKNAME"
+        ) {
           // 닉네임 중복
           setIsOverlap(true);
           setIsFocused(true);
