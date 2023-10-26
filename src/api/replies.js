@@ -13,6 +13,7 @@ export const createReply = async (postId, commentId, body) => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -23,6 +24,7 @@ export const getReplies = async commentId => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    throw err;
   }
 };
 
@@ -33,5 +35,6 @@ export const deleteReply = async replyId => {
     return res.data;
   } catch (err) {
     console.log("에러 발생", err);
+    throw err;
   }
 };

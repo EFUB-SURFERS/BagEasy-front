@@ -7,6 +7,7 @@ import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import { getLikes } from "../api/likes";
 import {
   getAllPosts,
   getPostBySchool,
@@ -19,17 +20,18 @@ const ItemListPage = () => {
     JSON.parse(localStorage.getItem("toggle")),
   );
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
-  const [uniDisplay, setUniDisplay] = useState(
+  const [uniSearch, setUniSearch] = useState(
     localStorage.getItem("university"),
   );
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
-  const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onToggle = () => {
     setOnSales(prev => {
       localStorage.setItem("toggle", JSON.stringify(!prev));
+      window.location.reload();
       return !prev;
     });
   };
@@ -44,42 +46,58 @@ const ItemListPage = () => {
 
   //양도글 리스트 조회
   useEffect(() => {
-    let data = null;
     async function fetchData() {
-      if (onSales) {
-        data = uniDisplay
-          ? await getpostsBySchoolOnSales(uniDisplay)
-          : await getPostonSales();
-      } else {
-        data = uniDisplay
-          ? await getPostBySchool(uniDisplay)
-          : await getAllPosts();
-      }
-
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
+      try {
+        let data = null;
+        if (onSales) {
+          data = uniSearch
+            ? await getpostsBySchoolOnSales(uniSearch)
+            : await getPostonSales();
+        } else {
+          data = uniSearch
+            ? await getPostBySchool(uniSearch)
+            : await getAllPosts();
+        }
         setPosts(data);
         setLoading(false);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
-
     fetchData();
   }, [refresh, onSales]);
 
+  //찜여부 리스트 조회
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        posts.forEach(async (post, index) => {
+          let newLikes = likes;
+          const likedData = await getLikes(post.postId);
+          newLikes[index] = likedData.isLiked;
+          setLikes(newLikes);
+        });
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
+    }
+    fetchData();
+  }, [refresh, onSales, posts]);
+
   return (
     <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
-      <Header />
-      <Buttons navigate={navigate} />
-      <SearchBar
+      {isModalVisible && <TokenRefreshModal />}
+      <Header
+        uniSearch={uniSearch}
+        setUniSearch={setUniSearch}
         onToggle={onToggle}
         onSales={onSales}
-        uniDisplay={uniDisplay}
-        setUniDisplay={setUniDisplay}
         setRefresh={setRefresh}
+        setIsModalVisible={setIsModalVisible}
       />
       {loading ? (
         <Loader>loading...</Loader>
@@ -87,8 +105,9 @@ const ItemListPage = () => {
         <List
           posts={posts}
           setRefresh={setRefresh}
-          offset="111px"
-          setIsExpired={setIsExpired}
+          offset="90px"
+          setIsModalVisible={setIsModalVisible}
+          likes={likes}
         />
       )}
       <WriteBtn />

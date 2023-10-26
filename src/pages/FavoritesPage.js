@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from "react";
 import List from "./../components/ItemList/List";
 import styled from "styled-components";
-import Header from "./../components/Common/Header";
-import { getLikedPosts } from "../api/likes";
+import SimpleHeader from "../components/ItemList/SimpleHeader";
+import { getLikedPosts, getLikes } from "../api/likes";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [refresh, setRefresh] = useState(0);
-  const [isExpired, setIsExpired] = useState(localStorage.getItem("isExpired"));
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
   //찜한 양도글 리스트 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getLikedPosts();
+      try {
+        const data = await getLikedPosts();
 
-      //토큰 만료시
-      if (data.response && data.response.data.code === "EXPIRED_TOKEN") {
-        localStorage.setItem("isExpired", true);
-        setIsExpired(localStorage.getItem("isExpired"));
-      } else {
         setLoading(false);
         setPosts(data);
+
+        //찜여부 리스트 조회
+        data.forEach(async (post, index) => {
+          let newLikes = likes;
+          const likedData = await getLikes(post.postId);
+          newLikes[index] = likedData.isLiked;
+          setLikes(newLikes);
+        });
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
       }
     }
 
@@ -33,11 +42,17 @@ const FavoritesPage = () => {
 
   return (
     <Wrapper>
-      {isExpired === "true" && <TokenRefreshModal />}
+      {isModalVisible && <TokenRefreshModal />}
       <button onClick={() => navigate("/home")}>
-        <Header />
+        <SimpleHeader />
       </button>
-      <List posts={posts} setRefresh={setRefresh} liked={true} />
+      <List
+        posts={posts}
+        setRefresh={setRefresh}
+        showUni={true}
+        setIsModalVisible={setIsModalVisible}
+        likes={likes}
+      />
     </Wrapper>
   );
 };

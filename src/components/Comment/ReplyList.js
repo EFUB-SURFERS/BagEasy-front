@@ -4,21 +4,28 @@ import { getReplies } from "../../api/replies";
 import Comment from "./Comment";
 
 const ReplyList = ({
-  commentId,
+  originComment, //원댓글
   setReplying,
   nickname,
   refresh,
   setRefresh,
   postWriter,
   commentWriter,
+  setIsModalVisible,
 }) => {
   const [replies, setReplies] = useState([]);
 
   //대댓글 조회
   useEffect(() => {
     async function fetchData() {
-      const data = await getReplies(commentId);
-      setReplies(data);
+      try {
+        const data = await getReplies(originComment.commentId);
+        setReplies(data);
+      } catch (err) {
+        if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+          setIsModalVisible(true);
+        }
+      }
     }
     fetchData();
   }, [refresh]);
@@ -30,12 +37,14 @@ const ReplyList = ({
           <Comment
             comment={reply}
             isReply={true}
+            originComment={originComment}
             key={key}
             setReplying={setReplying}
             nickname={nickname}
             setRefresh={setRefresh}
             postWriter={postWriter}
             commentWriter={commentWriter}
+            setIsModalVisible={setIsModalVisible}
           />
         ))}
     </Root>

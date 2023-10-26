@@ -6,21 +6,23 @@ const List = ({
   posts,
   setRefresh,
   offset = "97px",
-  liked = false,
-  setIsExpired,
+  showUni = false,
+  setIsModalVisible,
+  likes,
 }) => {
   return (
     <Wrapper $offset={offset}>
       {!posts || posts.length === 0 ? (
         <NoList>목록이 없어요.</NoList>
       ) : (
-        posts.map((post, key) => (
+        posts.map((post, index) => (
           <Item
             post={post}
             setRefresh={setRefresh}
-            liked={liked}
-            key={key}
-            setIsExpired={setIsExpired}
+            showUni={showUni}
+            key={index}
+            setIsModalVisible={setIsModalVisible}
+            isLiked={likes[index]}
           />
         ))
       )}
@@ -36,7 +38,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: ${props => props.$offset};
-  padding-bottom: ${props => `calc(${props.$offset} + 70px)`};
+  padding-bottom: ${props => `calc(${props.$offset} + 75px)`};
   box-sizing: border-box;
   overflow: scroll;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */

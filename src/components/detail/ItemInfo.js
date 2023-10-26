@@ -80,6 +80,7 @@ const ItemInfo = ({ postId }) => {
         postTitle={post.postTitle}
         postContent={post.postContent}
         imageResponseDtos={post.imageResponseDtos}
+        modifeddate={post.modifiedAt}
       />
       <CommentList postId={postId} postWriter={post.sellerNickname} />
       <Footer
@@ -106,5 +107,10 @@ const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 97px;
+
+  padding-top: 46px;
+  @media (max-width: 768px) {
+    //모바일
+    padding-top: 38px;
+  }
 `;

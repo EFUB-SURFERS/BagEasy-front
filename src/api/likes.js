@@ -28,6 +28,7 @@ export const getLikes = async postId => {
   }
 };
 
+//찜한 게시글 목록 조회
 export const getLikedPosts = async () => {
   try {
     const res = await client.get(`posts/likes`);

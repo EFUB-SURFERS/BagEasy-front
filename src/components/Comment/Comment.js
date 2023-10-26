@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Profile from "../Common/Profile";
-import dots from "../../assets/itemListPage/dots.png";
-import CommentModal from "./CommentModal";
-import lockGrey from "../../assets/itemListPage/lockGrey.png";
+import lockDark from "../../assets/itemListPage/lockDark.png";
+import lockLight from "../../assets/itemListPage/lockLight.png";
 import { deleteReply } from "../../api/replies";
 import { deleteComment } from "../../api/comments";
 
 const Comment = ({
   comment,
   isReply = false,
+  originComment,
   setReplying,
   nickname,
   setRefresh,
   postWriter,
   commentWriter,
+  setIsModalVisible,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [hide, setHide] = useState(false);
 
   //비밀댓글 숨김여부 설정
@@ -30,29 +30,34 @@ const Comment = ({
 
   //댓글,대댓글 삭제
   const onDelete = async () => {
-    async function deleteData() {
+    try {
       isReply
         ? await deleteReply(comment.replyId)
         : await deleteComment(comment.commentId);
       setRefresh(prev => prev + 1);
+    } catch (err) {
+      if (err.response && err.response.data.code === "EXPIRED_TOKEN") {
+        setIsModalVisible(true);
+      }
     }
-    deleteData();
-    //window.location.reload();
   };
 
   return (
     <Container>
       <Root $isReply={isReply}>
         <ProfileWrapper>
-          <Profile nickname={comment.writer} width="24px" height="24px" />
+          <Profile nickname={comment.writer} width="30px" height="30px" />
         </ProfileWrapper>
 
-        <Wrapper>
-          <Nickname>{comment.writer}</Nickname>
+        <MainWrapper>
+          <Wrapper>
+            <Nickname>{comment.writer}</Nickname>
+            <Day>2시간</Day>
+          </Wrapper>
           <TextWrapper>
             {comment.isSecret && (
               <LockWrapper>
-                <Lock src={lockGrey} />
+                <Lock src={hide ? lockLight : lockDark} />
               </LockWrapper>
             )}
             <Text $hide={hide}>
@@ -63,19 +68,30 @@ const Comment = ({
                 : comment.replyContent}
             </Text>
           </TextWrapper>
-        </Wrapper>
-
-        <Button onClick={() => setIsOpen(true)}>
-          <Dots src={dots} />
-        </Button>
-        {isOpen && (
-          <CommentModal
-            setIsOpen={setIsOpen}
-            setReplying={setReplying}
-            isMine={nickname === comment.writer}
-            onDelete={onDelete}
-          />
-        )}
+          <ButtonWrapper>
+            <Button
+              onClick={() =>
+                isReply
+                  ? setReplying({
+                      originComment: originComment,
+                      repliedComment: comment,
+                    })
+                  : setReplying({
+                      originComment: comment,
+                      repliedComment: comment,
+                    })
+              }
+            >
+              답글달기
+            </Button>
+            {nickname === comment.writer && (
+              <>
+                <Bar>|</Bar>
+                <Button onClick={onDelete}>삭제하기</Button>
+              </>
+            )}
+          </ButtonWrapper>
+        </MainWrapper>
       </Root>
     </Container>
   );
@@ -88,7 +104,6 @@ const Container = styled.div`
 
 const Root = styled.div`
   display: flex;
-  background: #ffee94;
   margin: 0 15px;
   padding: 8px 0;
   margin-left: ${props => props.$isReply && "50px"};
@@ -99,16 +114,28 @@ const ProfileWrapper = styled.div`
   padding-top: 3px;
 `;
 
-const Wrapper = styled.div`
+const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 15px;
+  font-weight: 400;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const Nickname = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   margin-bottom: 2px;
+`;
+
+const Day = styled.div`
+  font-size: 10px;
+  color: #848484;
+  margin-left: 10px;
 `;
 
 const TextWrapper = styled.div`
@@ -127,23 +154,26 @@ const Lock = styled.img`
 
 const Text = styled.div`
   flex: 1;
-  font-size: 13px;
+  font-size: 11px;
   color: ${props => (props.$hide ? "#909090" : "black")};
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  color: #848484;
+  font-size: 10px;
+`;
+
 const Button = styled.div`
-  margin-left: auto;
   &:hover {
     cursor: pointer;
   }
-  width: 12px;
-  height: 12px;
-  display: flex;
-  align-items: center;
 `;
 
-const Dots = styled.img`
-  width: 12px;
+const Bar = styled.div`
+  padding: 0px 3px;
 `;
 
 export default Comment;
