@@ -14,7 +14,7 @@ const ListItemContainer = styled.div`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: #ffee94;
+    background: #f4f4f4;
   }
 `;
 
@@ -22,10 +22,11 @@ const Icon = styled.img`
   width: 25px;
   height: 25px;
   padding: 18px;
+  padding-left: 30px;
 `;
 
 const ListItemText = styled.p`
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
 `;
 export default ListItem;
