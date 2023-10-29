@@ -185,7 +185,7 @@ const ImgaeBox = styled.div`
 const Seller = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   width: 100%;
