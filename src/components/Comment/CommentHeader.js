@@ -13,17 +13,21 @@ const CommentHeader = ({ comments }) => {
 export default CommentHeader;
 
 const Header = styled.div`
-  height: 30px;
+  height: 28px;
   display: flex;
   align-items: center;
   padding: 4px 13px;
 `;
 
 const Text = styled.div`
+  font-size: 12px;
   padding-right: 5px;
+  /* border: 1px solid lightgrey; */
 `;
 
 const Count = styled.div`
+  padding-top: 2px;
   color: #848484;
-  font-size: 12px;
+  font-size: 10px;
+  /* border: 1px solid lightgrey; */
 `;

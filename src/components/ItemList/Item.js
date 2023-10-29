@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addLikes, cancelLikes, getLikes } from "../../api/likes";
-import heartImg from "../../assets/itemListPage/heartImg.png";
+import heart from "../../assets/itemListPage/heart.png";
 import emptyheart from "../../assets/itemListPage/emptyheart.png";
 
 const Item = ({
@@ -41,43 +41,50 @@ const Item = ({
         <Image src={post.imageResponseDtos[0].imageUrl} />
       </ImageWrapper>
 
-      <Info>
+      <TextWrapper>
         <Title>{post.postTitle}</Title>
+        <Detail>
+          <University>{post.school}</University>
+          <Day> | 2일전</Day>
+        </Detail>
         <Price>{`${post.price}원`}</Price>
-        {showUni && <School>{post.school}</School>}
-        <Footer>
-          <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
-          <Favorites>
-            <HeartImg src={isLiked ? heartImg : emptyheart} onClick={like} />
-            <FavoritesNum>{post.heartCount}</FavoritesNum>
-          </Favorites>
-        </Footer>
-      </Info>
+        {/* {showUni && <School>{post.school}</School>} */}
+      </TextWrapper>
+
+      <IconWrapper>
+        <Favorites>
+          <Heart src={isLiked ? heart : emptyheart} onClick={like} />
+          <FavoritesNum>{post.heartCount}</FavoritesNum>
+        </Favorites>
+        <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>
+      </IconWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  margin: 0 30px;
-  padding: 30px 0;
-  height: 180px;
-  box-sizing: border-box;
   display: flex;
+  margin: 0 14px;
+  padding: 14px 0;
+  height: 123px;
+  box-sizing: border-box;
   align-items: center;
-  border-bottom: 1px solid #d7d7d7;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  line-height: 17px;
   &:hover {
     cursor: default;
   }
 `;
 
 const ImageWrapper = styled.div`
-  position: relative;
-  width: 120px;
-  padding-bottom: 120px;
-  outline: 1px solid #ededed;
-  border-radius: 5px;
-  overflow: hidden;
   flex: none;
+  outline: 1px solid #ededed;
+  position: relative;
+  width: 96px;
+  padding-bottom: 96px;
+  border-radius: 13px;
+  overflow: hidden;
 `;
 
 const Image = styled.img`
@@ -87,56 +94,70 @@ const Image = styled.img`
   object-fit: cover;
 `;
 
-const Info = styled.div`
-  height: 120px;
+const TextWrapper = styled.div`
   flex: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 16px;
+  padding-top: 10px;
+  padding-bottom: 12px;
   box-sizing: border-box;
+  overflow: hidden;
 `;
 
 const Title = styled.div`
-  font-weight: bold;
-  font-size: 20px;
-  flex: none;
-  padding-bottom: 3px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  margin-bottom: 4px;
+`;
+
+const Detail = styled.div`
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  /* border: 1px solid lightgrey; */
+`;
+
+const University = styled.div`
+  /* border: 1px solid lightgrey; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+`;
+
+const Day = styled.div`
+  white-space: nowrap;
+  margin-left: 5px;
 `;
 
 const Price = styled.div`
-  flex: none;
   font-size: 16px;
-  color: grey;
-  padding-bottom: 4px;
-`;
-
-const School = styled.div`
-  flex: none;
-  font-size: 13px;
-  color: grey;
-`;
-
-const Footer = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-around;
+  font-weight: 700;
+  color: #b476e5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
   margin-top: auto;
 `;
 
-const Tag = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 75px;
-  height: 28px;
+const IconWrapper = styled.div`
+  padding-top: 10px;
+  padding-bottom: 12px;
   box-sizing: border-box;
-  background: ${props => (props.$isSold ? `#cbcbcb` : `#FFC700`)};
-  border-radius: 15px;
-  color: white;
-  font-weight: 700;
-  font-size: 12px;
+  flex: none;
+  width: 80px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
 `;
 
 const Favorites = styled.div`
@@ -145,8 +166,24 @@ const Favorites = styled.div`
   align-items: center;
 `;
 
-const HeartImg = styled.img`
-  width: 18px;
+const Tag = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0px 10px;
+  height: 23px;
+  box-sizing: border-box;
+  background: ${props => (props.$isSold ? `#C2C2C2` : `#B476E5`)};
+  border-radius: 15px;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+`;
+
+const Heart = styled.img`
+  width: 16px;
+  height: 15px;
   transform: translateY(1px);
   &:hover {
     cursor: pointer;

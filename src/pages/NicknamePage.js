@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Arrow from "../assets/GoogleLogin/arrow.png";
+import pattern from "../assets/GoogleLogin/pattern.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
@@ -84,6 +85,7 @@ const Nickname = () => {
 
   return (
     <>
+      <BG src={pattern} />
       {isExpired && <TokenRefreshModal />}
       <NickNameContainer>
         <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
@@ -114,6 +116,13 @@ const Nickname = () => {
   );
 };
 
+const BG = styled.img`
+  position: absolute;
+  z-index: -1;
+  height: 100vh;
+  top: 0;
+`;
+
 const NickNameContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,11 +136,11 @@ const Container = styled.div`
 `;
 
 const ArrowIcon = styled.img`
-  width: 31px;
-  height: 22px;
+  width: 41px;
+  height: 35px;
   margin-bottom: 40px;
   align-self: flex-start;
-  margin-left: 20px;
+  margin-left: 15px;
   cursor: pointer;
 `;
 
@@ -140,7 +149,7 @@ const Copy = styled.h2`
   font-weight: 600;
   margin: 3px;
   align-self: flex-start;
-  margin-left: 20px;
+  margin-left: 30px;
 `;
 
 const Copy2 = styled(Copy)`
@@ -163,7 +172,7 @@ const Input = styled.input`
   padding-left: 15px;
   font-size: 15px;
   font-weight: 400;
-  margin-top: 190px;
+  margin-top: 90px;
   outline: none;
 `;
 
@@ -171,7 +180,7 @@ const Btn = styled.button`
   width: 327.073px;
   height: 46px;
   border-radius: 30px;
-  background: linear-gradient(#ffc700 73.96%, rgba(255, 199, 0, 0.7) 100%);
+  background: #0e312b;
   border: none;
   color: #fff;
   text-align: center;
