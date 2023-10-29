@@ -28,6 +28,7 @@ const Root = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 16px;
+  height: 62px;
 `;
 
 const ProfileWrapper = styled.div`
