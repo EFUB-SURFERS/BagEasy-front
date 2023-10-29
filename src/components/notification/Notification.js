@@ -3,19 +3,19 @@ import { styled } from "styled-components";
 import Profile from "../Common/Profile";
 import itemImg from "../../assets/itemListPage/itemImg.png";
 
-const Notification = () => {
+const Notification = ({ nickname, content }) => {
   return (
     <Root>
       <ProfileWrapper>
-        <Profile nickname="nickname" width="40px" height="40px" />
+        <Profile nickname={nickname} width="40px" height="40px" />
       </ProfileWrapper>
       <TextWrapper>
         <Wrapper>
-          <Nickname>catcat</Nickname>
-          <Text>님이 비밀댓글을 달았습니다.</Text>
+          <Nickname>{nickname}</Nickname>
+          <Text>님이 댓글을 달았습니다.</Text>
           <Day>2시간</Day>
         </Wrapper>
-        <Content>거래 원합니다. 채팅 확인해주세요. 답변 기다립니다.</Content>
+        <Content>{content}</Content>
       </TextWrapper>
       <ImageWrapper>
         <Image src={itemImg} />
@@ -28,6 +28,7 @@ const Root = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 16px;
+  height: 62px;
 `;
 
 const ProfileWrapper = styled.div`
