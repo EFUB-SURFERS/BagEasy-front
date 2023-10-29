@@ -23,13 +23,13 @@ const Bar = ({ activeTab, onTabClick }) => {
 const BarContainer = styled.div`
   display: flex;
   color: white;
-  height: 36px;
+  height: 46px;
   cursor: pointer;
   margin-top: 97px;
 `;
 
 const TabItem = styled.div`
-  color: #fff;
+  color: ${({ active }) => (active ? "#fff" : "#C2C2C2")};
   text-align: center;
   font-family: Inter;
   font-size: 15px;
@@ -41,7 +41,8 @@ const TabItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ active }) => (active ? "#ffc700" : "#cbcbcb")};
+  border-radius: 20px 20px 0px 0px;
+  background-color: ${({ active }) => (active ? "#0E312B" : "#F4F4F4")};
 `;
 
 export default Bar;

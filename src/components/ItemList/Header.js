@@ -8,6 +8,7 @@ import notification from "../../assets/itemListPage/notification.png";
 import chat from "../../assets/itemListPage/chat.png";
 import Profile from "../Common/Profile";
 import Modal from "./../UpdateUni/Modal";
+import profileIcon from "../../assets/itemListPage/profile.png";
 import Toggle from "./Toggle";
 
 const Header = ({
@@ -17,6 +18,7 @@ const Header = ({
   onSales,
   setRefresh,
   setIsModalVisible,
+  setIsMypageModalVisible,
 }) => {
   const [nickname, setNickname] = useState();
   const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +86,8 @@ const Header = ({
           <ChatBtn onClick={() => navigate("/chats")}>
             <Img src={chat} />
           </ChatBtn>
-          <MyPageBtn onClick={() => navigate("/mypage")}>
-            <Profile nickname={nickname} width="22px" height="22px" />
+          <MyPageBtn onClick={() => setIsMypageModalVisible(true)}>
+            <Img src={profileIcon} />
           </MyPageBtn>
         </ButtonWrapper>
         {isOpen ? (

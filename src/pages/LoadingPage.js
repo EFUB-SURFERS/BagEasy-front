@@ -1,4 +1,4 @@
-import loading from "../assets/Loading/loadingIcon.gif";
+import loading from "../assets/Loading/loading.png";
 import { styled } from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -50,6 +50,7 @@ const Loading = () => {
   return (
     <LoadingConatiner>
       <LoadingIcon src={loading} />
+      <p>로그인중입니다...</p>
     </LoadingConatiner>
   );
 };
@@ -58,10 +59,13 @@ const LoadingConatiner = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const LoadingIcon = styled.img``;
+const LoadingIcon = styled.img`
+  width: 260px;
+`;
 
 export default Loading;
