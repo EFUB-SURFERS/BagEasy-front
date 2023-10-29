@@ -1,10 +1,12 @@
 import React from "react";
 import { styled } from "styled-components";
+import Header from "../components/notification/Header";
 import Notification from "../components/notification/Notification";
 
 const NotificationPage = () => {
   return (
     <Root>
+      <Header />
       <Wrapper>
         <Notification />
         <Notification />
@@ -29,7 +31,7 @@ const NotificationPage = () => {
 const Root = styled.div``;
 
 const Wrapper = styled.div`
-  margin-top: 46px;
+  margin-top: 50px;
 `;
 
 export default NotificationPage;

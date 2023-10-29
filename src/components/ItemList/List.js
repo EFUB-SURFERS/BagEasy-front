@@ -5,7 +5,7 @@ import Item from "./Item";
 const List = ({
   posts,
   setRefresh,
-  offset = "97px",
+  offset = "50px",
   showUni = false,
   setIsModalVisible,
   likes,
@@ -52,7 +52,7 @@ const NoList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: calc(100vh - 50px);
 `;
 
 export default List;
