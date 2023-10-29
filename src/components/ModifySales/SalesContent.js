@@ -19,7 +19,6 @@ const SalesContent = ({ postId, originalData }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // 데이터를 받아온 후 modifiedData를 업데이트
       setModifiedData({
         uni: originalData?.school || "",
         title: originalData?.postTitle || "",
@@ -50,7 +49,7 @@ const SalesContent = ({ postId, originalData }) => {
 
   const saveImgFile = e => {
     const fileArr = imgRef.current.files;
-    const limitedFileArr = Array.from(fileArr).slice(0, 10); // Limit to 10 files
+    const limitedFileArr = Array.from(fileArr).slice(0, 10); 
     setImgFile(prevImgFile => [...prevImgFile, ...limitedFileArr]);
     setModifiedData(prevData => ({ ...prevData, imgData: imgFile })); //이미지 전송 데이터
   };
@@ -91,6 +90,12 @@ const SalesContent = ({ postId, originalData }) => {
     }
   };
 
+  const handleDeleteImage = index => {
+    const newImgFile = [...imgFile];
+    newImgFile.splice(index, 1); // 해당 인덱스의 이미지를 삭제
+    setImgFile(newImgFile);
+  };
+
   return (
     <>
       {isModalVisible && <TokenRefreshModal />}
@@ -122,11 +127,10 @@ const SalesContent = ({ postId, originalData }) => {
           />
           {imgFile.length > 0
             ? imgFile.map((file, index) => (
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Image ${index}`}
-                />
+                <div key={index} className="image-container">
+                  <img src={URL.createObjectURL(file)} alt={`Image ${index}`} />
+                  <button onClick={() => handleDeleteImage(index)}>X</button>
+                </div>
               ))
             : modifiedData.imgData.map(file => (
                 <img
@@ -228,7 +232,7 @@ const SalesContent = ({ postId, originalData }) => {
 export default SalesContent;
 
 const Header = styled.div`
-  height: 117px;
+  height: 70px;
   width: 100%;
 
   display: flex;
@@ -239,30 +243,29 @@ const Header = styled.div`
 
 const Delete = styled.div`
   display: flex;
-  width: 36px;
-  height: 23px;
+  width: 20px;
+  height: 20px;
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
 
-  color: #000;
-  text-align: center;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+  margin-left: 11px;
+`;
 
-  padding-left: 11px;
-  padding-top: 76px;
-  padding-bottom: 18px;
+const Close = styled.img`
+  width: 20px;
+  height: 20px;
+  padding-left: 15px;
+  &:hover {
+    filter: brightness(30%);
+  }
 `;
 
 const Done = styled.button`
   border: 0;
   outline: 0;
   background: none;
-  color: #727272;
+  color: #000;
   font-family: Inter;
   font-size: 18px;
   font-style: normal;
@@ -270,20 +273,9 @@ const Done = styled.button`
   line-height: normal;
 
   margin-right: 15px;
-  margin-top: 76px;
-  margin-bottom: 19px;
 
   &:hover {
-    color: #000000;
-  }
-`;
-
-const Close = styled.img`
-  width: 25px;
-  height: 25px;
-  padding-left: 5px;
-  &:hover {
-    filter: brightness(30%);
+    color: #727272;
   }
 `;
 
@@ -329,11 +321,32 @@ const Images = styled.div`
 
   margin-bottom: 19px;
 
+  .image-container {
+    position: relative;
+  }
+  button {
+    position: absolute;
+    background: none;
+    top: 35px;
+    right: 5px;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
   img {
     width: 80px;
     height: 80px;
     margin-left: 17px;
     margin-top: 30px;
+    border-radius: 13px;
   }
 
   #file {
@@ -480,7 +493,6 @@ const UniText = styled.div`
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  /* color: #b8b8b8; */
   text-align: left;
   font-family: Inter;
   font-size: 13px;

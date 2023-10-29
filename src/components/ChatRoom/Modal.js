@@ -33,11 +33,9 @@ const Modal = ({
         }}
       ></Layer>
       <Container>
-        <p className="yellow">거래를 확정하시겠습니까?</p>
+        <p className="title">거래를 확정하시겠습니까?</p>
         <p className="gray">거래 확정 뒤에는 취소가 불가합니다.</p>
-        <div className="btn">
-          <Btn onClick={handleItemClick}>확정</Btn>
-        </div>
+        <Btn onClick={handleItemClick}>확정</Btn>
       </Container>
     </>
   );
@@ -46,11 +44,15 @@ const Modal = ({
 export default Modal;
 
 const Btn = styled.div`
+  width: 172.93px;
+  height: 31px;
+  flex-shrink: 0;
+  border-radius: 100px;
+  background: #0e312b;
   display: flex;
-  width: 48.129px;
-  height: 30px;
   flex-direction: column;
   justify-content: center;
+
   color: #fff;
   text-align: center;
   font-family: Noto Sans KR;
@@ -58,11 +60,7 @@ const Btn = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  width: 50.07px;
-  height: 31px;
-  border-radius: 100px;
-  background: #ffc701;
-  margin-top: 13px;
+  margin: 33px auto 0px;
 `;
 const Layer = styled.div`
   display: block;
@@ -88,11 +86,12 @@ const Container = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  .yellow {
+  .title {
+    color: #0e312b;
     width: 65%;
     margin-left: 8%;
-    margin-top: 30px;
-    color: #eeba00;
+    margin-top: 22px;
+
     font-family: Inter;
     font-size: 15px;
     font-style: normal;
@@ -107,13 +106,9 @@ const Container = styled.div`
     font-family: Inter;
     font-size: 12px;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 700;
     line-height: normal;
   }
   .btn {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-left: 75%;
   }
 `;

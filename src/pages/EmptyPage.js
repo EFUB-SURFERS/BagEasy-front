@@ -1,6 +1,4 @@
 import { styled } from "styled-components";
-import Duck from "../assets/GoogleLogin/duck.png";
-import Arrow from "../assets/GoogleLogin/arrow.png";
 import { useNavigate } from "react-router-dom";
 
 const Empty = () => {
@@ -11,8 +9,8 @@ const Empty = () => {
   };
   return (
     <Container>
-      <ArrowIcon src={Arrow} onClick={handleNavigateBack} />
-      <Character src={Duck} />
+      {/* <ArrowIcon src={Arrow} onClick={handleNavigateBack} /> */}
+      {/* <Character src={Duck} /> */}
       <P>이 페이지는 텅~ 비었어요.</P>
     </Container>
   );

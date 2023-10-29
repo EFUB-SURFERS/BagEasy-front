@@ -36,7 +36,6 @@ const Footer = ({
       alert("이미 판매가 완료된 글은 수정이 불가합니다.");
       return;
     } else navigate("/modify/" + postId);
-    // navigate("/modify/" + postId);
   };
 
   useEffect(() => {
@@ -151,7 +150,8 @@ const Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 75px;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   background: #ffffff;
   border-top: 0.5px solid #808080;
 `;
@@ -193,7 +193,6 @@ const Line = styled.div`
   width: 0.5px;
   height: 48px;
   background: #808080;
-  margin-top: 16px;
 `;
 
 const Price = styled.div`
@@ -201,28 +200,24 @@ const Price = styled.div`
   font-family: Noto Sans KR;
   font-size: 20px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   line-height: normal;
 
-  padding-top: 24px;
   margin-left: 18px;
 `;
 
 const Button = styled.img`
   width: 103px;
-  height: 46px;
+  height: 36px;
 
   margin-left: auto;
   margin-right: 15px;
-  margin-top: 16px;
   flex-shrink: 0;
 `;
 
 const MenuBar = styled.img`
-  width: 38px;
-  height: 38px;
   margin-left: auto;
   margin-right: 15px;
-  margin-top: 16px;
-  flex-shrink: 0;
+  width: 5px;
+  height: 25px;
 `;

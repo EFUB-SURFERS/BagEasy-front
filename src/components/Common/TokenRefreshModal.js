@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import ModalBg from "../../assets/modal/modal_bg.png";
+import ModalBg from "../../assets/modal/modalBg.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -76,8 +76,8 @@ const Bg = styled.div`
   top: 0;
   width: 100vw;
   height: 100%;
-  background-color: gray;
-  opacity: 0.7;
+  background-color: black;
+  opacity: 0.5;
 `;
 
 const Container = styled.div`
@@ -89,25 +89,28 @@ const Container = styled.div`
 `;
 
 const P = styled.p`
+  font-size: 14px;
   position: absolute;
-  margin-top: 4rem;
-  margin-left: 2rem;
+  margin-top: 3rem;
+  margin-left: 3rem;
 `;
 
 const Btn = styled.button`
   position: absolute;
-  margin-top: 8rem;
-  margin-left: 9rem;
+  margin-top: 7.5rem;
+  margin-left: 8.5rem;
   width: 100px;
   height: 34px;
   border-radius: 30px;
-  background-color: #ffc700;
+  background-color: #0e312b;
   color: white;
   font-weight: 600;
   border: none;
   font-size: 15px;
 `;
 
-const Modal = styled.img``;
+const Modal = styled.img`
+  width: 374px;
+`;
 
 export default TokenRefreshModal;

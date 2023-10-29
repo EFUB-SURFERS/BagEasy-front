@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import GoogleLogin from "./pages/GoogleLoginPage";
+import Login from "./pages/LoginPage";
 import Nickname from "./pages/NicknamePage";
 import ChatListPage from "./pages/ChatListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
@@ -21,7 +21,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Start />} />
-      <Route path="/login" element={<GoogleLogin />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/loading" element={<Loading />} />
       {/* 로그인 해야 접근 가능한 페이지 */}
       <Route element={<PrivateRoute />}>
