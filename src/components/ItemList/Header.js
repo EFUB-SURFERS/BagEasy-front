@@ -92,7 +92,7 @@ const Header = ({
             <Img src={chat} />
           </ChatBtn>
           <MyPageBtn onClick={() => setIsMypageModalVisible(true)}>
-            <Img src={profileIcon} />
+            <Img src={profileIcon} style={{ width: "21px" }} />
           </MyPageBtn>
         </ButtonWrapper>
         {isOpen ? (

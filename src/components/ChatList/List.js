@@ -61,6 +61,7 @@ const List = () => {
                     roomId={room.roomId}
                     postId={room.postId}
                     latestMessage={room.latestMessage}
+                    unReadCount={room.unReadCount}
                   />
                 );
               })}
