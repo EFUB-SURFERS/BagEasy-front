@@ -103,6 +103,7 @@ const MessagesContainer = ({ setIsModalVisible }) => {
                       sendTime={getSendTime(message.sentAt)}
                       sendDate={checkIsNewDate(message.sentAt)}
                       type={message.type}
+                      readCount={message.readCount}
                     />
                   </>
                 ) : (
@@ -115,6 +116,7 @@ const MessagesContainer = ({ setIsModalVisible }) => {
                       sendTime={getSendTime(message.sentAt)}
                       sendDate={checkIsNewDate(message.sentAt)}
                       type={message.type}
+                      readCount={message.readCount}
                     />
                   </>
                 );
