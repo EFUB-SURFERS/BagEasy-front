@@ -3,10 +3,10 @@ import { styled } from "styled-components";
 import logo from "../../assets/itemListPage/logo.png";
 import { useNavigate } from "react-router-dom";
 import { getMyProfile } from "../../api/member";
-import location from "../../assets/itemListPage/location.png";
+import search from "../../assets/itemListPage/search.png";
 import notification from "../../assets/itemListPage/notification.png";
 import chat from "../../assets/itemListPage/chat.png";
-import Profile from "../Common/Profile";
+import close from "../../assets/itemListPage/close.png";
 import Modal from "./../UpdateUni/Modal";
 import profileIcon from "../../assets/itemListPage/profile.png";
 import Toggle from "./Toggle";
@@ -66,6 +66,14 @@ const Header = ({
     getNickname();
   }, []);
 
+  //학교 검색 초기화
+  const onDeleteUni = () => {
+    setUni("");
+    setUniSearch("");
+    localStorage.setItem("university", uni);
+    setRefresh(prev => prev + 1);
+  };
+
   return (
     <Root>
       <Wrapper>
@@ -77,9 +85,6 @@ const Header = ({
           <Img src={logo} alt="로고" />
         </Logo>
         <ButtonWrapper>
-          <UniversityBtn onClick={() => setIsOpen(true)}>
-            <Img src={location} />
-          </UniversityBtn>
           <NotificationBtn onClick={() => navigate("/notification")}>
             <Img src={notification} />
           </NotificationBtn>
@@ -102,6 +107,19 @@ const Header = ({
       </Wrapper>
       <ToggleWrapper>
         <Toggle onToggle={onToggle} onSales={onSales} />
+        {!uniSearch && (
+          <SearchBtn onClick={() => setIsOpen(true)}>
+            <Img src={search} />
+          </SearchBtn>
+        )}
+        {uniSearch && (
+          <UniWrapper>
+            <UniName>{uniSearch}</UniName>
+            <DeleteBtn onClick={onDeleteUni}>
+              <Img src={close} />
+            </DeleteBtn>
+          </UniWrapper>
+        )}
       </ToggleWrapper>
     </Root>
   );
@@ -130,6 +148,8 @@ const Wrapper = styled.div`
 `;
 
 const ToggleWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
   height: 40px;
   padding: 0px 14px;
   display: flex;
@@ -158,7 +178,8 @@ const Img = styled.img`
   display: block;
 `;
 
-const UniversityBtn = styled.div`
+const SearchBtn = styled.div`
+  margin-left: auto;
   width: 17px;
   display: flex;
   align-items: center;
@@ -190,6 +211,29 @@ const ChatBtn = styled.div`
 const MyPageBtn = styled.div`
   margin-left: 9px;
   width: 20px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const UniWrapper = styled.div`
+  z-index: 1;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  padding: 0px 12px;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.15);
+  height: 26px;
+  border-radius: 18px;
+`;
+
+const UniName = styled.div`
+  font-size: 10px;
+`;
+
+const DeleteBtn = styled.div`
+  width: 8px;
+  margin-left: 6px;
   &:hover {
     cursor: pointer;
   }
