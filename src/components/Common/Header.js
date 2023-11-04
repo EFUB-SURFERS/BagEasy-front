@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import headerLogo from "../../assets/common/headerLogo.png";
 import back from "../../assets/common/back.png";
 import alarm from "../../assets/common/alarm.png";
-import menu from "../../assets/common/menu.png";
+import profileIcon from "../../assets/itemListPage/profile.png";
 import { useNavigate } from "react-router-dom";
 //사용방법
 //헤더가 상단 고정이라 다음에 이어질 컴포넌트가 있다면
@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
     padding-top: 38px;
   }
 */
-const Header = ({ isMenu = true }) => {
+const Header = ({ isMenu = true, setIsMypageModalVisible }) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
@@ -35,9 +35,9 @@ const Header = ({ isMenu = true }) => {
           <img src={headerLogo} alt="로고" />
         </p>
         {isMenu ? (
-          <Menu>
-            <img src={menu} alt="메뉴" />
-          </Menu>
+          <MyPage onClick={() => setIsMypageModalVisible(true)}>
+            <img src={profileIcon} alt="메뉴" />
+          </MyPage>
         ) : (
           <Alarm>
             <img src={alarm} alt="알림" />
@@ -102,12 +102,12 @@ const Line = styled.div`
   background: #f4f4f4;
   height: 1px;
 `;
-const Menu = styled.div`
+const MyPage = styled.div`
   margin-right: 17px;
   margin-top: 2px;
   img {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
   }
 `;
