@@ -1,12 +1,16 @@
 import React from "react";
 import { styled } from "styled-components";
 
-const MyMessage = ({ content, sendTime, sendDate, type }) => {
+const MyMessage = ({ content, sendTime, sendDate, type, readCount }) => {
   return (
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
       <Wrapper>
-        <Time>{sendTime}</Time>
+        <Time>
+          {readCount === 1 && <div className="count">{readCount}</div>}
+          {sendTime}
+        </Time>
+
         {type === 1 ? (
           <ImageContainer>
             <img src={content} alt="" />
@@ -55,6 +59,13 @@ const Time = styled.div`
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+
+  .count {
+    display: flex;
+    justify-content: end;
+    font-size: 10px;
+    color: #50115a;
+  }
 `;
 const Text = styled.div`
   max-width: 235px;

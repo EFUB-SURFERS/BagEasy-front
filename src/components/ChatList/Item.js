@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Profile from "../../components/Common/Profile";
-const Item = ({ roomId, latestMessage, yourNickname }) => {
+const Item = ({ roomId, latestMessage, yourNickname, unReadCount }) => {
   const navigate = useNavigate();
 
   const getElapsedTime = sentAt => {
@@ -32,7 +32,6 @@ const Item = ({ roomId, latestMessage, yourNickname }) => {
     }
     return Math.floor(elapsedMin) + "분 전";
   };
-
   return (
     <Wrapper>
       <ChatItem
@@ -43,7 +42,7 @@ const Item = ({ roomId, latestMessage, yourNickname }) => {
         <div className="img">
           <Profile nickname={yourNickname} width={"67px"} height={"67px"} />
         </div>
-        <MainContainer $isRead={latestMessage.isRead || latestMessage.isMine}>
+        <MainContainer $isRead={unReadCount === 0}>
           <p className="name">{yourNickname}</p>
           {latestMessage && <p className="text">{latestMessage.content}</p>}
         </MainContainer>
@@ -51,9 +50,7 @@ const Item = ({ roomId, latestMessage, yourNickname }) => {
           {latestMessage && (
             <p className="time">{getElapsedTime(latestMessage.sentAt)}</p>
           )}
-          {false && !latestMessage.isRead && !latestMessage.isMine && (
-            <p className="count">3</p>
-          )}
+          {unReadCount !== 0 && <p className="count">{unReadCount}</p>}
         </div>
       </ChatItem>
       <Line />

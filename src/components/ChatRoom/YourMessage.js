@@ -3,7 +3,14 @@ import { styled } from "styled-components";
 import Profile from "../Common/Profile";
 //유저인포 겟으로 프로필이미지 얻기
 //로그인 완료되면 api 작업
-const YourMessage = ({ yourNickname, content, sendTime, sendDate, type }) => {
+const YourMessage = ({
+  yourNickname,
+  content,
+  sendTime,
+  sendDate,
+  type,
+  readCount,
+}) => {
   return (
     <>
       {sendDate.isNewDate && <Date>{sendDate.date}</Date>}
@@ -27,7 +34,10 @@ const YourMessage = ({ yourNickname, content, sendTime, sendDate, type }) => {
             <Text>{content}</Text>
           )}
         </div>
-        <Time>{sendTime}</Time>
+        <Time>
+          {readCount === 1 && <div className="count">{readCount}</div>}
+          {sendTime}
+        </Time>
       </Wrapper>
     </>
   );
@@ -86,6 +96,13 @@ const Time = styled.div`
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+
+  .count {
+    display: flex;
+    justify-content: start;
+    font-size: 10px;
+    color: #50115a;
+  }
 `;
 const Text = styled.div`
   max-width: 192px;
