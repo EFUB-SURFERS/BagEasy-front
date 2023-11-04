@@ -3,7 +3,37 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addLikes, cancelLikes, getLikes } from "../../api/likes";
 import heart from "../../assets/itemListPage/heart.png";
-import emptyHeart from "../../assets/itemListPage/emptyHeart.png";
+import emptyheart from "../../assets/itemListPage/emptyheart.png";
+
+// 게시글 작성 시간 계산
+export const elapsedTime = date => {
+  const timeValue = new Date(date);
+  const today = new Date();
+
+  const diff = Math.floor(
+    (today.getTime() -
+      timeValue.getTime() +
+      timeValue.getTimezoneOffset() * 60 * 1000) /
+      1000,
+  );
+
+  const times = [
+    { name: "년", milliSeconds: 60 * 60 * 24 * 365 },
+    { name: "개월", milliSeconds: 60 * 60 * 24 * 30 },
+    { name: "일", milliSeconds: 60 * 60 * 24 },
+    { name: "시간", milliSeconds: 60 * 60 },
+    { name: "분", milliSeconds: 60 },
+  ];
+
+  for (const value of times) {
+    const betweenTime = Math.floor(diff / value.milliSeconds);
+
+    if (betweenTime > 0) {
+      return `${betweenTime}${value.name} 전`;
+    }
+  }
+  return "방금 전";
+};
 
 const Item = ({
   post,
@@ -45,7 +75,7 @@ const Item = ({
         <Title>{post.postTitle}</Title>
         <Detail>
           <University>{post.school}</University>
-          <Day> | 2일전</Day>
+          <Day> | {elapsedTime(post.createdAt)}</Day>
         </Detail>
         <Price>{`${post.price}원`}</Price>
         {/* {showUni && <School>{post.school}</School>} */}
@@ -53,7 +83,7 @@ const Item = ({
 
       <IconWrapper>
         <Favorites>
-          <Heart src={isLiked ? heart : emptyHeart} onClick={like} />
+          <Heart src={isLiked ? heart : emptyheart} onClick={like} />
           <FavoritesNum>{post.heartCount}</FavoritesNum>
         </Favorites>
         <Tag $isSold={post.isSold}>{post.isSold ? `판매완료` : `판매중`}</Tag>

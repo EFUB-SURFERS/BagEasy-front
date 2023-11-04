@@ -5,6 +5,7 @@ import lockDark from "../../assets/itemListPage/lockDark.png";
 import lockLight from "../../assets/itemListPage/lockLight.png";
 import { deleteReply } from "../../api/replies";
 import { deleteComment } from "../../api/comments";
+import { elapsedTime } from "../ItemList/Item";
 
 const Comment = ({
   comment,
@@ -52,7 +53,7 @@ const Comment = ({
         <MainWrapper>
           <Wrapper>
             <Nickname>{comment.writer}</Nickname>
-            <Day>2시간</Day>
+            <Day>{elapsedTime(comment.createdAt)}</Day>
           </Wrapper>
           <TextWrapper>
             {comment.isSecret && (

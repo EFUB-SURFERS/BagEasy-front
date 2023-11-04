@@ -5,6 +5,7 @@ import SimpleHeader from "../components/ItemList/SimpleHeader";
 import { getLikedPosts, getLikes } from "../api/likes";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/notification/Header";
 
 const FavoritesPage = () => {
   const [loading, setLoading] = useState(true);
@@ -43,9 +44,7 @@ const FavoritesPage = () => {
   return (
     <Wrapper>
       {isModalVisible && <TokenRefreshModal />}
-      <button onClick={() => navigate("/home")}>
-        <SimpleHeader />
-      </button>
+      <Header />
       <List
         posts={posts}
         setRefresh={setRefresh}

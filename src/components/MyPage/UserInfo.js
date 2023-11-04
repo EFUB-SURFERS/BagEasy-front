@@ -59,7 +59,6 @@ const UserInfo = ({ setIsModalVisible }) => {
           />
         )}
       </AvatarContainer>
-
       <UserInfoContainer>
         <Username>{myProfile.nickname}</Username>
         <UniversityContainer>
@@ -89,7 +88,7 @@ const UserInfo = ({ setIsModalVisible }) => {
 };
 
 const AvatarContainer = styled.div`
-  margin-top: 46px;
+  margin-top: 65px;
   margin-bottom: 20px;
 `;
 
@@ -97,7 +96,7 @@ const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 53px;
+  margin-bottom: 33px;
 `;
 
 const Username = styled.p`
@@ -114,7 +113,7 @@ const UniversityContainer = styled.div`
 
 const University = styled.p`
   margin: 0;
-  font-size: 18px;
+  font-size: 14px;
   color: #848484;
 `;
 
@@ -124,6 +123,5 @@ const Icon2 = styled.img`
   margin-left: 10px;
   cursor: pointer; /* Add this to indicate the icon is clickable */
 `;
-
 
 export default UserInfo;

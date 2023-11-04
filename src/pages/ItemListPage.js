@@ -7,6 +7,7 @@ import SearchBar from "../components/ItemList/SearchBar";
 import List from "../components/ItemList/List";
 import WriteBtn from "../components/ItemList/WriteBtn";
 import TokenRefreshModal from "../components/Common/TokenRefreshModal";
+import MyPageModal from "../components/ItemList/MyPageModal";
 import { getLikes } from "../api/likes";
 import {
   getAllPosts,
@@ -27,6 +28,7 @@ const ItemListPage = () => {
     localStorage.getItem("university"),
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isMypageModalVisible, setIsMypageModalVisible] = useState(false);
 
   const onToggle = () => {
     setOnSales(prev => {
@@ -91,6 +93,12 @@ const ItemListPage = () => {
   return (
     <Wrapper>
       {isModalVisible && <TokenRefreshModal />}
+      {isMypageModalVisible && (
+        <MyPageModal
+          setIsMypageModalVisible={setIsMypageModalVisible}
+          isMypageModalVisible={isMypageModalVisible}
+        />
+      )}
       <Header
         uniSearch={uniSearch}
         setUniSearch={setUniSearch}
@@ -98,6 +106,7 @@ const ItemListPage = () => {
         onSales={onSales}
         setRefresh={setRefresh}
         setIsModalVisible={setIsModalVisible}
+        setIsMypageModalVisible={setIsMypageModalVisible}
       />
       {loading ? (
         <Loader>loading...</Loader>

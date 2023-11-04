@@ -22,17 +22,11 @@ const Purchase = () => {
           <Bar activeTab={activeTab} onTabClick={handleTabClick} />
           <ListContainer>
             {activeTab === "구매내역" && (
-              <>
-                <BuyItem setIsModalVisible={setIsModalVisible} />
-                <Divider />
-              </>
+              <BuyItem setIsModalVisible={setIsModalVisible} />
             )}
 
             {activeTab === "판매내역" && (
-              <>
-                <SoldItem setIsModalVisible={setIsModalVisible} />
-                <Divider />
-              </>
+              <SoldItem setIsModalVisible={setIsModalVisible} />
             )}
           </ListContainer>
         </Content>
@@ -42,7 +36,7 @@ const Purchase = () => {
 };
 
 const Container = styled.div`
-  height: 844px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,6 +47,7 @@ const Content = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: -40px;
 `;
 
 const ListContainer = styled.div`
@@ -60,13 +55,6 @@ const ListContainer = styled.div`
   flex-direction: column;
   width: 390px;
   padding-right: 5px;
-`;
-
-const Divider = styled.div`
-  width: 350px;
-  height: 0.5px;
-  margin: 0 auto;
-  background-color: #d9d9d9;
 `;
 
 export default Purchase;
