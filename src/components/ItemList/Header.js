@@ -189,6 +189,7 @@ const ChatBtn = styled.div`
 
 const MyPageBtn = styled.div`
   margin-left: 9px;
+  width: 20px;
   &:hover {
     cursor: pointer;
   }
