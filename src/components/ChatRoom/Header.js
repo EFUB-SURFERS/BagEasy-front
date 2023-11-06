@@ -22,6 +22,7 @@ const Header = ({ setIsModalVisible }) => {
     try {
       const res = await getChatRoom(roomId);
       const mydata = await getMyProfile();
+
       setRoomInfo(res);
       getPostData(res);
       checkIsSeller(res, mydata);
@@ -45,6 +46,8 @@ const Header = ({ setIsModalVisible }) => {
   };
 
   const checkIsSeller = async (room, mydata) => {
+    console.log(mydata);
+    console.log(room);
     //본인 프로필 조회
     //본인 닉네임과 판매자 닉네임 비교
     //같으면 거래 성사버튼 보이게 처리.
@@ -93,7 +96,7 @@ const Header = ({ setIsModalVisible }) => {
                 {postInfo.price} <p className="won">원</p>
               </p>
 
-              {true ? (
+              {isSeller ? (
                 <>
                   {postInfo.isSold ? (
                     <FinishBtn $isFinished={postInfo.isSold}>
