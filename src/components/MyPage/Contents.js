@@ -45,7 +45,15 @@ const Contents = ({
         <ListItem icon={list_gray} text="거래 내역" onClick={handleListClick} />
       </ListContainer>
       <BtnContainer>
-        <Btn>로그아웃</Btn>
+        <Btn
+          onClick={() => {
+            localStorage.removeItem("bagtoken");
+            alert("로그아웃 되었습니다.");
+            navigate("/login");
+          }}
+        >
+          로그아웃
+        </Btn>
         <p style={{ color: "#9B9B9B" }}>|</p>
         <Btn>탈퇴하기</Btn>
       </BtnContainer>

@@ -6,7 +6,6 @@ import { getMyProfile } from "../../api/member";
 import location from "../../assets/itemListPage/location.png";
 import notification from "../../assets/itemListPage/notification.png";
 import chat from "../../assets/itemListPage/chat.png";
-import Profile from "../Common/Profile";
 import Modal from "./../UpdateUni/Modal";
 import profileIcon from "../../assets/itemListPage/profile.png";
 import Toggle from "./Toggle";
@@ -87,7 +86,7 @@ const Header = ({
             <Img src={chat} />
           </ChatBtn>
           <MyPageBtn onClick={() => setIsMypageModalVisible(true)}>
-            <Img src={profileIcon} />
+            <Img src={profileIcon} style={{ width: "21px" }} />
           </MyPageBtn>
         </ButtonWrapper>
         {isOpen ? (
