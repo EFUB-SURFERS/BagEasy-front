@@ -2,7 +2,7 @@
 
 ## 🧳 BagEasy 서비스 설명
 
-<img width="480" alt="스크린샷 2023-07-25 오전 12 53 55" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/49335d6b-b859-48bd-aa0f-46349ebc773d">
+<img width="600" alt="start" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/04bba489-e5c6-4fb3-808d-098947baacaa">
 
 
 - [x] `BagEasy`는 교환학생을 위한 짐 양도 서비스입니다.
@@ -16,7 +16,7 @@
 
 | 김예진                                                                                                                                                                         | 곽지우                                                                                                                                                                         | 송지민                                                                                                                                                                         | 이주희                                                                                                                                                                         | 조정민                                                                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| <img width="150px" alt="스크린샷 2023-07-25 오전 12 46 14" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/71dc6f6c-706d-43b5-951e-7a2a1ac78904"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 48" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/cf199ccc-fe99-4a5d-a045-f8be0f71e450"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/678ff507-7836-4c9c-ba4f-a58a2b9b9896"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/76e28349-f536-46bc-8341-c46f8d3dab37"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 46 00" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/07779d2c-e6e8-4b87-9e79-b2cbce093636"> |
+| <img width="150px" alt="스크린샷 2023-07-25 오전 12 46 14" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/71dc6f6c-706d-43b5-951e-7a2a1ac78904"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 48" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/cf199ccc-fe99-4a5d-a045-f8be0f71e450"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/678ff507-7836-4c9c-ba4f-a58a2b9b9896"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 45 37" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/104717341/76e28349-f536-46bc-8341-c46f8d3dab37"> | <img width="150px" alt="스크린샷 2023-07-25 오전 12 46 00" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/a73f8040-80b0-49f7-a892-205ee0381be4"> |
 | 시작 페이지 <br> 거래내역 페이지 <br> 마이페이지                                                                                                                               | 판매글 열람 페이지 <br> 판매글 작성 페이지                                                                                                                                     | 채팅 목록 페이지 <br> 채팅방 페이지 <br> 학교 설정 모달                                                                                                                        | 구글 로그인 페이지 <br> 닉네임 설정 페이지 <br> 랜덤 프로필 생성                                                                                                                                    | 메인 페이지 <br> 찜 목록 페이지 <br> 댓글 컴포넌트                                                                                                                             |
 
 <br>
@@ -81,7 +81,7 @@ https://bageasy.vercel.app/
 ### 🗨️ 댓글
 
 - 양도글 하단에서 댓글 작성/열람
-- 대댓글, 비밀댓글 기능
+- 대댓글, 비밀댓글, 답글 기능
 
 ### ✉️ 채팅
 
@@ -99,11 +99,11 @@ https://bageasy.vercel.app/
 	<th>👤 마이페이지</th>
 	<th>❤️ 찜 목록</th>
 	<tr>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/dcd2b936-fa8b-4dad-8408-99ea382e1d75"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/3725425b-7c1d-432a-9404-5318fa524034"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/28b94da0-14a6-4f4e-aeb1-337903a19c0a"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/73ee9f90-5f6f-4151-a631-4c477288d109"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/553578a1-f5ee-4cef-90b9-484699adcee6"></td>
+		<td><img width="200px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/bca4c652-6510-43c9-9dea-6ac6c2555503"></td>
+		<td><img width="200px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/4d9597f7-7a5e-41a3-aac6-c6a41a78af7e"></td>
+		<td><img width="198px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/67ec6d27-2b2e-4d5d-968d-6e8c429a3daf"></td>
+		<td><img width="190px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/d735249d-8f4e-4da0-bcb2-b4441885279e"></td>
+		<td><img width="200px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/e95042f6-7bf6-4c3e-b2dd-8adaeea7e4d9"></td>
 	</tr>
 </table>
 <br/>
@@ -114,11 +114,11 @@ https://bageasy.vercel.app/
 	<th>🗨️ 댓글</th>
 	<th>✉️ 채팅</th>
 	<tr>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/f649c53f-de75-4e7f-8c88-0b73607d77cd"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/a022434d-a250-4a37-a8e7-1f334043f558"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/631cea21-d44c-4bf5-895e-b995a1f9a5a8"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/7367d593-b120-4537-b904-fefb12bc0b78"></td>
-		<td><img width="200px" src="https://github.com/Cho-Jeongmin/BagEasy-front/assets/97157930/6ef2b5b3-5e4c-410a-a893-10a1ae50c13a"></td>
+		<td><img width="198px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/ab35669f-f49d-4c85-9583-fc90a93e0e19"></td>
+		<td><img width="203px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/58b3439f-7c2e-46ea-b2be-0202acc0c530"></td>
+		<td><img width="189px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/8f4c3e1b-e638-4c7d-9bce-00c5ce29b2fa"></td>
+		<td><img width="190px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/6f9d87bd-4b96-4dc2-b755-183d3f4cb80a"></td>
+		<td><img width="200px" src="https://github.com/EFUB-SURFERS/BagEasy-front/assets/97157930/973e4ac1-c6db-4741-a858-fe88f135f7ac"></td>
 	</tr>
 </table>
 
